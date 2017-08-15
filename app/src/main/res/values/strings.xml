@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Smart Collection</string>
+
+    <!--App version-->
+    <string name="App_Version">Version 0.1</string>
+
+    <!--Misc text-->
+    <string name="Misc_Copyright">\u00A9 Copyright Bank BTN 2017</string>
+
+    <!--Login page-->
+    <string name="Login_EnterUsernamePassword">Masukkan Username dan Password Anda</string>
+    <string name="Login_ShowPassword">Tunjukkan Password</string>
+    <string name="Login_RememberMe">Remember Me</string>
+    <string name="Login_ID">User ID</string>
+    <string name="Login_Password">Password</string>
+
+    <!--Home page-->
+    <string name="Home_Menu">Menu</string>
+
+    <!--Update password page-->
+    <string name="UpdatePassword_PageTitle">Update Password</string>
+    <string name="UpdatePassword_OldPassword">Old Password</string>
+    <string name="UpdatePassword_NewPassword">New Password</string>
+    <string name="UpdatePassword_ConfirmPassword">Confirm Password</string>
+    <string name="UpdatePassword_Button_Submit">Update Password</string>
+
+    <!--Inbox adapter-->
+    <string name="InboxAdapter_NoRekening">No. Rekening</string>
+    <string name="InboxAdapter_Tagihan">Tagihan</string>
+    <string name="InboxAdapter_DPD">DPD</string>
+    <string name="InboxAdapter_LastPayment">Last Payment</string>
+
+    <!--Button text-->
+    <string name="Button_LoginPage_Login">Login</string>
+    <string name="Button_LoginPage_ForgotPassword">Forgot Password?</string>
+
+    <!--Form hint-->
+    <string name="Hint_LoginForm_Username">Login Id</string>
+    <string name="Hint_LoginForm_Password">Password</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_update_password">UpdatePasswordActivity</string>
+</resources>

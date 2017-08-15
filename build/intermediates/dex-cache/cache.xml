@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="G:\Kerjaan\BTN\ProjectFiles\SmartCollection\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="2939af0ab1f27ae98ee2122acdb8c2b770554862">
+        <dex dex="G:\Kerjaan\BTN\ProjectFiles\SmartCollection\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_1036e48189d516b0d2402caefc38f51699031a42\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="G:\Kerjaan\BTN\ProjectFiles\SmartCollection\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="G:\Kerjaan\BTN\ProjectFiles\SmartCollection\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_011e47d80d408d17b609b135f6368460df5c8c4e\classes.dex" />
+    </item>
+
+</items>

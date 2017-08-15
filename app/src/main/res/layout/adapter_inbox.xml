@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/background_card_white"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@drawable/ic_person_pin_black_36dp"
+            android:tint="@color/Tint_Inbox_PersonIcon"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/inboxAdapter_PersonName"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!--Separator-->
+    <View
+        android:background="@color/Black"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--Data-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Label-->
+        <TextView
+            android:text="@string/InboxAdapter_NoRekening"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <!--Data-->
+        <TextView
+            android:id="@+id/inboxAdapter_AccountNo"
+            android:layout_weight="7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!--Data-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Label-->
+        <TextView
+            android:text="@string/InboxAdapter_Tagihan"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <!--Data-->
+        <TextView
+            android:id="@+id/inboxAdapter_Tagihan"
+            android:layout_weight="7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!--Data-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Label-->
+        <TextView
+            android:text="@string/InboxAdapter_DPD"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <!--Data-->
+        <TextView
+            android:id="@+id/inboxAdapter_DPD"
+            android:layout_weight="7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!--Data-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Label-->
+        <TextView
+            android:text="@string/InboxAdapter_LastPayment"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <!--Data-->
+        <TextView
+            android:id="@+id/inboxAdapter_LastPayment"
+            android:layout_weight="7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

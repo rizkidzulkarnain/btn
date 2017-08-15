@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#ffffff</color>
+
+    <!--color by name-->
+    <color name="White">#ffffff</color>
+    <color name="Black">#000000</color>
+    <color name="Transparent">#00000000</color>
+    <color name="Black_Transparent">#55000000</color>
+    <color name="White_Transparent">#55ffffff</color>
+
+    <!--color by usage-->
+    <color name="Background_Login">#0d568d</color>
+    <color name="Background_LoginForm">#312d2d</color>
+    <color name="Background_LoginButton">#ff2800</color>
+    <color name="Background_MenuDrawer">#eeeeee</color>
+    <color name="Background_Toolbar">#a2b3f5</color>
+    <color name="Background_Fragment">#999999</color>
+
+    <color name="Font_LoginForm">#747373</color>
+    <color name="Font_HomeMenu">#0ba1ff</color>
+
+    <color name="Tint_Inbox_PersonIcon">#d4abd8</color>
+    <color name="Tint_Logout_Button">#da2928</color>
+    <color name="Tint_HomeMenu_Button">#68c2fa</color>
+
+    <color name="Line_UpdatePassword">#0ba1ff</color>
+    <color name="Line_HomeMenu">#0ba1ff</color>
+
+    <color name="Gradient_Blue_Start">#2484b5</color>
+    <color name="Gradient_Blue_End">#0a2042</color>
+</resources>

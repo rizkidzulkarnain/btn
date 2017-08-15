@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="HomeMenu">
+        <item>Dashboard</item>
+        <item>Berita</item>
+        <item>Penugasan</item>
+        <item>PTP Reminder</item>
+        <item>Tambah Kontak</item>
+        <item>Chat</item>
+        <item>Laporan</item>
+        <item>Pusat Notifikasi</item>
+    </string-array>
+
+    <string-array name="HomeMenu_BC">
+        <item>Dashboard</item>
+        <item>Berita</item>
+        <item>Account Assignment</item>
+        <item>PTP Reminder</item>
+        <item>Tambah Kontak</item>
+        <item>Chat</item>
+        <item>Laporan</item>
+        <item>Pusat Notifikasi</item>
+    </string-array>
+</resources>

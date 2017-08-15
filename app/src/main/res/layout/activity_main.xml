@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_Main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mitkoindo.smartcollection.MainActivity">
+
+    <!--Content-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--Toolbar-->
+        <android.support.v7.widget.Toolbar
+            android:background="@color/Background_Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--Drawer toggle button-->
+                <ImageView
+                    android:onClick="HandleInput_OpenDrawer"
+                    android:src="@drawable/ic_menu_black_36dp"
+                    android:tint="@color/Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!--Logo bank-->
+                <!--<ImageView
+                    android:src="@drawable/logo_sm"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:scaleType="center"
+                    android:layout_height="32dp" />-->
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+
+        <FrameLayout
+            android:id="@+id/MainActivity_Content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+    <!--Drawer-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:background="@color/Background_MenuDrawer"
+            android:orientation="vertical"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <!--User details-->
+            <LinearLayout
+                android:background="@drawable/background_drawer"
+                android:padding="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+                <!--username-->
+                <TextView
+                    android:text="DICKY ARDIKA"
+                    android:textSize="18sp"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!--Address-->
+                <TextView
+                    android:text="Jalan Harmoni, Plaza Pertoyo Utara, 10130 \nupdated on 2016/08/19. 08:07:54"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!--Menu list-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/MainActivity_MenuList"
+                android:overScrollMode="never"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@color/Transparent"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</android.support.v4.widget.DrawerLayout>
