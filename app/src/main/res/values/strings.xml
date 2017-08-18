@@ -5,6 +5,11 @@
     <string name="App_Version">Version 0.1</string>
 
     <!--Misc text-->
+    <string name="Text_OK">OK</string>
+    <string name="Text_PleaseWait">Please Wait</string>
+    <string name="Text_Ya">Ya</string>
+    <string name="Text_Tidak">Tidak</string>
+    <string name="Text_Success">Sukses</string>
     <string name="Misc_Copyright">\u00A9 Copyright Bank BTN 2017</string>
 
     <!--Login page-->
@@ -16,6 +21,7 @@
 
     <!--Home page-->
     <string name="Home_Menu">Menu</string>
+    <string name="Home_Alert_Logout_Message">Apakah anda ingin log-out?</string>
 
     <!--Update password page-->
     <string name="UpdatePassword_PageTitle">Update Password</string>
@@ -23,6 +29,14 @@
     <string name="UpdatePassword_NewPassword">New Password</string>
     <string name="UpdatePassword_ConfirmPassword">Confirm Password</string>
     <string name="UpdatePassword_Button_Submit">Update Password</string>
+    <string name="UpdatePassword_Alert_UpdatePasswordSuccess">Password berhasil diubah</string>
+
+    <!--Page histori tindakan-->
+    <string name="HistoriTindakan_Title">Histori Tindakan</string>
+    <string name="HistoriTindakan_Adapter_DeskripsiTindakan">Deskripsi Tindakan</string>
+    <string name="HistoriTindakan_Adapter_TanggalTindakan">Tanggal Tindakan</string>
+    <string name="HistoriTindakan_Adapter_Pelaku">Pelaku</string>
+    <string name="HistoriTindakan_Adapter_AlasanTindakan">Alasan Tindakan</string>
 
     <!--Inbox adapter-->
     <string name="InboxAdapter_NoRekening">No. Rekening</string>
@@ -37,6 +51,16 @@
     <!--Form hint-->
     <string name="Hint_LoginForm_Username">Login Id</string>
     <string name="Hint_LoginForm_Password">Password</string>
+
+    <!--Transaksi-->
+    <string name="BaseURL">https://ee54c06e.ngrok.io/btn_new/</string>
+    <string name="URL_Login">api/Account/login</string>
+    <string name="URL_UpdatePassword">api/Account/updatePassword</string>
+    <string name="URL_Data_StoreProcedure">api/Data/sp</string>
+
+    <!--Shared preference key-->
+    <string name="SharedPreferenceName">SharedPreference_SmartCollection</string>
+    <string name="SharedPreferenceKey_AccessToken">Key_AccessToken</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

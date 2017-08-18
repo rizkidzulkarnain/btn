@@ -1,10 +1,10 @@
-package com.mitkoindo.adsjalan.supportview;
+package com.mitkoindo.smartcollection.utilities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 
-import com.mitkoindo.adsjalan.R;
+import com.mitkoindo.smartcollection.R;
 
 public class GenericAlert
 {

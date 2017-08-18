@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
+import com.mitkoindo.smartcollection.helper.ItemClickListener;
 import com.mitkoindo.smartcollection.objectdata.HomeMenu;
 
 import java.util.ArrayList;
@@ -23,6 +24,12 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.HomeMe
 
     //context
     private Activity context;
+
+    //----------------------------------------------------------------------------------------------
+    //  Input
+    //----------------------------------------------------------------------------------------------
+    //click listener
+    private ItemClickListener itemClickListener;
 
     //----------------------------------------------------------------------------------------------
     //  Setup
@@ -67,10 +74,30 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.HomeMe
         return homeMenus.size();
     }
 
+    //get current menu
+    public String getCurrentMenu(int position)
+    {
+        //pastikan posisi tidak melebihi index
+        if (position >= homeMenus.size())
+            return "Out of bounds";
+
+        //return menu name
+        return homeMenus.get(position).Name;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Handle Input
+    //----------------------------------------------------------------------------------------------
+    // allows clicks events to be caught
+    public void setClickListener(ItemClickListener itemClickListener)
+    {
+        this.itemClickListener = itemClickListener;
+    }
+
     //----------------------------------------------------------------------------------------------
     //  View holder
     //----------------------------------------------------------------------------------------------
-    class HomeMenuViewHolder extends RecyclerView.ViewHolder
+    class HomeMenuViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         ImageView Icon;
         TextView Name;
@@ -82,7 +109,15 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.HomeMe
             Icon = itemView.findViewById(R.id.HomeMenuAdapter_Icon);
             Name = itemView.findViewById(R.id.HomeMenuAdapter_Text);
 
-            //add input listener disini
+            //add input listener
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view)
+        {
+            if (itemClickListener != null)
+                itemClickListener.onItemClick(view, getAdapterPosition());
         }
     }
 }

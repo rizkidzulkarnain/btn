@@ -1,8 +1,8 @@
 package com.mitkoindo.smartcollection.helper;
 
-/**
- * Created by W8 on 16/08/2017.
- */
+import android.view.View;
 
-public interface ItemClickListener {
+public interface ItemClickListener
+{
+    void onItemClick(View view, int position);
 }

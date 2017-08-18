@@ -1,6 +1,10 @@
 package com.mitkoindo.smartcollection;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.mitkoindo.smartcollection.adapter.HomeMenuAdapter;
+import com.mitkoindo.smartcollection.helper.ItemClickListener;
+import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.objectdata.HomeMenu;
 
 import java.util.ArrayList;
@@ -61,11 +67,25 @@ public class HomeActivity extends AppCompatActivity
         {
             HomeMenu newHomeMenu = new HomeMenu();
             newHomeMenu.Name = menuTitle[i];
+
+            //add bitmap tergantung judul menu
+            newHomeMenu.Icon = ResourceLoader.LoadMenuIcon(this, newHomeMenu.Name);
+
             homeMenus.add(newHomeMenu);
         }
 
         //create menu
         homeMenuAdapter = new HomeMenuAdapter(this, homeMenus);
+
+        //set click listener
+        homeMenuAdapter.setClickListener(new ItemClickListener()
+        {
+            @Override
+            public void onItemClick(View view, int position)
+            {
+                HandleInput_Home_SelectMenu(position);
+            }
+        });
 
         //attach adapter
         int numberOfColumns = 3;
@@ -81,6 +101,70 @@ public class HomeActivity extends AppCompatActivity
     {
         //test open change password
         Intent intent = new Intent(this, UpdatePasswordActivity.class);
+        startActivity(intent);
+    }
+
+    //handle logout
+    public void HandleInput_Home_Logout(View view)
+    {
+        //Confirm apakah user benar2 mau logout
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.Home_Alert_Logout_Message);
+
+        //handle input
+        builder.setNegativeButton(R.string.Text_Tidak, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                //do nothing & dismiss the alertdialog
+            }
+        });
+        builder.setPositiveButton(R.string.Text_Ya, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                //delete auth token & return to login screen
+                LogoutUser();
+            }
+        });
+
+        //show alert dialog
+        AlertDialog confimationPopup = builder.create();
+        confimationPopup.show();
+    }
+
+    //handle select menu
+    private void HandleInput_Home_SelectMenu(int menuPos)
+    {
+        //get selected menu name
+        String selectedMenuName = homeMenuAdapter.getCurrentMenu(menuPos);
+        int x = 0;
+        int y = x + 1;
+
+        //test langsung buka histori tindakan
+        Intent intent = new Intent(this, HistoriTindakanActivity.class);
+        startActivity(intent);
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Manipulate data
+    //----------------------------------------------------------------------------------------------
+    //handle logout
+    private void LogoutUser()
+    {
+        //get key to auth token
+        String key_AuthToken = getString(R.string.SharedPreferenceKey_AccessToken);
+
+        //delete auth token
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key_AuthToken, "");
+        editor.apply();
+
+        //return to login screen
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
     }

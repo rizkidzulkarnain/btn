@@ -66,6 +66,7 @@
 
                 <!--logout button-->
                 <ImageView
+                    android:onClick="HandleInput_Home_Logout"
                     android:src="@drawable/ic_power_settings_new_black_36dp"
                     android:tint="@color/Tint_Logout_Button"
                     android:layout_alignParentRight="true"

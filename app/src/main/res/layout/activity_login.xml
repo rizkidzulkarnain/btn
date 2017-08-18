@@ -43,6 +43,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <EditText
+            android:id="@+id/LoginActivity_Username"
+            android:inputType="text"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
             android:theme="@style/EditText.Login"
             android:textColor="@color/White"
             android:textColorHint="@color/White"
@@ -56,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <EditText
+            android:id="@+id/LoginActivity_Password"
             android:theme="@style/EditText.Login"
             android:textColor="@color/White"
             android:textColorHint="@color/White"

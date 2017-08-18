@@ -1,4 +1,4 @@
-package com.mitkoindo.adsjalan.customUtilities;
+package com.mitkoindo.smartcollection.utilities;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,10 +12,15 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class NetworkConnection
 {
     //property koneksi
     private String accessToken, phoneSpec;
+
+    //request object
+    private JSONObject requestObject;
 
     //set koneksi
     public NetworkConnection(String accessToken, String phonespec)
@@ -24,8 +29,14 @@ public class NetworkConnection
         this.phoneSpec = phonespec;
     }
 
+    //set request object
+    public void SetRequestObject(JSONObject requestObject)
+    {
+        this.requestObject = requestObject;
+    }
+
     //Send post request
-    public String SendPostRequest(JSONObject requestObject, String url_String, String selectedCityName)
+    public String SendPostRequest(String url_String)
     {
         StringBuilder sb = new StringBuilder();
 
@@ -35,7 +46,7 @@ public class NetworkConnection
         {
             URL url = null;
             url = new URL(url_String);
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection httpURLConnection = (HttpsURLConnection) url.openConnection();
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setConnectTimeout(5000);
@@ -52,8 +63,6 @@ public class NetworkConnection
                     httpURLConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
                 }
             }
-            if (selectedCityName != null && !selectedCityName.isEmpty())
-                httpURLConnection.setRequestProperty("City", selectedCityName);
             httpURLConnection.setRequestProperty("PhoneSpec", phoneSpec);
             httpURLConnection.connect();
 
@@ -62,6 +71,22 @@ public class NetworkConnection
             out.close();
 
             int HttpResult = httpURLConnection.getResponseCode();
+
+            //cek jika resultcode nggak 200
+            switch (HttpResult)
+            {
+                case HttpsURLConnection.HTTP_BAD_REQUEST : //400
+                    return "Bad Request";
+                case HttpsURLConnection.HTTP_UNAUTHORIZED : //401
+                    return "Unauthorized";
+                case HttpsURLConnection.HTTP_FORBIDDEN : //403
+                    return "Forbidden";
+                case HttpsURLConnection.HTTP_NOT_FOUND : //404
+                    return "Not Found";
+                case HttpsURLConnection.HTTP_INTERNAL_ERROR : //500
+                    return "Internal Server Error";
+                default:break;
+            }
 
             //cek resultcode, jika 503, return maintenance
             if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)
@@ -89,7 +114,7 @@ public class NetworkConnection
     }
 
     //send get request
-    public String SendGetRequest(String url_String, String selectedCityName)
+    public String SendGetRequest(String url_String)
     {
         StringBuilder sb = new StringBuilder();
 
@@ -99,7 +124,7 @@ public class NetworkConnection
         {
             URL url = null;
             url = new URL(url_String);
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection httpURLConnection = (HttpsURLConnection) url.openConnection();
             httpURLConnection.setDoOutput(false);
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.setConnectTimeout(5000);
@@ -107,12 +132,26 @@ public class NetworkConnection
             httpURLConnection.setRequestProperty("Content-Type","application/json");
             if (accessToken != null && !accessToken.isEmpty())
                 httpURLConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
-            if (selectedCityName != null && !selectedCityName.isEmpty())
-                httpURLConnection.setRequestProperty("City", selectedCityName);
             httpURLConnection.setRequestProperty("PhoneSpec", phoneSpec);
             httpURLConnection.connect();
 
             int HttpResult = httpURLConnection.getResponseCode();
+
+            //cek jika resultcode nggak 200
+            switch (HttpResult)
+            {
+                case HttpsURLConnection.HTTP_BAD_REQUEST : //400
+                    return "Bad Request";
+                case HttpsURLConnection.HTTP_UNAUTHORIZED : //401
+                    return "Unauthorized";
+                case HttpsURLConnection.HTTP_FORBIDDEN : //403
+                    return "Forbidden";
+                case HttpsURLConnection.HTTP_NOT_FOUND : //404
+                    return "Not Found";
+                case HttpsURLConnection.HTTP_INTERNAL_ERROR : //500
+                    return "Internal Server Error";
+                default:break;
+            }
 
             //cek resultcode, jika 503, return maintenance
             if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)
@@ -147,7 +186,7 @@ public class NetworkConnection
         try
         {
             URL url = new URL(imageUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.connect();
             int responseCode = connection.getResponseCode();
 
@@ -166,7 +205,7 @@ public class NetworkConnection
     }
 
     //Send put request
-    public String SendPutRequest(JSONObject requestObject, String url_String, String selectedCityName)
+    public String SendPutRequest(String url_String)
     {
         StringBuilder sb = new StringBuilder();
 
@@ -176,7 +215,7 @@ public class NetworkConnection
         {
             URL url = null;
             url = new URL(url_String);
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection httpURLConnection = (HttpsURLConnection) url.openConnection();
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setRequestMethod("PUT");
             httpURLConnection.setConnectTimeout(5000);
@@ -193,8 +232,6 @@ public class NetworkConnection
                     httpURLConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
                 }
             }
-            if (selectedCityName != null && !selectedCityName.isEmpty())
-                httpURLConnection.setRequestProperty("City", selectedCityName);
             httpURLConnection.setRequestProperty("PhoneSpec", phoneSpec);
             httpURLConnection.connect();
 
@@ -203,6 +240,22 @@ public class NetworkConnection
             out.close();
 
             int HttpResult = httpURLConnection.getResponseCode();
+
+            //cek jika resultcode nggak 200
+            switch (HttpResult)
+            {
+                case HttpsURLConnection.HTTP_BAD_REQUEST : //400
+                    return "Bad Request";
+                case HttpsURLConnection.HTTP_UNAUTHORIZED : //401
+                    return "Unauthorized";
+                case HttpsURLConnection.HTTP_FORBIDDEN : //403
+                    return "Forbidden";
+                case HttpsURLConnection.HTTP_NOT_FOUND : //404
+                    return "Not Found";
+                case HttpsURLConnection.HTTP_INTERNAL_ERROR : //500
+                    return "Internal Server Error";
+                default:break;
+            }
 
             //cek resultcode, jika 503, return maintenance
             if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)

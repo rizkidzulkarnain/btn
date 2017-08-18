@@ -1,6 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/background_card_white"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--Deskripsi Tindakan-->
+    <TextView
+        android:text="@string/HistoriTindakan_Adapter_DeskripsiTindakan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:background="@color/Black"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:id="@+id/HistoriTindakanAdapter_DeskripsiTindakan"
+        android:textSize="14sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--Tanggal Tindakan-->
+    <TextView
+        android:layout_marginTop="10dp"
+        android:text="@string/HistoriTindakan_Adapter_TanggalTindakan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:background="@color/Black"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:id="@+id/HistoriTindakanAdapter_TanggalTindakan"
+        android:textSize="14sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--Pelaku-->
+    <TextView
+        android:layout_marginTop="10dp"
+        android:text="@string/HistoriTindakan_Adapter_Pelaku"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:background="@color/Black"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:id="@+id/HistoriTindakanAdapter_Pelaku"
+        android:textSize="14sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--Alasan Tindakan-->
+    <TextView
+        android:layout_marginTop="10dp"
+        android:text="@string/HistoriTindakan_Adapter_AlasanTindakan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:background="@color/Black"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:id="@+id/HistoriTindakanAdapter_AlasanTindakan"
+        android:textSize="14sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

@@ -3,21 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="G:\Kerjaan\BTN\ProjectFiles\SmartCollection\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.0"
-        sha1="2939af0ab1f27ae98ee2122acdb8c2b770554862">
-        <dex dex="G:\Kerjaan\BTN\ProjectFiles\SmartCollection\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_1036e48189d516b0d2402caefc38f51699031a42\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="G:\Kerjaan\BTN\ProjectFiles\SmartCollection\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="G:\Kerjaan\BTN\ProjectFiles\BTNSmartCollection\Android%20App\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="26.0.0"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="G:\Kerjaan\BTN\ProjectFiles\SmartCollection\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_011e47d80d408d17b609b135f6368460df5c8c4e\classes.dex" />
+        <dex dex="G:\Kerjaan\BTN\ProjectFiles\BTNSmartCollection\Android%20App\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_0621d822ebf5668e47684251dfcd41d070dbaf47\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="G:\Kerjaan\BTN\ProjectFiles\BTNSmartCollection\Android%20App\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="9e2e0879c2e82c644a892ca61f5bacd1ed7f8a3b">
+        <dex dex="G:\Kerjaan\BTN\ProjectFiles\BTNSmartCollection\Android%20App\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_a7e29ae17a7eb154d0d8dc8d99f410411bfa602d\classes.dex" />
     </item>
 
 </items>
