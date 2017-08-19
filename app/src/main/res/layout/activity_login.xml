@@ -32,6 +32,7 @@
 
         <!--logo smart collection-->
         <ImageView
+            android:onClick="HandleInput_Login_ChangeBaseURL"
             android:src="@drawable/logo_smart_collection"
             android:layout_width="wrap_content"
             android:layout_height="50dp" />

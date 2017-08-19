@@ -94,7 +94,6 @@
     <string name="font_default_reg">fonts/Roboto-Regular.ttf</string>
     <string name="font_default_bold">fonts/Roboto-Bold.ttf</string>
 
-
     <!--Transaksi-->
     <string name="BaseURL">https://ee54c06e.ngrok.io/btn_new/</string>
     <string name="URL_Login">api/Account/login</string>
@@ -104,6 +103,14 @@
     <!--Shared preference key-->
     <string name="SharedPreferenceName">SharedPreference_SmartCollection</string>
     <string name="SharedPreferenceKey_AccessToken">Key_AccessToken</string>
+    <string name="SharedPreferenceKey_BaseURL">Key_BaseURL</string>
+
+    <!--Temporary change base url class-->
+    <string name="ChangeBaseURL_Title">Change Base URL</string>
+    <string name="ChangeBaseURL_Change">Change</string>
+    <string name="ChangeBaseURL_Reset">Reset</string>
+    <string name="ChangeBaseURL_UrlChanged">Base URL berhasil diubah</string>
+    <string name="ChangeBaseURL_UrlReset">Base URL berhasil direset</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

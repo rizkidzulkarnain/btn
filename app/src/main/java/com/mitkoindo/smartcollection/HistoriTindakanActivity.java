@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.mitkoindo.smartcollection.adapter.HistoriTindakanAdapter;
+import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.objectdata.HistoriTindakan;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
@@ -73,7 +74,7 @@ public class HistoriTindakanActivity extends AppCompatActivity
     private void SetupTransaction()
     {
         //get url
-        baseURL = getString(R.string.BaseURL);
+        baseURL = ResourceLoader.LoadBaseURL(this);
         url_Data_StoreProcedure = getString(R.string.URL_Data_StoreProcedure);
 
         //get auth token

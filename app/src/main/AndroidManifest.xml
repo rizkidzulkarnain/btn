@@ -45,6 +45,7 @@
         <activity
             android:name=".module.visitform.FormVisitActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".module.misc.ChangeBaseURLActivity"></activity>
     </application>
 
 </manifest>

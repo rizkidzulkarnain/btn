@@ -1,8 +1,11 @@
 package com.mitkoindo.smartcollection.helper;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 
 import com.mitkoindo.smartcollection.R;
 
@@ -50,5 +53,28 @@ public class ResourceLoader
 
         //return iconnya
         return icon;
+    }
+
+    //load base url
+    public static String LoadBaseURL(Context context)
+    {
+        //initialize base url string
+        String baseURL = "";
+
+        //cek data base url di shared preference
+        String key_BaseURL = context.getString(R.string.SharedPreferenceKey_BaseURL);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        baseURL = sharedPreferences.getString(key_BaseURL, "");
+
+        //cek apakah string base url kosong atau tidak
+        if (baseURL.isEmpty())
+        {
+            //jika kosong, load dari resource
+            baseURL = context.getString(R.string.BaseURL);
+            return baseURL;
+        }
+
+        //jika tidak kosong, return hasil get base url dari shared preference
+        return baseURL;
     }
 }

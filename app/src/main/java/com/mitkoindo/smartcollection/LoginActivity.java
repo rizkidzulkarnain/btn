@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
 
+import com.mitkoindo.smartcollection.helper.ResourceLoader;
+import com.mitkoindo.smartcollection.module.misc.ChangeBaseURLActivity;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
@@ -42,6 +44,9 @@ public class LoginActivity extends AppCompatActivity
     private String baseURL;
     private String url_Login;
 
+    //request code buat ganti base url
+    private static final int REQUESTCODE_CHANGEURL = 850;
+
     //----------------------------------------------------------------------------------------------
     //  Setup
     //----------------------------------------------------------------------------------------------
@@ -71,7 +76,7 @@ public class LoginActivity extends AppCompatActivity
     //setup URL
     private void SetupURL()
     {
-        baseURL = getString(R.string.BaseURL);
+        baseURL = ResourceLoader.LoadBaseURL(this);
         url_Login = getString(R.string.URL_Login);
     }
 
@@ -120,6 +125,14 @@ public class LoginActivity extends AppCompatActivity
             view_RememberMe.setChecked(false);
         else
             view_RememberMe.setChecked(true);
+    }
+
+    //secret feature, change base url
+    public void HandleInput_Login_ChangeBaseURL(View view)
+    {
+        //open change base url activity
+        Intent intent = new Intent(this, ChangeBaseURLActivity.class);
+        startActivityForResult(intent, REQUESTCODE_CHANGEURL);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -221,5 +234,28 @@ public class LoginActivity extends AppCompatActivity
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Handle ganti URL
+    //----------------------------------------------------------------------------------------------
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode)
+        {
+            case REQUESTCODE_CHANGEURL :
+                if (resultCode == RESULT_OK)
+                    //reload data base url
+                    baseURL = ResourceLoader.LoadBaseURL(this);
+                break;
+            default:break;
+        }
+
+        int x = 0;
+        int z = x + 1;
     }
 }
