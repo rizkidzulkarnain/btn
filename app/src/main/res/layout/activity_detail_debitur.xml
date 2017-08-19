@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="detailDebiturViewModel"
+            type="com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturViewModel" />
+        <variable
+            name="detailDebitur"
+            type="com.mitkoindo.smartcollection.objectdata.DetailDebitur" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_general"
+            style="@style/AppToolbar.BottomShadow">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <include layout="@layout/include_toolbar_back_button"/>
+
+                <include
+                    layout="@layout/include_toolbar_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <include layout="@layout/include_toolbar_more_button"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_medium">
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.4"/>
+
+                <!--Left column background-->
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    android:background="@color/Background_MenuDrawer"/>
+
+                <!--Background header-->
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_view_no_rekening"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@color/Background_Fragment"/>
+
+                <!--Nama Debitur-->
+                <TextView
+                    android:id="@+id/text_view_nama_debitur"
+                    style="@style/FontBold.Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_medium"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"
+                    android:gravity="center"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@{detailDebitur.namaDebitur}"
+                    tools:text="Susilo Setiawan"/>
+
+                <!--Nomor CIF-->
+                <TextView
+                    android:id="@+id/text_view_no_cif"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_small"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"
+                    android:gravity="center"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_nama_debitur"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@{@string/DetailDebitur_NoCif(detailDebitur.noCif)}"
+                    tools:text="CIF : 198239128319"/>
+
+                <!--Nomor Rekening-->
+                <TextView
+                    android:id="@+id/text_view_no_rekening"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/padding_medium"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"
+                    android:gravity="center"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_no_cif"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@{@string/DetailDebitur_NoRekening(detailDebitur.noRekening)}"
+                    tools:text="Rekening : 198239128319"/>
+
+                <!--Total Tunggakan-->
+                <TextView
+                    android:id="@+id/text_view_total_tunggakan"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_no_rekening"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline"
+                    android:maxLines="1"
+                    android:text="@string/DetailDebitur_TotalTunggakan"
+                    tools:text="Rekening"/>
+
+                <!--Total Tunggakan value-->
+                <TextView
+                    android:id="@+id/text_view_total_tunggakan_value"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_no_rekening"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/text_view_total_tunggakan"
+                    android:text="@{detailDebitur.totalTunggakan}"
+                    tools:text="1.000.000"/>
+
+                <!--Last Payment Date-->
+                <TextView
+                    android:id="@+id/text_view_last_payment_date"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_total_tunggakan_value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline"
+                    android:maxLines="1"
+                    android:text="@string/DetailDebitur_LastPaymentDate"
+                    tools:text="Last Payment Date"/>
+
+                <!--Last Payment Date value-->
+                <TextView
+                    android:id="@+id/text_view_last_payment_date_value"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_total_tunggakan_value"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/text_view_last_payment_date"
+                    android:text="@{detailDebitur.lastPaymentDate}"
+                    tools:text="17/8/2017"/>
+
+                <!--DPD-->
+                <TextView
+                    android:id="@+id/text_view_dpd"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_last_payment_date_value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline"
+                    android:maxLines="1"
+                    android:text="@string/DetailDebitur_Dpd"
+                    tools:text="DPD"/>
+
+                <!--DPD value-->
+                <TextView
+                    android:id="@+id/text_view_dpd_value"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_last_payment_date_value"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/text_view_dpd"
+                    android:text="@{detailDebitur.dpd}"
+                    tools:text="10"/>
+
+                <!--Angsuran / bulan-->
+                <TextView
+                    android:id="@+id/text_view_angsuran_per_bulan"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_dpd_value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline"
+                    android:maxLines="1"
+                    android:text="@string/DetailDebitur_AngsuanPerBulan"
+                    tools:text="Angsuran / Bulan"/>
+
+                <!--Angsuran / bulan value-->
+                <TextView
+                    android:id="@+id/text_view_angsuran_per_bulan_value"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_dpd_value"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/text_view_angsuran_per_bulan"
+                    android:text="@{detailDebitur.angsuranPerBulan}"
+                    tools:text="1.000.000"/>
+
+                <!--Total Kewajiban-->
+                <TextView
+                    android:id="@+id/text_view_total_kewajiban"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_angsuran_per_bulan_value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline"
+                    android:maxLines="1"
+                    android:text="@string/DetailDebitur_TotalKewajiban"
+                    tools:text="Total Kewajiban"/>
+
+                <!--Total Kewajiban value-->
+                <TextView
+                    android:id="@+id/text_view_total_kewajiban_value"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_angsuran_per_bulan_value"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/text_view_total_kewajiban"
+                    android:text="@{detailDebitur.totalKewajiban}"
+                    tools:text="500.000"/>
+
+                <!--Kolektabilitas-->
+                <TextView
+                    android:id="@+id/text_view_kolektabilitas"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_total_kewajiban_value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline"
+                    android:maxLines="1"
+                    android:text="@string/DetailDebitur_Kolektabilitas"
+                    tools:text="Kolektabilitas"/>
+
+                <!--Kolektabilitas-->
+                <TextView
+                    android:id="@+id/text_view_kolektabilitas_value"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_total_kewajiban_value"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/text_view_kolektabilitas"
+                    android:text="@{detailDebitur.kolektabilitas}"
+                    tools:text=""/>
+
+                <!--Tindak Lanjut-->
+                <TextView
+                    android:id="@+id/text_view_tindak_lanjut"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_kolektabilitas_value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline"
+                    android:maxLines="1"
+                    android:text="@string/DetailDebitur_TindakLanjut"
+                    tools:text="Tindak Lanjut"/>
+
+                <!--Tindak Lanjut value-->
+                <TextView
+                    android:id="@+id/text_view_tindak_lanjut_value"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_kolektabilitas_value"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/text_view_tindak_lanjut"
+                    android:text="@{detailDebitur.tindakLanjut}"
+                    tools:text="Surat"/>
+
+                <!--Status-->
+                <TextView
+                    android:id="@+id/text_view_status"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_tindak_lanjut_value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline"
+                    android:maxLines="1"
+                    android:text="@string/DetailDebitur_Status"
+                    tools:text="Status"/>
+
+                <!--Status value-->
+                <TextView
+                    android:id="@+id/text_view_status_value"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_tindak_lanjut_value"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/text_view_status"
+                    android:text="@{detailDebitur.status}"
+                    tools:text="Ditempati"/>
+
+                <!--PTP-->
+                <TextView
+                    android:id="@+id/text_view_ptp"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_status_value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline"
+                    android:maxLines="1"
+                    android:text="@string/DetailDebitur_Ptp"
+                    tools:text="PTP"/>
+
+                <!--PTP value-->
+                <TextView
+                    android:id="@+id/text_view_ptp_value"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_status_value"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/text_view_ptp"
+                    android:text="@{detailDebitur.ptp}"
+                    tools:text="19/8/2017"/>
+
+                <!--Besaran PTP-->
+                <TextView
+                    android:id="@+id/text_view_besaran_ptp"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_ptp_value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline"
+                    android:maxLines="1"
+                    android:text="@string/DetailDebitur_BesaranPtp"
+                    tools:text="Besaran PTP"/>
+
+                <!--Besaran PTP value-->
+                <TextView
+                    android:id="@+id/text_view_besaran_ptp_value"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_ptp_value"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/text_view_besaran_ptp"
+                    android:text="@{detailDebitur.besaranPtp}"
+                    tools:text="4.000.0000"/>
+
+                <!--Alamat Rumah-->
+                <TextView
+                    android:id="@+id/text_view_alamat_rumah"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_besaran_ptp_value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline"
+                    android:maxLines="1"
+                    android:text="@string/DetailDebitur_AlamatRumah"
+                    tools:text="Alamat Rumah"/>
+
+                <!--Alamat Rumah value-->
+                <TextView
+                    android:id="@+id/text_view_alamat_rumah_value"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_besaran_ptp_value"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/text_view_alamat_rumah"
+                    android:text="@{detailDebitur.alamatRumah}"
+                    tools:text="Jl. Papua 33, Jurangmangu Timur, Pondok Aren, Tangerang Selatan"/>
+
+                <!--Alamat Agunan-->
+                <TextView
+                    android:id="@+id/text_view_alamat_agunan"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_rumah_value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline"
+                    android:maxLines="1"
+                    android:text="@string/DetailDebitur_AlamatAgunan"
+                    tools:text="Alamat Agunan"/>
+
+                <!--Alamat Agunan value-->
+                <TextView
+                    android:id="@+id/text_view_alamat_agunan_value"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_rumah_value"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/text_view_alamat_agunan"
+                    android:text="@{detailDebitur.alamatAgunan}"
+                    tools:text="Jl. Papua 33, Jurangmangu Timur, Pondok Aren, Tangerang Selatan"/>
+
+                <!--Alamat Kantor-->
+                <TextView
+                    android:id="@+id/text_view_alamat_kantor"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_agunan_value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline"
+                    android:maxLines="1"
+                    android:text="@string/DetailDebitur_AlamatKantor"
+                    tools:text="Alamat Kantor"/>
+
+                <!--Alamat Kantor value-->
+                <TextView
+                    android:id="@+id/text_view_alamat_kantor_value"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_agunan_value"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/text_view_alamat_kantor"
+                    android:text="@{detailDebitur.alamatKantor}"
+                    tools:text="Jl. Papua 33, Jurangmangu Timur, Pondok Aren, Tangerang Selatan"/>
+
+                <!--Alamat saat ini-->
+                <TextView
+                    android:id="@+id/text_view_alamat_saat_ini"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_kantor_value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline"
+                    android:maxLines="1"
+                    android:text="@string/DetailDebitur_AlamatSaatIni"
+                    tools:text="Alamat saat ini"/>
+
+                <!--Alamat saat ini value-->
+                <TextView
+                    android:id="@+id/text_view_alamat_saat_ini_value"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_kantor_value"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/text_view_alamat_saat_ini"
+                    android:text="@{detailDebitur.alamatSaatIni}"
+                    tools:text="Jl. Papua 33, Jurangmangu Timur, Pondok Aren, Tangerang Selatan"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+</layout>
+

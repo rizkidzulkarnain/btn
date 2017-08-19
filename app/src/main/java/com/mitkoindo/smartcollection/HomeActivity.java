@@ -14,6 +14,7 @@ import android.view.View;
 import com.mitkoindo.smartcollection.adapter.HomeMenuAdapter;
 import com.mitkoindo.smartcollection.helper.ItemClickListener;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
+import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.objectdata.HomeMenu;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class HomeActivity extends AppCompatActivity
     //get views
     private void GetViews()
     {
-        view_HomeMenu = (RecyclerView)findViewById(R.id.HomeActivity_MenuGrid);
+        view_HomeMenu = findViewById(R.id.HomeActivity_MenuGrid);
     }
 
     //setup view
@@ -140,12 +141,26 @@ public class HomeActivity extends AppCompatActivity
     {
         //get selected menu name
         String selectedMenuName = homeMenuAdapter.getCurrentMenu(menuPos);
-        int x = 0;
+
+        //open corresponding menu
+        Intent intent = null;
+        switch (selectedMenuName)
+        {
+            case "Penugasan" :
+                intent = new Intent(this, ListDebiturActivity.class);
+                break;
+            default:break;
+        }
+
+        if (intent != null)
+            startActivity(intent);
+
+        /*int x = 0;
         int y = x + 1;
 
         //test langsung buka histori tindakan
         Intent intent = new Intent(this, HistoriTindakanActivity.class);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     //----------------------------------------------------------------------------------------------

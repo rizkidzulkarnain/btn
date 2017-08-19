@@ -23,6 +23,34 @@
     <string name="Home_Menu">Menu</string>
     <string name="Home_Alert_Logout_Message">Apakah anda ingin log-out?</string>
 
+    <!--List debitur page-->
+    <string name="ListDebitur_PageTitle">List Debitur</string>
+
+    <!--Detail debitur page-->
+    <string name="DetailDebitur_PageTitle">Detail Debitur</string>
+    <string name="DetailDebitur_NoCif">CIF :  %1$s</string>
+    <string name="DetailDebitur_NoRekening">Rekening : %1$s</string>
+    <string name="DetailDebitur_TotalTunggakan">Total Tunggakan</string>
+    <string name="DetailDebitur_LastPaymentDate">Last Payment Date</string>
+    <string name="DetailDebitur_Dpd">DPD</string>
+    <string name="DetailDebitur_AngsuanPerBulan">Angsuran / Bulan</string>
+    <string name="DetailDebitur_TotalKewajiban">Total Kewajiban</string>
+    <string name="DetailDebitur_Kolektabilitas">Kolektabilitas</string>
+    <string name="DetailDebitur_TindakLanjut">Tindak Lanjut</string>
+    <string name="DetailDebitur_Status">Status</string>
+    <string name="DetailDebitur_Ptp">PTP</string>
+    <string name="DetailDebitur_BesaranPtp">Besaran PTP</string>
+    <string name="DetailDebitur_AlamatRumah">Alamat Rumah</string>
+    <string name="DetailDebitur_AlamatAgunan">Alamat Agunan</string>
+    <string name="DetailDebitur_AlamatKantor">Alamat Kantor</string>
+    <string name="DetailDebitur_AlamatSaatIni">Alamat Saat Ini</string>
+    <string name="DetailDebitur_MenuCall">Call</string>
+    <string name="DetailDebitur_MenuIsiFormVisit">Isi form visit</string>
+    <string name="DetailDebitur_MenuLihatHistory">Lihat history</string>
+
+    <!--Form visit page-->
+    <string name="FormVisit_PageTitle">Form Visit</string>
+
     <!--Update password page-->
     <string name="UpdatePassword_PageTitle">Update Password</string>
     <string name="UpdatePassword_OldPassword">Old Password</string>
@@ -44,6 +72,12 @@
     <string name="InboxAdapter_DPD">DPD</string>
     <string name="InboxAdapter_LastPayment">Last Payment</string>
 
+    <!--List Debitur adapter-->
+    <string name="no_rekening">No. Rekening</string>
+    <string name="tagihan">Tagihan</string>
+    <string name="dpd">DPD</string>
+    <string name="last_payment">Last Payment</string>
+
     <!--Button text-->
     <string name="Button_LoginPage_Login">Login</string>
     <string name="Button_LoginPage_ForgotPassword">Forgot Password?</string>
@@ -51,6 +85,15 @@
     <!--Form hint-->
     <string name="Hint_LoginForm_Username">Login Id</string>
     <string name="Hint_LoginForm_Password">Password</string>
+
+    <!--Base-->
+    <string name="loading">Loading</string>
+    <string name="ok">OK</string>
+
+    <!--Font path-->
+    <string name="font_default_reg">fonts/Roboto-Regular.ttf</string>
+    <string name="font_default_bold">fonts/Roboto-Bold.ttf</string>
+
 
     <!--Transaksi-->
     <string name="BaseURL">https://ee54c06e.ngrok.io/btn_new/</string>

@@ -10,6 +10,7 @@
     <color name="Transparent">#00000000</color>
     <color name="Black_Transparent">#55000000</color>
     <color name="White_Transparent">#55ffffff</color>
+    <color name="Grey">#808080</color>
 
     <!--color by usage-->
     <color name="Background_Login">#0d568d</color>
@@ -32,4 +33,6 @@
 
     <color name="Gradient_Blue_Start">#2484b5</color>
     <color name="Gradient_Blue_End">#0a2042</color>
+
+    <color name="Gradient_Shadow_Start">#66757575</color>
 </resources>

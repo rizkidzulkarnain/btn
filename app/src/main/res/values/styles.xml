@@ -34,4 +34,58 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!--Font-->
+    <style name="FontRegular">
+        <item name="fontPath">@string/font_default_reg</item>
+    </style>
+    <style name="FontBold">
+        <item name="fontPath">@string/font_default_bold</item>
+    </style>
+
+    <style name="FontRegular.Title" parent="FontRegular">
+        <item name="android:textSize">@dimen/text_title</item>
+    </style>
+    <style name="FontRegular.Medium" parent="FontRegular">
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+    <style name="FontRegular.Small" parent="FontRegular">
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+    <style name="FontRegular.Smaller" parent="FontRegular">
+        <item name="android:textSize">@dimen/text_smaller</item>
+    </style>
+
+    <style name="FontBold.Title" parent="FontBold">
+        <item name="android:textSize">@dimen/text_title</item>
+    </style>
+    <style name="FontBold.Medium" parent="FontBold">
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+    <style name="FontBold.Small" parent="FontBold">
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+    <style name="FontBold.Smaller" parent="FontBold">
+        <item name="android:textSize">@dimen/text_smaller</item>
+    </style>
+
+    <!--Toolbar-->
+    <style name="AppToolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="contentInsetLeft">0dp</item>
+        <item name="contentInsetStart">0dp</item>
+    </style>
+
+    <style name="AppToolbar.BottomShadow">
+        <item name="android:background">@drawable/toolbar_shadowed_down_bg</item>
+        <item name="android:paddingBottom">@dimen/padding_small</item>
+    </style>
+
+    <style name="AppToolbarActionButton">
+        <item name="android:layout_width">?attr/actionBarSize</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
 </resources>
