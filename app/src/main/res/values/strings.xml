@@ -45,11 +45,63 @@
     <string name="DetailDebitur_AlamatKantor">Alamat Kantor</string>
     <string name="DetailDebitur_AlamatSaatIni">Alamat Saat Ini</string>
     <string name="DetailDebitur_MenuCall">Call</string>
+    <string name="DetailDebitur_MenuCheckIn">Check In</string>
     <string name="DetailDebitur_MenuIsiFormVisit">Isi form visit</string>
     <string name="DetailDebitur_MenuLihatHistory">Lihat history</string>
 
     <!--Form visit page-->
     <string name="FormVisit_PageTitle">Form Visit</string>
+    <string name="FormVisit_TujuanKunjungan">Tujuan kunjungan</string>
+    <string name="FormVisit_AlamatYangDiKunjungi">Alamat yang dikunjungi</string>
+    <string name="FormVisit_OrangYangDiKunjungi">Orang yang dikunjungi</string>
+    <string name="FormVisit_OrangYangDiKunjungiHint">Tuliskan nama</string>
+    <string name="FormVisit_HubunganDenganDebitur">Hubungan dengan debitur</string>
+    <string name="FormVisit_HasilKunjungan">Hasil kunjungan</string>
+    <string name="FormVisit_TanggalJanjiDebitur">Tanggal janji debitur</string>
+    <string name="FormVisit_JumlahYangAkanDisetor">Jumlah yang akan disetor</string>
+    <string name="FormVisit_JumlahYangAkanDisetorHint">Masukkan jumlah</string>
+    <string name="FormVisit_StatusAgunan">Status agunan</string>
+    <string name="FormVisit_KondisiAgunan">Kondisi agunan</string>
+    <string name="FormVisit_AlasanMenunggak">Alasan menunggak</string>
+    <string name="FormVisit_TindakLanjut">Tindak lanjut</string>
+    <string name="FormVisit_TanggalTindakLanjut">Tanggal tindak lanjut</string>
+    <string name="FormVisit_Catatan">Catatan</string>
+    <string name="FormVisit_CatatanHint">Catatan tambahan</string>
+    <string name="FormVisit_Gallery">Gallery</string>
+    <string name="FormVisit_FotoDebitur">Foto Debitur</string>
+    <string name="FormVisit_AmbilFoto">Ambil foto</string>
+    <string name="FormVisit_FotoAgunan">Foto agunan</string>
+    <string name="FormVisit_Submit">Submit</string>
+    <string name="FormVisit_external_storage_permission_description">Perlu Permission Media Penyimpan</string>
+    <string name="FormVisit_setting_external_storage_permission">Anda sebelumnya menolak Permission Media Penyimpan, Aktifkan kembali Permission Media Penyimpan ?</string>
+    <string name="FormVisit_denied_external_storage_permission">Menolak Permission Media Penyimpan</string>
+    <string name="FormVisit_NamaFileFotoDebitur">foto_debitur.jpg</string>
+    <string name="FormVisit_NamaFileFotoAgunan1">foto_agunan_1.jpg</string>
+    <string name="FormVisit_NamaFileFotoAgunan2">foto_agunan_2.jpg</string>
+    <string name="FormVisit_KonfirmasiSubmit">Apakah Anda yakin data sudah benar?</string>
+
+    <!--Form Visit initial value-->
+    <string name="FormVisit_TujuanKunjunganInitial">Pilih tujuan kunjungan</string>
+    <string name="FormVisit_TanggalJanjiDebiturInitial">Pilih tanggal</string>
+    <string name="FormVisit_TanggalTindakLanjutInitial">Pilih tanggal</string>
+
+    <!--Form Visit Tujuan Kunjungan-->
+    <string name="FormVisit_MengingatkanAngsuran">Mengingatkan Angsuran</string>
+    <string name="FormVisit_PenagihanKredit">Penagihan Kredit</string>
+    <string name="FormVisit_Konfirmasi">Konfirmasi Gaji</string>
+    <string name="FormVisit_IdentifikasiBarangJaminan">Identifikasi Barang Jaminan</string>
+    <string name="FormVisit_PemasanganPlakatPengawasanBank">Pemasangan Plakat Pengawasan Bank</string>
+    <string name="FormVisit_PemasanganPlakatDijual">Pemasangan Plakat Dijual</string>
+    <string name="FormVisit_PemasanganPlakatDilelang">Pemasangan Plakat Dilelang</string>
+    <string name="FormVisit_LainLain">Lain-lain</string>
+
+    <!--Form Visit Hasil Kunjungan-->
+    <string name="FormVisit_AkanSetorTanggal">Akan setor tol (PTP) tanggal</string>
+    <string name="FormVisit_AkanDatangKeBtnTanggal">Akan datang ke BTN tanggal</string>
+    <string name="FormVisit_MintaDihubungiTanggal">Minta dihubungi tanggal</string>
+    <string name="FormVisit_AkanMenjualBarangJaminan">Akan menjual barang jaminan</string>
+    <string name="FormVisit_AkanMenjualAsetLainnya">Akan menjual aset lainnya</string>
+    <string name="FormVisit_Lainnya">Lainnya</string>
 
     <!--Update password page-->
     <string name="UpdatePassword_PageTitle">Update Password</string>
@@ -89,6 +141,8 @@
     <!--Base-->
     <string name="loading">Loading</string>
     <string name="ok">OK</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
 
     <!--Font path-->
     <string name="font_default_reg">fonts/Roboto-Regular.ttf</string>

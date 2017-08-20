@@ -3,6 +3,7 @@ package com.mitkoindo.smartcollection.module.debitur.detaildebitur;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.PopupMenu;
@@ -92,7 +93,11 @@ public class DetailDebiturActivity extends BaseActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.popup_menu_call: {
-                        startActivity(ListDebiturActivity.instantiate(anchorView.getContext()));
+
+                        break;
+                    }
+                    case R.id.popup_menu_check_in: {
+
                         break;
                     }
                     case R.id.popup_menu_isi_form_visit: {
@@ -110,6 +115,16 @@ public class DetailDebiturActivity extends BaseActivity {
         });
 
         mPopUpMenu.show();
+    }
+
+    @OnClick(R.id.fab_map)
+    public void onFabMapClick(View view) {
+        Uri gmmIntentUri = Uri.parse("geo:-6.1671626,106.8175127");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        }
     }
 
     //----------------------------------------------------------------------------------------------

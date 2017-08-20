@@ -1,5 +1,6 @@
 package com.mitkoindo.smartcollection;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,6 +36,12 @@ public class HomeActivity extends AppCompatActivity
 
     //adapter menu
     private HomeMenuAdapter homeMenuAdapter;
+
+    public static Intent instantiateClearTask(Context context) {
+        Intent intent = new Intent(context, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
 
     //----------------------------------------------------------------------------------------------
     //  Setup

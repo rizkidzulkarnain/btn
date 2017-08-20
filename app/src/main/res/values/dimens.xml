@@ -8,12 +8,17 @@
     <dimen name="text_smaller">12sp</dimen>
 
     <!--Padding-->
+    <dimen name="padding_1">1dp</dimen>
     <dimen name="padding_smaller">2dp</dimen>
     <dimen name="padding_small">4dp</dimen>
     <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="padding_12">12dp</dimen>
     <dimen name="padding_medium_large">16dp</dimen>
+    <dimen name="padding_20">20dp</dimen>
     <dimen name="padding_large">24dp</dimen>
     <dimen name="padding_larger">32dp</dimen>
+    <dimen name="padding_64">64dp</dimen>
 
     <!--Icon size-->
     <dimen name="icon_small">18dp</dimen>

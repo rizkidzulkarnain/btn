@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/Transparent"/>
+    <item android:gravity="bottom"
+        android:height="@dimen/padding_1"
+        android:drawable="@color/Background_PageTitle">
+    </item>
+</layer-list>

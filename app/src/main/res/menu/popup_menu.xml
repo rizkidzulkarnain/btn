@@ -2,6 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/popup_menu_call"
         android:title="@string/DetailDebitur_MenuCall" />
+    <item android:id="@+id/popup_menu_check_in"
+        android:title="@string/DetailDebitur_MenuCheckIn" />
     <item android:id="@+id/popup_menu_isi_form_visit"
         android:title="@string/DetailDebitur_MenuIsiFormVisit" />
     <item android:id="@+id/popup_menu_lihat_history"

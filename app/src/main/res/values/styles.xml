@@ -68,6 +68,41 @@
         <item name="android:textSize">@dimen/text_smaller</item>
     </style>
 
+    <style name="FontRegular.Title.White" parent="FontRegular.Title">
+        <item name="android:textSize">@dimen/text_title</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
+    <style name="FontRegular.Medium.White" parent="FontRegular.Medium">
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
+    <style name="FontRegular.Small.White" parent="FontRegular.Small">
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
+    <style name="FontRegular.Smaller.White" parent="FontRegular.Smaller">
+        <item name="android:textSize">@dimen/text_smaller</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
+
+    <style name="FontBold.Title.White" parent="FontBold.Title">
+        <item name="android:textSize">@dimen/text_title</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
+    <style name="FontBold.Medium.White" parent="FontBold.Medium">
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
+    <style name="FontBold.Small.White" parent="FontBold.Small">
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
+    <style name="FontBold.Smaller.White" parent="FontBold.Small">
+        <item name="android:textSize">@dimen/text_smaller</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
+
+
     <!--Toolbar-->
     <style name="AppToolbar">
         <item name="android:layout_width">match_parent</item>
@@ -81,6 +116,12 @@
         <item name="android:background">@drawable/toolbar_shadowed_down_bg</item>
         <item name="android:paddingBottom">@dimen/padding_small</item>
     </style>
+
+    <style name="AppToolbar.Line">
+        <item name="android:background">@drawable/toolbar_down_line</item>
+        <item name="android:paddingBottom">@dimen/padding_1</item>
+    </style>
+
 
     <style name="AppToolbarActionButton">
         <item name="android:layout_width">?attr/actionBarSize</item>

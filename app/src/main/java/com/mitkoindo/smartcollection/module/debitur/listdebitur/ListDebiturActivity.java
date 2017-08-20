@@ -65,7 +65,7 @@ public class ListDebiturActivity extends BaseActivity {
         List<DebiturItem> items = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             DebiturItem item = new DebiturItem();
-            item.setNama("Darcy Retraubun");
+            item.setNama("Indra Susilo Setiawan");
             item.setNoRekening("172371237");
             item.setTagihan("1.500.000");
             item.setDpd("25");
@@ -75,7 +75,7 @@ public class ListDebiturActivity extends BaseActivity {
         }
         fastAdapter.add(items);
 
-        int divider = getResources().getDimensionPixelSize(R.dimen.padding_medium);
+        int divider = getResources().getDimensionPixelSize(R.dimen.padding_medium_large);
         RecyclerView.ItemDecoration itemDecoration = new SimpleListItemDecoration(divider, RecyclerView.VERTICAL);
         mBinding.recyclerViewDebitur.addItemDecoration(itemDecoration);
         mBinding.recyclerViewDebitur.setLayoutManager(new LinearLayoutManager(this));
