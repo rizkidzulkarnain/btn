@@ -1,4 +1,4 @@
-package com.mitkoindo.smartcollection.module.visitform;
+package com.mitkoindo.smartcollection.module.formvisit;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -395,6 +395,5 @@ public class FormVisitActivity extends BaseActivity {
                 })
                 .create()
                 .show();
-
     }
 }

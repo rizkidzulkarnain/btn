@@ -4,9 +4,14 @@ import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.databinding.AdapterListDebiturBinding;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -15,21 +20,39 @@ import java.util.List;
  */
 
 public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHolder> {
+    @SerializedName("No")
+    @Expose
+    private String no;
+
+    @SerializedName("NoCIF")
+    @Expose
+    private String noCif;
+
+    @SerializedName("NamaNasabah")
+    @Expose
     private String nama;
+
+    @SerializedName("NomorRekening")
+    @Expose
     private String noRekening;
-    private String tagihan;
-    private String dpd;
+
+    @SerializedName("Tagihan")
+    @Expose
+    private int tagihan;
+
+    @SerializedName("DPD")
+    @Expose
+    private int dpd;
+
+    @SerializedName("LastPaymentDate")
+    @Expose
     private String lastPayment;
 
-    public DebiturItem() {
-    }
+    @SerializedName("UseAssignDate")
+    @Expose
+    private String useAssignDate;
 
-    public DebiturItem(String nama, String noRekening, String tagihan, String dpd, String lastPayment) {
-        this.nama = nama;
-        this.noRekening = noRekening;
-        this.tagihan = tagihan;
-        this.dpd = dpd;
-        this.lastPayment = lastPayment;
+    public DebiturItem() {
     }
 
     public String getNama() {
@@ -48,19 +71,19 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
         this.noRekening = noRekening;
     }
 
-    public String getTagihan() {
+    public int getTagihan() {
         return tagihan;
     }
 
-    public void setTagihan(String tagihan) {
+    public void setTagihan(int tagihan) {
         this.tagihan = tagihan;
     }
 
-    public String getDpd() {
+    public int getDpd() {
         return dpd;
     }
 
-    public void setDpd(String dpd) {
+    public void setDpd(int dpd) {
         this.dpd = dpd;
     }
 
@@ -70,6 +93,30 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
 
     public void setLastPayment(String lastPayment) {
         this.lastPayment = lastPayment;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
+    }
+
+    public String getNoCif() {
+        return noCif;
+    }
+
+    public void setNoCif(String noCif) {
+        this.noCif = noCif;
+    }
+
+    public String getUseAssignDate() {
+        return useAssignDate;
+    }
+
+    public void setUseAssignDate(String useAssignDate) {
+        this.useAssignDate = useAssignDate;
     }
 
     @Override
@@ -107,6 +154,30 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
             super(view);
 
             binding = DataBindingUtil.bind(view);
+        }
+    }
+
+
+
+    //parse form JSON
+    public void ParseData(String jsonString)
+    {
+        try
+        {
+            //converst string to json object
+            JSONObject dataObject = new JSONObject(jsonString);
+
+            //get data
+            nama = dataObject.getString("NamaNasabah");
+            noRekening = dataObject.getString("NomorRekening");
+            tagihan = dataObject.optInt("Tagihan", 0);
+            dpd = dataObject.optInt("DPD", 0);
+            lastPayment = dataObject.getString("LastPaymentDate");
+
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
         }
     }
 }

@@ -9,7 +9,7 @@
 
         <variable
             name="formVisitViewModel"
-            type="com.mitkoindo.smartcollection.module.visitform.FormVisitViewModel" />
+            type="com.mitkoindo.smartcollection.module.formvisit.FormVisitViewModel" />
     </data>
 
     <LinearLayout
@@ -79,23 +79,23 @@
 
                 <!--Tujuan Kunjungan value-->
                 <!--<TextView-->
-                <!--android:id="@+id/text_view_tujuan_kunjungan_value"-->
-                <!--style="@style/FontRegular.Medium"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:paddingTop="@dimen/padding_10"-->
-                <!--android:paddingBottom="@dimen/padding_10"-->
-                <!--android:paddingStart="@dimen/padding_medium"-->
-                <!--android:paddingLeft="@dimen/padding_medium"-->
-                <!--android:paddingRight="@dimen/padding_medium"-->
-                <!--android:layout_marginRight="@dimen/padding_larger"-->
-                <!--android:layout_marginEnd="@dimen/padding_larger"-->
-                <!--app:layout_constraintTop_toTopOf="@+id/card_view_tujuan_kunjungan"-->
-                <!--app:layout_constraintBottom_toBottomOf="@+id/card_view_tujuan_kunjungan"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--android:text="@={formVisitViewModel.tujuanKunjungan}"-->
-                <!--android:background="@color/White"/>-->
+                    <!--android:id="@+id/text_view_tujuan_kunjungan_value"-->
+                    <!--style="@style/FontRegular.Medium"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:paddingTop="@dimen/padding_10"-->
+                    <!--android:paddingBottom="@dimen/padding_10"-->
+                    <!--android:paddingStart="@dimen/padding_medium"-->
+                    <!--android:paddingLeft="@dimen/padding_medium"-->
+                    <!--android:paddingRight="@dimen/padding_medium"-->
+                    <!--android:layout_marginRight="@dimen/padding_larger"-->
+                    <!--android:layout_marginEnd="@dimen/padding_larger"-->
+                    <!--app:layout_constraintTop_toTopOf="@+id/card_view_tujuan_kunjungan"-->
+                    <!--app:layout_constraintBottom_toBottomOf="@+id/card_view_tujuan_kunjungan"-->
+                    <!--app:layout_constraintStart_toStartOf="parent"-->
+                    <!--app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--android:text="@={formVisitViewModel.tujuanKunjungan}"-->
+                    <!--android:background="@color/White"/>-->
 
                 <!--Alamat yang dikunjungi-->
                 <TextView
@@ -356,7 +356,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/FormVisit_AlasanMenunggak"/>
 
-                <!--Alasan Menunggak soinner-->
+                <!--Alasan Menunggak spinner-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_alasan_menunggak"
                     android:layout_width="0dp"
@@ -579,6 +579,7 @@
                     <ImageView
                         android:layout_width="36dp"
                         android:layout_height="36dp"
+                        android:scaleType="centerInside"
                         android:src="@{formVisitViewModel.isFotoAgunan2Show ?  @drawable/ic_minus_grey600_36dp : @drawable/ic_plus_grey600_36dp}"/>
                 </android.support.v7.widget.CardView>
 

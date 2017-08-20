@@ -1,4 +1,4 @@
-package com.mitkoindo.smartcollection.module.visitform;
+package com.mitkoindo.smartcollection.module.formvisit;
 
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
@@ -52,4 +52,6 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
         formVisit.setTanggalTindakLanjut(tanggalTindakLanjut);
         this.tanggalTindakLanjut.set(dateFormatter.format(formVisit.getTanggalTindakLanjut()));
     }
+
+
 }

@@ -158,7 +158,7 @@
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_total_tunggakan"
-                            android:text="@{detailDebitur.totalTunggakan}"
+                            android:text="@{Integer.toString(detailDebitur.totalTunggakan)}"
                             tools:text="1.000.000"/>
 
                         <!--Last Payment Date-->
@@ -214,7 +214,7 @@
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_dpd"
-                            android:text="@{detailDebitur.dpd}"
+                            android:text="@{Integer.toString(detailDebitur.dpd)}"
                             tools:text="10"/>
 
                         <!--Angsuran / bulan-->
@@ -242,7 +242,7 @@
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_angsuran_per_bulan"
-                            android:text="@{detailDebitur.angsuranPerBulan}"
+                            android:text="@{Integer.toString(detailDebitur.angsuranPerBulan)}"
                             tools:text="1.000.000"/>
 
                         <!--Total Kewajiban-->
@@ -270,7 +270,7 @@
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_total_kewajiban"
-                            android:text="@{detailDebitur.totalKewajiban}"
+                            android:text="@{Integer.toString(detailDebitur.totalKewajiban)}"
                             tools:text="500.000"/>
 
                         <!--Kolektabilitas-->

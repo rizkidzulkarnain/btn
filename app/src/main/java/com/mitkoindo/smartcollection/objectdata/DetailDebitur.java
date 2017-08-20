@@ -1,28 +1,80 @@
 package com.mitkoindo.smartcollection.objectdata;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by ericwijaya on 8/17/17.
  */
 
 public class DetailDebitur {
 
+    @SerializedName("NamaDebitur")
+    @Expose
     private String namaDebitur;
+
+    @SerializedName("NoCIF")
+    @Expose
     private String noCif;
+
+    @SerializedName("NomorRekening")
+    @Expose
     private String noRekening;
-    private String totalTunggakan;
+
+    @SerializedName("TotalTunggakan")
+    @Expose
+    private int totalTunggakan;
+
+    @SerializedName("LastPaymentDate")
+    @Expose
     private String lastPaymentDate;
-    private String dpd;
-    private String angsuranPerBulan;
-    private String totalKewajiban;
+
+    @SerializedName("DPD")
+    @Expose
+    private int dpd;
+
+    @SerializedName("AngsuranPerBulan")
+    @Expose
+    private int angsuranPerBulan;
+
+    @SerializedName("TotalKewajiban")
+    @Expose
+    private int totalKewajiban;
+
+    @SerializedName("Kolektibilitas")
+    @Expose
     private String kolektabilitas;
+
+    @SerializedName("TindakLanjut")
+    @Expose
     private String tindakLanjut;
+
+    @SerializedName("StatusAkhir")
+    @Expose
     private String status;
+
     private String ptp;
     private String besaranPtp;
+
+    @SerializedName("AlamatRumah")
+    @Expose
     private String alamatRumah;
+
+    @SerializedName("AlamatAgunan")
+    @Expose
     private String alamatAgunan;
+
+    @SerializedName("AlamatKantor")
+    @Expose
     private String alamatKantor;
     private String alamatSaatIni;
+
+    @SerializedName("UserAssignDate")
+    @Expose
+    private String userAssignDate;
 
 
     public DetailDebitur() {
@@ -52,11 +104,11 @@ public class DetailDebitur {
         this.noRekening = noRekening;
     }
 
-    public String getTotalTunggakan() {
+    public int getTotalTunggakan() {
         return totalTunggakan;
     }
 
-    public void setTotalTunggakan(String totalTunggakan) {
+    public void setTotalTunggakan(int totalTunggakan) {
         this.totalTunggakan = totalTunggakan;
     }
 
@@ -68,27 +120,27 @@ public class DetailDebitur {
         this.lastPaymentDate = lastPaymentDate;
     }
 
-    public String getDpd() {
+    public int getDpd() {
         return dpd;
     }
 
-    public void setDpd(String dpd) {
+    public void setDpd(int dpd) {
         this.dpd = dpd;
     }
 
-    public String getAngsuranPerBulan() {
+    public int getAngsuranPerBulan() {
         return angsuranPerBulan;
     }
 
-    public void setAngsuranPerBulan(String angsuranPerBulan) {
+    public void setAngsuranPerBulan(int angsuranPerBulan) {
         this.angsuranPerBulan = angsuranPerBulan;
     }
 
-    public String getTotalKewajiban() {
+    public int getTotalKewajiban() {
         return totalKewajiban;
     }
 
-    public void setTotalKewajiban(String totalKewajiban) {
+    public void setTotalKewajiban(int totalKewajiban) {
         this.totalKewajiban = totalKewajiban;
     }
 
@@ -162,5 +214,48 @@ public class DetailDebitur {
 
     public void setAlamatSaatIni(String alamatSaatIni) {
         this.alamatSaatIni = alamatSaatIni;
+    }
+
+    public String getUserAssignDate() {
+        return userAssignDate;
+    }
+
+    public void setUserAssignDate(String userAssignDate) {
+        this.userAssignDate = userAssignDate;
+    }
+
+
+
+
+
+    //parse form JSON
+    public void ParseData(String jsonString)
+    {
+        try
+        {
+            //converst string to json object
+            JSONObject dataObject = new JSONObject(jsonString);
+
+            //get data
+            noCif = dataObject.getString("NoCIF");
+            noRekening = dataObject.getString("NomorRekening");
+            namaDebitur = dataObject.getString("NamaDebitur");
+            totalTunggakan = dataObject.optInt("TotalTunggakan", 0);
+            lastPaymentDate = dataObject.getString("LastPaymentDate");
+            dpd = dataObject.optInt("DPD", 0);
+            angsuranPerBulan = dataObject.optInt("AngsuranPerBulan", 0);
+            totalKewajiban = dataObject.optInt("TotalKewajiban", 0);
+            kolektabilitas = dataObject.getString("Kolektibilitas");
+            tindakLanjut = dataObject.getString("TindakLanjut");
+            status = dataObject.optString("StatusAkhir", "");
+            alamatRumah = dataObject.getString("AlamatRumah");
+            alamatKantor = dataObject.getString("AlamatKantor");
+            alamatAgunan = dataObject.optString("AlamatAgunan", "");
+            userAssignDate = dataObject.getString("UserAssignDate");
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

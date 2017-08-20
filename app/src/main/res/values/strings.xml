@@ -48,6 +48,7 @@
     <string name="DetailDebitur_MenuCheckIn">Check In</string>
     <string name="DetailDebitur_MenuIsiFormVisit">Isi form visit</string>
     <string name="DetailDebitur_MenuLihatHistory">Lihat history</string>
+    <string name="DetailDebitur_PilihNomorTelepon">Pilih nomor telepon</string>
 
     <!--Form visit page-->
     <string name="FormVisit_PageTitle">Form Visit</string>
@@ -103,6 +104,28 @@
     <string name="FormVisit_AkanMenjualAsetLainnya">Akan menjual aset lainnya</string>
     <string name="FormVisit_Lainnya">Lainnya</string>
 
+    <!--Form Call-->
+    <string name="FormCall_PageTitle">Form Call</string>
+    <string name="FormCall_TujuanCall">Tujuan panggilan</string>
+    <string name="FormCall_BerbicaraDengan">Berbicara dengan</string>
+    <string name="FormCall_HubunganDenganDebitur">Hubungan dengan debitur</string>
+    <string name="FormCall_HasilPanggilan">Hasil panggilan</string>
+    <string name="FormCall_TanggalHasilPanggilan">Tanggal hasil panggilan</string>
+    <string name="FormCall_JumlahYangAkanDisetor">Jumlah yang akan disetor</string>
+    <string name="FormCall_JumlahYangAkanDisetorHint">Masukkan jumlah</string>
+    <string name="FormCall_AlasanTidakBayar">Alasan tidak bayar</string>
+    <string name="FormCall_TindakLanjut">Tindak lanjut</string>
+    <string name="FormCall_TanggalTindakLanjut">Tanggal tindak lanjut</string>
+    <string name="FormCall_Catatan">Catatan</string>
+    <string name="FormCall_CatatanHint">Catatan tambahan</string>
+    <string name="FormCall_Submit">Submit</string>
+    <string name="FormCall_KonfirmasiSubmit">Apakah Anda yakin data sudah benar?</string>
+
+    <!--Form Call initial value-->
+    <string name="FormCall_TujuanCallInitial">Pilih tujuan</string>
+    <string name="FormCall_TanggalHasilPanggilanInitial">Pilih tanggal</string>
+    <string name="FormCall_TanggalTindakLanjutInitial">Pilih tanggal</string>
+
     <!--Update password page-->
     <string name="UpdatePassword_PageTitle">Update Password</string>
     <string name="UpdatePassword_OldPassword">Old Password</string>
@@ -143,13 +166,15 @@
     <string name="ok">OK</string>
     <string name="yes">Ya</string>
     <string name="no">Tidak</string>
+    <string name="TidakAdaDataPilihan">Tidak ada data pilihan</string>
 
     <!--Font path-->
     <string name="font_default_reg">fonts/Roboto-Regular.ttf</string>
     <string name="font_default_bold">fonts/Roboto-Bold.ttf</string>
 
     <!--Transaksi-->
-    <string name="BaseURL">https://ee54c06e.ngrok.io/btn_new/</string>
+    <!--<string name="BaseURL">https://ee54c06e.ngrok.io/btn_new/</string>-->
+    <string name="BaseURL">https://eaf186b7.ngrok.io/btn_new/</string>
     <string name="URL_Login">api/Account/login</string>
     <string name="URL_UpdatePassword">api/Account/updatePassword</string>
     <string name="URL_Data_StoreProcedure">api/Data/sp</string>

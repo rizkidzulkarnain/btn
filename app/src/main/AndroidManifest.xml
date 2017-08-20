@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".MyApplication"
@@ -41,6 +42,7 @@
         <activity
             android:name=".HistoriTindakanActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".module.misc.ChangeBaseURLActivity"/>
         <activity
             android:name=".module.debitur.listdebitur.ListDebiturActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -48,9 +50,11 @@
             android:name=".module.debitur.detaildebitur.DetailDebiturActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".module.visitform.FormVisitActivity"
+            android:name=".module.formvisit.FormVisitActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".module.misc.ChangeBaseURLActivity"/>
+        <activity
+            android:name=".module.formcall.FormCallActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
