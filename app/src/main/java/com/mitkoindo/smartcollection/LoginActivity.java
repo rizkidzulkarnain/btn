@@ -194,9 +194,13 @@ public class LoginActivity extends AppCompatActivity
 
             //get token
             String accessToken = resultObject.getString("AccessToken");
+            String userName = resultObject.getString("SU_FULLNAME");
+            String userGroup = resultObject.getString("SG_GRPNAME");
 
             //simpan access token di shared preference
             SaveToken(accessToken);
+            SaveUserID();
+            SaveUserNameAndGroup(userName, userGroup);
 
             //open home activity
             OpenHomeActivity();
@@ -211,7 +215,7 @@ public class LoginActivity extends AppCompatActivity
     }
 
     //----------------------------------------------------------------------------------------------
-    //  Save token
+    //  Save property
     //----------------------------------------------------------------------------------------------
     private void SaveToken(String authToken)
     {
@@ -222,6 +226,34 @@ public class LoginActivity extends AppCompatActivity
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(authTokenKey, authToken);
+        editor.apply();
+    }
+
+    //save user ID
+    private void SaveUserID()
+    {
+        //get user id key
+        String userIDKey = getString(R.string.SharedPreferenceKey_UserID);
+
+        //save user ID
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(userIDKey, text_Username);
+        editor.apply();
+    }
+
+    //save user name
+    private void SaveUserNameAndGroup(String userName, String userGroup)
+    {
+        //get user id key & group key
+        String userNameKey = getString(R.string.SharedPreferenceKey_NamaPetugas);
+        String userGroupKey = getString(R.string.SharedPreferenceKey_UserGroup);
+
+        //save user ID
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(userNameKey, userName);
+        editor.putString(userGroupKey, userGroup);
         editor.apply();
     }
 

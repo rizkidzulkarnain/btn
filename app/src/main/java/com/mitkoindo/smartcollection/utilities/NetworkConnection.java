@@ -46,64 +46,129 @@ public class NetworkConnection
         {
             URL url = null;
             url = new URL(url_String);
-            HttpsURLConnection httpURLConnection = (HttpsURLConnection) url.openConnection();
-            httpURLConnection.setDoOutput(true);
-            httpURLConnection.setRequestMethod("POST");
-            httpURLConnection.setConnectTimeout(5000);
-            httpURLConnection.setReadTimeout(60000);
-            httpURLConnection.setRequestProperty("Content-Type","application/json");
-            if (accessToken != null && !accessToken.isEmpty())
+            if (url.openConnection() instanceof HttpsURLConnection)
             {
-                if (accessToken.contains("Bearer"))
+                HttpsURLConnection httpURLConnection = (HttpsURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setReadTimeout(60000);
+                httpURLConnection.setRequestProperty("Content-Type","application/json");
+                if (accessToken != null && !accessToken.isEmpty())
                 {
-                    httpURLConnection.setRequestProperty("Authorization", accessToken);
+                    if (accessToken.contains("Bearer"))
+                    {
+                        httpURLConnection.setRequestProperty("Authorization", accessToken);
+                    }
+                    else
+                    {
+                        httpURLConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
+                    }
                 }
-                else
+                httpURLConnection.setRequestProperty("PhoneSpec", phoneSpec);
+                httpURLConnection.connect();
+
+                OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
+                out.write(requestObject.toString());
+                out.close();
+
+                int HttpResult = httpURLConnection.getResponseCode();
+
+                //cek jika resultcode nggak 200
+                switch (HttpResult)
                 {
-                    httpURLConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
+                    case HttpsURLConnection.HTTP_BAD_REQUEST : //400
+                        return "Bad Request";
+                    case HttpsURLConnection.HTTP_UNAUTHORIZED : //401
+                        return "Unauthorized";
+                    case HttpsURLConnection.HTTP_FORBIDDEN : //403
+                        return "Forbidden";
+                    case HttpsURLConnection.HTTP_NOT_FOUND : //404
+                        return "Not Found";
+                    case HttpsURLConnection.HTTP_INTERNAL_ERROR : //500
+                        return "Internal Server Error";
+                    default:break;
+                }
+
+                //cek resultcode, jika 503, return maintenance
+                if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)
+                    return "Maintenance";
+
+                if (HttpResult == HttpURLConnection.HTTP_OK)
+                {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"utf-8"));
+                    String line = null;
+                    while ((line = br.readLine()) != null)
+                    {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+
+                    serverResponse = ""+sb.toString();
                 }
             }
-            httpURLConnection.setRequestProperty("PhoneSpec", phoneSpec);
-            httpURLConnection.connect();
-
-            OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
-            out.write(requestObject.toString());
-            out.close();
-
-            int HttpResult = httpURLConnection.getResponseCode();
-
-            //cek jika resultcode nggak 200
-            switch (HttpResult)
+            else if (url.openConnection() instanceof HttpURLConnection)
             {
-                case HttpsURLConnection.HTTP_BAD_REQUEST : //400
-                    return "Bad Request";
-                case HttpsURLConnection.HTTP_UNAUTHORIZED : //401
-                    return "Unauthorized";
-                case HttpsURLConnection.HTTP_FORBIDDEN : //403
-                    return "Forbidden";
-                case HttpsURLConnection.HTTP_NOT_FOUND : //404
-                    return "Not Found";
-                case HttpsURLConnection.HTTP_INTERNAL_ERROR : //500
-                    return "Internal Server Error";
-                default:break;
-            }
-
-            //cek resultcode, jika 503, return maintenance
-            if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)
-                return "Maintenance";
-
-            if (HttpResult == HttpURLConnection.HTTP_OK)
-            {
-                BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"utf-8"));
-                String line = null;
-                while ((line = br.readLine()) != null)
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setReadTimeout(60000);
+                httpURLConnection.setRequestProperty("Content-Type","application/json");
+                if (accessToken != null && !accessToken.isEmpty())
                 {
-                    sb.append(line + "\n");
+                    if (accessToken.contains("Bearer"))
+                    {
+                        httpURLConnection.setRequestProperty("Authorization", accessToken);
+                    }
+                    else
+                    {
+                        httpURLConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
+                    }
                 }
-                br.close();
+                httpURLConnection.setRequestProperty("PhoneSpec", phoneSpec);
+                httpURLConnection.connect();
 
-                serverResponse = ""+sb.toString();
+                OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
+                out.write(requestObject.toString());
+                out.close();
+
+                int HttpResult = httpURLConnection.getResponseCode();
+
+                //cek jika resultcode nggak 200
+                switch (HttpResult)
+                {
+                    case HttpsURLConnection.HTTP_BAD_REQUEST : //400
+                        return "Bad Request";
+                    case HttpsURLConnection.HTTP_UNAUTHORIZED : //401
+                        return "Unauthorized";
+                    case HttpsURLConnection.HTTP_FORBIDDEN : //403
+                        return "Forbidden";
+                    case HttpsURLConnection.HTTP_NOT_FOUND : //404
+                        return "Not Found";
+                    case HttpsURLConnection.HTTP_INTERNAL_ERROR : //500
+                        return "Internal Server Error";
+                    default:break;
+                }
+
+                //cek resultcode, jika 503, return maintenance
+                if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)
+                    return "Maintenance";
+
+                if (HttpResult == HttpURLConnection.HTTP_OK)
+                {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"utf-8"));
+                    String line = null;
+                    while ((line = br.readLine()) != null)
+                    {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+
+                    serverResponse = ""+sb.toString();
+                }
             }
+
         }
         catch (IOException e)
         {
@@ -215,63 +280,127 @@ public class NetworkConnection
         {
             URL url = null;
             url = new URL(url_String);
-            HttpsURLConnection httpURLConnection = (HttpsURLConnection) url.openConnection();
-            httpURLConnection.setDoOutput(true);
-            httpURLConnection.setRequestMethod("PUT");
-            httpURLConnection.setConnectTimeout(5000);
-            httpURLConnection.setReadTimeout(60000);
-            httpURLConnection.setRequestProperty("Content-Type","application/json");
-            if (accessToken != null && !accessToken.isEmpty())
+            if (url.openConnection() instanceof  HttpsURLConnection)
             {
-                if (accessToken.contains("Bearer"))
+                HttpsURLConnection httpURLConnection = (HttpsURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setRequestMethod("PUT");
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setReadTimeout(60000);
+                httpURLConnection.setRequestProperty("Content-Type","application/json");
+                if (accessToken != null && !accessToken.isEmpty())
                 {
-                    httpURLConnection.setRequestProperty("Authorization", accessToken);
+                    if (accessToken.contains("Bearer"))
+                    {
+                        httpURLConnection.setRequestProperty("Authorization", accessToken);
+                    }
+                    else
+                    {
+                        httpURLConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
+                    }
                 }
-                else
+                httpURLConnection.setRequestProperty("PhoneSpec", phoneSpec);
+                httpURLConnection.connect();
+
+                OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
+                out.write(requestObject.toString());
+                out.close();
+
+                int HttpResult = httpURLConnection.getResponseCode();
+
+                //cek jika resultcode nggak 200
+                switch (HttpResult)
                 {
-                    httpURLConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
+                    case HttpsURLConnection.HTTP_BAD_REQUEST : //400
+                        return "Bad Request";
+                    case HttpsURLConnection.HTTP_UNAUTHORIZED : //401
+                        return "Unauthorized";
+                    case HttpsURLConnection.HTTP_FORBIDDEN : //403
+                        return "Forbidden";
+                    case HttpsURLConnection.HTTP_NOT_FOUND : //404
+                        return "Not Found";
+                    case HttpsURLConnection.HTTP_INTERNAL_ERROR : //500
+                        return "Internal Server Error";
+                    default:break;
+                }
+
+                //cek resultcode, jika 503, return maintenance
+                if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)
+                    return "Maintenance";
+
+                if (HttpResult == HttpURLConnection.HTTP_OK)
+                {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"utf-8"));
+                    String line = null;
+                    while ((line = br.readLine()) != null)
+                    {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+
+                    serverResponse = ""+sb.toString();
                 }
             }
-            httpURLConnection.setRequestProperty("PhoneSpec", phoneSpec);
-            httpURLConnection.connect();
-
-            OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
-            out.write(requestObject.toString());
-            out.close();
-
-            int HttpResult = httpURLConnection.getResponseCode();
-
-            //cek jika resultcode nggak 200
-            switch (HttpResult)
+            else if (url.openConnection() instanceof HttpURLConnection)
             {
-                case HttpsURLConnection.HTTP_BAD_REQUEST : //400
-                    return "Bad Request";
-                case HttpsURLConnection.HTTP_UNAUTHORIZED : //401
-                    return "Unauthorized";
-                case HttpsURLConnection.HTTP_FORBIDDEN : //403
-                    return "Forbidden";
-                case HttpsURLConnection.HTTP_NOT_FOUND : //404
-                    return "Not Found";
-                case HttpsURLConnection.HTTP_INTERNAL_ERROR : //500
-                    return "Internal Server Error";
-                default:break;
-            }
-
-            //cek resultcode, jika 503, return maintenance
-            if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)
-                return "Maintenance";
-
-            if (HttpResult == HttpURLConnection.HTTP_OK)
-            {
-                BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"utf-8"));
-                String line = null;
-                while ((line = br.readLine()) != null)
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setRequestMethod("PUT");
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setReadTimeout(60000);
+                httpURLConnection.setRequestProperty("Content-Type","application/json");
+                if (accessToken != null && !accessToken.isEmpty())
                 {
-                    sb.append(line + "\n");
+                    if (accessToken.contains("Bearer"))
+                    {
+                        httpURLConnection.setRequestProperty("Authorization", accessToken);
+                    }
+                    else
+                    {
+                        httpURLConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
+                    }
                 }
-                br.close();
+                httpURLConnection.setRequestProperty("PhoneSpec", phoneSpec);
+                httpURLConnection.connect();
 
-                serverResponse = ""+sb.toString();
+                OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
+                out.write(requestObject.toString());
+                out.close();
+
+                int HttpResult = httpURLConnection.getResponseCode();
+
+                //cek jika resultcode nggak 200
+                switch (HttpResult)
+                {
+                    case HttpsURLConnection.HTTP_BAD_REQUEST : //400
+                        return "Bad Request";
+                    case HttpsURLConnection.HTTP_UNAUTHORIZED : //401
+                        return "Unauthorized";
+                    case HttpsURLConnection.HTTP_FORBIDDEN : //403
+                        return "Forbidden";
+                    case HttpsURLConnection.HTTP_NOT_FOUND : //404
+                        return "Not Found";
+                    case HttpsURLConnection.HTTP_INTERNAL_ERROR : //500
+                        return "Internal Server Error";
+                    default:break;
+                }
+
+                //cek resultcode, jika 503, return maintenance
+                if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)
+                    return "Maintenance";
+
+                if (HttpResult == HttpURLConnection.HTTP_OK)
+                {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"utf-8"));
+                    String line = null;
+                    while ((line = br.readLine()) != null)
+                    {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+
+                    serverResponse = ""+sb.toString();
+                }
             }
         }
         catch (IOException e)

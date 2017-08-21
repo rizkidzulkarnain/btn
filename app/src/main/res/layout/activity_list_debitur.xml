@@ -12,37 +12,60 @@
     </data>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/background_bluegradient">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_general"
-            style="@style/AppToolbar.Line">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <include layout="@layout/include_toolbar_back_button"/>
-
-                <include layout="@layout/include_toolbar_title" />
-
-            </RelativeLayout>
-
-        </android.support.v7.widget.Toolbar>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_debitur"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/background_bluegradient">
 
-    </LinearLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_general"
+                style="@style/AppToolbar.Line">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <include layout="@layout/include_toolbar_back_button"/>
+
+                    <include layout="@layout/include_toolbar_title" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.Toolbar>
+
+            <!--status-->
+            <Spinner
+                android:padding="10dp"
+                android:gravity="center"
+                android:id="@+id/ListDebitur_Spinner_Status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_debitur"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/ListDebitur_NoData"
+            android:text="@string/Text_NoData"
+            android:textSize="18sp"
+            android:textColor="@color/White"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 </layout>
 

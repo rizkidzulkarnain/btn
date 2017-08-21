@@ -12,9 +12,11 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.adapter.HistoriTindakanAdapter;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
+import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturActivity;
 import com.mitkoindo.smartcollection.objectdata.HistoriTindakan;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
@@ -36,6 +38,9 @@ public class HistoriTindakanActivity extends AppCompatActivity
     //generic alert
     private GenericAlert genericAlert;
 
+    //no data text
+    private TextView view_NoData;
+
     //----------------------------------------------------------------------------------------------
     //  Transaksi
     //----------------------------------------------------------------------------------------------
@@ -45,6 +50,12 @@ public class HistoriTindakanActivity extends AppCompatActivity
 
     //auth token
     private String authToken;
+
+    //----------------------------------------------------------------------------------------------
+    //  Data
+    //----------------------------------------------------------------------------------------------
+    //data nomor rekening
+    private String noRekening;
 
     //----------------------------------------------------------------------------------------------
     //  Setup
@@ -58,6 +69,7 @@ public class HistoriTindakanActivity extends AppCompatActivity
         //setup
         GetViews();
         SetupTransaction();
+        GetExtra();
     }
 
     //get views
@@ -68,6 +80,9 @@ public class HistoriTindakanActivity extends AppCompatActivity
 
         //create alert
         genericAlert = new GenericAlert(this);
+
+        //get no data text
+        view_NoData = findViewById(R.id.HistoriTindakan_NoData);
     }
 
     //setup views
@@ -85,6 +100,18 @@ public class HistoriTindakanActivity extends AppCompatActivity
         //show loading alert & create request
         genericAlert.ShowLoadingAlert();
         new SendGetHistoriTindakanRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+    }
+
+    //get extra
+    private void GetExtra()
+    {
+        //get bundle data
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null)
+            return;
+
+        //get no. rekening
+        noRekening = bundle.getString(DetailDebiturActivity.EXTRA_NO_REKENING, "");
     }
 
     //----------------------------------------------------------------------------------------------
@@ -132,9 +159,16 @@ public class HistoriTindakanActivity extends AppCompatActivity
         try
         {
             //populate object
-            requestObject.put("DatabaseID", "db1test");
+            requestObject.put("DatabaseID", "db1");
             requestObject.put("SpName", "MKI_SP_HISTORI_TINDAKAN");
-            requestObject.put("SpParameter", new JSONObject());
+
+            //create sp parameter object
+            JSONObject spParameterObject = new JSONObject();
+            spParameterObject.put("nomorRekening", noRekening);
+            /*spParameterObject.put("nomorRekening", "3501010002958");*/
+
+            //put spparameter object
+            requestObject.put("SpParameter", spParameterObject);
         }
         catch (JSONException e)
         {
@@ -152,8 +186,17 @@ public class HistoriTindakanActivity extends AppCompatActivity
 
         try
         {
+            view_NoData.setVisibility(View.GONE);
+            list_HistoriTindakan.setVisibility(View.VISIBLE);
+
             //test parse jsonString
             JSONArray dataArray = new JSONArray(jsonString);
+
+            if (dataArray.length() <= 0)
+            {
+                view_NoData.setVisibility(View.VISIBLE);
+                list_HistoriTindakan.setVisibility(View.GONE);
+            }
 
             //extract data
             ArrayList<HistoriTindakan> all_Tindakan = new ArrayList<>();
@@ -180,6 +223,9 @@ public class HistoriTindakanActivity extends AppCompatActivity
         catch (JSONException e)
         {
             e.printStackTrace();
+
+            view_NoData.setVisibility(View.VISIBLE);
+            list_HistoriTindakan.setVisibility(View.GONE);
         }
     }
 }

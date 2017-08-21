@@ -252,6 +252,11 @@ public class DetailDebitur {
             alamatKantor = dataObject.getString("AlamatKantor");
             alamatAgunan = dataObject.optString("AlamatAgunan", "");
             userAssignDate = dataObject.getString("UserAssignDate");
+
+            if (tindakLanjut == null || tindakLanjut.equals("null"))
+                tindakLanjut = "";
+            if (status == null || status.equals("null"))
+                status = "";
         }
         catch (JSONException e)
         {

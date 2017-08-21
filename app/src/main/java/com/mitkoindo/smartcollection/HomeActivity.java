@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.adapter.HomeMenuAdapter;
 import com.mitkoindo.smartcollection.helper.ItemClickListener;
@@ -27,6 +28,15 @@ public class HomeActivity extends AppCompatActivity
     //----------------------------------------------------------------------------------------------
     //Recycler view
     private RecyclerView view_HomeMenu;
+
+    //user name holder
+    private TextView view_UserName;
+
+    //user id holder
+    private TextView view_UserID;
+
+    //user group holder
+    private TextView view_UserGroup;
 
     //----------------------------------------------------------------------------------------------
     //  Data
@@ -61,6 +71,9 @@ public class HomeActivity extends AppCompatActivity
     private void GetViews()
     {
         view_HomeMenu = findViewById(R.id.HomeActivity_MenuGrid);
+        view_UserName = findViewById(R.id.HomeActivity_UserName);
+        view_UserID = findViewById(R.id.HomeActivity_UserID);
+        view_UserGroup = findViewById(R.id.HomeActivity_UserGroup);
     }
 
     //setup view
@@ -99,6 +112,22 @@ public class HomeActivity extends AppCompatActivity
         int numberOfColumns = 3;
         view_HomeMenu.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         view_HomeMenu.setAdapter(homeMenuAdapter);
+
+        //set username
+        String key_UserName = getString(R.string.SharedPreferenceKey_NamaPetugas);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String value_UserName = sharedPreferences.getString(key_UserName, "");
+        view_UserName.setText(value_UserName);
+
+        //set user ID
+        String key_UserID = getString(R.string.SharedPreferenceKey_UserID);
+        String value_UserID = sharedPreferences.getString(key_UserID, "");
+        view_UserID.setText(value_UserID);
+
+        //set user group
+        String key_UserGroup = getString(R.string.SharedPreferenceKey_UserGroup);
+        String value_UserGroup = sharedPreferences.getString(key_UserGroup, "");
+        view_UserGroup.setText(value_UserGroup);
     }
 
     //----------------------------------------------------------------------------------------------

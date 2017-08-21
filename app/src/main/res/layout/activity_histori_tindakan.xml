@@ -36,16 +36,32 @@
             android:layout_height="1dp"/>
 
         <!--List tindakan-->
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/HistoriTindakan_ListTindakan"
-            android:overScrollMode="never"
-            android:clipToPadding="false"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/HistoriTindakan_ListTindakan"
+                android:overScrollMode="never"
+                android:clipToPadding="false"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/HistoriTindakan_NoData"
+                android:text="@string/Text_NoData"
+                android:textSize="18sp"
+                android:textColor="@color/White"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
     </LinearLayout>
 
     <!--Back button-->

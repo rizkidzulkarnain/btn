@@ -10,6 +10,7 @@
     <string name="Text_Ya">Ya</string>
     <string name="Text_Tidak">Tidak</string>
     <string name="Text_Success">Sukses</string>
+    <string name="Text_NoData">Tidak ada data</string>
     <string name="Misc_Copyright">\u00A9 Copyright Bank BTN 2017</string>
 
     <!--Login page-->
@@ -22,6 +23,8 @@
     <!--Home page-->
     <string name="Home_Menu">Menu</string>
     <string name="Home_Alert_Logout_Message">Apakah anda ingin log-out?</string>
+    <string name="Home_UserID">User ID</string>
+    <string name="Home_UserGroup">Group</string>
 
     <!--List debitur page-->
     <string name="ListDebitur_PageTitle">List Debitur</string>
@@ -174,6 +177,7 @@
 
     <!--Transaksi-->
     <!--<string name="BaseURL">https://ee54c06e.ngrok.io/btn_new/</string>-->
+    <!--<string name="BaseURL">https://eaf186b7.ngrok.io/btn_new/</string>-->
     <string name="BaseURL">https://eaf186b7.ngrok.io/btn_new/</string>
     <string name="URL_Login">api/Account/login</string>
     <string name="URL_UpdatePassword">api/Account/updatePassword</string>
@@ -183,6 +187,9 @@
     <string name="SharedPreferenceName">SharedPreference_SmartCollection</string>
     <string name="SharedPreferenceKey_AccessToken">Key_AccessToken</string>
     <string name="SharedPreferenceKey_BaseURL">Key_BaseURL</string>
+    <string name="SharedPreferenceKey_UserID">Key_UserID</string>
+    <string name="SharedPreferenceKey_NamaPetugas">Key_NamaPetugas</string>
+    <string name="SharedPreferenceKey_UserGroup">Key_UserGroup</string>
 
     <!--Temporary change base url class-->
     <string name="ChangeBaseURL_Title">Change Base URL</string>

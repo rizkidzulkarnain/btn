@@ -24,6 +24,7 @@ import com.mitkoindo.smartcollection.base.BaseActivity;
 import com.mitkoindo.smartcollection.databinding.ActivityDetailDebiturBinding;
 import com.mitkoindo.smartcollection.dialog.DialogSimpleSpinnerAdapter;
 import com.mitkoindo.smartcollection.event.EventDialogSimpleSpinnerSelected;
+import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.module.formcall.FormCallActivity;
 import com.mitkoindo.smartcollection.module.formvisit.FormVisitActivity;
 import com.mitkoindo.smartcollection.objectdata.DetailDebitur;
@@ -47,7 +48,7 @@ import butterknife.Optional;
  */
 
 public class DetailDebiturActivity extends BaseActivity {
-    private static final String EXTRA_NO_REKENING = "extra_no_rekening";
+    public static final String EXTRA_NO_REKENING = "extra_no_rekening";
 
     private DetailDebiturViewModel mDetailDebiturViewModel;
     private ActivityDetailDebiturBinding mBinding;
@@ -159,7 +160,10 @@ public class DetailDebiturActivity extends BaseActivity {
                         break;
                     }
                     case R.id.popup_menu_lihat_history: {
-                        startActivity(new Intent(DetailDebiturActivity.this, HistoriTindakanActivity.class));
+                        Intent intent = new Intent(DetailDebiturActivity.this, HistoriTindakanActivity.class);
+                        intent.putExtra(EXTRA_NO_REKENING, mNoRekening);
+                        startActivity(intent);
+                        /*startActivity(new Intent(DetailDebiturActivity.this, HistoriTindakanActivity.class));*/
                         break;
                     }
                 }
@@ -230,7 +234,8 @@ public class DetailDebiturActivity extends BaseActivity {
     private void SetupTransaction()
     {
         //get url
-        baseURL = getString(R.string.BaseURL);
+        /*baseURL = getString(R.string.BaseURL);*/
+        baseURL = ResourceLoader.LoadBaseURL(this);
         url_Data_StoreProcedure = getString(R.string.URL_Data_StoreProcedure);
 
         //get auth token
@@ -275,7 +280,7 @@ public class DetailDebiturActivity extends BaseActivity {
         try
         {
             //populate object
-            requestObject.put("DatabaseID", "db1test");
+            requestObject.put("DatabaseID", "db1");
             requestObject.put("SpName", "MKI_SP_DEBITUR_DETAIL");
 
             JSONObject spParameterObject = new JSONObject();
