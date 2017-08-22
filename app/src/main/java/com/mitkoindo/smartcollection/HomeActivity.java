@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.mitkoindo.smartcollection.adapter.HomeMenuAdapter;
 import com.mitkoindo.smartcollection.helper.ItemClickListener;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
+import com.mitkoindo.smartcollection.module.berita.BeritaActivity;
+import com.mitkoindo.smartcollection.module.dashboard.DashboardActivity;
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.objectdata.HomeMenu;
 
@@ -182,6 +184,12 @@ public class HomeActivity extends AppCompatActivity
         Intent intent = null;
         switch (selectedMenuName)
         {
+            case "Dashboard" :
+                intent = new Intent(this, DashboardActivity.class);
+                break;
+            case "Berita" :
+                intent = new Intent(this, BeritaActivity.class);
+                break;
             case "Penugasan" :
                 intent = new Intent(this, ListDebiturActivity.class);
                 break;

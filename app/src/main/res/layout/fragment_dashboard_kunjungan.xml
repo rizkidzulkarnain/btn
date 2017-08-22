@@ -1,0 +1,55 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_bluegradient"
+    tools:context="com.mitkoindo.smartcollection.module.dashboard.DashboardKunjunganFragment">
+
+    <LinearLayout
+        android:padding="10dp"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Spinner untuk memilih mau menampilkan data hari ini atau akumulasi-->
+        <Spinner
+            android:id="@+id/DashboardKunjunganFragment_Spinner"
+            android:background="@color/Background_Spinner1"
+            android:dropDownSelector="@color/White"
+            android:gravity="center"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!--Label data nominal-->
+        <TextView
+            android:text="@string/Dashboard_Nominal"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/White"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--Chart nominal-->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/DashboardKunjunganFragment_Chart_Nominal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!--Label data debitur-->
+        <TextView
+            android:text="@string/Dashboard_Debitur"
+            android:textSize="18sp"
+            android:textColor="@color/White"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--Chart debitur-->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/DashboardKunjunganFragment_Chart_Debitur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</ScrollView>

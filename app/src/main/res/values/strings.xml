@@ -11,6 +11,8 @@
     <string name="Text_Tidak">Tidak</string>
     <string name="Text_Success">Sukses</string>
     <string name="Text_NoData">Tidak ada data</string>
+    <string name="Text_HariIni">Hari Ini</string>
+    <string name="Text_Akumulasi">Akumulasi</string>
     <string name="Misc_Copyright">\u00A9 Copyright Bank BTN 2017</string>
 
     <!--Login page-->
@@ -25,6 +27,20 @@
     <string name="Home_Alert_Logout_Message">Apakah anda ingin log-out?</string>
     <string name="Home_UserID">User ID</string>
     <string name="Home_UserGroup">Group</string>
+
+    <!--Dashboard page-->
+    <string name="Dashboard_Title">Dashboard</string>
+    <string name="Dashboard_Nominal">Nominal</string>
+    <string name="Dashboard_Debitur">Debitur</string>
+    <string name="Dashboard_FragmentTitle_Kunjungan">Kunjungan</string>
+    <string name="Dashboard_FragmentTitle_Penyelesaian">Penyelesaian</string>
+    <string name="Dashboard_FragmentTitle_PTP">PTP</string>
+
+    <!--Berita page-->
+    <string name="Berita_Title">Info Berita</string>
+    <string name="Berita_Adapter_Sender">From</string>
+    <string name="Berita_Adapter_SendTime">Sent</string>
+    <string name="Berita_Adapter_NoFiles">No files attached&#8230;</string>
 
     <!--List debitur page-->
     <string name="ListDebitur_PageTitle">List Debitur</string>

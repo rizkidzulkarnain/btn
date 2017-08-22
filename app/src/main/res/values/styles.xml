@@ -30,6 +30,10 @@
         <item name="colorControlHighlight">@color/Line_UpdatePassword</item>
     </style>
 
+    <style name="TabLayoutNotAllCaps" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
+    
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

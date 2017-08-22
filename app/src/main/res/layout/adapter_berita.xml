@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/White"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--Title-->
+    <TextView
+        android:id="@+id/AdapterBerita_Title"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/Black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!--Divider-->
+    <View
+        android:layout_marginTop="5dp"
+        android:background="@color/Black"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--Sender & Send time-->
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Sender-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/Berita_Adapter_Sender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/AdapterBerita_Sender"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!--Underline-->
+            <View
+                android:background="@color/Line_News_SenderUnderline"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </LinearLayout>
+
+        <!--Send time-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/Berita_Adapter_SendTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/AdapterBerita_SendTime"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!--Underline-->
+            <View
+                android:background="@color/Line_News_SenderUnderline"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--News content-->
+    <TextView
+        android:id="@+id/AdapterBerita_Content"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--Attachment & Warning if no files exist-->
+    <!--Only one can appear at any time-->
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Text to show that no files are attached-->
+        <TextView
+            android:id="@+id/AdapterBerita_NoFile"
+            android:text="@string/Berita_Adapter_NoFiles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--File icon & filename-->
+        <LinearLayout
+            android:id="@+id/AdapterBerita_FileHolder"
+            android:visibility="gone"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--file icon-->
+            <ImageView
+                android:id="@+id/AdapterBerita_FileIcon"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+
+            <!--File name-->
+            <TextView
+                android:id="@+id/AdapterBerita_FileName"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
