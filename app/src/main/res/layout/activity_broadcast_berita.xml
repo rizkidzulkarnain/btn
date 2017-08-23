@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_bluegradient"
+    tools:context="com.mitkoindo.smartcollection.module.berita.BroadcastBeritaActivity">
+
+    <LinearLayout
+        android:clipToPadding="false"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--Title-->
+            <TextView
+                android:text="@string/Berita_Broadcast_Title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@drawable/background_card_white"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--Judul berita-->
+            <TextView
+                android:text="@string/Berita_Broadcast_Judul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!--Form judul berita-->
+            <EditText
+                android:id="@+id/BroadcastBerita_Title"
+                android:hint="@string/Berita_Broadcast_JudulHint"
+                android:layout_marginTop="5dp"
+                android:theme="@style/EditText.BroadcastBerita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--Isi berita-->
+            <TextView
+                android:text="@string/Berita_Broadcast_Isi"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!--Form isi berita-->
+            <EditText
+                android:id="@+id/BroadcastBerita_Isi"
+                android:layout_marginTop="5dp"
+                android:theme="@style/EditText.BroadcastBerita"
+                android:inputType="textMultiLine"
+                android:hint="@string/Berita_Broadcast_IsiHint"
+                android:gravity="top"
+                android:padding="10dp"
+                android:minLines="5"
+                android:maxLines="5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--File-->
+            <TextView
+                android:text="@string/Berita_Broadcast_File"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--Filename-->
+                <TextView
+                    android:id="@+id/BroadcastBerita_FileName"
+                    android:text="@string/Berita_Broadcast_NoFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!--Attach button-->
+                <RelativeLayout
+                    android:background="@drawable/background_circle_pagetitleblue"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_attach_file_white_36dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!--Start date & Expired date-->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <!--Start date Label-->
+                    <TextView
+                        android:text="@string/Berita_Broadcast_StartDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <!--StartDate text-->
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/BroadcastBerita_StartDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <!--Divider-->
+                    <View
+                        android:background="@color/Grey15"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <!--Start date Label-->
+                    <TextView
+                        android:text="@string/Berita_Broadcast_ExpiredDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <!--StartDate text-->
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/BroadcastBerita_ExpiredDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <!--Divider-->
+                    <View
+                        android:background="@color/Grey15"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--Send button-->
+            <Button
+                android:onClick="HandleInput_BroadcastBerita_OpenBroadcastPopup"
+                android:text="@string/Berita_Broadcast_Kirim"
+                android:textColor="@color/White"
+                android:textAllCaps="false"
+                android:drawableRight="@drawable/ic_play_arrow_white_36dp"
+                android:drawableEnd="@drawable/ic_play_arrow_white_36dp"
+                android:background="@drawable/background_rounded_rectangle_pagetitle"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

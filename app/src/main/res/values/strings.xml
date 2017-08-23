@@ -13,6 +13,9 @@
     <string name="Text_NoData">Tidak ada data</string>
     <string name="Text_HariIni">Hari Ini</string>
     <string name="Text_Akumulasi">Akumulasi</string>
+    <string name="Text_CariPetugas">Cari Petugas</string>
+    <string name="Text_Batal">Batal</string>
+    <string name="Text_SelectAll">Select All</string>
     <string name="Misc_Copyright">\u00A9 Copyright Bank BTN 2017</string>
 
     <!--Login page-->
@@ -35,12 +38,27 @@
     <string name="Dashboard_FragmentTitle_Kunjungan">Kunjungan</string>
     <string name="Dashboard_FragmentTitle_Penyelesaian">Penyelesaian</string>
     <string name="Dashboard_FragmentTitle_PTP">PTP</string>
+    <string name="Dashboard_FragmentTitle_NPL">NPL</string>
+    <string name="Dashboard_NPL_Nasional">NPL Nasional</string>
+    <string name="Dashboard_NPL_Kanwil">NPL Kanwil</string>
+    <string name="Dashboard_NPL_KC">NPL KC</string>
 
     <!--Berita page-->
     <string name="Berita_Title">Info Berita</string>
     <string name="Berita_Adapter_Sender">From</string>
     <string name="Berita_Adapter_SendTime">Sent</string>
     <string name="Berita_Adapter_NoFiles">No files attached&#8230;</string>
+    <string name="Berita_Broadcast_Title">Broadcast Berita</string>
+    <string name="Berita_Broadcast_Judul">Judul Berita</string>
+    <string name="Berita_Broadcast_JudulHint">Masukkan judul berita</string>
+    <string name="Berita_Broadcast_Isi">Isi Berita</string>
+    <string name="Berita_Broadcast_IsiHint">Masukkan isi berita</string>
+    <string name="Berita_Broadcast_File">File</string>
+    <string name="Berita_Broadcast_NoFile">Belum ada file &#8230;</string>
+    <string name="Berita_Broadcast_StartDate">Start Date</string>
+    <string name="Berita_Broadcast_ExpiredDate">Expired Date</string>
+    <string name="Berita_Broadcast_Kirim">Kirim Berita</string>
+    <string name="Berita_Broadcast_Popup_Title">Broadcast berita ke&#8230;</string>
 
     <!--List debitur page-->
     <string name="ListDebitur_PageTitle">List Debitur</string>
@@ -198,6 +216,7 @@
     <string name="URL_Login">api/Account/login</string>
     <string name="URL_UpdatePassword">api/Account/updatePassword</string>
     <string name="URL_Data_StoreProcedure">api/Data/sp</string>
+    <string name="URL_Data_View">api/Data/view</string>
 
     <!--Shared preference key-->
     <string name="SharedPreferenceName">SharedPreference_SmartCollection</string>

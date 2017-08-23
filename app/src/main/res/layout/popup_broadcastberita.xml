@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/background_card_white"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--Popup title-->
+    <TextView
+        android:text="@string/Berita_Broadcast_Popup_Title"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!--Divider-->
+    <View
+        android:background="@color/Black"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--Search form-->
+    <EditText
+        android:id="@+id/BroadcastPopup_SearchForm"
+        android:hint="@string/Text_CariPetugas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--Select all checkbox-->
+    <CheckBox
+        android:id="@+id/BroadcastPopup_SelectAll"
+        android:text="@string/Text_SelectAll"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!--List of petugas-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/BroadcastPopup_ListPetugas"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <!--Action button-->
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Send button-->
+        <Button
+            android:id="@+id/BroadcastPopup_KirimBerita"
+            android:text="@string/Berita_Broadcast_Kirim"
+            android:textColor="@color/White"
+            android:textAllCaps="false"
+            android:background="@drawable/background_rounded_rectangle_pagetitle"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!--Cancel button-->
+        <Button
+            android:id="@+id/BroadcastPopup_BatalKirim"
+            android:text="@string/Text_Batal"
+            android:textColor="@color/White"
+            android:textAllCaps="false"
+            android:background="@drawable/background_rounded_rectangle_pagetitle"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

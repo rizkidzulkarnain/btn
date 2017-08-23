@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_bluegradient"
-    tools:context="com.mitkoindo.smartcollection.module.dashboard.DashboardKunjunganFragment">
+    tools:context="com.mitkoindo.smartcollection.module.dashboard.DashboardNPLFragment">
 
     <LinearLayout
         android:padding="10dp"
@@ -13,19 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!--Spinner untuk memilih mau menampilkan data hari ini atau akumulasi-->
-        <Spinner
-            android:id="@+id/DashboardKunjunganFragment_Spinner"
-            android:background="@color/Background_Spinner1"
-            android:dropDownSelector="@color/White"
-            android:gravity="center"
-            android:padding="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <!--Label data nominal-->
+        <!--Label data NPL Nasional-->
         <TextView
-            android:text="@string/Dashboard_Nominal"
+            android:text="@string/Dashboard_NPL_Nasional"
             android:textSize="18sp"
             android:layout_marginTop="10dp"
             android:textColor="@color/White"
@@ -34,23 +24,39 @@
 
         <!--Chart nominal-->
         <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/DashboardKunjunganFragment_Chart_Nominal"
+            android:id="@+id/DashboardNPLFragment_Chart_Nasional"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <!--Label data debitur-->
+        <!--Label data NPL Kanwil-->
         <TextView
-            android:text="@string/Dashboard_Debitur"
+            android:text="@string/Dashboard_NPL_Kanwil"
             android:textSize="18sp"
             android:layout_marginTop="10dp"
             android:textColor="@color/White"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <!--Chart debitur-->
+        <!--Chart nominal-->
         <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/DashboardKunjunganFragment_Chart_Debitur"
+            android:id="@+id/DashboardNPLFragment_Chart_Kanwil"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!--Label data NPL KC-->
+        <TextView
+            android:text="@string/Dashboard_NPL_KC"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/White"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--Chart nominal-->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/DashboardNPLFragment_Chart_KC"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

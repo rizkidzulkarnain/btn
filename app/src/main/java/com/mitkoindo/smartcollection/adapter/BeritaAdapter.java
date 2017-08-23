@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
+import com.mitkoindo.smartcollection.objectdata.GlobalNews;
+
+import java.util.ArrayList;
 
 /**
  * Created by W8 on 22/08/2017.
@@ -22,9 +25,19 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
     //reference ke context
     private Activity context;
 
+    //data berita
+    private ArrayList<GlobalNews> news;
+
     //----------------------------------------------------------------------------------------------
     //  Setup
     //----------------------------------------------------------------------------------------------
+    //constructor
+    public BeritaAdapter(Activity context, ArrayList<GlobalNews> news)
+    {
+        this.context = context;
+        this.news = news;
+    }
+
     @Override
     public BeritaViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -45,7 +58,12 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
         if (position >= getItemCount())
             return;
 
-        //ToDo : get current item, dan attach ke holder
+        //get current item, dan attach ke holder
+        GlobalNews currentNews = news.get(position);
+
+        //attach to view
+        holder.Title.setText(currentNews.Subject);
+
     }
 
     @Override

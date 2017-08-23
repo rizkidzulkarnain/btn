@@ -30,6 +30,13 @@
         <item name="colorControlHighlight">@color/Line_UpdatePassword</item>
     </style>
 
+    <style name="EditText.BroadcastBerita" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/Font_BroadcastBerita_Form</item>
+        <item name="android:textColorHint">@color/Font_BroadcastBerita_Form</item>
+        <item name="colorControlActivated">@color/Grey15</item>
+        <item name="colorControlHighlight">@color/Grey15</item>
+    </style>
+
     <style name="TabLayoutNotAllCaps" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
     </style>

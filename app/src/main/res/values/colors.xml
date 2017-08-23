@@ -11,6 +11,7 @@
     <color name="Black_Transparent">#55000000</color>
     <color name="White_Transparent">#55ffffff</color>
     <color name="Grey">#808080</color>
+    <color name="Grey15">#888888</color>
 
     <!--color by usage-->
     <color name="Background_Login">#0d568d</color>
@@ -24,6 +25,8 @@
 
     <color name="Font_LoginForm">#747373</color>
     <color name="Font_HomeMenu">#0ba1ff</color>
+    <color name="Font_BroadcastBerita_Item">#b8cddb</color>
+    <color name="Font_BroadcastBerita_Form">#2486b7</color>
 
     <color name="Tint_Inbox_PersonIcon">#d4abd8</color>
     <color name="Tint_Logout_Button">#da2928</color>

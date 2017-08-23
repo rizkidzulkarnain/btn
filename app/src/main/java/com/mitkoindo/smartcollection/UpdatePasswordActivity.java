@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
@@ -78,7 +79,7 @@ public class UpdatePasswordActivity extends AppCompatActivity
     private void SetupTransactionProperties()
     {
         //get url
-        baseURL = getString(R.string.BaseURL);
+        baseURL = ResourceLoader.LoadBaseURL(this);
         url_UpdatePassword = getString(R.string.URL_UpdatePassword);
 
         //load auth token

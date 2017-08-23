@@ -53,12 +53,14 @@ public class DashboardActivity extends AppCompatActivity
         fragmentTitles.add(getString(R.string.Dashboard_FragmentTitle_Kunjungan));
         fragmentTitles.add(getString(R.string.Dashboard_FragmentTitle_Penyelesaian));
         fragmentTitles.add(getString(R.string.Dashboard_FragmentTitle_PTP));
+        /*fragmentTitles.add(getString(R.string.Dashboard_FragmentTitle_NPL));*/
 
         //create fragments
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new DashboardKunjunganFragment());
         fragments.add(new DashboardPenyelesaianFragment());
         fragments.add(new DashboardPTPFragment());
+        fragments.add(new DashboardNPLFragment());
 
         //create tab adapter
         DashboardTabAdapter dashboardTabAdapter = new DashboardTabAdapter(getSupportFragmentManager(), fragments, fragmentTitles);

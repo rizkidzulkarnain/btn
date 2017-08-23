@@ -309,7 +309,7 @@ public class NetworkConnection
                 int HttpResult = httpURLConnection.getResponseCode();
 
                 //cek jika resultcode nggak 200
-                switch (HttpResult)
+                /*switch (HttpResult)
                 {
                     case HttpsURLConnection.HTTP_BAD_REQUEST : //400
                         return "Bad Request";
@@ -322,7 +322,7 @@ public class NetworkConnection
                     case HttpsURLConnection.HTTP_INTERNAL_ERROR : //500
                         return "Internal Server Error";
                     default:break;
-                }
+                }*/
 
                 //cek resultcode, jika 503, return maintenance
                 if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)
@@ -372,8 +372,8 @@ public class NetworkConnection
                 //cek jika resultcode nggak 200
                 switch (HttpResult)
                 {
-                    case HttpsURLConnection.HTTP_BAD_REQUEST : //400
-                        return "Bad Request";
+                    /*case HttpsURLConnection.HTTP_BAD_REQUEST : //400
+                        return "Bad Request";*/
                     case HttpsURLConnection.HTTP_UNAUTHORIZED : //401
                         return "Unauthorized";
                     case HttpsURLConnection.HTTP_FORBIDDEN : //403
@@ -386,10 +386,10 @@ public class NetworkConnection
                 }
 
                 //cek resultcode, jika 503, return maintenance
-                if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)
-                    return "Maintenance";
+                /*if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)
+                    return "Maintenance";*/
 
-                if (HttpResult == HttpURLConnection.HTTP_OK)
+                /*if (HttpResult == HttpURLConnection.HTTP_OK)
                 {
                     BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"utf-8"));
                     String line = null;
@@ -400,7 +400,19 @@ public class NetworkConnection
                     br.close();
 
                     serverResponse = ""+sb.toString();
+                }*/
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"utf-8"));
+                String line = null;
+                while ((line = br.readLine()) != null)
+                {
+                    sb.append(line + "\n");
                 }
+                br.close();
+
+                serverResponse = ""+sb.toString();
+                int x = 0;
+                int z = x + 1;
             }
         }
         catch (IOException e)
