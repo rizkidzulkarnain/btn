@@ -16,6 +16,7 @@
     <string name="Text_CariPetugas">Cari Petugas</string>
     <string name="Text_Batal">Batal</string>
     <string name="Text_SelectAll">Select All</string>
+    <string name="Text_SomethingWrong">Terjadi kesalahan, mohon coba kembali</string>
     <string name="Misc_Copyright">\u00A9 Copyright Bank BTN 2017</string>
 
     <!--Login page-->
@@ -59,6 +60,8 @@
     <string name="Berita_Broadcast_ExpiredDate">Expired Date</string>
     <string name="Berita_Broadcast_Kirim">Kirim Berita</string>
     <string name="Berita_Broadcast_Popup_Title">Broadcast berita ke&#8230;</string>
+    <string name="Berita_Fragment_Global_Title">Berita Global</string>
+    <string name="Berita_Fragment_Group_Title">Berita Group</string>
 
     <!--List debitur page-->
     <string name="ListDebitur_PageTitle">List Debitur</string>
@@ -225,6 +228,7 @@
     <string name="SharedPreferenceKey_UserID">Key_UserID</string>
     <string name="SharedPreferenceKey_NamaPetugas">Key_NamaPetugas</string>
     <string name="SharedPreferenceKey_UserGroup">Key_UserGroup</string>
+    <string name="SharedPreferenceKey_UserGroupID">Key_UserGroupID</string>
 
     <!--Temporary change base url class-->
     <string name="ChangeBaseURL_Title">Change Base URL</string>

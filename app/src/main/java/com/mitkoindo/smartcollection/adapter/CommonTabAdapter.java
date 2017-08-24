@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Created by Erlangga on 22/08/2017.
  */
 
-public class DashboardTabAdapter extends FragmentPagerAdapter
+public class CommonTabAdapter extends FragmentPagerAdapter
 {
     //----------------------------------------------------------------------------------------------
     //  Data
@@ -24,7 +24,7 @@ public class DashboardTabAdapter extends FragmentPagerAdapter
     //----------------------------------------------------------------------------------------------
     //  Setup
     //----------------------------------------------------------------------------------------------
-    public DashboardTabAdapter(FragmentManager fm, ArrayList<Fragment> fragments, ArrayList<String> fragmentTitles)
+    public CommonTabAdapter(FragmentManager fm, ArrayList<Fragment> fragments, ArrayList<String> fragmentTitles)
     {
         super(fm);
 

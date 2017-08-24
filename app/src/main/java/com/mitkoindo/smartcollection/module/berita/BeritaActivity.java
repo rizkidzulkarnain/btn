@@ -5,7 +5,10 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,6 +20,7 @@ import android.view.View;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.adapter.BeritaAdapter;
 import com.mitkoindo.smartcollection.adapter.BeritaGlobalAdapter;
+import com.mitkoindo.smartcollection.adapter.CommonTabAdapter;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.objectdata.GlobalNews;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
@@ -34,16 +38,21 @@ public class BeritaActivity extends AppCompatActivity
     //  View
     //----------------------------------------------------------------------------------------------
     //list of berita
-    private RecyclerView view_ListBerita;
+    /*private RecyclerView view_ListBerita;*/
 
     //generic alert
     private GenericAlert genericAlert;
 
-    //----------------------------------------------------------------------------------------------
-    //  Data
-    //----------------------------------------------------------------------------------------------
-    //adapter for berita
-    private BeritaGlobalAdapter beritaAdapter;
+    //tablayout & view pager
+    private TabLayout view_TabLayout;
+    private ViewPager view_ViewPager;
+
+    //fragment yang hold data berita global & berita lokal
+    private BeritaGlobalFragment beritaGlobalFragment;
+    private BeritaGrupFragment beritaGrupFragment;
+
+    //Button untuk create broadcast
+    private View view_CreateBroadcast;
 
     //----------------------------------------------------------------------------------------------
     //  Transaksi
@@ -67,17 +76,24 @@ public class BeritaActivity extends AppCompatActivity
         //setup
         GetViews();
         SetupTransaction();
-        LoadNews();
+        SetupViews();
     }
 
     //get reference ke view
     private void GetViews()
     {
         //get list berita
-        view_ListBerita = findViewById(R.id.BeritaActivity_ListBerita);
+        /*view_ListBerita = findViewById(R.id.BeritaActivity_ListBerita);*/
 
         //create generic alert
         genericAlert = new GenericAlert(this);
+
+        //get tablayout & viewpager
+        view_TabLayout = findViewById(R.id.BeritaActivity_Tab);
+        view_ViewPager = findViewById(R.id.BeritaActivity_ViewPager);
+
+        //get button buat create broadcast, akan dihide kalo user di level petugas
+        view_CreateBroadcast = findViewById(R.id.BeritaActivity_CreateBroadcast);
     }
 
     //set transaksi
@@ -93,14 +109,33 @@ public class BeritaActivity extends AppCompatActivity
         authToken = sharedPreferences.getString(key_AuthToken, "");
     }
 
-    //load data
-    private void LoadNews()
+    //setup views
+    private void SetupViews()
     {
-        //show loading alert
-        genericAlert.ShowLoadingAlert();
+        //create fragment titles
+        ArrayList<String> fragmentTitles = new ArrayList<>();
+        fragmentTitles.add(getString(R.string.Berita_Fragment_Global_Title));
+        fragmentTitles.add(getString(R.string.Berita_Fragment_Group_Title));
 
-        //send request buat get news
-        new SendGetGlobalNewsRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+        //create fragments
+        beritaGlobalFragment = new BeritaGlobalFragment();
+        beritaGrupFragment = new BeritaGrupFragment();
+
+        //set transaction property
+        beritaGlobalFragment.SetTransactionData(baseURL, url_GetBerita, authToken);
+        beritaGrupFragment.SetTransactionData(baseURL, url_GetBerita, authToken);
+
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(beritaGlobalFragment);
+        fragments.add(beritaGrupFragment);
+
+        //set fragment ke views
+        //create tab adapter
+        CommonTabAdapter dashboardTabAdapter = new CommonTabAdapter(getSupportFragmentManager(), fragments, fragmentTitles);
+
+        //set adapter to tab
+        view_ViewPager.setAdapter(dashboardTabAdapter);
+        view_TabLayout.setupWithViewPager(view_ViewPager);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -117,128 +152,5 @@ public class BeritaActivity extends AppCompatActivity
     {
         Intent intent = new Intent(this, BroadcastBeritaActivity.class);
         startActivity(intent);
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //  Load global news
-    //----------------------------------------------------------------------------------------------
-    //create async task buat load news
-    private class SendGetGlobalNewsRequest extends AsyncTask<String, Void, String>
-    {
-        @Override
-        protected String doInBackground(String... strings)
-        {
-            //set url untul transaksi
-            String usedURL = baseURL + url_GetBerita;
-
-            //create request object
-            JSONObject requestObject = CreateGetNewsRequestObject();
-
-            //execute transaction
-            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
-            networkConnection.SetRequestObject(requestObject);
-            return networkConnection.SendPostRequest(usedURL);
-        }
-
-        @Override
-        protected void onPostExecute(String s)
-        {
-            super.onPostExecute(s);
-            HandleGetGlobalNewsResult(s);
-        }
-    }
-
-    //create request object buat get news data
-    private JSONObject CreateGetNewsRequestObject()
-    {
-        //create empty object
-        JSONObject requestObject = new JSONObject();
-
-        try
-        {
-            //create sorting object
-            JSONObject sortingObject = new JSONObject();
-            sortingObject.put("Property", "TanggalBerita");
-            sortingObject.put("Direction", "DESC");
-
-            //create sorting array
-            JSONArray sortingArray = new JSONArray();
-            sortingArray.put(sortingObject);
-
-            //create dbParam
-            JSONObject dbParam = new JSONObject();
-            dbParam.put("Page", 1);
-            dbParam.put("Limit", 10);
-            dbParam.put("Sort", sortingArray);
-
-            //create filter object
-            JSONObject filterObject = new JSONObject();
-            filterObject.put("Property", "Publish");
-            filterObject.put("Operator", "eq");
-            filterObject.put("Value", 1);
-
-            //create filter array
-            JSONArray filterArray = new JSONArray();
-            filterArray.put(filterObject);
-
-            //create request object
-            requestObject.put("DatabaseID", "db1");
-            requestObject.put("ViewName", "MKI_VW_NEWS_GLOBAL");
-            requestObject.put("DBParam", dbParam);
-            requestObject.put("Filter", filterArray);
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-
-        //return object
-        return requestObject;
-    }
-
-    //handle get global news
-    private void HandleGetGlobalNewsResult(String resultString)
-    {
-        //dismiss loading alert
-        genericAlert.Dismiss();
-
-        try
-        {
-            //create json object
-            JSONArray resultArray = new JSONArray(resultString);
-
-            //create array of news
-            ArrayList<GlobalNews> news = new ArrayList<>();
-
-            //parse all news item
-            for (int i = 0; i < resultArray.length(); i++)
-            {
-                GlobalNews globalNews = new GlobalNews();
-                globalNews.ParseData(resultArray.getJSONObject(i));
-                news.add(globalNews);
-            }
-
-            //create news adapter
-            beritaAdapter = new BeritaGlobalAdapter(this, news);
-            AttachNewsData();
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    //Attach news data
-    private void AttachNewsData()
-    {
-        //attach adapter to recyclerview
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        view_ListBerita.setLayoutManager(layoutManager);
-        view_ListBerita.setItemAnimator(new DefaultItemAnimator());
-        Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider_vertical_10dp);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        dividerItemDecoration.setDrawable(dividerDrawable);
-        view_ListBerita.addItemDecoration(dividerItemDecoration);
-        view_ListBerita.setAdapter(beritaAdapter);
     }
 }

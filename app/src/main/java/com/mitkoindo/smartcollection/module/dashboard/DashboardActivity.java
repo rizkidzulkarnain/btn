@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.mitkoindo.smartcollection.R;
-import com.mitkoindo.smartcollection.adapter.DashboardTabAdapter;
+import com.mitkoindo.smartcollection.adapter.CommonTabAdapter;
 
 import java.util.ArrayList;
 
@@ -63,7 +63,7 @@ public class DashboardActivity extends AppCompatActivity
         fragments.add(new DashboardNPLFragment());
 
         //create tab adapter
-        DashboardTabAdapter dashboardTabAdapter = new DashboardTabAdapter(getSupportFragmentManager(), fragments, fragmentTitles);
+        CommonTabAdapter dashboardTabAdapter = new CommonTabAdapter(getSupportFragmentManager(), fragments, fragmentTitles);
 
         //set adapter to tab
         view_ViewPager.setAdapter(dashboardTabAdapter);

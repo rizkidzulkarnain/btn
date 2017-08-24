@@ -1,0 +1,42 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mitkoindo.smartcollection.module.berita.BeritaGrupFragment">
+
+    <!--Recycler view untuk hold item berita-->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/BeritaGroupFragment_SwipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/BeritaGroupFragment_ListBerita"
+            android:visibility="gone"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:clipToPadding="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <!--Progress bar-->
+    <ProgressBar
+        android:id="@+id/BeritaGroupFragment_ProgressBar"
+        android:visibility="visible"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--Message text-->
+    <TextView
+        android:id="@+id/BeritaGroupFragment_Message"
+        android:visibility="gone"
+        android:textColor="@color/White"
+        android:textSize="16sp"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

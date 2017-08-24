@@ -63,11 +63,11 @@ public class LoginActivity extends AppCompatActivity
     //get views
     private void GetViews()
     {
-        view_RememberMe = (Switch) findViewById(R.id.LoginActivity_RememberMe);
+        view_RememberMe = findViewById(R.id.LoginActivity_RememberMe);
 
         //get form username & password
-        form_Username = (EditText) findViewById(R.id.LoginActivity_Username);
-        form_Password = (EditText) findViewById(R.id.LoginActivity_Password);
+        form_Username = findViewById(R.id.LoginActivity_Username);
+        form_Password = findViewById(R.id.LoginActivity_Password);
 
         //create alert dialog
         genericAlert = new GenericAlert(this);
@@ -192,15 +192,16 @@ public class LoginActivity extends AppCompatActivity
             //get access token
             JSONObject resultObject = new JSONObject(resultString);
 
-            //get token
+            //get token & user properties
             String accessToken = resultObject.getString("AccessToken");
             String userName = resultObject.getString("SU_FULLNAME");
             String userGroup = resultObject.getString("SG_GRPNAME");
+            String userGroupID = resultObject.getString("GROUPID");
 
             //simpan access token di shared preference
             SaveToken(accessToken);
             SaveUserID();
-            SaveUserNameAndGroup(userName, userGroup);
+            SaveUserNameAndGroup(userName, userGroup, userGroupID);
 
             //open home activity
             OpenHomeActivity();
@@ -243,17 +244,19 @@ public class LoginActivity extends AppCompatActivity
     }
 
     //save user name
-    private void SaveUserNameAndGroup(String userName, String userGroup)
+    private void SaveUserNameAndGroup(String userName, String userGroup, String userGroupID)
     {
         //get user id key & group key
         String userNameKey = getString(R.string.SharedPreferenceKey_NamaPetugas);
         String userGroupKey = getString(R.string.SharedPreferenceKey_UserGroup);
+        String userGroupIDKey = getString(R.string.SharedPreferenceKey_UserGroupID);
 
         //save user ID
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(userNameKey, userName);
         editor.putString(userGroupKey, userGroup);
+        editor.putString(userGroupIDKey, userGroupID);
         editor.apply();
     }
 

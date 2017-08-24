@@ -309,23 +309,36 @@ public class NetworkConnection
                 int HttpResult = httpURLConnection.getResponseCode();
 
                 //cek jika resultcode nggak 200
-                /*switch (HttpResult)
+                switch (HttpResult)
                 {
+                    case HttpsURLConnection.HTTP_NO_CONTENT : //204
+                        return "204"; //Sukses, tapi balesannya emang no content
                     case HttpsURLConnection.HTTP_BAD_REQUEST : //400
                         return "Bad Request";
                     case HttpsURLConnection.HTTP_UNAUTHORIZED : //401
                         return "Unauthorized";
                     case HttpsURLConnection.HTTP_FORBIDDEN : //403
                         return "Forbidden";
-                    case HttpsURLConnection.HTTP_NOT_FOUND : //404
-                        return "Not Found";
+                    /*case HttpsURLConnection.HTTP_NOT_FOUND : //404
+                        return "Not Found";*/
                     case HttpsURLConnection.HTTP_INTERNAL_ERROR : //500
                         return "Internal Server Error";
                     default:break;
-                }*/
+                }
+
+                //the only way to reach this line is if the result is 404
+                BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"utf-8"));
+                String line = null;
+                while ((line = br.readLine()) != null)
+                {
+                    sb.append(line + "\n");
+                }
+                br.close();
+
+                serverResponse = ""+sb.toString();
 
                 //cek resultcode, jika 503, return maintenance
-                if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)
+                /*if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)
                     return "Maintenance";
 
                 if (HttpResult == HttpURLConnection.HTTP_OK)
@@ -339,7 +352,7 @@ public class NetworkConnection
                     br.close();
 
                     serverResponse = ""+sb.toString();
-                }
+                }*/
             }
             else if (url.openConnection() instanceof HttpURLConnection)
             {
@@ -369,21 +382,36 @@ public class NetworkConnection
 
                 int HttpResult = httpURLConnection.getResponseCode();
 
+                /*serverResponse = Integer.toString(HttpResult);*/
+
                 //cek jika resultcode nggak 200
                 switch (HttpResult)
                 {
-                    /*case HttpsURLConnection.HTTP_BAD_REQUEST : //400
-                        return "Bad Request";*/
-                    case HttpsURLConnection.HTTP_UNAUTHORIZED : //401
+                    case HttpURLConnection.HTTP_NO_CONTENT : //204
+                        return "204";
+                    case HttpURLConnection.HTTP_BAD_REQUEST : //400
+                        return "Bad Request";
+                    case HttpURLConnection.HTTP_UNAUTHORIZED : //401
                         return "Unauthorized";
-                    case HttpsURLConnection.HTTP_FORBIDDEN : //403
+                    case HttpURLConnection.HTTP_FORBIDDEN : //403
                         return "Forbidden";
-                    case HttpsURLConnection.HTTP_NOT_FOUND : //404
-                        return "Not Found";
-                    case HttpsURLConnection.HTTP_INTERNAL_ERROR : //500
+                    /*case HttpURLConnection.HTTP_NOT_FOUND : //404
+                        return "Not Found";*/
+                    case HttpURLConnection.HTTP_INTERNAL_ERROR : //500
                         return "Internal Server Error";
                     default:break;
                 }
+
+                //the only way to reach this line is if the result is 404
+                BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"utf-8"));
+                String line = null;
+                while ((line = br.readLine()) != null)
+                {
+                    sb.append(line + "\n");
+                }
+                br.close();
+
+                serverResponse = ""+sb.toString();
 
                 //cek resultcode, jika 503, return maintenance
                 /*if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)
@@ -402,17 +430,10 @@ public class NetworkConnection
                     serverResponse = ""+sb.toString();
                 }*/
 
-                BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"utf-8"));
-                String line = null;
-                while ((line = br.readLine()) != null)
-                {
-                    sb.append(line + "\n");
-                }
-                br.close();
-
-                serverResponse = ""+sb.toString();
+                /*
                 int x = 0;
                 int z = x + 1;
+                */
             }
         }
         catch (IOException e)

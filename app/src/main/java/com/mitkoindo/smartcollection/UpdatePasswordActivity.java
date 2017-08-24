@@ -1,10 +1,12 @@
 package com.mitkoindo.smartcollection;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -167,7 +169,22 @@ public class UpdatePasswordActivity extends AppCompatActivity
         //dismiss loading alert
         genericAlert.Dismiss();
 
-        try
+        //cek jika response code adalah 204
+        if (resultString.equals("204"))
+        {
+            //jika resultnya 204, maka update password sukses
+            //remove auth token dan
+            //show alert bahwa password berhasil diganti, dan jika user press ok di alertnya,
+            //access token akan dihapus, dan app akan kembali ke screen login
+            DeleteAuthToken();
+            ShowPasswordChangedAlert();
+        }
+        else
+        {
+            //show error message
+        }
+
+        /*try
         {
             //sementara ini cek dulu stringnya kosong atau nggak
             if (resultString.isEmpty())
@@ -183,14 +200,14 @@ public class UpdatePasswordActivity extends AppCompatActivity
             //get access token
             JSONObject resultObject = new JSONObject(resultString);
 
-            /*//get token
+            //get token
             String accessToken = resultObject.getString("AccessToken");
 
             //simpan access token di shared preference
             SaveToken(accessToken);
 
             //open home activity
-            OpenHomeActivity();*/
+            OpenHomeActivity();
         }
         catch (JSONException e)
         {
@@ -198,6 +215,57 @@ public class UpdatePasswordActivity extends AppCompatActivity
 
             //show alert
             genericAlert.DisplayAlert(resultString, "");
-        }
+        }*/
+    }
+
+    //Delete auth token
+    private void DeleteAuthToken()
+    {
+        //get preference name & key
+        String authTokenKey = getString(R.string.SharedPreferenceKey_AccessToken);
+
+        //save access token
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(authTokenKey, "");
+        editor.apply();
+    }
+
+    //show password changed alert
+    private void ShowPasswordChangedAlert()
+    {
+        //setup builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+
+        //set title & message
+        builder.setTitle(R.string.Text_Success);
+        builder.setMessage(R.string.UpdatePassword_Alert_UpdatePasswordSuccess);
+
+        //set listener
+        builder.setPositiveButton(R.string.Text_OK, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                ReturnUserToLoginScreen();
+            }
+        });
+
+        //show alert
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    //return user ke login screen
+    private void ReturnUserToLoginScreen()
+    {
+        //start login screen
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+
+        //remove all previous screen
+        finishAffinity();
+
     }
 }

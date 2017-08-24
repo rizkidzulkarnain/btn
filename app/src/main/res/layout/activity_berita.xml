@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_bluegradient"
-    android:padding="10dp"
     tools:context="com.mitkoindo.smartcollection.module.berita.BeritaActivity">
 
     <LinearLayout
@@ -15,6 +14,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:padding="10dp"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -38,20 +38,39 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+        <android.support.design.widget.TabLayout
+            android:id="@+id/BeritaActivity_Tab"
+            android:background="@color/Background_PageTitle"
+            android:layout_marginTop="10dp"
+            app:tabTextColor="@color/White"
+            app:tabSelectedTextColor="@color/White"
+            app:tabIndicatorColor="@color/White"
+            app:tabTextAppearance="@style/TabLayoutNotAllCaps"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/BeritaActivity_ViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <!--Recycler view untuk hold item berita-->
-        <android.support.v7.widget.RecyclerView
+        <!--<android.support.v7.widget.RecyclerView
             android:id="@+id/BeritaActivity_ListBerita"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:clipToPadding="false"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"/>-->
     </LinearLayout>
 
     <!--back button-->
     <RelativeLayout
         android:onClick="HandleInput_Berita_Back"
         android:background="@drawable/background_circle_blacktransparent"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_width="66dp"
@@ -65,11 +84,22 @@
     </RelativeLayout>
 
     <!--Button buat add berita baru-->
-    <android.support.design.widget.FloatingActionButton
+    <RelativeLayout
+        android:id="@+id/BeritaActivity_CreateBroadcast"
         android:onClick="HandleInput_Berita_CreateBroadcast"
+        android:background="@drawable/background_circle_blacktransparent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:src="@drawable/ic_message_white_36dp"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 </RelativeLayout>
