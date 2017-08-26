@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity
         //set current menu index
         currentMenuIndex = 0;
 
-        view_DrawerMenuList = (RecyclerView)findViewById(R.id.MainActivity_MenuList);
-        drawerLayout = (DrawerLayout)findViewById(R.id.activity_Main);
+        view_DrawerMenuList = findViewById(R.id.MainActivity_MenuList);
+        drawerLayout = findViewById(R.id.activity_Main);
     }
 
     //setup view

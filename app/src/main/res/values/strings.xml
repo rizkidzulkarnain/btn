@@ -17,6 +17,8 @@
     <string name="Text_Batal">Batal</string>
     <string name="Text_SelectAll">Select All</string>
     <string name="Text_SomethingWrong">Terjadi kesalahan, mohon coba kembali</string>
+    <string name="Text_UploadFailed">Upload gagal, mohon coba kembali</string>
+    <string name="Text_MohonMaaf">Mohon Maaf</string>
     <string name="Misc_Copyright">\u00A9 Copyright Bank BTN 2017</string>
 
     <!--Login page-->
@@ -62,6 +64,8 @@
     <string name="Berita_Broadcast_Popup_Title">Broadcast berita ke&#8230;</string>
     <string name="Berita_Fragment_Global_Title">Berita Global</string>
     <string name="Berita_Fragment_Group_Title">Berita Group</string>
+    <string name="Berita_Broadcast_Alert_StartDateAfterEndDate">Start date tidak boleh melebihi expired date</string>
+    <string name="Berita_Broadcast_Alert_EndDateBeforeStartDate">Expired date tidak boleh mendahului start date</string>
 
     <!--List debitur page-->
     <string name="ListDebitur_PageTitle">List Debitur</string>
@@ -220,6 +224,7 @@
     <string name="URL_UpdatePassword">api/Account/updatePassword</string>
     <string name="URL_Data_StoreProcedure">api/Data/sp</string>
     <string name="URL_Data_View">api/Data/view</string>
+    <string name="URL_UploadFile">api/File/upload</string>
 
     <!--Shared preference key-->
     <string name="SharedPreferenceName">SharedPreference_SmartCollection</string>

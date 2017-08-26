@@ -14,14 +14,31 @@
         android:layout_height="wrap_content">
 
         <!--Spinner untuk memilih mau menampilkan data hari ini atau akumulasi-->
-        <Spinner
-            android:id="@+id/DashboardKunjunganFragment_Spinner"
-            android:background="@color/Background_Spinner1"
-            android:dropDownSelector="@color/White"
-            android:gravity="center"
+        <RelativeLayout
             android:padding="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/DashboardKunjunganFragment_Spinner"
+                android:background="@color/Background_Spinner1"
+                android:dropDownSelector="@color/White"
+                android:padding="5dp"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <!--Dropdown arrow, karena yang punya spinner ketutup background-->
+            <ImageView
+                android:src="@drawable/ic_arrow_drop_down_white_36dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
 
         <!--Label data nominal-->
         <TextView

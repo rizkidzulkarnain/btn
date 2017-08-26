@@ -77,4 +77,21 @@ public class ResourceLoader
         //jika tidak kosong, return hasil get base url dari shared preference
         return baseURL;
     }
+
+    //load auth token
+    public static String LoadAuthToken(Context context)
+    {
+        //get auth token
+        String key_AuthToken = context.getString(R.string.SharedPreferenceKey_AccessToken);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(key_AuthToken, "");
+    }
+
+    //load user ID
+    public static String LoadUserID(Context context)
+    {
+        String key_UserID = context.getString(R.string.SharedPreferenceKey_UserID);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(key_UserID, "");
+    }
 }

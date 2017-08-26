@@ -1,9 +1,13 @@
 package com.mitkoindo.smartcollection.module.berita;
 
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -19,11 +23,15 @@ import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.adapter.BeritaAdapter;
+import com.mitkoindo.smartcollection.helper.ItemClickListener;
+import com.mitkoindo.smartcollection.objectdata.MobileNews;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,7 +64,7 @@ public class BeritaGrupFragment extends Fragment
     //  Data
     //----------------------------------------------------------------------------------------------
     //adapter for berita
-    /*private BeritaAdapter beritaAdapter;*/
+    private BeritaAdapter beritaAdapter;
 
     //----------------------------------------------------------------------------------------------
     //  Transaksi
@@ -67,6 +75,9 @@ public class BeritaGrupFragment extends Fragment
 
     //auth token
     private String authToken;
+
+    //user ID
+    private String userID;
 
     //----------------------------------------------------------------------------------------------
     //  Setup
@@ -102,11 +113,12 @@ public class BeritaGrupFragment extends Fragment
     }
 
     //set transaction data
-    public void SetTransactionData(String baseURL, String url_GetNews, String authToken)
+    public void SetTransactionData(String baseURL, String url_GetNews, String authToken, String userID)
     {
         this.baseURL = baseURL;
         this.url_GetNews = url_GetNews;
         this.authToken = authToken;
+        this.userID = userID;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -145,7 +157,7 @@ public class BeritaGrupFragment extends Fragment
         @Override
         protected void onPostExecute(String s)
         {
-            super.onPostExecute(s);
+             super.onPostExecute(s);
             HandleGetGroupNewsResult(s);
         }
     }
@@ -156,6 +168,45 @@ public class BeritaGrupFragment extends Fragment
         //create empty object
         JSONObject requestObject = new JSONObject();
 
+        //populate request object
+        try
+        {
+            //create sorting object
+            JSONObject sortingObject = new JSONObject();
+            sortingObject.put("Property", "CreatedDate");
+            sortingObject.put("Direction", "DESC");
+
+            //create sorting array
+            JSONArray sortingArray = new JSONArray();
+            sortingArray.put(sortingObject);
+
+            //create dbParam
+            JSONObject dbParam = new JSONObject();
+            dbParam.put("Page", 1);
+            dbParam.put("Limit", 10);
+            dbParam.put("Sort", sortingArray);
+
+            //create filter object
+            JSONObject filterObject = new JSONObject();
+            filterObject.put("Property", "ToUserID");
+            filterObject.put("Operator", "eq");
+            filterObject.put("Value", userID);
+
+            //create filter array
+            JSONArray filterArray = new JSONArray();
+            filterArray.put(filterObject);
+
+            //create request object
+            requestObject.put("DatabaseID", "db1");
+            requestObject.put("ViewName", "MKI_VW_NEWS_GROUP");
+            requestObject.put("DBParam", dbParam);
+            requestObject.put("Filter", filterArray);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
         //return object
         return requestObject;
     }
@@ -163,7 +214,52 @@ public class BeritaGrupFragment extends Fragment
     //handle get global news
     private void HandleGetGroupNewsResult(String resultString)
     {
+        try
+        {
+            //parse data
+            JSONArray dataArray = new JSONArray(resultString);
 
+            //initialize array
+            ArrayList<MobileNews> mobileNews = new ArrayList<>();
+
+            //extract data
+            for (int i = 0; i < dataArray.length(); i++)
+            {
+                //extract data dari json
+                MobileNews newMobileNews = new MobileNews();
+                newMobileNews.ParseData(dataArray.getJSONObject(i));
+                mobileNews.add(newMobileNews);
+            }
+
+            //create mobile news adapter
+            beritaAdapter = new BeritaAdapter(getActivity(), mobileNews);
+
+            //set click listener ke adapter
+            beritaAdapter.setClickListener(new ItemClickListener()
+            {
+                @Override
+                public void onItemClick(View view, int position)
+                {
+                    OpenAttachedFile(position);
+                }
+            });
+
+            //attach adapter ke list view
+            AttachNewsData();
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+
+            //show message bahwa something wrong
+            String somethingWrongMessage = getString(R.string.Text_SomethingWrong);
+            view_Message.setText(somethingWrongMessage);
+
+            //hide other views
+            view_Message.setVisibility(View.VISIBLE);
+            view_ProgressBar.setVisibility(View.GONE);
+            view_ListBerita.setVisibility(View.GONE);
+        }
     }
 
     //Attach news data
@@ -177,11 +273,40 @@ public class BeritaGrupFragment extends Fragment
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
         dividerItemDecoration.setDrawable(dividerDrawable);
         view_ListBerita.addItemDecoration(dividerItemDecoration);
-        /*view_ListBerita.setAdapter(beritaAdapter);*/
+        view_ListBerita.setAdapter(beritaAdapter);
 
         //show list
         view_ListBerita.setVisibility(View.VISIBLE);
         view_Message.setVisibility(View.GONE);
         view_ProgressBar.setVisibility(View.GONE);
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Handle input
+    //----------------------------------------------------------------------------------------------
+    //open attachment
+    private void OpenAttachedFile(int position)
+    {
+        //get current berita
+        MobileNews newsItem = beritaAdapter.GetCurrentNews(position);
+
+        //pastikan item tidak null
+        if (newsItem == null)
+            return;
+
+        //buka attachment
+        String attachmentURL = newsItem.Attachment;
+        char attachmentURL_FirstCharacter = attachmentURL.charAt(0);
+        if (attachmentURL_FirstCharacter == '/')
+        {
+            attachmentURL = attachmentURL.substring(1);
+        }
+
+        String intentURL = baseURL + attachmentURL;
+
+        //open intent
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(intentURL));
+        startActivity(i);
     }
 }

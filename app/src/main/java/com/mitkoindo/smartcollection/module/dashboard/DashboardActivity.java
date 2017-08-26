@@ -60,7 +60,7 @@ public class DashboardActivity extends AppCompatActivity
         fragments.add(new DashboardKunjunganFragment());
         fragments.add(new DashboardPenyelesaianFragment());
         fragments.add(new DashboardPTPFragment());
-        fragments.add(new DashboardNPLFragment());
+        /*fragments.add(new DashboardNPLFragment());*/
 
         //create tab adapter
         CommonTabAdapter dashboardTabAdapter = new CommonTabAdapter(getSupportFragmentManager(), fragments, fragmentTitles);

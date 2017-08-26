@@ -9,7 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
+import com.mitkoindo.smartcollection.helper.ItemClickListener;
+import com.mitkoindo.smartcollection.module.berita.BeritaGrupFragment;
 import com.mitkoindo.smartcollection.objectdata.GlobalNews;
+import com.mitkoindo.smartcollection.objectdata.MobileNews;
 
 import java.util.ArrayList;
 
@@ -26,13 +29,19 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
     private Activity context;
 
     //data berita
-    private ArrayList<GlobalNews> news;
+    private ArrayList<MobileNews> news;
+
+    //----------------------------------------------------------------------------------------------
+    //  Input
+    //----------------------------------------------------------------------------------------------
+    //click listener
+    private ItemClickListener itemClickListener;
 
     //----------------------------------------------------------------------------------------------
     //  Setup
     //----------------------------------------------------------------------------------------------
     //constructor
-    public BeritaAdapter(Activity context, ArrayList<GlobalNews> news)
+    public BeritaAdapter(Activity context, ArrayList<MobileNews> news)
     {
         this.context = context;
         this.news = news;
@@ -59,21 +68,63 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
             return;
 
         //get current item, dan attach ke holder
-        GlobalNews currentNews = news.get(position);
+        MobileNews currentNews = news.get(position);
 
         //attach to view
-        holder.Title.setText(currentNews.Subject);
+        holder.Title.setText(currentNews.Title);
+        holder.Sender.setText(currentNews.AuthorID);
+        holder.Content.setText(currentNews.NewsContent);
+        holder.SendTime.setText(currentNews.StartDate);
 
+        //cek attachment
+        if (currentNews.Attachment == null || currentNews.Attachment.isEmpty())
+        {
+            //show no attachment text
+            holder.Holder_NoFile.setVisibility(View.VISIBLE);
+            holder.Holder_FileExist.setVisibility(View.GONE);
+        }
+        else
+        {
+            //show attachment
+            holder.Holder_FileExist.setVisibility(View.VISIBLE);
+            holder.Holder_NoFile.setVisibility(View.GONE);
+
+            //set filename
+            holder.FileName.setText(currentNews.Attachment);
+        }
     }
 
     @Override
     public int getItemCount()
     {
-        return 0;
+        return news.size();
     }
 
+    //get current item
+    public MobileNews GetCurrentNews(int index)
+    {
+        //pastikan index tidak melebihi item size
+        if (index >= getItemCount())
+            return null;
+
+        //return news item
+        return news.get(index);
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Handle Input
+    //----------------------------------------------------------------------------------------------
+    // allows clicks events to be caught
+    public void setClickListener(ItemClickListener itemClickListener)
+    {
+        this.itemClickListener = itemClickListener;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  View holder
+    //----------------------------------------------------------------------------------------------
     //Viewholder
-    class BeritaViewHolder extends RecyclerView.ViewHolder
+    class BeritaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         //views
         TextView Title;
@@ -100,6 +151,16 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
 
             Holder_NoFile = itemView.findViewById(R.id.AdapterBerita_NoFile);
             Holder_FileExist = itemView.findViewById(R.id.AdapterBerita_FileHolder);
+
+            //add listener ke file exist holder
+            Holder_FileExist.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view)
+        {
+            if (itemClickListener != null)
+                itemClickListener.onItemClick(view, getAdapterPosition());
         }
     }
 }

@@ -93,9 +93,7 @@ public class HistoriTindakanActivity extends AppCompatActivity
         url_Data_StoreProcedure = getString(R.string.URL_Data_StoreProcedure);
 
         //get auth token
-        String key_AuthToken = getString(R.string.SharedPreferenceKey_AccessToken);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        authToken = sharedPreferences.getString(key_AuthToken, "");
+        authToken = ResourceLoader.LoadAuthToken(this);
 
         //show loading alert & create request
         genericAlert.ShowLoadingAlert();

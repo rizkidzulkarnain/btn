@@ -5,7 +5,7 @@
     android:background="@color/White"
     android:padding="10dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <!--Title-->
     <TextView
@@ -118,6 +118,8 @@
             <!--file icon-->
             <ImageView
                 android:id="@+id/AdapterBerita_FileIcon"
+                android:src="@drawable/ic_insert_drive_file_white_24dp"
+                android:tint="@color/Background_PageTitle"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
 

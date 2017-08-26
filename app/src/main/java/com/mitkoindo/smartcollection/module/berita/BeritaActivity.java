@@ -64,6 +64,9 @@ public class BeritaActivity extends AppCompatActivity
     //auth token
     private String authToken;
 
+    //user ID
+    private String userID;
+
     //----------------------------------------------------------------------------------------------
     //  Setup
     //----------------------------------------------------------------------------------------------
@@ -104,9 +107,10 @@ public class BeritaActivity extends AppCompatActivity
         url_GetBerita = getString(R.string.URL_Data_View);
 
         //get auth token
-        String key_AuthToken = getString(R.string.SharedPreferenceKey_AccessToken);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        authToken = sharedPreferences.getString(key_AuthToken, "");
+        authToken = ResourceLoader.LoadAuthToken(this);
+
+        //get user ID
+        userID = ResourceLoader.LoadUserID(this);
     }
 
     //setup views
@@ -123,7 +127,7 @@ public class BeritaActivity extends AppCompatActivity
 
         //set transaction property
         beritaGlobalFragment.SetTransactionData(baseURL, url_GetBerita, authToken);
-        beritaGrupFragment.SetTransactionData(baseURL, url_GetBerita, authToken);
+        beritaGrupFragment.SetTransactionData(baseURL, url_GetBerita, authToken, userID);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(beritaGlobalFragment);
