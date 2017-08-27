@@ -19,6 +19,7 @@
     <string name="Text_SomethingWrong">Terjadi kesalahan, mohon coba kembali</string>
     <string name="Text_UploadFailed">Upload gagal, mohon coba kembali</string>
     <string name="Text_MohonMaaf">Mohon Maaf</string>
+    <string name="Text_IsianBelumLengkap">Form belum lengkap</string>
     <string name="Misc_Copyright">\u00A9 Copyright Bank BTN 2017</string>
 
     <!--Login page-->
@@ -46,6 +47,19 @@
     <string name="Dashboard_NPL_Nasional">NPL Nasional</string>
     <string name="Dashboard_NPL_Kanwil">NPL Kanwil</string>
     <string name="Dashboard_NPL_KC">NPL KC</string>
+    <string name="Dashboard_Target">Target</string>
+    <string name="Dashboard_Realisasi">Realisasi</string>
+    <string name="Dashboard_Outstanding">Outstanding</string>
+    <string name="Dashboard_NPL">NPL</string>
+    <string name="Dashboard_SaldoPokokNPL">Saldo Pokok NPL</string>
+    
+    <!--Dashboard mode-->
+    <string name="dashboardKunjungan_Mode_Today">MKI_SP_DASHBOARD_KUNJUNGAN_TODAY</string>
+    <string name="dashboardKunjungan_Mode_Monthly">MKI_SP_DASHBOARD_KUNJUNGAN_MONTH</string>
+    <string name="dashboardPenyelesaian_Mode_Today">MKI_SP_DASHBOARD_PENYELESAIAN_TODAY</string>
+    <string name="dashboardPenyelesaian_Mode_Monthly">MKI_SP_DASHBOARD_PENYELESAIAN_MONTH</string>
+    <string name="dashboardPTP_Mode_Today">MKI_SP_DASHBOARD_PTP_TODAY</string>
+    <string name="dashboardPTP_Mode_Monthly">MKI_SP_DASHBOARD_PTP_MONTH</string>
 
     <!--Berita page-->
     <string name="Berita_Title">Info Berita</string>
@@ -67,6 +81,7 @@
     <string name="Berita_Fragment_Group_Title">Berita Group</string>
     <string name="Berita_Broadcast_Alert_StartDateAfterEndDate">Start date tidak boleh melebihi expired date</string>
     <string name="Berita_Broadcast_Alert_EndDateBeforeStartDate">Expired date tidak boleh mendahului start date</string>
+    <string name="Berita_Broadcast_Alert_BroadcastSuccess">Berita berhasil dikirim</string>
 
     <!--List debitur page-->
     <string name="ListDebitur_PageTitle">List Debitur</string>

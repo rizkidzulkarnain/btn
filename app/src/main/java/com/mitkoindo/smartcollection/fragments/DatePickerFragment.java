@@ -49,7 +49,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     private Activity caller;
 
     //date format
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+    /*private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());*/
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     //set reference ke activity yang memanggil
     public void SetCallerActivity(Activity caller)

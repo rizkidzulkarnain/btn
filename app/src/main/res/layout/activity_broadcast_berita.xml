@@ -49,6 +49,8 @@
             <EditText
                 android:id="@+id/BroadcastBerita_Title"
                 android:hint="@string/Berita_Broadcast_JudulHint"
+                android:inputType="text"
+                android:imeOptions="actionNext"
                 android:layout_marginTop="5dp"
                 android:theme="@style/EditText.BroadcastBerita"
                 android:layout_width="match_parent"

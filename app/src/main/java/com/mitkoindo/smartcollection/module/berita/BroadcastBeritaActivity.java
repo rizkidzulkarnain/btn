@@ -15,6 +15,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -45,6 +47,10 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     //----------------------------------------------------------------------------------------------
     //  Views
     //----------------------------------------------------------------------------------------------
+    //form
+    private TextView view_Title;
+    private TextView view_Content;
+
     //start date & expired date text
     private TextView view_StartDate;
     private TextView view_ExpiredDate;
@@ -116,6 +122,10 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     //get views
     private void GetViews()
     {
+        //get title & content
+        view_Title = findViewById(R.id.BroadcastBerita_Title);
+        view_Content = findViewById(R.id.BroadcastBerita_Isi);
+
         //create datepicker
         datePickerFragment = new DatePickerFragment();
         datePickerFragment.SetCallerActivity(this);
@@ -155,6 +165,23 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     //open broadcast popup
     public void HandleInput_BroadcastBerita_OpenBroadcastPopup(View view)
     {
+        //get data dari form
+        formBroadcastBerita.Judul = view_Title.getText().toString();
+        formBroadcastBerita.Isi = view_Content.getText().toString();
+
+        //pastikan judul, isi, dan start / end date sudah diisi
+        if (formBroadcastBerita.Judul.isEmpty() ||
+                formBroadcastBerita.Isi.isEmpty() ||
+                formBroadcastBerita.StartDate == null ||
+                formBroadcastBerita.ExpiredDate == null)
+        {
+            //show alert bahwa isian belum lengkap
+            String alertTitle = getString(R.string.Text_MohonMaaf);
+            String alertMessage = getString(R.string.Text_IsianBelumLengkap);
+            genericAlert.DisplayAlert(alertMessage, alertTitle);
+            return;
+        }
+
         //get inflater
         LayoutInflater inflater = getLayoutInflater();
 
@@ -182,8 +209,8 @@ public class BroadcastBeritaActivity extends AppCompatActivity
         //show dialog
         sendPopup.show();
 
-        //test upload file
-        /*CreateSendFileRequest();*/
+        /*//test upload file
+        CreateSendFileRequest();*/
     }
 
     //open datepicker fragment, select start date
@@ -236,7 +263,22 @@ public class BroadcastBeritaActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                CreateSendBroadcastRequest();
+                //cek ada attachment atau tidak
+                if (formBroadcastBerita.Filepath == null || formBroadcastBerita.Filepath.isEmpty())
+                    CreateSendBroadcastRequest();
+                else
+                    CreateSendFileRequest();
+            }
+        });
+
+        //add listener ke checkbox
+        final CheckBox selectAllButton = broadcastPopup.findViewById(R.id.BroadcastPopup_SelectAll);
+        selectAllButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+            {
+                staffBroadcastAdapter.HandleInput_BroadcastAdapter_SelectAllTrigger(selectAllButton);
             }
         });
     }
@@ -441,10 +483,6 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     //create request
     private void CreateSendFileRequest()
     {
-        //pastikan filepath tidak kosong
-        if (formBroadcastBerita.Filepath == null || formBroadcastBerita.Filepath.isEmpty())
-            return;
-
         new ExecuteSendFileRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
     }
 
@@ -476,7 +514,7 @@ public class BroadcastBeritaActivity extends AppCompatActivity
                     });*/
             Ion.with(BroadcastBeritaActivity.this)
                     .load(usedURL)
-                    .setHeader("Content-Type", "multipart/form-data")
+                    .setHeader("ContentType", "multipart/form-data")
                     .setHeader("Authorization", "Bearer" + authToken)
                     .setMultipartFile("file", file)
                     .asString()
@@ -484,8 +522,7 @@ public class BroadcastBeritaActivity extends AppCompatActivity
                         @Override
                         public void onCompleted(Exception e, String result)
                         {
-                            int x = 0;
-                            int y = x + 1;
+                            HandleUploadFileResult(e, result);
                         }
                     });
 
@@ -500,7 +537,7 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     }
 
     //handle response
-    private void HandleUploadFileResult(Exception e, JsonObject result)
+    private void HandleUploadFileResult(Exception e, String result)
     {
         //text buat alert kalo gagal upload file
         String title = getString(R.string.Text_MohonMaaf);
@@ -514,18 +551,14 @@ public class BroadcastBeritaActivity extends AppCompatActivity
             return;
         }
 
-        //get string dari response server
-        String resultString = result.toString();
-
         try
         {
             //parse result dalam bentuk JSONObject
-            JSONObject resultObject = new JSONObject(resultString);
+            JSONObject resultObject = new JSONObject(result);
 
             //simpan relativepath
             formBroadcastBerita.UploadedFilepath = resultObject.getString("RelativePath");
-
-            //ToDo :  langsung lanjut dengan upload form?
+            CreateSendBroadcastRequest();
         }
         catch (JSONException e1)
         {
@@ -556,13 +589,17 @@ public class BroadcastBeritaActivity extends AppCompatActivity
             //create request object
             JSONObject requestObject = CreateSendBroadcastRequestObject();
 
-            return null;
+            //eksekusi request
+            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
+            networkConnection.SetRequestObject(requestObject);
+            return networkConnection.SendPostRequest(usedURL);
         }
 
         @Override
         protected void onPostExecute(String s)
         {
             super.onPostExecute(s);
+            HandleSendBroadcastResult(s);
         }
     }
 
@@ -584,11 +621,14 @@ public class BroadcastBeritaActivity extends AppCompatActivity
             JSONObject spParameterObject = new JSONObject();
             spParameterObject.put("AuthorID", userID);
             spParameterObject.put("Title", formBroadcastBerita.Judul);
-            spParameterObject.put("Summary", "");
+            spParameterObject.put("Summary", formBroadcastBerita.Isi);
             spParameterObject.put("NewsContent", formBroadcastBerita.Isi);
             spParameterObject.put("StartDate", formBroadcastBerita.StartDate_Formatted);
             spParameterObject.put("EndDate", formBroadcastBerita.ExpiredDate_Formatted);
-            spParameterObject.put("Attachment", "");
+            if (formBroadcastBerita.UploadedFilepath != null)
+                spParameterObject.put("Attachment", formBroadcastBerita.UploadedFilepath);
+            else
+                spParameterObject.put("Attachment", "");
 
             if (allUserSelected)
             {
@@ -613,6 +653,8 @@ public class BroadcastBeritaActivity extends AppCompatActivity
 
             //populate request object
             requestObject.put("DatabaseID", "db1");
+            requestObject.put("SpName", "MKI_SP_NEWS_CREATE");
+            requestObject.put("SpParameter", spParameterObject);
         }
         catch (JSONException e)
         {
@@ -621,5 +663,71 @@ public class BroadcastBeritaActivity extends AppCompatActivity
 
         //return request object
         return requestObject;
+    }
+
+    //handle result
+    private void HandleSendBroadcastResult(String resultString)
+    {
+        //komponen alert message
+        String alertTitle, alertMessage;
+
+        //pastikan response tidak kosong
+        if (resultString == null || resultString.isEmpty())
+        {
+            //show alert bahwa transaksi gagal
+            alertTitle = getString(R.string.Text_MohonMaaf);
+            alertMessage = getString(R.string.Text_SomethingWrong);
+            genericAlert.DisplayAlert(alertMessage, alertTitle);
+            return;
+        }
+
+        try
+        {
+            //konvert jadi json object
+            JSONArray resultArray = new JSONArray(resultString);
+
+            if (resultArray.length() <= 0)
+            {
+                //show error
+                alertTitle = getString(R.string.Text_MohonMaaf);
+                alertMessage = getString(R.string.Text_SomethingWrong);
+                genericAlert.DisplayAlert(alertMessage, alertTitle);
+                return;
+            }
+
+            //get response object
+            JSONObject resultObject = resultArray.getJSONObject(0);
+
+            //get response code
+            int responseCode = resultObject.getInt("ResponseCode");
+
+            //cek apakah response codenya 200
+            if (responseCode != 200)
+            {
+                //show error
+                alertTitle = getString(R.string.Text_MohonMaaf);
+                alertMessage = getString(R.string.Text_SomethingWrong);
+                genericAlert.DisplayAlert(alertMessage, alertTitle);
+                return;
+            }
+
+            //show alert bahwa send broadcast sukses
+            alertTitle = getString(R.string.Text_Success);
+            alertMessage = getString(R.string.Berita_Broadcast_Alert_BroadcastSuccess);
+            genericAlert.DisplayAlert(alertMessage, alertTitle);
+
+            //dismiss sendpopup
+            if (sendPopup.isShowing())
+                sendPopup.dismiss();
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+
+            //show error
+            alertTitle = getString(R.string.Text_MohonMaaf);
+            alertMessage = getString(R.string.Text_SomethingWrong);
+            genericAlert.DisplayAlert(alertMessage, alertTitle);
+        }
     }
 }

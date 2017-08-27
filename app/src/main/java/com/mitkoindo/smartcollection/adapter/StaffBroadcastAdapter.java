@@ -83,17 +83,9 @@ public class StaffBroadcastAdapter extends RecyclerView.Adapter<StaffBroadcastAd
         return staffList.size();
     }
 
-    //change staff state
-    private void ChangeStaffState(int position, boolean checked)
-    {
-        //pastikan posisi nggak melebihi index
-        if (position >= getItemCount())
-            return;
-
-        //ganti state staff
-        staffList.get(position).FLAG_CHECKED = checked;
-    }
-
+    //----------------------------------------------------------------------------------------------
+    //  Manipulasi data
+    //----------------------------------------------------------------------------------------------
     //get list staff yang diselect
     public ArrayList<String> GetSelectedUserID()
     {
@@ -123,6 +115,33 @@ public class StaffBroadcastAdapter extends RecyclerView.Adapter<StaffBroadcastAd
         }
 
         return selectedCount == getItemCount();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Handle input
+    //----------------------------------------------------------------------------------------------
+    //change staff state
+    private void ChangeStaffState(int position, boolean checked)
+    {
+        //pastikan posisi nggak melebihi index
+        if (position >= getItemCount())
+            return;
+
+        //ganti state staff
+        staffList.get(position).FLAG_CHECKED = checked;
+    }
+
+    //handle select all input
+    public void HandleInput_BroadcastAdapter_SelectAllTrigger(CheckBox checkBox)
+    {
+        //set all user sesuai state checkbox
+        for (int i = 0; i < staffList.size(); i++)
+        {
+            staffList.get(i).FLAG_CHECKED = checkBox.isChecked();
+        }
+
+        //update view
+        notifyDataSetChanged();
     }
 
     //----------------------------------------------------------------------------------------------
