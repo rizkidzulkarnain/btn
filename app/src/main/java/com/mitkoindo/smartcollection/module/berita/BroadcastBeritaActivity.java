@@ -2,18 +2,26 @@ package com.mitkoindo.smartcollection.module.berita;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.mitkoindo.smartcollection.R;
+import com.mitkoindo.smartcollection.adapter.StaffBroadcastAdapter;
 import com.mitkoindo.smartcollection.fragments.DatePickerFragment;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.objectdata.FormBroadcastBerita;
@@ -47,6 +55,9 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     //generic alert
     private GenericAlert genericAlert;
 
+    //popup buat milih petugas yang akan dikirimi berita
+    private AlertDialog sendPopup;
+
     //----------------------------------------------------------------------------------------------
     //  Data
     //----------------------------------------------------------------------------------------------
@@ -58,6 +69,9 @@ public class BroadcastBeritaActivity extends AppCompatActivity
 
     //data staff list
     private ArrayList<Staff> staffs;
+
+    //adapter staff list
+    private StaffBroadcastAdapter staffBroadcastAdapter;
 
     //----------------------------------------------------------------------------------------------
     //  Utilities
@@ -73,7 +87,7 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     //----------------------------------------------------------------------------------------------
     //base url dan url lainnya
     private String baseURL;
-    private String url_GetStaffList;
+    private String url_DataSP;
     private String url_UploadFile;
 
     //auth token
@@ -125,7 +139,7 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     {
         //load url
         baseURL = ResourceLoader.LoadBaseURL(this);
-        url_GetStaffList = getString(R.string.URL_Data_StoreProcedure);
+        url_DataSP = getString(R.string.URL_Data_StoreProcedure);
         url_UploadFile = getString(R.string.URL_UploadFile);
 
         //load auth token
@@ -141,11 +155,17 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     //open broadcast popup
     public void HandleInput_BroadcastBerita_OpenBroadcastPopup(View view)
     {
-        /*//get inflater
+        //get inflater
         LayoutInflater inflater = getLayoutInflater();
 
         //inflate broadcast popup
         View broadcastPopup = inflater.inflate(R.layout.popup_broadcastberita, null, false);
+
+        //attach data staff list
+        AttachStaffListData(broadcastPopup);
+
+        //Add listener
+        AddListenerToBroadcastPopup(broadcastPopup);
 
         //setup dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -157,13 +177,13 @@ public class BroadcastBeritaActivity extends AppCompatActivity
         builder.setCancelable(false);
 
         //create alertdialog
-        AlertDialog alertDialog = builder.create();
+        sendPopup = builder.create();
 
         //show dialog
-        alertDialog.show();*/
+        sendPopup.show();
 
         //test upload file
-        CreateSendFileRequest();
+        /*CreateSendFileRequest();*/
     }
 
     //open datepicker fragment, select start date
@@ -193,6 +213,32 @@ public class BroadcastBeritaActivity extends AppCompatActivity
         FilePickerBuilder.getInstance().setMaxCount(1)
                 .setActivityTheme(R.style.AppTheme)
                 .pickFile(this);
+    }
+
+    //Listener pada send broadcast popup
+    private void AddListenerToBroadcastPopup(View broadcastPopup)
+    {
+        //get cancel button & add listener
+        Button cancelButton = broadcastPopup.findViewById(R.id.BroadcastPopup_BatalKirim);
+        cancelButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                sendPopup.dismiss();
+            }
+        });
+
+        //get send button & add listener
+        Button sendButton = broadcastPopup.findViewById(R.id.BroadcastPopup_KirimBerita);
+        sendButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                CreateSendBroadcastRequest();
+            }
+        });
     }
 
     //----------------------------------------------------------------------------------------------
@@ -248,6 +294,26 @@ public class BroadcastBeritaActivity extends AppCompatActivity
         }
     }
 
+    //attach staff list data di send popup
+    private void AttachStaffListData(View popupView)
+    {
+        //get recyclerviw
+        RecyclerView view_List = popupView.findViewById(R.id.BroadcastPopup_ListPetugas);
+
+        //create list adapter
+        staffBroadcastAdapter = new StaffBroadcastAdapter(this, staffs);
+
+        //attach stafflist di popup
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        view_List.setLayoutManager(layoutManager);
+        view_List.setItemAnimator(new DefaultItemAnimator());
+        Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider_vertical_10dp);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        dividerItemDecoration.setDrawable(dividerDrawable);
+        view_List.addItemDecoration(dividerItemDecoration);
+        view_List.setAdapter(staffBroadcastAdapter);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -290,7 +356,7 @@ public class BroadcastBeritaActivity extends AppCompatActivity
         protected String doInBackground(String... strings)
         {
             //setup url
-            String usedURL = baseURL + url_GetStaffList;
+            String usedURL = baseURL + url_DataSP;
 
             //create request object
             JSONObject requestObject = CreateGetStaffListRequestObject();
@@ -468,5 +534,92 @@ public class BroadcastBeritaActivity extends AppCompatActivity
             //show alert bahwa upload gagal
             genericAlert.DisplayAlert(message, title);
         }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Handle transaksi buat send berita broadcast
+    //----------------------------------------------------------------------------------------------
+    private void CreateSendBroadcastRequest()
+    {
+        new SendBroadcastRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+    }
+
+    //send broadcast request
+    private class SendBroadcastRequest extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected String doInBackground(String... strings)
+        {
+            //create url
+            String usedURL = baseURL + url_DataSP;
+
+            //create request object
+            JSONObject requestObject = CreateSendBroadcastRequestObject();
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+        }
+    }
+
+    //create request object
+    private JSONObject CreateSendBroadcastRequestObject()
+    {
+        //create request object
+        JSONObject requestObject = new JSONObject();
+
+        //get list of user yang diselect
+        ArrayList<String> selectedUserID = staffBroadcastAdapter.GetSelectedUserID();
+
+        //cek apakah semua user diselect
+        boolean allUserSelected = staffBroadcastAdapter.IsAllUserSelected();
+
+        try
+        {
+            //populate sp parameter request object
+            JSONObject spParameterObject = new JSONObject();
+            spParameterObject.put("AuthorID", userID);
+            spParameterObject.put("Title", formBroadcastBerita.Judul);
+            spParameterObject.put("Summary", "");
+            spParameterObject.put("NewsContent", formBroadcastBerita.Isi);
+            spParameterObject.put("StartDate", formBroadcastBerita.StartDate_Formatted);
+            spParameterObject.put("EndDate", formBroadcastBerita.ExpiredDate_Formatted);
+            spParameterObject.put("Attachment", "");
+
+            if (allUserSelected)
+            {
+                spParameterObject.put("IsGlobal", 1);
+                spParameterObject.put("SendToUserID", "");
+            }
+            else
+            {
+                spParameterObject.put("IsGlobal", 0);
+
+                //create list of user
+                String selectedUsers = "";
+                for (int i = 0; i < selectedUserID.size(); i++)
+                {
+                    selectedUsers += selectedUserID.get(i);
+                    if (i < selectedUserID.size() - 1)
+                        selectedUsers += ",";
+                }
+
+                spParameterObject.put("SendToUserID", selectedUsers);
+            }
+
+            //populate request object
+            requestObject.put("DatabaseID", "db1");
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        //return request object
+        return requestObject;
     }
 }

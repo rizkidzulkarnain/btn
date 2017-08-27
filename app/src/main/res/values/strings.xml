@@ -33,6 +33,7 @@
     <string name="Home_Alert_Logout_Message">Apakah anda ingin log-out?</string>
     <string name="Home_UserID">User ID</string>
     <string name="Home_UserGroup">Group</string>
+    <string name="Home_LogoutFailed">Gagal logout, mohon dicoba kembali</string>
 
     <!--Dashboard page-->
     <string name="Dashboard_Title">Dashboard</string>
@@ -221,6 +222,7 @@
     <!--<string name="BaseURL">https://eaf186b7.ngrok.io/btn_new/</string>-->
     <string name="BaseURL">https://eaf186b7.ngrok.io/btn_new/</string>
     <string name="URL_Login">api/Account/login</string>
+    <string name="URL_Logout">api/Account/logout</string>
     <string name="URL_UpdatePassword">api/Account/updatePassword</string>
     <string name="URL_Data_StoreProcedure">api/Data/sp</string>
     <string name="URL_Data_View">api/Data/view</string>

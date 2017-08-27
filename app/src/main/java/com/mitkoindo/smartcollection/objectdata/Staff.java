@@ -19,6 +19,9 @@ public class Staff
     public String AO_CODE;
     public int SU_LIMIT;
 
+    //custom flag, buat ketika staff masuk ke dalam checklist
+    public boolean FLAG_CHECKED;
+
     //parse data
     public void Parse(JSONObject dataObject)
     {
@@ -33,6 +36,9 @@ public class Staff
             GROUP = dataObject.getString("GROUP");
             AO_CODE = dataObject.getString("AO_CODE");
             SU_LIMIT = dataObject.getInt("SU_LIMIT");
+
+            //set default flag check ke true
+            FLAG_CHECKED = true;
         }
         catch (JSONException e)
         {

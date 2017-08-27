@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,8 @@ import com.mitkoindo.smartcollection.module.berita.BeritaActivity;
 import com.mitkoindo.smartcollection.module.dashboard.DashboardActivity;
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.objectdata.HomeMenu;
+import com.mitkoindo.smartcollection.utilities.GenericAlert;
+import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
 import java.util.ArrayList;
 
@@ -40,6 +43,9 @@ public class HomeActivity extends AppCompatActivity
     //user group holder
     private TextView view_UserGroup;
 
+    //generic alert
+    private GenericAlert genericAlert;
+
     //----------------------------------------------------------------------------------------------
     //  Data
     //----------------------------------------------------------------------------------------------
@@ -48,6 +54,17 @@ public class HomeActivity extends AppCompatActivity
 
     //adapter menu
     private HomeMenuAdapter homeMenuAdapter;
+
+    //----------------------------------------------------------------------------------------------
+    //  Transaksi
+    //----------------------------------------------------------------------------------------------
+    //url
+    private String baseUrl;
+    private String url_Logout;
+
+    //auth token
+    private String authToken;
+
 
     public static Intent instantiateClearTask(Context context) {
         Intent intent = new Intent(context, HomeActivity.class);
@@ -67,6 +84,7 @@ public class HomeActivity extends AppCompatActivity
         //setup
         GetViews();
         SetupViews();
+        SetupTransaction();
     }
 
     //get views
@@ -76,6 +94,9 @@ public class HomeActivity extends AppCompatActivity
         view_UserName = findViewById(R.id.HomeActivity_UserName);
         view_UserID = findViewById(R.id.HomeActivity_UserID);
         view_UserGroup = findViewById(R.id.HomeActivity_UserGroup);
+
+        //create alert
+        genericAlert = new GenericAlert(this);
     }
 
     //setup view
@@ -130,6 +151,17 @@ public class HomeActivity extends AppCompatActivity
         String key_UserGroup = getString(R.string.SharedPreferenceKey_UserGroup);
         String value_UserGroup = sharedPreferences.getString(key_UserGroup, "");
         view_UserGroup.setText(value_UserGroup);
+    }
+
+    //setup transaksi
+    private void SetupTransaction()
+    {
+        //load url
+        baseUrl = ResourceLoader.LoadBaseURL(this);
+        url_Logout = getString(R.string.URL_Logout);
+
+        //load auth token
+        authToken = ResourceLoader.LoadAuthToken(this);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -212,6 +244,62 @@ public class HomeActivity extends AppCompatActivity
     //----------------------------------------------------------------------------------------------
     //handle logout
     private void LogoutUser()
+    {
+        CreateLogoutRequest();
+    }
+
+    //create request buat logout
+    private void CreateLogoutRequest()
+    {
+        //show loading alert
+        genericAlert.ShowLoadingAlert();
+
+        //send logout request
+        new SendLogoutRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+    }
+
+    //send request buat logout
+    private class SendLogoutRequest extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected String doInBackground(String... strings)
+        {
+            //create url
+            String usedURL = baseUrl + url_Logout;
+
+            //eksekusi request
+            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
+            return networkConnection.SendPutRequest(usedURL);
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+            HandleLogoutResult(s);
+        }
+    }
+
+    //handle result dari logout request
+    private void HandleLogoutResult(String resultString)
+    {
+        //cek resultstring, jika 204, maka logout sukses
+        if (resultString.equals("204"))
+        {
+            //remove auth token & kembali ke login screen
+            RemoveAuthToken();
+        }
+        else
+        {
+            //show alert bahwa gagal logout
+            String alertTitle = getString(R.string.Text_MohonMaaf);
+            String alertMessage = getString(R.string.Home_LogoutFailed);
+            genericAlert.DisplayAlert(alertMessage, alertTitle);
+        }
+    }
+
+    //remove auth token
+    private void RemoveAuthToken()
     {
         //get key to auth token
         String key_AuthToken = getString(R.string.SharedPreferenceKey_AccessToken);
