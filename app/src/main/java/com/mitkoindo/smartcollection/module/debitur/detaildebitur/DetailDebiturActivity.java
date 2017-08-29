@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.databinding.Observable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.module.formcall.FormCallActivity;
 import com.mitkoindo.smartcollection.module.formvisit.FormVisitActivity;
 import com.mitkoindo.smartcollection.objectdata.DetailDebitur;
+import com.mitkoindo.smartcollection.objectdata.PhoneNumber;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 import com.mitkoindo.smartcollection.utils.ToastUtils;
 
@@ -69,9 +71,8 @@ public class DetailDebiturActivity extends BaseActivity {
 
         setupToolbar(getString(R.string.DetailDebitur_PageTitle));
         getExtra();
-        initView();
 
-        SetupTransaction();
+//        SetupTransaction();
     }
 
     @Override
@@ -95,10 +96,54 @@ public class DetailDebiturActivity extends BaseActivity {
 
     @Override
     protected void setupDataBinding(View contentView) {
-        mDetailDebiturViewModel = new DetailDebiturViewModel();
+        mDetailDebiturViewModel = new DetailDebiturViewModel(getAccessToken());
         addViewModel(mDetailDebiturViewModel);
         mBinding = DataBindingUtil.bind(contentView);
         mBinding.setDetailDebiturViewModel(mDetailDebiturViewModel);
+
+        mDetailDebiturViewModel.obsIsLoading.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (mDetailDebiturViewModel.obsIsLoading.get()) {
+                    showLoadingDialog();
+                } else {
+                    hideLoadingDialog();
+                }
+            }
+        });
+        mDetailDebiturViewModel.error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (mDetailDebiturViewModel.mErrorType == mDetailDebiturViewModel.GET_PHONE_LIST_ERROR) {
+//                    displayMessage(R.string.GagalMendapatListNomorTelepon);
+                    mListNomorTelepon.clear();
+                    mListNomorTelepon.add("081325765051");
+                    showInstallmentDialogSimpleSpinner(mListNomorTelepon, getString(R.string.DetailDebitur_PilihNomorTelepon), LIST_PHONE);
+                } else {
+                    displayMessage(R.string.GagalMendapatkanData);
+                }
+            }
+        });
+        mDetailDebiturViewModel.obsDetailDebitur.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                displayResult(mDetailDebiturViewModel.obsDetailDebitur.get());
+            }
+        });
+        mDetailDebiturViewModel.obsListPhoneNumber.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (mDetailDebiturViewModel.obsListPhoneNumber.get() != null) {
+                    mListNomorTelepon.clear();
+                    for (PhoneNumber phoneNumber : mDetailDebiturViewModel.obsListPhoneNumber.get()) {
+                        mListNomorTelepon.add(phoneNumber.getNomorKontak());
+                    }
+                    showInstallmentDialogSimpleSpinner(mListNomorTelepon, getString(R.string.DetailDebitur_PilihNomorTelepon), LIST_PHONE);
+                }
+            }
+        });
+
+        mDetailDebiturViewModel.getDetailDebitur(mNoRekening);
     }
 
     private void getExtra() {
@@ -107,7 +152,7 @@ public class DetailDebiturActivity extends BaseActivity {
         }
     }
 
-    private void initView() {
+    private void displayResult(DetailDebitur detailDebitur) {
 //        DetailDebitur detailDebitur = new DetailDebitur();
 //        detailDebitur.setNamaDebitur("Indra Susilo Setiawan");
 //        detailDebitur.setNoRekening("182319283");
@@ -127,11 +172,7 @@ public class DetailDebiturActivity extends BaseActivity {
 //        detailDebitur.setAlamatKantor("Jl. Sudirman kav 1");
 //        detailDebitur.setAlamatSaatIni("Jl. Ceger no 198");
 //
-//        mBinding.setDetailDebitur(detailDebitur);
-
-        mListNomorTelepon.add("081325765051");
-        mListNomorTelepon.add("081325765052");
-        mListNomorTelepon.add("081325765555");
+        mBinding.setDetailDebitur(detailDebitur);
     }
 
     @Optional
@@ -148,7 +189,7 @@ public class DetailDebiturActivity extends BaseActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.popup_menu_call: {
-                        showInstallmentDialogSimpleSpinner(mListNomorTelepon, getString(R.string.DetailDebitur_PilihNomorTelepon), LIST_PHONE);
+                        mDetailDebiturViewModel.getPhoneList(mNoRekening);
                         break;
                     }
                     case R.id.popup_menu_check_in: {
@@ -156,7 +197,7 @@ public class DetailDebiturActivity extends BaseActivity {
                         break;
                     }
                     case R.id.popup_menu_isi_form_visit: {
-                        startActivity(FormVisitActivity.instantiate(DetailDebiturActivity.this));
+                        startActivity(FormVisitActivity.instantiate(DetailDebiturActivity.this, mNoRekening));
                         break;
                     }
                     case R.id.popup_menu_lihat_history: {
@@ -219,7 +260,7 @@ public class DetailDebiturActivity extends BaseActivity {
                 intent.setData(Uri.parse("tel:" + phoneNumber));
 
                 startActivities(new Intent[] {
-                        FormCallActivity.instantiate(DetailDebiturActivity.this),
+                        FormCallActivity.instantiate(DetailDebiturActivity.this, mNoRekening),
                         intent});
             }
         }

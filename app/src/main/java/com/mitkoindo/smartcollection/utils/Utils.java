@@ -7,11 +7,17 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ExifInterface;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by ericwijaya on 8/19/17.
@@ -104,9 +110,62 @@ public class Utils {
                     break;
             }
         } catch (IOException e) {
-            Log.e("SendKontribusi", "Unable to get image exif orientation", e);
+            Log.e("Send", "Unable to get image exif orientation", e);
         }
 
         return orientation;
+    }
+
+    public static String dateToString(Date aDate, String aFormat) {
+        if (aDate != null) {
+            Locale id = new Locale("in", "ID");
+            SimpleDateFormat dateFormat = new SimpleDateFormat(aFormat, id);
+            try {
+                String datetime = dateFormat.format(aDate);
+                return datetime;
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return "";
+            }
+        } else {
+            return "";
+        }
+    }
+
+    public static String changeDateFormat(String aDate, String aFromFormat, String aToFormat) {
+        if (!TextUtils.isEmpty(aDate)) {
+            Locale id = new Locale("in", "ID");
+            SimpleDateFormat format = new SimpleDateFormat(aFromFormat, id);
+            try {
+                Date date = format.parse(aDate);
+                return dateToString(date, aToFormat);
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return "";
+            }
+        } else {
+            return "";
+        }
+    }
+
+    public static String convertDoubleToString(double eval, String text) {
+        String res = String.valueOf(eval);
+
+        res = removeLastChar(res, text);
+
+        return res;
+    }
+
+    @NonNull
+    private static String removeLastChar(String res, String text) {
+        int length = text.length();
+
+        if (res.length() > length) {
+            res = res.substring((res.length() - length), res.length()).equals(text)
+                    ? res.substring(0, (res.length() - length)) : res;
+        }
+        return res;
     }
 }

@@ -26,7 +26,7 @@ public class DetailDebitur {
 
     @SerializedName("TotalTunggakan")
     @Expose
-    private int totalTunggakan;
+    private String totalTunggakan;
 
     @SerializedName("LastPaymentDate")
     @Expose
@@ -34,15 +34,15 @@ public class DetailDebitur {
 
     @SerializedName("DPD")
     @Expose
-    private int dpd;
+    private String dpd;
 
     @SerializedName("AngsuranPerBulan")
     @Expose
-    private int angsuranPerBulan;
+    private String angsuranPerBulan;
 
     @SerializedName("TotalKewajiban")
     @Expose
-    private int totalKewajiban;
+    private String totalKewajiban;
 
     @SerializedName("Kolektibilitas")
     @Expose
@@ -104,11 +104,11 @@ public class DetailDebitur {
         this.noRekening = noRekening;
     }
 
-    public int getTotalTunggakan() {
+    public String getTotalTunggakan() {
         return totalTunggakan;
     }
 
-    public void setTotalTunggakan(int totalTunggakan) {
+    public void setTotalTunggakan(String totalTunggakan) {
         this.totalTunggakan = totalTunggakan;
     }
 
@@ -120,27 +120,27 @@ public class DetailDebitur {
         this.lastPaymentDate = lastPaymentDate;
     }
 
-    public int getDpd() {
+    public String getDpd() {
         return dpd;
     }
 
-    public void setDpd(int dpd) {
+    public void setDpd(String dpd) {
         this.dpd = dpd;
     }
 
-    public int getAngsuranPerBulan() {
+    public String getAngsuranPerBulan() {
         return angsuranPerBulan;
     }
 
-    public void setAngsuranPerBulan(int angsuranPerBulan) {
+    public void setAngsuranPerBulan(String angsuranPerBulan) {
         this.angsuranPerBulan = angsuranPerBulan;
     }
 
-    public int getTotalKewajiban() {
+    public String getTotalKewajiban() {
         return totalKewajiban;
     }
 
-    public void setTotalKewajiban(int totalKewajiban) {
+    public void setTotalKewajiban(String totalKewajiban) {
         this.totalKewajiban = totalKewajiban;
     }
 
@@ -240,11 +240,11 @@ public class DetailDebitur {
             noCif = dataObject.getString("NoCIF");
             noRekening = dataObject.getString("NomorRekening");
             namaDebitur = dataObject.getString("NamaDebitur");
-            totalTunggakan = dataObject.optInt("TotalTunggakan", 0);
+            totalTunggakan = dataObject.getString("TotalTunggakan");
             lastPaymentDate = dataObject.getString("LastPaymentDate");
-            dpd = dataObject.optInt("DPD", 0);
-            angsuranPerBulan = dataObject.optInt("AngsuranPerBulan", 0);
-            totalKewajiban = dataObject.optInt("TotalKewajiban", 0);
+            dpd = dataObject.getString("DPD");
+            angsuranPerBulan = dataObject.getString("AngsuranPerBulan");
+            totalKewajiban = dataObject.getString("TotalKewajiban");
             kolektabilitas = dataObject.getString("Kolektibilitas");
             tindakLanjut = dataObject.getString("TindakLanjut");
             status = dataObject.optString("StatusAkhir", "");

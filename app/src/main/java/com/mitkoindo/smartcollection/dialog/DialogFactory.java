@@ -12,6 +12,6 @@ import com.mitkoindo.smartcollection.R;
 
 public class DialogFactory {
     public static AlertDialog createLoadingDialog(Context context) {
-        return ProgressDialog.show(context, null, context.getString(R.string.loading), true, false);
+        return ProgressDialog.show(context, null, context.getString(R.string.Text_PleaseWait), true, false);
     }
 }

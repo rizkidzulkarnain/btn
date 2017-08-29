@@ -22,6 +22,7 @@ import com.mitkoindo.smartcollection.module.dashboard.DashboardActivity;
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.objectdata.HomeMenu;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
+import com.mitkoindo.smartcollection.utilities.HttpsTrustManager;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
 import java.util.ArrayList;
@@ -85,6 +86,9 @@ public class HomeActivity extends AppCompatActivity
         GetViews();
         SetupViews();
         SetupTransaction();
+
+        //ignore certificate
+        HttpsTrustManager.allowAllSSL();
     }
 
     //get views

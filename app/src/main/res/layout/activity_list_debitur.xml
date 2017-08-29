@@ -4,68 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="listDebiturVideModel"
-            type="com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturViewModel"/>
-
-    </data>
-
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/background_bluegradient">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@drawable/background_bluegradient">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_general"
+            style="@style/AppToolbar.Line">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_general"
-                style="@style/AppToolbar.Line">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <include layout="@layout/include_toolbar_back_button"/>
-
-                    <include layout="@layout/include_toolbar_title" />
-
-                </RelativeLayout>
-
-            </android.support.v7.widget.Toolbar>
-
-            <!--status-->
-            <Spinner
-                android:padding="10dp"
-                android:gravity="center"
-                android:id="@+id/ListDebitur_Spinner_Status"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="?attr/actionBarSize"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_debitur"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-            </android.support.v7.widget.RecyclerView>
-        </LinearLayout>
+                <include layout="@layout/include_toolbar_back_button"/>
 
-        <TextView
-            android:id="@+id/ListDebitur_NoData"
-            android:text="@string/Text_NoData"
-            android:textSize="18sp"
-            android:textColor="@color/White"
-            android:visibility="gone"
-            android:layout_centerInParent="true"
-            android:gravity="center"
+                <include layout="@layout/include_toolbar_title" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab_layout"
+                    style="@style/TabLayout"
+                    app:layout_scrollFlags="scroll|enterAlways"/>
+
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </android.support.design.widget.CoordinatorLayout>
+
+    </LinearLayout>
 </layout>
 

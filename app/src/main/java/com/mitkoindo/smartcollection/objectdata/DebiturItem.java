@@ -38,11 +38,11 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
 
     @SerializedName("Tagihan")
     @Expose
-    private int tagihan;
+    private String tagihan;
 
     @SerializedName("DPD")
     @Expose
-    private int dpd;
+    private String dpd;
 
     @SerializedName("LastPaymentDate")
     @Expose
@@ -71,19 +71,19 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
         this.noRekening = noRekening;
     }
 
-    public int getTagihan() {
+    public String getTagihan() {
         return tagihan;
     }
 
-    public void setTagihan(int tagihan) {
+    public void setTagihan(String tagihan) {
         this.tagihan = tagihan;
     }
 
-    public int getDpd() {
+    public String getDpd() {
         return dpd;
     }
 
-    public void setDpd(int dpd) {
+    public void setDpd(String  dpd) {
         this.dpd = dpd;
     }
 
@@ -170,8 +170,8 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
             //get data
             nama = dataObject.getString("NamaNasabah");
             noRekening = dataObject.getString("NomorRekening");
-            tagihan = dataObject.optInt("Tagihan", 0);
-            dpd = dataObject.optInt("DPD", 0);
+            tagihan = dataObject.getString("Tagihan");
+            dpd = dataObject.getString("DPD");
             lastPayment = dataObject.getString("LastPaymentDate");
 
         }

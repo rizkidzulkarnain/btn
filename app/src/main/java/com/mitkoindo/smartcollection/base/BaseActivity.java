@@ -2,7 +2,9 @@ package com.mitkoindo.smartcollection.base;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -157,5 +159,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .create();
         alertDialog.show();
         return alertDialog;
+    }
+
+    public String getAccessToken() {
+        String key_AuthToken = getString(R.string.SharedPreferenceKey_AccessToken);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return sharedPreferences.getString(key_AuthToken, "");
     }
 }

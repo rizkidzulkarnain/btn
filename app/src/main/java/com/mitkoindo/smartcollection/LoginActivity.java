@@ -13,6 +13,7 @@ import android.widget.Switch;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.module.misc.ChangeBaseURLActivity;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
+import com.mitkoindo.smartcollection.utilities.HttpsTrustManager;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
 import org.json.JSONException;
@@ -58,6 +59,9 @@ public class LoginActivity extends AppCompatActivity
 
         GetViews();
         SetupURL();
+
+        //ignore certificate
+        HttpsTrustManager.allowAllSSL();
     }
 
     //get views

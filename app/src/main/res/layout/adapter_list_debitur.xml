@@ -99,7 +99,7 @@
                 app:layout_constraintStart_toEndOf="@+id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBaseline_toBaselineOf="@+id/text_view_tagihan"
-                android:text="@{Integer.toString(debiturItem.tagihan)}"
+                android:text="@{debiturItem.tagihan}"
                 tools:text="1.500.000"/>
 
             <!--DPD-->
@@ -125,7 +125,7 @@
                 app:layout_constraintStart_toEndOf="@+id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBaseline_toBaselineOf="@+id/text_view_dpd"
-                android:text="@{Integer.toString(debiturItem.dpd)}"
+                android:text="@{debiturItem.dpd}"
                 tools:text="25"/>
 
             <!--Last Payment-->

@@ -1,13 +1,14 @@
 package com.mitkoindo.smartcollection.module.formvisit;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.databinding.Observable;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
@@ -19,17 +20,37 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.HomeActivity;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.base.BaseActivity;
 import com.mitkoindo.smartcollection.databinding.ActivityFormVisitBinding;
+import com.mitkoindo.smartcollection.dialog.DialogSimpleSpinnerAdapter;
+import com.mitkoindo.smartcollection.event.EventDialogSimpleSpinnerSelected;
+import com.mitkoindo.smartcollection.helper.RealmHelper;
+import com.mitkoindo.smartcollection.network.body.FormVisitBody;
+import com.mitkoindo.smartcollection.objectdata.DropDownAction;
+import com.mitkoindo.smartcollection.objectdata.DropDownAddress;
+import com.mitkoindo.smartcollection.objectdata.DropDownPurpose;
+import com.mitkoindo.smartcollection.objectdata.DropDownReason;
+import com.mitkoindo.smartcollection.objectdata.DropDownRelationship;
+import com.mitkoindo.smartcollection.objectdata.DropDownResult;
+import com.mitkoindo.smartcollection.objectdata.DropDownStatusAgunan;
 import com.mitkoindo.smartcollection.utils.ToastUtils;
 import com.mitkoindo.smartcollection.utils.Utils;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,11 +64,34 @@ import butterknife.OnClick;
 
 public class FormVisitActivity extends BaseActivity {
 
+    private static final String EXTRA_NO_REKENING = "extra_no_rekening";
+
     private FormVisitViewModel mFormVisitViewModel;
     private ActivityFormVisitBinding mBinding;
+    private Dialog mSpinnerDialog;
 
-    public static Intent instantiate(Context context) {
+    private List<DropDownPurpose> mListDropDownPurpose;
+    private List<DropDownAddress> mListDropDownAddress;
+    private List<DropDownRelationship> mListDropDownRelationship;
+    private List<DropDownResult> mListDropDownResult;
+    private List<DropDownReason> mListDropDownReason;
+    private List<DropDownAction> mListDropDownAction;
+    private List<DropDownStatusAgunan> mListDropDownStatusAgunan;
+    private List<String> mListTujuanKunjungan = new ArrayList<String>();
+    private List<String> mListAlamatYangDikunjungi = new ArrayList<String>();
+    private List<String> mListHubunganDenganDebitur = new ArrayList<String>();
+    private List<String> mListHasilKunjungan = new ArrayList<String>();
+    private List<String> mListAlasanMenunggak = new ArrayList<String>();
+    private List<String> mListTindakLanjut = new ArrayList<String>();
+    private List<String> mListStatusAgunan = new ArrayList<String>();
+    private List<String> mListKondisiAgunan = new ArrayList<String>();
+
+    private String mNoRekening;
+
+
+    public static Intent instantiate(Context context, String noRekening) {
         Intent intent = new Intent(context, FormVisitActivity.class);
+        intent.putExtra(EXTRA_NO_REKENING, noRekening);
         return intent;
     }
 
@@ -56,8 +100,22 @@ public class FormVisitActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setupToolbar(getString(R.string.FormVisit_PageTitle));
-        initSpinner();
+        initArrayDropDown();
         initNoSelectValue();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -67,109 +125,144 @@ public class FormVisitActivity extends BaseActivity {
 
     @Override
     protected void setupDataBinding(View contentView) {
+        getExtra();
+
         mFormVisitViewModel = new FormVisitViewModel();
         mBinding = DataBindingUtil.bind(contentView);
         mBinding.setFormVisitViewModel(mFormVisitViewModel);
+
+        mFormVisitViewModel.obsIsLoading.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (mFormVisitViewModel.obsIsLoading.get()) {
+                    showLoadingDialog();
+                } else {
+                    hideLoadingDialog();
+                }
+            }
+        });
+        mFormVisitViewModel.error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                displayMessage(R.string.GagalMendapatkanData);
+            }
+        });
+        mFormVisitViewModel.errorSave.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                displayMessage(R.string.GagalMenyimpanFormVisit);
+            }
+        });
+        mFormVisitViewModel.mObsListDropDownAddress.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (mFormVisitViewModel.mObsListDropDownAddress.get() != null) {
+                    mListDropDownAddress = mFormVisitViewModel.mObsListDropDownAddress.get();
+                    for (DropDownAddress dropDownAddress : mListDropDownAddress) {
+                        if (dropDownAddress.getAlamat() != null) {
+                            mListAlamatYangDikunjungi.add(dropDownAddress.getAlamat());
+                        }
+                    }
+                }
+            }
+        });
+        mFormVisitViewModel.jumlahYangAkanDisetor.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                try {
+                    Double jumlahYangAkanDisetor = Double.parseDouble(mFormVisitViewModel.jumlahYangAkanDisetor.get());
+                    mFormVisitViewModel.spParameter.setPtpAmount(jumlahYangAkanDisetor);
+                } catch(NumberFormatException nfe) {
+                    System.out.println("Could not parse " + nfe);
+                    mFormVisitViewModel.spParameter.setPtpAmount(0);
+                }
+            }
+        });
+        mFormVisitViewModel.obsIsSaveSuccess.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (mFormVisitViewModel.obsIsSaveSuccess.get()) {
+                    displayErrorDialog("", getString(R.string.FormVisit_SaveFormSuccess));
+                    startActivity(HomeActivity.instantiateClearTask(FormVisitActivity.this));
+                }
+            }
+        });
+        mFormVisitViewModel.isFotoAgunan2Show.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (!mFormVisitViewModel.isFotoAgunan2Show.get()) {
+                    mBinding.imageViewFotoAgunan2.setImageResource(R.drawable.ic_home_variant_grey600_48dp);
+                    mFormVisitViewModel.spParameter.setPhotoAgunan2Path("");
+                }
+            }
+        });
+
+        mFormVisitViewModel.getListAddress(getAccessToken(), mNoRekening);
     }
 
-    private void initSpinner() {
-        List<String> listTujuanKunjungan = new ArrayList<String>();
-        listTujuanKunjungan.add(getString(R.string.FormVisit_MengingatkanAngsuran));
-        listTujuanKunjungan.add(getString(R.string.FormVisit_PenagihanKredit));
-        listTujuanKunjungan.add(getString(R.string.FormVisit_Konfirmasi));
-        listTujuanKunjungan.add(getString(R.string.FormVisit_IdentifikasiBarangJaminan));
-        listTujuanKunjungan.add(getString(R.string.FormVisit_PemasanganPlakatPengawasanBank));
-        listTujuanKunjungan.add(getString(R.string.FormVisit_PemasanganPlakatDijual));
-        listTujuanKunjungan.add(getString(R.string.FormVisit_PemasanganPlakatDilelang));
-        listTujuanKunjungan.add(getString(R.string.FormVisit_LainLain));
+    private void getExtra() {
+        if (getIntent().getExtras() != null) {
+            mNoRekening = getIntent().getExtras().getString(EXTRA_NO_REKENING);
+        }
+    }
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.item_simple_spinner, listTujuanKunjungan);
-        dataAdapter.setDropDownViewResource(R.layout.item_simple_spinner_dropdown);
-        mBinding.spinnerTujuanKunjungan.setAdapter(dataAdapter);
+    private void initArrayDropDown() {
+        mListDropDownPurpose = RealmHelper.getListDropDownPurpose();
+        for (DropDownPurpose dropDownPurpose : mListDropDownPurpose) {
+            if (dropDownPurpose.getPDesc() != null) {
+                mListTujuanKunjungan.add(dropDownPurpose.getPDesc());
+            }
+        }
 
-        List<String> listAlamatYangDikunjungi = new ArrayList<String>();
-        listAlamatYangDikunjungi.add("Jl. Papua 33, Jurangmangu Timur");
-        listAlamatYangDikunjungi.add("Jl. Ceger 192 RT 005 / RW 012, Pondok Aren, Banten");
-        listAlamatYangDikunjungi.add("Jl. Camar 21, Bintaro");
+        mListDropDownRelationship = RealmHelper.getListDropDownRelationship();
+        for (DropDownRelationship dropDownRelationship : mListDropDownRelationship) {
+            if (dropDownRelationship.getRelDesc() != null) {
+                mListHubunganDenganDebitur.add(dropDownRelationship.getRelDesc());
+            }
+        }
 
-        ArrayAdapter<String> dataAdapterAlamatYangDikunjungi = new ArrayAdapter<String>(this, R.layout.item_simple_spinner, listAlamatYangDikunjungi);
-        dataAdapter.setDropDownViewResource(R.layout.item_simple_spinner_dropdown);
-        mBinding.spinnerAlamatYangDikunjungi.setAdapter(dataAdapterAlamatYangDikunjungi);
+        mListDropDownResult = RealmHelper.getListDropDownResult();
+        for (DropDownResult dropDownResult : mListDropDownResult) {
+            if (dropDownResult.getResultDesc() != null) {
+                mListHasilKunjungan.add(dropDownResult.getResultDesc());
+            }
+        }
 
+        mListDropDownReason = RealmHelper.getListDropDownReason();
+        for (DropDownReason dropDownReason : mListDropDownReason) {
+            if (dropDownReason.getReasonDesc() != null) {
+                mListAlasanMenunggak.add(dropDownReason.getReasonDesc());
+            }
+        }
 
-        List<String> listHubunganDenganDebitur = new ArrayList<String>();
-        listHubunganDenganDebitur.add("Yang bersangkutan");
-        listHubunganDenganDebitur.add("Suami");
-        listHubunganDenganDebitur.add("Istri");
-        listHubunganDenganDebitur.add("Orang tua");
-        listHubunganDenganDebitur.add("Mertua");
-        listHubunganDenganDebitur.add("Anak");
-        listHubunganDenganDebitur.add("Kakak kandung");
-        listHubunganDenganDebitur.add("Adik kandung");
-        listHubunganDenganDebitur.add("Kakek / Nenek kandung");
-        listHubunganDenganDebitur.add("Kakek / Nenek suami / istri");
+        mListDropDownAction = RealmHelper.getListDropDownAction();
+        for (DropDownAction dropDownAction : mListDropDownAction) {
+            if (dropDownAction.getActionDesc() != null) {
+                mListTindakLanjut.add(dropDownAction.getActionDesc());
+            }
+        }
 
-        ArrayAdapter<String> dataAdapterHubunganDenganDebitur = new ArrayAdapter<String>(this, R.layout.item_simple_spinner, listHubunganDenganDebitur);
-        dataAdapter.setDropDownViewResource(R.layout.item_simple_spinner_dropdown);
-        mBinding.spinnerHubunganDenganDebitur.setAdapter(dataAdapterHubunganDenganDebitur);
+        mListDropDownStatusAgunan = RealmHelper.getListDropDownStatusAgunan();
+        for (DropDownStatusAgunan dropDownStatusAgunan : mListDropDownStatusAgunan) {
+            if (dropDownStatusAgunan.getColstaDesc() != null) {
+                mListStatusAgunan.add(dropDownStatusAgunan.getColstaDesc());
+            }
+        }
 
-
-        List<String> listHasilKunjungan = new ArrayList<String>();
-        listHasilKunjungan.add(getString(R.string.FormVisit_AkanSetorTanggal));
-        listHasilKunjungan.add(getString(R.string.FormVisit_AkanDatangKeBtnTanggal));
-        listHasilKunjungan.add(getString(R.string.FormVisit_MintaDihubungiTanggal));
-        listHasilKunjungan.add(getString(R.string.FormVisit_AkanMenjualBarangJaminan));
-        listHasilKunjungan.add(getString(R.string.FormVisit_AkanMenjualAsetLainnya));
-        listHasilKunjungan.add(getString(R.string.FormVisit_Lainnya));
-
-        ArrayAdapter<String> dataAdapterHasilKunjungan = new ArrayAdapter<String>(this, R.layout.item_simple_spinner, listHasilKunjungan);
-        dataAdapter.setDropDownViewResource(R.layout.item_simple_spinner_dropdown);
-        mBinding.spinnerHasilKunjungan.setAdapter(dataAdapterHasilKunjungan);
-
-
-        List<String> listStatusAgunan = new ArrayList<String>();
-        listStatusAgunan.add("Ditempati");
-        listStatusAgunan.add("Tidak ditempati");
-        listStatusAgunan.add("Disewakan");
-
-        ArrayAdapter<String> dataAdapterStatusAgunan = new ArrayAdapter<String>(this, R.layout.item_simple_spinner, listStatusAgunan);
-        dataAdapter.setDropDownViewResource(R.layout.item_simple_spinner_dropdown);
-        mBinding.spinnerStatusAgunan.setAdapter(dataAdapterStatusAgunan);
-
-        List<String> listKondisiAgunan = new ArrayList<String>();
-        listKondisiAgunan.add("Terawat");
-        listKondisiAgunan.add("Terbengkalai");
-
-        ArrayAdapter<String> dataAdapterKondisiAgunan = new ArrayAdapter<String>(this, R.layout.item_simple_spinner, listKondisiAgunan);
-        dataAdapter.setDropDownViewResource(R.layout.item_simple_spinner_dropdown);
-        mBinding.spinnerKondisiAgunan.setAdapter(dataAdapterKondisiAgunan);
-
-
-        List<String> listAlasanMenunggak = new ArrayList<String>();
-        listAlasanMenunggak.add("Informasi kredit kurang");
-        listAlasanMenunggak.add("Sedang diluar luar kota / negeri");
-        listAlasanMenunggak.add("Kesalahan/keterlambatan transfer");
-        listAlasanMenunggak.add("Fasilitas pembayaran bermasalah");
-
-        ArrayAdapter<String> dataAdapterAlasanMenunggak = new ArrayAdapter<String>(this, R.layout.item_simple_spinner, listAlasanMenunggak);
-        dataAdapter.setDropDownViewResource(R.layout.item_simple_spinner_dropdown);
-        mBinding.spinnerAlasanMenunggak.setAdapter(dataAdapterAlasanMenunggak);
-
-
-        List<String> listTindakLanjut = new ArrayList<String>();
-        listTindakLanjut.add("Surat");
-        listTindakLanjut.add("Litigasi");
-        listTindakLanjut.add("Restrukturisasi Kredit");
-        listTindakLanjut.add("Klaim Asuransi");
-
-        ArrayAdapter<String> dataAdapterTindakLanjut = new ArrayAdapter<String>(this, R.layout.item_simple_spinner, listTindakLanjut);
-        dataAdapter.setDropDownViewResource(R.layout.item_simple_spinner_dropdown);
-        mBinding.spinnerTindakLanjut.setAdapter(dataAdapterTindakLanjut);
+        mListKondisiAgunan.add(getString(R.string.FormVisit_Terawat));
+        mListKondisiAgunan.add(getString(R.string.FormVisit_TidakTerawat));
     }
 
     private void initNoSelectValue() {
         mFormVisitViewModel.tujuanKunjungan.set(getString(R.string.FormVisit_TujuanKunjunganInitial));
+        mFormVisitViewModel.alamatYangDikunjungi.set(getString(R.string.FormVisit_AlamatYangDikunjungiInitial));
+        mFormVisitViewModel.hubunganDenganDebitur.set(getString(R.string.FormVisit_HubunganDenganDebiturInitial));
+        mFormVisitViewModel.hasilKunjungan.set(getString(R.string.FormVisit_HasilKunjunganInitial));
         mFormVisitViewModel.tanggalJanjiDebitur.set(getString(R.string.FormVisit_TanggalJanjiDebiturInitial));
+        mFormVisitViewModel.statusAgunan.set(getString(R.string.FormVisit_StatusAgunanInitial));
+        mFormVisitViewModel.kondisiAgunan.set(getString(R.string.FormVisit_KondisiAgunanInitial));
+        mFormVisitViewModel.alasanMenunggak.set(getString(R.string.FormVisit_AlasanMenunggakInitial));
+        mFormVisitViewModel.tindakLanjut.set(getString(R.string.FormVisit_TindakLanjutInitial));
         mFormVisitViewModel.tanggalTindakLanjut.set(getString(R.string.FormVisit_TanggalTindakLanjutInitial));
         mFormVisitViewModel.isFotoAgunan2Show.set(false);
     }
@@ -277,18 +370,30 @@ public class FormVisitActivity extends BaseActivity {
                 case ACTION_TAKE_PICTURE_DEBITUR:
                 case ACTION_TAKE_PICTURE_AGUNAN_1:
                 case ACTION_TAKE_PICTURE_AGUNAN_2: {
-                    String imagePath = "";
+                    File dir = new File(Environment.getExternalStorageDirectory() + File.separator + getString(R.string.app_name));
+                    if (!dir.exists()) {
+                        dir.mkdir();
+                    }
+
+                    String imagePath;
+                    File file;
                     if (requestCode == ACTION_TAKE_PICTURE_DEBITUR) {
                         imagePath = mFotoDebiturFilePath;
+                        file = new File(dir, "foto_debitur_" + mNoRekening + ".jpg");
                     }
                     else if (requestCode == ACTION_TAKE_PICTURE_AGUNAN_1) {
                         imagePath = mFotoAgunan1FilePath;
+                        file = new File(dir, "foto_agunan_1_" + mNoRekening + ".jpg");
                     }
                     else {
                         imagePath = mFotoAgunan2FilePath;
+                        file = new File(dir, "foto_agunan_2_" + mNoRekening +".jpg");
+                    }
+                    if (file.exists()) {
+                        file.delete();
                     }
 
-                    int widthHeight = Utils.convertDensityPixel(96, getResources());
+                    int widthHeight = Utils.convertDensityPixel(90, getResources());
                     Bitmap resizeBmp = Utils.decodeSampledBitmapFromFile(imagePath, widthHeight, widthHeight);
                     int rotate = Utils.getOrientationFromExif(imagePath);
                     if (rotate > 0) {
@@ -299,13 +404,27 @@ public class FormVisitActivity extends BaseActivity {
                         mtx.preRotate(rotate);
                         resizeBmp = Bitmap.createBitmap(resizeBmp, 0, 0, w, h, mtx, false);
                         resizeBmp = resizeBmp.copy(Bitmap.Config.ARGB_8888, true);
+
+                        FileOutputStream out;
+                        try {
+                            out = new FileOutputStream(file);
+                            resizeBmp.compress(Bitmap.CompressFormat.JPEG, 80, out);
+                            out.flush();
+                            out.close();
+                        }
+                        catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     if (requestCode == ACTION_TAKE_PICTURE_DEBITUR) {
                         mBinding.imageViewFotoDebitur.setImageBitmap(resizeBmp);
+                        mFormVisitViewModel.spParameter.setPhotoDebiturPath(file.getAbsolutePath());
                     } else if (requestCode == ACTION_TAKE_PICTURE_AGUNAN_1) {
                         mBinding.imageViewFotoAgunan1.setImageBitmap(resizeBmp);
+                        mFormVisitViewModel.spParameter.setPhotoAgunan1Path(file.getAbsolutePath());
                     } else {
                         mBinding.imageViewFotoAgunan2.setImageBitmap(resizeBmp);
+                        mFormVisitViewModel.spParameter.setPhotoAgunan2Path(file.getAbsolutePath());
                     }
                     break;
                 }
@@ -313,6 +432,158 @@ public class FormVisitActivity extends BaseActivity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+
+//    Show Dialog DropDown
+    private void showInstallmentDialogSimpleSpinner(List<String> nameList, String dialogTitle, int viewId) {
+        if (mSpinnerDialog == null) {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+            dialogBuilder
+                    .setTitle(null)
+                    .setMessage(null)
+                    .setCancelable(true)
+                    .setView(R.layout.dialog_simple_spinner);
+            mSpinnerDialog = dialogBuilder.create();
+        }
+        if (nameList.size() > 0) {
+            mSpinnerDialog.show();
+            RecyclerView recyclerView = (RecyclerView) mSpinnerDialog.findViewById(R.id.rv_dialog_simple_spinner);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            recyclerView.setLayoutManager(layoutManager);
+            DialogSimpleSpinnerAdapter adapter = new DialogSimpleSpinnerAdapter(nameList, viewId);
+            recyclerView.setAdapter(adapter);
+            TextView title = (TextView) mSpinnerDialog.findViewById(R.id.tv_dialog_simple_spinner_title);
+            title.setText(dialogTitle);
+        } else {
+            ToastUtils.toastShort(this, getString(R.string.TidakAdaDataPilihan));
+        }
+    }
+
+//    Event ketika DropDown item dipilih
+    @Subscribe
+    public void onDialogSimpleSpinnerSelected(EventDialogSimpleSpinnerSelected event) {
+        if (mSpinnerDialog != null && mSpinnerDialog.isShowing()) {
+            mSpinnerDialog.dismiss();
+
+            switch (event.getViewId()) {
+                case R.id.card_view_tujuan_kunjungan: {
+                    for (DropDownPurpose dropDownPurpose : mListDropDownPurpose) {
+                        if (!TextUtils.isEmpty(dropDownPurpose.getPDesc()) && dropDownPurpose.getPDesc().equals(event.getName())) {
+                            mFormVisitViewModel.spParameter.setTujuan(dropDownPurpose.getPId());
+                            mFormVisitViewModel.tujuanKunjungan.set(dropDownPurpose.getPDesc());
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case R.id.card_view_alamat_yang_dikunjungi: {
+                    for (DropDownAddress dropDownAddress : mListDropDownAddress) {
+                        if (!TextUtils.isEmpty(dropDownAddress.getAlamat()) && dropDownAddress.getAlamat().equals(event.getName())) {
+                            mFormVisitViewModel.spParameter.setCuAddr(dropDownAddress.getCaAddrType());
+                            mFormVisitViewModel.alamatYangDikunjungi.set(dropDownAddress.getAlamat());
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case R.id.card_view_hubungan_dengan_debitur: {
+                    for (DropDownRelationship dropDownRelationship : mListDropDownRelationship) {
+                        if (!TextUtils.isEmpty(dropDownRelationship.getRelDesc()) && dropDownRelationship.getRelDesc().equals(event.getName())) {
+                            mFormVisitViewModel.spParameter.setPersonVisitRel(dropDownRelationship.getRelId());
+                            mFormVisitViewModel.hubunganDenganDebitur.set(dropDownRelationship.getRelDesc());
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case R.id.card_view_hasil_kunjungan: {
+                    for (DropDownResult dropDownResult : mListDropDownResult) {
+                        if (!TextUtils.isEmpty(dropDownResult.getResultDesc()) && dropDownResult.getResultDesc().equals(event.getName())) {
+                            mFormVisitViewModel.spParameter.setResult(dropDownResult.getResultId());
+                            mFormVisitViewModel.hasilKunjungan.set(dropDownResult.getResultDesc());
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case R.id.card_view_alasan_menunggak: {
+                    for (DropDownReason dropDownReason : mListDropDownReason) {
+                        if (!TextUtils.isEmpty(dropDownReason.getReasonDesc()) && dropDownReason.getReasonDesc().equals(event.getName())) {
+                            mFormVisitViewModel.spParameter.setReasonNonPayment(dropDownReason.getReasonId());
+                            mFormVisitViewModel.alasanMenunggak.set(dropDownReason.getReasonDesc());
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case R.id.card_view_tindak_lanjut: {
+                    for (DropDownAction dropDownAction : mListDropDownAction) {
+                        if (!TextUtils.isEmpty(dropDownAction.getActionDesc()) && dropDownAction.getActionDesc().equals(event.getName())) {
+                            mFormVisitViewModel.spParameter.setNextAction(dropDownAction.getActionId());
+                            mFormVisitViewModel.tindakLanjut.set(dropDownAction.getActionDesc());
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case R.id.card_view_status_agunan: {
+                    for (DropDownStatusAgunan dropDownStatusAgunan : mListDropDownStatusAgunan) {
+                        if (!TextUtils.isEmpty(dropDownStatusAgunan.getColstaDesc()) && dropDownStatusAgunan.getColstaDesc().equals(event.getName())) {
+                            mFormVisitViewModel.spParameter.setCollStatDesc(dropDownStatusAgunan.getColstaCode());
+                            mFormVisitViewModel.statusAgunan.set(dropDownStatusAgunan.getColstaDesc());
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case R.id.card_view_kondisi_agunan: {
+                    mFormVisitViewModel.spParameter.setCollCondDesc(event.getName());
+                    mFormVisitViewModel.kondisiAgunan.set(event.getName());
+                    break;
+                }
+            }
+        }
+    }
+
+    @OnClick(R.id.card_view_tujuan_kunjungan)
+    public void onTujuanKunjunganClicked(View view) {
+        showInstallmentDialogSimpleSpinner(mListTujuanKunjungan, getString(R.string.FormVisit_TujuanKunjunganInitial), R.id.card_view_tujuan_kunjungan);
+    }
+
+    @OnClick(R.id.card_view_alamat_yang_dikunjungi)
+    public void onAlamatYangDikunjungiClicked(View view) {
+        showInstallmentDialogSimpleSpinner(mListAlamatYangDikunjungi, getString(R.string.FormVisit_AlamatYangDikunjungiInitial), R.id.card_view_alamat_yang_dikunjungi);
+    }
+
+    @OnClick(R.id.card_view_hubungan_dengan_debitur)
+    public void onHubunganDenganDebiturClicked(View view) {
+        showInstallmentDialogSimpleSpinner(mListHubunganDenganDebitur, getString(R.string.FormVisit_HubunganDenganDebiturInitial), R.id.card_view_hubungan_dengan_debitur);
+    }
+
+    @OnClick(R.id.card_view_hasil_kunjungan)
+    public void onHasilKunjunganClicked(View view) {
+        showInstallmentDialogSimpleSpinner(mListHasilKunjungan, getString(R.string.FormVisit_HasilKunjunganInitial), R.id.card_view_hasil_kunjungan);
+    }
+
+    @OnClick(R.id.card_view_alasan_menunggak)
+    public void onAlasanMenunggakClicked(View view) {
+        showInstallmentDialogSimpleSpinner(mListAlasanMenunggak, getString(R.string.FormVisit_AlasanMenunggakInitial), R.id.card_view_alasan_menunggak);
+    }
+
+    @OnClick(R.id.card_view_tindak_lanjut)
+    public void onTindakLanjutClicked(View view) {
+        showInstallmentDialogSimpleSpinner(mListTindakLanjut, getString(R.string.FormVisit_TindakLanjutInitial), R.id.card_view_tindak_lanjut);
+    }
+
+    @OnClick(R.id.card_view_status_agunan)
+    public void onStatusAgunanClicked(View view) {
+        showInstallmentDialogSimpleSpinner(mListStatusAgunan, getString(R.string.FormVisit_StatusAgunanInitial), R.id.card_view_status_agunan);
+    }
+
+    @OnClick(R.id.card_view_kondisi_agunan)
+    public void onKondisiAgunanClicked(View view) {
+        showInstallmentDialogSimpleSpinner(mListKondisiAgunan, getString(R.string.FormVisit_KondisiAgunanInitial), R.id.card_view_kondisi_agunan);
     }
 
     @OnClick(R.id.card_view_tanggal_janji_debitur)
@@ -348,6 +619,14 @@ public class FormVisitActivity extends BaseActivity {
         }, currentYear, currentMonth, currentDay);
 
         datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
+
+//        Get Date last day of the month
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.add(Calendar.DATE, -1);
+        datePickerDialog.getDatePicker().setMaxDate(calendar.getTime().getTime());
+
         datePickerDialog.show();
     }
 
@@ -379,21 +658,83 @@ public class FormVisitActivity extends BaseActivity {
 
     @OnClick(R.id.button_submit)
     public void onSubmitClicked(View view) {
-        new AlertDialog.Builder(this)
-                .setMessage(getString(R.string.FormVisit_KonfirmasiSubmit))
-                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivity(HomeActivity.instantiateClearTask(FormVisitActivity.this));
-                    }
-                })
-                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create()
-                .show();
+        if (isValid()) {
+//            new AlertDialog.Builder(this)
+//                    .setMessage(getString(R.string.FormVisit_KonfirmasiSubmit))
+//                    .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                        }
+//                    })
+//                    .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    })
+//                    .create()
+//                    .show();
+
+//          mFormVisitViewModel.saveFormVisit(getAccessToken());
+//          mFormVisitViewModel.uploadFile(getAccessToken(), mFormVisitViewModel.spParameter.getPhotoDebiturPath());
+
+            startActivity(FormVisitKonfirmasiActivity.instantiate(FormVisitActivity.this,
+                    mFormVisitViewModel.spParameter,
+                    mNoRekening,
+                    mFormVisitViewModel.alamatYangDikunjungi.get()));
+        }
+    }
+
+    private boolean isValid() {
+        mFormVisitViewModel.spParameter.setAccNo(mNoRekening);
+        mFormVisitViewModel.spParameter.setUserId("btn0100011");
+        FormVisitBody.SpParameter spParameter = mFormVisitViewModel.spParameter;
+//        if (TextUtils.isEmpty(spParameter.getTujuan())) {
+//            displayMessage(getString(R.string.FormVisit_TujuanKunjunganInitial));
+//            return false;
+//        }
+////        else if (TextUtils.isEmpty(spParameter.getCuAddr())) {
+////            displayMessage(getString(R.string.FormVisit_AlamatYangDikunjungiInitial));
+////            return false;
+////        }
+//        else if (TextUtils.isEmpty(spParameter.getPersonVisit())) {
+//            displayMessage(getString(R.string.FormVisit_OrangYangDiKunjungiHint));
+//            return false;
+//        } else if (TextUtils.isEmpty(spParameter.getPersonVisitRel())) {
+//            displayMessage(getString(R.string.FormVisit_HubunganDenganDebiturInitial));
+//            return false;
+//        } else if (TextUtils.isEmpty(spParameter.getResult())) {
+//            displayMessage(getString(R.string.FormVisit_HasilKunjunganInitial));
+//            return false;
+//        } else if (TextUtils.isEmpty(spParameter.getResultDate())) {
+//            displayMessage(getString(R.string.FormVisit_TanggalJanjiDebiturInitial));
+//            return false;
+//        } else if (spParameter.getPtpAmount() == 0) {
+//            displayMessage(getString(R.string.FormVisit_JumlahYangAkanDisetorHint));
+//            return false;
+//        } else if (TextUtils.isEmpty(spParameter.getCollStatDesc())) {
+//            displayMessage(getString(R.string.FormVisit_StatusAgunanInitial));
+//            return false;
+//        } else if (TextUtils.isEmpty(spParameter.getCollCondDesc())) {
+//            displayMessage(getString(R.string.FormVisit_KondisiAgunanInitial));
+//            return false;
+//        } else if (TextUtils.isEmpty(spParameter.getReasonNonPayment())) {
+//            displayMessage(getString(R.string.FormVisit_AlasanMenunggakInitial));
+//            return false;
+//        } else if (TextUtils.isEmpty(spParameter.getNextActionDate())) {
+//            displayMessage(getString(R.string.FormVisit_TanggalTindakLanjutInitial));
+//            return false;
+//        } else if (TextUtils.isEmpty(spParameter.getNextAction())) {
+//            displayMessage(getString(R.string.FormVisit_TindakLanjutInitial));
+//            return false;
+//        } else if (TextUtils.isEmpty(spParameter.getNotes())) {
+//            displayMessage(getString(R.string.FormVisit_CatatanHint));
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(spParameter.getPhotoDebiturPath())) {
+//            displayMessage(getString(R.string.FormVisit_FotoDebiturHint));
+//            return false;
+//        }
+        return true;
     }
 }

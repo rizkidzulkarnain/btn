@@ -7,4 +7,5 @@ package com.mitkoindo.smartcollection.utils;
 public class Constant {
 
     public static final String DATE_FORMAT_DISPLAY_DATE = "dd MMMM yyyy";
+    public static final String DATE_FORMAT_SEND_DATE = "yyyy-MM-dd HH:mm:ss";
 }

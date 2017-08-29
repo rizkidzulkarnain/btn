@@ -115,23 +115,24 @@
     <string name="FormVisit_TujuanKunjungan">Tujuan kunjungan</string>
     <string name="FormVisit_AlamatYangDiKunjungi">Alamat yang dikunjungi</string>
     <string name="FormVisit_OrangYangDiKunjungi">Orang yang dikunjungi</string>
-    <string name="FormVisit_OrangYangDiKunjungiHint">Tuliskan nama</string>
+    <string name="FormVisit_OrangYangDiKunjungiHint">Tuliskan nama yang ditemui</string>
     <string name="FormVisit_HubunganDenganDebitur">Hubungan dengan debitur</string>
     <string name="FormVisit_HasilKunjungan">Hasil kunjungan</string>
     <string name="FormVisit_TanggalJanjiDebitur">Tanggal janji debitur</string>
     <string name="FormVisit_JumlahYangAkanDisetor">Jumlah yang akan disetor</string>
-    <string name="FormVisit_JumlahYangAkanDisetorHint">Masukkan jumlah</string>
+    <string name="FormVisit_JumlahYangAkanDisetorHint">Masukkan jumlah yang akan disetor</string>
     <string name="FormVisit_StatusAgunan">Status agunan</string>
     <string name="FormVisit_KondisiAgunan">Kondisi agunan</string>
     <string name="FormVisit_AlasanMenunggak">Alasan menunggak</string>
     <string name="FormVisit_TindakLanjut">Tindak lanjut</string>
     <string name="FormVisit_TanggalTindakLanjut">Tanggal tindak lanjut</string>
     <string name="FormVisit_Catatan">Catatan</string>
-    <string name="FormVisit_CatatanHint">Catatan tambahan</string>
+    <string name="FormVisit_CatatanHint">Beri catatan tambahan</string>
     <string name="FormVisit_Gallery">Gallery</string>
     <string name="FormVisit_FotoDebitur">Foto Debitur</string>
     <string name="FormVisit_AmbilFoto">Ambil foto</string>
     <string name="FormVisit_FotoAgunan">Foto agunan</string>
+    <string name="FormVisit_Signature">Tanda tangan</string>
     <string name="FormVisit_Submit">Submit</string>
     <string name="FormVisit_external_storage_permission_description">Perlu Permission Media Penyimpan</string>
     <string name="FormVisit_setting_external_storage_permission">Anda sebelumnya menolak Permission Media Penyimpan, Aktifkan kembali Permission Media Penyimpan ?</string>
@@ -139,13 +140,25 @@
     <string name="FormVisit_NamaFileFotoDebitur">foto_debitur.jpg</string>
     <string name="FormVisit_NamaFileFotoAgunan1">foto_agunan_1.jpg</string>
     <string name="FormVisit_NamaFileFotoAgunan2">foto_agunan_2.jpg</string>
+    <string name="FormVisit_NamaFileSignature">signature.jpg</string>
     <string name="FormVisit_KonfirmasiSubmit">Apakah Anda yakin data sudah benar?</string>
+    <string name="FormVisit_Terawat">Terawat</string>
+    <string name="FormVisit_TidakTerawat">Tidak Terawat</string>
+    <string name="FormVisit_SaveFormSuccess">Sukses mengirim form visit</string>
+    <string name="FormVisit_FotoDebiturHint">Ambil foto debitur</string>
 
     <!--Form Visit initial value-->
     <string name="FormVisit_TujuanKunjunganInitial">Pilih tujuan kunjungan</string>
-    <string name="FormVisit_TanggalJanjiDebiturInitial">Pilih tanggal</string>
-    <string name="FormVisit_TanggalTindakLanjutInitial">Pilih tanggal</string>
-
+    <string name="FormVisit_AlamatYangDikunjungiInitial">Pilih alamat</string>
+    <string name="FormVisit_HubunganDenganDebiturInitial">Pilih hubungan dengan debitur</string>
+    <string name="FormVisit_HasilKunjunganInitial">Pilih hasil kunjungan</string>
+    <string name="FormVisit_StatusAgunanInitial">Pilih status agunan</string>
+    <string name="FormVisit_KondisiAgunanInitial">Pilih kondisi agunan</string>
+    <string name="FormVisit_AlasanMenunggakInitial">Pilih alasan menunggak</string>
+    <string name="FormVisit_TindakLanjutInitial">Pilih tindak lanjut</string>
+    <string name="FormVisit_TanggalJanjiDebiturInitial">Pilih tanggal janji debitur</string>
+    <string name="FormVisit_TanggalTindakLanjutInitial">Pilih tanggal tindak lanjut</string>
+	
     <!--Form Visit Tujuan Kunjungan-->
     <string name="FormVisit_MengingatkanAngsuran">Mengingatkan Angsuran</string>
     <string name="FormVisit_PenagihanKredit">Penagihan Kredit</string>
@@ -168,11 +181,12 @@
     <string name="FormCall_PageTitle">Form Call</string>
     <string name="FormCall_TujuanCall">Tujuan panggilan</string>
     <string name="FormCall_BerbicaraDengan">Berbicara dengan</string>
+    <string name="FormCall_BerbicaraDenganHint">Tuliskan nama yang dihubungi</string>
     <string name="FormCall_HubunganDenganDebitur">Hubungan dengan debitur</string>
     <string name="FormCall_HasilPanggilan">Hasil panggilan</string>
-    <string name="FormCall_TanggalHasilPanggilan">Tanggal hasil panggilan</string>
+    <string name="FormCall_TanggalHasilPanggilan">Tanggal janji bayar</string>
     <string name="FormCall_JumlahYangAkanDisetor">Jumlah yang akan disetor</string>
-    <string name="FormCall_JumlahYangAkanDisetorHint">Masukkan jumlah</string>
+    <string name="FormCall_JumlahYangAkanDisetorHint">Masukkan jumlah yang akan disetor</string>
     <string name="FormCall_AlasanTidakBayar">Alasan tidak bayar</string>
     <string name="FormCall_TindakLanjut">Tindak lanjut</string>
     <string name="FormCall_TanggalTindakLanjut">Tanggal tindak lanjut</string>
@@ -180,11 +194,19 @@
     <string name="FormCall_CatatanHint">Catatan tambahan</string>
     <string name="FormCall_Submit">Submit</string>
     <string name="FormCall_KonfirmasiSubmit">Apakah Anda yakin data sudah benar?</string>
+    <string name="FormCall_SaveFormSuccess">Sukses menyimpan form call</string>
 
     <!--Form Call initial value-->
-    <string name="FormCall_TujuanCallInitial">Pilih tujuan</string>
-    <string name="FormCall_TanggalHasilPanggilanInitial">Pilih tanggal</string>
-    <string name="FormCall_TanggalTindakLanjutInitial">Pilih tanggal</string>
+    <string name="FormCall_TujuanCallInitial">Pilih tujuan panggilan</string>
+    <string name="FormCall_HubunganDenganDebiturInitial">Pilih hubungan dengan debitur</string>
+    <string name="FormCall_HasilPanggilanInitial">Pilih hasil panggilan</string>
+    <string name="FormCall_TanggalHasilPanggilanInitial">Pilih tanggal janji bayar</string>
+    <string name="FormCall_AlasanTidakBayarInitial">Pilih alasan tidak bayar</string>
+    <string name="FormCall_TindakLanjutInitial">Pilih tindak lanjut</string>
+    <string name="FormCall_TanggalTindakLanjutInitial">Pilih tanggal tindak lanjut</string>
+	
+	<!--Form Visit Konfirmasi Page-->
+    <string name="FormKonfirmasi_PageTitle">Konfimasi Form Visit</string>
 
     <!--Update password page-->
     <string name="UpdatePassword_PageTitle">Update Password</string>
@@ -227,14 +249,16 @@
     <string name="yes">Ya</string>
     <string name="no">Tidak</string>
     <string name="TidakAdaDataPilihan">Tidak ada data pilihan</string>
+    <string name="GagalMendapatkanData">Gagal mendapatkan data</string>
+    <string name="GagalMenyimpanFormVisit">Gagal mengirim Form Visit</string>
+    <string name="GagalMenyimpanFormCall">Gagal mengirim Form Call</string>
+    <string name="GagalMendapatListNomorTelepon">Gagal mendapatkan list nomor telepon</string>
 
     <!--Font path-->
     <string name="font_default_reg">fonts/Roboto-Regular.ttf</string>
     <string name="font_default_bold">fonts/Roboto-Bold.ttf</string>
 
     <!--Transaksi-->
-    <!--<string name="BaseURL">https://ee54c06e.ngrok.io/btn_new/</string>-->
-    <!--<string name="BaseURL">https://eaf186b7.ngrok.io/btn_new/</string>-->
     <string name="BaseURL">https://eaf186b7.ngrok.io/btn_new/</string>
     <string name="URL_Login">api/Account/login</string>
     <string name="URL_Logout">api/Account/logout</string>
