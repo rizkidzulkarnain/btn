@@ -17,9 +17,11 @@ import android.widget.TextView;
 import com.mitkoindo.smartcollection.adapter.HomeMenuAdapter;
 import com.mitkoindo.smartcollection.helper.ItemClickListener;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
+import com.mitkoindo.smartcollection.module.assignment.AccountAssignmentActivity;
 import com.mitkoindo.smartcollection.module.berita.BeritaActivity;
 import com.mitkoindo.smartcollection.module.dashboard.DashboardActivity;
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
+import com.mitkoindo.smartcollection.module.ptp_reminder.PTPReminderActivity;
 import com.mitkoindo.smartcollection.objectdata.HomeMenu;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
 import com.mitkoindo.smartcollection.utilities.HttpsTrustManager;
@@ -108,6 +110,7 @@ public class HomeActivity extends AppCompatActivity
     {
         //load menu array
         String[] menuTitle = getResources().getStringArray(R.array.HomeMenu);
+        /*String[] menuTitle = getResources().getStringArray(R.array.HomeMenu_BC);*/
 
         //create menu object
         homeMenus = new ArrayList<>();
@@ -228,6 +231,12 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case "Penugasan" :
                 intent = new Intent(this, ListDebiturActivity.class);
+                break;
+            case "Account Assignment" :
+                intent = new Intent(this, AccountAssignmentActivity.class);
+                break;
+            case "PTP Reminder" :
+                intent = new Intent(this, PTPReminderActivity.class);
                 break;
             default:break;
         }

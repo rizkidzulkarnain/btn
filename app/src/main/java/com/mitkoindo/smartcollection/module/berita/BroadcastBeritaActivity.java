@@ -29,6 +29,7 @@ import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.objectdata.FormBroadcastBerita;
 import com.mitkoindo.smartcollection.objectdata.Staff;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
+import com.mitkoindo.smartcollection.utilities.HttpsTrustManager;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
 import org.json.JSONArray;
@@ -36,8 +37,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Date;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import javax.security.cert.X509Certificate;
+
 
 import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
@@ -157,6 +168,8 @@ public class BroadcastBeritaActivity extends AppCompatActivity
 
         //get user ID
         userID = ResourceLoader.LoadUserID(this);
+
+        Ion.getDefault(this).getConscryptMiddleware().enable(false);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -427,7 +440,8 @@ public class BroadcastBeritaActivity extends AppCompatActivity
         {
             //create SpParameter object
             JSONObject spParameterObject = new JSONObject();
-            spParameterObject.put("userID", userID);
+            /*spParameterObject.put("userID", userID);*/
+            spParameterObject.put("userID", "BTN0013887");
 
             //populate request object
             requestObject.put("DatabaseID", "db1");
@@ -498,6 +512,9 @@ public class BroadcastBeritaActivity extends AppCompatActivity
             //setup url
             String usedURL = baseURL + url_UploadFile;
 
+            //--------------------------------------------------------------------------------------
+            //  Normal procedure
+            //--------------------------------------------------------------------------------------
             //send file menggunakan ion
             /*Ion.with(BroadcastBeritaActivity.this)
                     .load(usedURL)
@@ -512,6 +529,60 @@ public class BroadcastBeritaActivity extends AppCompatActivity
                             HandleUploadFileResult(e, result);
                         }
                     });*/
+            //--------------------------------------------------------------------------------------
+
+            //--------------------------------------------------------------------------------------
+            //  Ignoring certificate
+            //--------------------------------------------------------------------------------------
+            /*Ion ionClient = Ion.getDefault(BroadcastBeritaActivity.this);
+            ionClient.getHttpClient().getSSLSocketMiddleware().setTrustManagers(new TrustManager[] {new X509TrustManager()
+            {
+                @Override
+                public void checkClientTrusted(java.security.cert.X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+                }
+
+                @Override
+                public void checkServerTrusted(java.security.cert.X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+                }
+
+                @Override
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return new java.security.cert.X509Certificate[0];
+                }
+            }});
+
+            ionClient.build(BroadcastBeritaActivity.this)
+                    .load(usedURL)
+                    .setHeader("ContentType", "multipart/form-data")
+                    .setHeader("Authorization", "Bearer" + authToken)
+                    .setMultipartFile("file", file)
+                    .asString()
+                    .setCallback(new FutureCallback<String>() {
+                        @Override
+                        public void onCompleted(Exception e, String result)
+                        {
+                            HandleUploadFileResult(e, result);
+                        }
+                    });*/
+
+            /*Ion.getDefault(BroadcastBeritaActivity.this).getHttpClient().getSSLSocketMiddleware().setTrustManagers(new TrustManager[] {new X509TrustManager() {
+                @Override
+                public void checkClientTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {}
+
+                @Override
+                public void checkServerTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {}
+
+                @Override
+                public X509Certificate[] getAcceptedIssuers() {
+                    return new X509Certificate[0];
+                }
+            }});*/
+
+             //ignore certificate
+            HttpsTrustManager.allowAllSSL();
+
             Ion.with(BroadcastBeritaActivity.this)
                     .load(usedURL)
                     .setHeader("ContentType", "multipart/form-data")
@@ -525,6 +596,7 @@ public class BroadcastBeritaActivity extends AppCompatActivity
                             HandleUploadFileResult(e, result);
                         }
                     });
+            //--------------------------------------------------------------------------------------
 
             return null;
         }
@@ -619,7 +691,8 @@ public class BroadcastBeritaActivity extends AppCompatActivity
         {
             //populate sp parameter request object
             JSONObject spParameterObject = new JSONObject();
-            spParameterObject.put("AuthorID", userID);
+            /*spParameterObject.put("AuthorID", userID);*/
+            spParameterObject.put("AuthorID", "BTN0013887");
             spParameterObject.put("Title", formBroadcastBerita.Judul);
             spParameterObject.put("Summary", formBroadcastBerita.Isi);
             spParameterObject.put("NewsContent", formBroadcastBerita.Isi);

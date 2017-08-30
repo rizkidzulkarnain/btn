@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_bluegradient"
+    tools:context="com.mitkoindo.smartcollection.module.assignment.AccountAssignmentActivity">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/AccountAssignmentLayout_PageTitle"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--Page title-->
+            <TextView
+                android:text="@string/AccountAssignment_PageTitle"
+                android:textColor="@color/White"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:background="@drawable/background_rounded_rectangle_pagetitle"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!--Search button-->
+            <ImageView
+                android:id="@+id/AccountAssignment_SearchButton"
+                android:src="@drawable/ic_search_white_24dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <!--Divider-->
+        <View
+            android:id="@+id/AccountAssignmentLayout_Divider"
+            android:layout_below="@id/AccountAssignmentLayout_PageTitle"
+            android:background="@color/Background_PageTitle"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <Button
+            android:id="@+id/AccountAssignmentLayout_AssignButton"
+            android:text="@string/AccountAssignment_Assign"
+            android:textAllCaps="false"
+            android:textColor="@color/White"
+            android:background="@color/Background_PageTitle"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:onClick="HandleInput_AccountAssignment_AssignButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--List tindakan-->
+        <RelativeLayout
+            android:layout_below="@id/AccountAssignmentLayout_Divider"
+            android:layout_above="@id/AccountAssignmentLayout_AssignButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/AccountAssignment_ListDebitur"
+                android:overScrollMode="never"
+                android:clipToPadding="false"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <!--Progress-->
+            <ProgressBar
+                android:id="@+id/AccountAssignment_Progress"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/AccountAssignment_NoData"
+                android:text="@string/Text_NoData"
+                android:textSize="18sp"
+                android:textColor="@color/White"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!--Back button-->
+    <RelativeLayout
+        android:onClick="HandleInput_AccountAssignment_Back"
+        android:background="@drawable/background_circle_blacktransparent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="66dp"
+        android:layout_height="66dp">
+
+        <ImageView
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_chevron_left_white_36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>
