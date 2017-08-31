@@ -2,6 +2,8 @@ package com.mitkoindo.smartcollection;
 
 import android.app.Application;
 
+import com.facebook.stetho.Stetho;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -21,6 +23,7 @@ public class MyApplication extends Application {
         sInstance = this;
         initCalligraphy();
         initRealm();
+        initStetho();
     }
 
     public static Application getInstance() {
@@ -43,5 +46,9 @@ public class MyApplication extends Application {
 
     public static Realm getRealmInstance() {
         return Realm.getDefaultInstance();
+    }
+
+    private void initStetho() {
+        Stetho.initializeWithDefaults(this);
     }
 }

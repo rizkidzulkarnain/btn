@@ -5,9 +5,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +25,7 @@ import com.mitkoindo.smartcollection.databinding.ActivityFormCallBinding;
 import com.mitkoindo.smartcollection.dialog.DialogSimpleSpinnerAdapter;
 import com.mitkoindo.smartcollection.event.EventDialogSimpleSpinnerSelected;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
+import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.FormCallBody;
 import com.mitkoindo.smartcollection.objectdata.DropDownAction;
 import com.mitkoindo.smartcollection.objectdata.DropDownAddress;
@@ -146,6 +149,37 @@ public class FormCallActivity extends BaseActivity {
                 if (mFormCallViewModel.obsIsSaveSuccess.get()) {
                     displayErrorDialog("", getString(R.string.FormCall_SaveFormSuccess));
                     startActivity(HomeActivity.instantiateClearTask(FormCallActivity.this));
+                }
+            }
+        });
+        mFormCallViewModel.hasilPanggilan.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                String hasilPanggilan = mFormCallViewModel.hasilPanggilan.get();
+                String hasilPanggilanId = "";
+                for (DropDownResult dropDownResult : mListDropDownResult) {
+                    if (!TextUtils.isEmpty(dropDownResult.getResultDesc()) && dropDownResult.getResultDesc().equals(hasilPanggilan)) {
+                        hasilPanggilanId = dropDownResult.getResultId();
+                        break;
+                    }
+                }
+
+//                Jika hasil kunjungan = akan setor tanggal / akan datang ke btn tanggal / minta dihubungi tanggal, maka show field tanggal janji debitur
+                if (hasilPanggilanId.equals(RestConstants.RESULT_ID_AKAN_SETOR_TANGGAL_VALUE)
+                        || hasilPanggilanId.equals(RestConstants.RESULT_ID_AKAN_DATANG_KE_BTN_TANGGAL_VALUE)
+                        || hasilPanggilanId.equals(RestConstants.RESULT_ID_MINTA_DIHUBUNGI_TANGGAL_VALUE)) {
+
+                    mFormCallViewModel.obsIsShowTanggalJanjiDebitur.set(true);
+
+//                    Jika hasil kunjungan = akan setor tanggal, maka show field jumlah yang akan disetor
+                    if (hasilPanggilanId.equals(RestConstants.RESULT_ID_AKAN_SETOR_TANGGAL_VALUE)) {
+                        mFormCallViewModel.obsIsShowJumlahYangAkanDisetor.set(true);
+                    } else {
+                        mFormCallViewModel.obsIsShowJumlahYangAkanDisetor.set(false);
+                    }
+                } else {
+                    mFormCallViewModel.obsIsShowTanggalJanjiDebitur.set(false);
+                    mFormCallViewModel.obsIsShowJumlahYangAkanDisetor.set(false);
                 }
             }
         });
@@ -382,7 +416,7 @@ public class FormCallActivity extends BaseActivity {
 
     private boolean isValid() {
         mFormCallViewModel.spParameter.setAccountNo(mNoRekening);
-        mFormCallViewModel.spParameter.setUserId("btn0100011");
+        mFormCallViewModel.spParameter.setUserId(getUserId());
         FormCallBody.SpParameter spParameter = mFormCallViewModel.spParameter;
         if (TextUtils.isEmpty(spParameter.getTujuan())) {
             displayMessage(getString(R.string.FormCall_TujuanCallInitial));
@@ -396,10 +430,10 @@ public class FormCallActivity extends BaseActivity {
         } else if (TextUtils.isEmpty(spParameter.getResult())) {
             displayMessage(getString(R.string.FormCall_HasilPanggilanInitial));
             return false;
-        } else if (TextUtils.isEmpty(spParameter.getResultDate())) {
+        } else if (TextUtils.isEmpty(spParameter.getResultDate()) && mFormCallViewModel.obsIsShowTanggalJanjiDebitur.get()) {
             displayMessage(getString(R.string.FormCall_TanggalHasilPanggilanInitial));
             return false;
-        } else if (spParameter.getPtpAmount() == 0) {
+        } else if (spParameter.getPtpAmount() == 0 && mFormCallViewModel.obsIsShowJumlahYangAkanDisetor.get()) {
             displayMessage(getString(R.string.FormCall_JumlahYangAkanDisetorHint));
             return false;
         } else if (TextUtils.isEmpty(spParameter.getReasonNoPayment())) {
@@ -417,5 +451,4 @@ public class FormCallActivity extends BaseActivity {
         }
         return true;
     }
-
 }

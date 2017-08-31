@@ -52,7 +52,7 @@
     <string name="Dashboard_Outstanding">Outstanding</string>
     <string name="Dashboard_NPL">NPL</string>
     <string name="Dashboard_SaldoPokokNPL">Saldo Pokok NPL</string>
-
+    
     <!--Dashboard mode-->
     <string name="dashboardKunjungan_Mode_Today">MKI_SP_DASHBOARD_KUNJUNGAN_TODAY</string>
     <string name="dashboardKunjungan_Mode_Monthly">MKI_SP_DASHBOARD_KUNJUNGAN_MONTH</string>
@@ -85,6 +85,7 @@
 
     <!--List debitur page-->
     <string name="ListDebitur_PageTitle">List Debitur</string>
+    <string name="ListDebitur_Empty">Tidak ada data debitur</string>
 
     <!--Detail debitur page-->
     <string name="DetailDebitur_PageTitle">Detail Debitur</string>
@@ -146,6 +147,7 @@
     <string name="FormVisit_TidakTerawat">Tidak Terawat</string>
     <string name="FormVisit_SaveFormSuccess">Sukses mengirim form visit</string>
     <string name="FormVisit_FotoDebiturHint">Ambil foto debitur</string>
+    <string name="FormVisit_FotoAgunanHint">Ambil foto agunan</string>
 
     <!--Form Visit initial value-->
     <string name="FormVisit_TujuanKunjunganInitial">Pilih tujuan kunjungan</string>
@@ -204,8 +206,8 @@
     <string name="FormCall_AlasanTidakBayarInitial">Pilih alasan tidak bayar</string>
     <string name="FormCall_TindakLanjutInitial">Pilih tindak lanjut</string>
     <string name="FormCall_TanggalTindakLanjutInitial">Pilih tanggal tindak lanjut</string>
-
-    <!--Form Visit Konfirmasi Page-->
+	
+	<!--Form Visit Konfirmasi Page-->
     <string name="FormKonfirmasi_PageTitle">Konfimasi Form Visit</string>
 
     <!--Account assignment-->

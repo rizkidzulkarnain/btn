@@ -56,7 +56,12 @@ public class DetailDebitur {
     @Expose
     private String status;
 
+    @SerializedName("PTP")
+    @Expose
     private String ptp;
+
+    @SerializedName("PTPAmount")
+    @Expose
     private String besaranPtp;
 
     @SerializedName("AlamatRumah")

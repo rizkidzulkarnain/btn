@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
@@ -14,6 +15,7 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -34,6 +36,7 @@ import com.mitkoindo.smartcollection.databinding.ActivityFormVisitBinding;
 import com.mitkoindo.smartcollection.dialog.DialogSimpleSpinnerAdapter;
 import com.mitkoindo.smartcollection.event.EventDialogSimpleSpinnerSelected;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
+import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.FormVisitBody;
 import com.mitkoindo.smartcollection.objectdata.DropDownAction;
 import com.mitkoindo.smartcollection.objectdata.DropDownAddress;
@@ -193,6 +196,37 @@ public class FormVisitActivity extends BaseActivity {
                 if (!mFormVisitViewModel.isFotoAgunan2Show.get()) {
                     mBinding.imageViewFotoAgunan2.setImageResource(R.drawable.ic_home_variant_grey600_48dp);
                     mFormVisitViewModel.spParameter.setPhotoAgunan2Path("");
+                }
+            }
+        });
+        mFormVisitViewModel.hasilKunjungan.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                String hasilKunjungan = mFormVisitViewModel.hasilKunjungan.get();
+                String hasilKunjunganId = "";
+                for (DropDownResult dropDownResult : mListDropDownResult) {
+                    if (!TextUtils.isEmpty(dropDownResult.getResultDesc()) && dropDownResult.getResultDesc().equals(hasilKunjungan)) {
+                        hasilKunjunganId = dropDownResult.getResultId();
+                        break;
+                    }
+                }
+
+//                Jika hasil kunjungan = akan setor tanggal / akan datang ke btn tanggal / minta dihubungi tanggal, maka show field tanggal janji debitur
+                if (hasilKunjunganId.equals(RestConstants.RESULT_ID_AKAN_SETOR_TANGGAL_VALUE)
+                        || hasilKunjunganId.equals(RestConstants.RESULT_ID_AKAN_DATANG_KE_BTN_TANGGAL_VALUE)
+                        || hasilKunjunganId.equals(RestConstants.RESULT_ID_MINTA_DIHUBUNGI_TANGGAL_VALUE)) {
+
+                    mFormVisitViewModel.obsIsShowTanggalJanjiDebitur.set(true);
+
+//                    Jika hasil kunjungan = akan setor tanggal, maka show field jumlah yang akan disetor
+                    if (hasilKunjunganId.equals(RestConstants.RESULT_ID_AKAN_SETOR_TANGGAL_VALUE)) {
+                        mFormVisitViewModel.obsIsShowJumlahYangAkanDisetor.set(true);
+                    } else {
+                        mFormVisitViewModel.obsIsShowJumlahYangAkanDisetor.set(false);
+                    }
+                } else {
+                    mFormVisitViewModel.obsIsShowTanggalJanjiDebitur.set(false);
+                    mFormVisitViewModel.obsIsShowJumlahYangAkanDisetor.set(false);
                 }
             }
         });
@@ -659,25 +693,6 @@ public class FormVisitActivity extends BaseActivity {
     @OnClick(R.id.button_submit)
     public void onSubmitClicked(View view) {
         if (isValid()) {
-//            new AlertDialog.Builder(this)
-//                    .setMessage(getString(R.string.FormVisit_KonfirmasiSubmit))
-//                    .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                        }
-//                    })
-//                    .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
-//                        }
-//                    })
-//                    .create()
-//                    .show();
-
-//          mFormVisitViewModel.saveFormVisit(getAccessToken());
-//          mFormVisitViewModel.uploadFile(getAccessToken(), mFormVisitViewModel.spParameter.getPhotoDebiturPath());
-
             startActivity(FormVisitKonfirmasiActivity.instantiate(FormVisitActivity.this,
                     mFormVisitViewModel.spParameter,
                     mNoRekening,
@@ -687,54 +702,54 @@ public class FormVisitActivity extends BaseActivity {
 
     private boolean isValid() {
         mFormVisitViewModel.spParameter.setAccNo(mNoRekening);
-        mFormVisitViewModel.spParameter.setUserId("btn0100011");
+        mFormVisitViewModel.spParameter.setUserId(getUserId());
         FormVisitBody.SpParameter spParameter = mFormVisitViewModel.spParameter;
-//        if (TextUtils.isEmpty(spParameter.getTujuan())) {
-//            displayMessage(getString(R.string.FormVisit_TujuanKunjunganInitial));
-//            return false;
-//        }
-////        else if (TextUtils.isEmpty(spParameter.getCuAddr())) {
-////            displayMessage(getString(R.string.FormVisit_AlamatYangDikunjungiInitial));
-////            return false;
-////        }
-//        else if (TextUtils.isEmpty(spParameter.getPersonVisit())) {
-//            displayMessage(getString(R.string.FormVisit_OrangYangDiKunjungiHint));
-//            return false;
-//        } else if (TextUtils.isEmpty(spParameter.getPersonVisitRel())) {
-//            displayMessage(getString(R.string.FormVisit_HubunganDenganDebiturInitial));
-//            return false;
-//        } else if (TextUtils.isEmpty(spParameter.getResult())) {
-//            displayMessage(getString(R.string.FormVisit_HasilKunjunganInitial));
-//            return false;
-//        } else if (TextUtils.isEmpty(spParameter.getResultDate())) {
-//            displayMessage(getString(R.string.FormVisit_TanggalJanjiDebiturInitial));
-//            return false;
-//        } else if (spParameter.getPtpAmount() == 0) {
-//            displayMessage(getString(R.string.FormVisit_JumlahYangAkanDisetorHint));
-//            return false;
-//        } else if (TextUtils.isEmpty(spParameter.getCollStatDesc())) {
-//            displayMessage(getString(R.string.FormVisit_StatusAgunanInitial));
-//            return false;
-//        } else if (TextUtils.isEmpty(spParameter.getCollCondDesc())) {
-//            displayMessage(getString(R.string.FormVisit_KondisiAgunanInitial));
-//            return false;
-//        } else if (TextUtils.isEmpty(spParameter.getReasonNonPayment())) {
-//            displayMessage(getString(R.string.FormVisit_AlasanMenunggakInitial));
-//            return false;
-//        } else if (TextUtils.isEmpty(spParameter.getNextActionDate())) {
-//            displayMessage(getString(R.string.FormVisit_TanggalTindakLanjutInitial));
-//            return false;
-//        } else if (TextUtils.isEmpty(spParameter.getNextAction())) {
-//            displayMessage(getString(R.string.FormVisit_TindakLanjutInitial));
-//            return false;
-//        } else if (TextUtils.isEmpty(spParameter.getNotes())) {
-//            displayMessage(getString(R.string.FormVisit_CatatanHint));
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(spParameter.getPhotoDebiturPath())) {
-//            displayMessage(getString(R.string.FormVisit_FotoDebiturHint));
-//            return false;
-//        }
+        if (TextUtils.isEmpty(spParameter.getTujuan())) {
+            displayMessage(getString(R.string.FormVisit_TujuanKunjunganInitial));
+            return false;
+        } else if (TextUtils.isEmpty(spParameter.getCuAddr())) {
+            displayMessage(getString(R.string.FormVisit_AlamatYangDikunjungiInitial));
+            return false;
+        } else if (TextUtils.isEmpty(spParameter.getPersonVisit())) {
+            displayMessage(getString(R.string.FormVisit_OrangYangDiKunjungiHint));
+            return false;
+        } else if (TextUtils.isEmpty(spParameter.getPersonVisitRel())) {
+            displayMessage(getString(R.string.FormVisit_HubunganDenganDebiturInitial));
+            return false;
+        } else if (TextUtils.isEmpty(spParameter.getResult())) {
+            displayMessage(getString(R.string.FormVisit_HasilKunjunganInitial));
+            return false;
+        } else if (TextUtils.isEmpty(spParameter.getResultDate()) && mFormVisitViewModel.obsIsShowTanggalJanjiDebitur.get()) {
+            displayMessage(getString(R.string.FormVisit_TanggalJanjiDebiturInitial));
+            return false;
+        } else if (spParameter.getPtpAmount() == 0 && mFormVisitViewModel.obsIsShowJumlahYangAkanDisetor.get()) {
+            displayMessage(getString(R.string.FormVisit_JumlahYangAkanDisetorHint));
+            return false;
+        } else if (TextUtils.isEmpty(spParameter.getCollStatDesc())) {
+            displayMessage(getString(R.string.FormVisit_StatusAgunanInitial));
+            return false;
+        } else if (TextUtils.isEmpty(spParameter.getCollCondDesc())) {
+            displayMessage(getString(R.string.FormVisit_KondisiAgunanInitial));
+            return false;
+        } else if (TextUtils.isEmpty(spParameter.getReasonNonPayment())) {
+            displayMessage(getString(R.string.FormVisit_AlasanMenunggakInitial));
+            return false;
+        } else if (TextUtils.isEmpty(spParameter.getNextActionDate())) {
+            displayMessage(getString(R.string.FormVisit_TanggalTindakLanjutInitial));
+            return false;
+        } else if (TextUtils.isEmpty(spParameter.getNextAction())) {
+            displayMessage(getString(R.string.FormVisit_TindakLanjutInitial));
+            return false;
+        } else if (TextUtils.isEmpty(spParameter.getNotes())) {
+            displayMessage(getString(R.string.FormVisit_CatatanHint));
+            return false;
+        } else if (TextUtils.isEmpty(spParameter.getPhotoDebiturPath())) {
+            displayMessage(getString(R.string.FormVisit_FotoDebiturHint));
+            return false;
+        } else if (TextUtils.isEmpty(spParameter.getPhotoAgunan1Path())) {
+            displayMessage(getString(R.string.FormVisit_FotoAgunanHint));
+            return false;
+        }
         return true;
     }
 }

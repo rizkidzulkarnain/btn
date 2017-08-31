@@ -55,6 +55,8 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
     public ObservableField<Throwable> error = new ObservableField<>();
     public ObservableField<Throwable> errorSave = new ObservableField<>();
     public ObservableBoolean obsIsSaveSuccess = new ObservableBoolean(false);
+    public ObservableBoolean obsIsShowTanggalJanjiDebitur = new ObservableBoolean(false);
+    public ObservableBoolean obsIsShowJumlahYangAkanDisetor = new ObservableBoolean(false);
 
     public ObservableField<String> tujuanKunjungan = new ObservableField<>();
     public ObservableField<String> alamatYangDikunjungi = new ObservableField<>();
@@ -62,7 +64,7 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
     public ObservableField<String> hubunganDenganDebitur = new ObservableField<>();
     public ObservableField<String> hasilKunjungan = new ObservableField<>();
     public ObservableField<String> tanggalJanjiDebitur = new ObservableField<>();
-    public ObservableField<String> jumlahYangAkanDisetor = new ObservableField<>("0");
+    public ObservableField<String> jumlahYangAkanDisetor = new ObservableField<>();
     public ObservableField<String> statusAgunan = new ObservableField<>();
     public ObservableField<String> kondisiAgunan = new ObservableField<>();
     public ObservableField<String> alasanMenunggak = new ObservableField<>();
@@ -96,7 +98,7 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
     }
 
     public void getListAddress(String accessToken, String noRekening) {
-        Disposable disposable = ApiUtils.getRestServices(accessToken).getDropDownAddress(createAddressBody(noRekening))
+        Disposable disposable = ApiUtils.getRestServices(accessToken).getDropDownAddress(createAddressBody("'" + noRekening + "'"))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(new Consumer<Disposable>() {
@@ -238,7 +240,7 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
 
         DbParam dbParam = new DbParam();
         dbParam.setPage(1);
-        dbParam.setLimit(20);
+        dbParam.setLimit(15);
         dbParam.setSort(listSort);
         dbParam.setFilter(listFilter);
 

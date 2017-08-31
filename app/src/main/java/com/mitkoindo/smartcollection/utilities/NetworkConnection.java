@@ -303,6 +303,8 @@ public class NetworkConnection
                 httpURLConnection.connect();
 
                 OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
+                if (requestObject == null)
+                    requestObject = new JSONObject();
                 out.write(requestObject.toString());
                 out.close();
 
@@ -377,6 +379,8 @@ public class NetworkConnection
                 httpURLConnection.connect();
 
                 OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
+                if (requestObject == null)
+                    requestObject = new JSONObject();
                 out.write(requestObject.toString());
                 out.close();
 

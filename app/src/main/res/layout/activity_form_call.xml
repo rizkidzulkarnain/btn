@@ -60,7 +60,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/FormCall_TujuanCall"/>
 
-                <!--Tujuan Spinner-->
+                <!--Tujuan Value-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_tujuan"
                     android:layout_width="0dp"
@@ -69,12 +69,33 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tujuan"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_tujuan"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown" />
+                        android:orientation="horizontal">
+                        <TextView
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingStart="@dimen/padding_medium"
+                            android:paddingLeft="@dimen/padding_medium"
+                            android:paddingRight="@dimen/padding_medium"
+                            android:paddingEnd="@dimen/padding_medium"
+                            android:text="@={formCallViewModel.tujuan}" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/padding_medium"
+                            android:layout_marginRight="@dimen/padding_medium"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                    </LinearLayout>
                 </android.support.v7.widget.CardView>
+
 
                 <!--Berbicara dengan-->
                 <TextView
@@ -108,8 +129,10 @@
                         android:paddingLeft="@dimen/padding_medium"
                         android:paddingEnd="@dimen/padding_medium"
                         android:textColor="@color/Grey"
-                        android:hint="@string/FormVisit_OrangYangDiKunjungiHint"
-                        android:background="@color/Transparent"/>
+                        android:textColorHint="@color/Grey"
+                        android:hint="@string/FormCall_BerbicaraDenganHint"
+                        android:background="@color/Transparent"
+                        android:text="@={formCallViewModel.spParameter.spokeTo}"/>
                 </android.support.v7.widget.CardView>
 
                 <!--Hubungan dengan debitur-->
@@ -124,7 +147,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/FormCall_HubunganDenganDebitur"/>
 
-                <!--Hubungan dengan debitur spinner-->
+                <!--Hubungan dengan debitur value-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_hubungan_dengan_debitur"
                     android:layout_width="0dp"
@@ -133,12 +156,33 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_hubungan_dengan_debitur"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_hubungan_dengan_debitur"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"/>
+                        android:orientation="horizontal">
+                        <TextView
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingStart="@dimen/padding_medium"
+                            android:paddingLeft="@dimen/padding_medium"
+                            android:paddingRight="@dimen/padding_medium"
+                            android:paddingEnd="@dimen/padding_medium"
+                            android:text="@={formCallViewModel.hubunganDenganDebitur}" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/padding_medium"
+                            android:layout_marginRight="@dimen/padding_medium"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                    </LinearLayout>
                 </android.support.v7.widget.CardView>
+
 
                 <!--Hasil Panggilan-->
                 <TextView
@@ -152,7 +196,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/FormCall_HasilPanggilan"/>
 
-                <!--Hasil Panggilan spinner-->
+                <!--Hasil Panggilan value-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_hasil_panggilan"
                     android:layout_width="0dp"
@@ -161,12 +205,33 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_hasil_panggilan"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_hasil_panggilan"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"/>
+                        android:orientation="horizontal">
+                        <TextView
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingStart="@dimen/padding_medium"
+                            android:paddingLeft="@dimen/padding_medium"
+                            android:paddingRight="@dimen/padding_medium"
+                            android:paddingEnd="@dimen/padding_medium"
+                            android:text="@={formCallViewModel.hasilPanggilan}" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/padding_medium"
+                            android:layout_marginRight="@dimen/padding_medium"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                    </LinearLayout>
                 </android.support.v7.widget.CardView>
+
 
                 <!--Tanggal Hasil Panggilan-->
                 <TextView
@@ -178,7 +243,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/card_view_hasil_panggilan"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="@string/FormCall_TanggalHasilPanggilan"/>
+                    android:text="@string/FormCall_TanggalHasilPanggilan"
+                    android:visibility="@{formCallViewModel.obsIsShowTanggalJanjiDebitur ? View.VISIBLE : View.GONE}"/>
 
                 <!--Tanggal hasil panggilan DatePicker-->
                 <android.support.v7.widget.CardView
@@ -188,7 +254,8 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tanggal_hasil_panggilan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="@{formCallViewModel.obsIsShowTanggalJanjiDebitur ? View.VISIBLE : View.GONE}">
                     <TextView
                         android:id="@+id/text_view_tanggal_hasil_panggilan_date"
                         style="@style/FontRegular.Medium"
@@ -212,7 +279,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/card_view_tanggal_hasil_panggilan"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="@string/FormCall_JumlahYangAkanDisetor"/>
+                    android:text="@string/FormCall_JumlahYangAkanDisetor"
+                    android:visibility="@{formCallViewModel.obsIsShowJumlahYangAkanDisetor ? View.VISIBLE : View.GONE}"/>
 
                 <!--Jumlah yang akan disetor edit text-->
                 <android.support.v7.widget.CardView
@@ -222,7 +290,8 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_jumlah_yang_akan_disetor"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="@{formCallViewModel.obsIsShowJumlahYangAkanDisetor ? View.VISIBLE : View.GONE}">
                     <EditText
                         android:id="@+id/edit_text_jumlah_yang_akan_disetor"
                         style="@style/FontRegular.Medium"
@@ -234,9 +303,11 @@
                         android:paddingLeft="@dimen/padding_medium"
                         android:paddingEnd="@dimen/padding_medium"
                         android:textColor="@color/Grey"
+                        android:textColorHint="@color/Grey"
                         android:hint="@string/FormCall_JumlahYangAkanDisetorHint"
                         android:inputType="number"
-                        android:background="@color/Transparent"/>
+                        android:background="@color/Transparent"
+                        android:text="@={formCallViewModel.jumlahYangAkanDisetor}" />
                 </android.support.v7.widget.CardView>
 
                 <!--Alasan Tidak Bayar-->
@@ -251,7 +322,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/FormCall_AlasanTidakBayar"/>
 
-                <!--Alasan Tidak Bayar spinner-->
+                <!--Alasan Tidak Bayar value-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_alasan_tidak_bayar"
                     android:layout_width="0dp"
@@ -260,12 +331,33 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_alasan_tidak_bayar"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_alasan_tidak_bayar"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"/>
+                        android:orientation="horizontal">
+                        <TextView
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingStart="@dimen/padding_medium"
+                            android:paddingLeft="@dimen/padding_medium"
+                            android:paddingRight="@dimen/padding_medium"
+                            android:paddingEnd="@dimen/padding_medium"
+                            android:text="@={formCallViewModel.alasanTidakBayar}" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/padding_medium"
+                            android:layout_marginRight="@dimen/padding_medium"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                    </LinearLayout>
                 </android.support.v7.widget.CardView>
+
 
                 <!--Tindak Lanjut-->
                 <TextView
@@ -279,7 +371,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/FormCall_TindakLanjut"/>
 
-                <!--Tindak Lanjut spinner-->
+                <!--Tindak Lanjut value-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_tindak_lanjut"
                     android:layout_width="0dp"
@@ -288,12 +380,33 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tindak_lanjut"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_tindak_lanjut"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"/>
+                        android:orientation="horizontal">
+                        <TextView
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingStart="@dimen/padding_medium"
+                            android:paddingLeft="@dimen/padding_medium"
+                            android:paddingRight="@dimen/padding_medium"
+                            android:paddingEnd="@dimen/padding_medium"
+                            android:text="@={formCallViewModel.tindakLanjut}" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/padding_medium"
+                            android:layout_marginRight="@dimen/padding_medium"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                    </LinearLayout>
                 </android.support.v7.widget.CardView>
+
 
                 <!--Tanggal Tindak Lanjut-->
                 <TextView
@@ -364,8 +477,10 @@
                         android:lines="3"
                         android:gravity="top|left"
                         android:textColor="@color/Grey"
+                        android:textColorHint="@color/Grey"
                         android:hint="@string/FormCall_CatatanHint"
-                        android:background="@color/Transparent"/>
+                        android:background="@color/Transparent"
+                        android:text="@={formCallViewModel.spParameter.notes}"/>
                 </android.support.v7.widget.CardView>
 
                 <!--Submit Button-->

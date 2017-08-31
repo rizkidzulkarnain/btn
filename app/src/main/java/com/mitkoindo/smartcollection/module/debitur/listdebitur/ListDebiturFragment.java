@@ -1,10 +1,13 @@
 package com.mitkoindo.smartcollection.module.debitur.listdebitur;
 
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +16,10 @@ import android.view.ViewGroup;
 
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
+import com.mikepenz.fastadapter.adapters.FooterAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
+import com.mikepenz.fastadapter_extensions.items.ProgressItem;
+import com.mikepenz.fastadapter_extensions.scroll.EndlessRecyclerOnScrollListener;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.base.BaseFragment;
 import com.mitkoindo.smartcollection.databinding.FragmentListDebiturBinding;
@@ -34,6 +40,7 @@ public class ListDebiturFragment extends BaseFragment {
     private ListDebiturViewModel mListDebiturViewModel;
     private FragmentListDebiturBinding mBinding;
     private FastItemAdapter mFastAdapter;
+    private FooterAdapter<ProgressItem> mFooterAdapter;
     private String mStatus = RestConstants.LIST_DEBITUR_STATUS_PENDING_VALUE;
 
 
@@ -72,6 +79,7 @@ public class ListDebiturFragment extends BaseFragment {
                 if (mListDebiturViewModel.obsIsLoading.get()) {
                     showLoadingDialog();
                 } else {
+                    mBinding.swipeRefreshLayoutDebitur.setRefreshing(false);
                     hideLoadingDialog();
                 }
             }
@@ -85,33 +93,36 @@ public class ListDebiturFragment extends BaseFragment {
         mListDebiturViewModel.obsDebiturResponse.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
+                mFastAdapter.clear();
                 mFastAdapter.add(mListDebiturViewModel.obsDebiturResponse.get());
+                if (mListDebiturViewModel.obsDebiturResponse.get().size() > 0) {
+                    mListDebiturViewModel.obsIsEmpty.set(false);
+                } else {
+                    mListDebiturViewModel.obsIsEmpty.set(true);
+                }
+            }
+        });
+        mListDebiturViewModel.obsDebiturResponseLoadMore.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                mFastAdapter.add(mListDebiturViewModel.obsDebiturResponseLoadMore.get());
             }
         });
 
         setupRecyclerView();
 
-        mListDebiturViewModel.getListDebitur(mStatus, 1);
+        mListDebiturViewModel.getListDebitur(getUserId(), mStatus, 1);
     }
 
     private void setupRecyclerView() {
         mFastAdapter = new FastItemAdapter();
-
-        /*for (int i = 0; i < 5; i++) {
-            DebiturItem item = new DebiturItem();
-            item.setNama("Susilo Hermawan");
-            item.setLastPayment("19 Agustus 2017");
-            item.setDpd("12");
-            item.setNoRekening("182871873");
-
-            mFastAdapter.add(item);
-        }*/
+        mFooterAdapter = new FooterAdapter<>();
 
         int divider = getResources().getDimensionPixelSize(R.dimen.padding_medium_large);
         RecyclerView.ItemDecoration itemDecoration = new SimpleListItemDecoration(divider, RecyclerView.VERTICAL);
         mBinding.recyclerViewDebitur.addItemDecoration(itemDecoration);
         mBinding.recyclerViewDebitur.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mBinding.recyclerViewDebitur.setAdapter(mFastAdapter);
+        mBinding.recyclerViewDebitur.setAdapter(mFooterAdapter.wrap(mFastAdapter));
 
         mFastAdapter.withSelectable(true);
         mFastAdapter.withOnClickListener(new FastAdapter.OnClickListener<DebiturItem>() {
@@ -120,6 +131,23 @@ public class ListDebiturFragment extends BaseFragment {
                 startActivity(DetailDebiturActivity.instantiate(getActivity(), item.getNoRekening()));
 
                 return true;
+            }
+        });
+        mBinding.recyclerViewDebitur.addOnScrollListener(new EndlessRecyclerOnScrollListener(mFooterAdapter) {
+            @Override
+            public void onLoadMore(final int currentPage) {
+                mFooterAdapter.clear();
+                mFooterAdapter.add(new ProgressItem().withEnabled(false));
+
+                mListDebiturViewModel.getListDebitur(getUserId(), mStatus, currentPage);
+            }
+        });
+
+        mBinding.swipeRefreshLayoutDebitur.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mBinding.swipeRefreshLayoutDebitur.setRefreshing(true);
+                mListDebiturViewModel.getListDebitur(getUserId(), mStatus, 1);
             }
         });
     }

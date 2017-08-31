@@ -3,13 +3,13 @@ package com.mitkoindo.smartcollection.module.debitur.detaildebitur;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.util.Log;
 
 import com.mitkoindo.smartcollection.base.ILifecycleViewModel;
 import com.mitkoindo.smartcollection.network.ApiUtils;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.DetailDebiturBody;
 import com.mitkoindo.smartcollection.network.body.ListPhoneNumberBody;
-import com.mitkoindo.smartcollection.network.response.DetailDebiturResponse;
 import com.mitkoindo.smartcollection.objectdata.DetailDebitur;
 import com.mitkoindo.smartcollection.objectdata.PhoneNumber;
 
@@ -71,16 +71,19 @@ public class DetailDebiturViewModel extends BaseObservable implements ILifecycle
                         obsIsLoading.set(false);
                     }
                 })
-                .subscribeWith(new DisposableObserver<DetailDebiturResponse>() {
+                .subscribeWith(new DisposableObserver<List<DetailDebitur>>() {
                     @Override
-                    public void onNext(DetailDebiturResponse detailDebiturResponse) {
-                        obsDetailDebitur.set(detailDebiturResponse.getDetailDebitur());
+                    public void onNext(List<DetailDebitur> listDetailDebitur) {
+                        if (listDetailDebitur.size() > 0) {
+                            obsDetailDebitur.set(listDetailDebitur.get(0));
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         mErrorType = GET_DETAIL_DEBITUR_ERROR;
                         error.set(e);
+                        Log.e("DetailDebiturViewModel", "getDetailDebitur" + e.getMessage());
                     }
 
                     @Override
@@ -127,6 +130,7 @@ public class DetailDebiturViewModel extends BaseObservable implements ILifecycle
                     public void onError(Throwable e) {
                         mErrorType = GET_PHONE_LIST_ERROR;
                         error.set(e);
+                        Log.e("DetailDebiturViewModel", "getPhoneList" + e.getMessage());
                     }
 
                     @Override

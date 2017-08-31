@@ -11,23 +11,47 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.adapter.HomeMenuAdapter;
 import com.mitkoindo.smartcollection.helper.ItemClickListener;
+import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.module.assignment.AccountAssignmentActivity;
 import com.mitkoindo.smartcollection.module.berita.BeritaActivity;
 import com.mitkoindo.smartcollection.module.dashboard.DashboardActivity;
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.module.ptp_reminder.PTPReminderActivity;
+import com.mitkoindo.smartcollection.network.ApiUtils;
+import com.mitkoindo.smartcollection.network.RestConstants;
+import com.mitkoindo.smartcollection.network.body.FormVisitDropDownBody;
+import com.mitkoindo.smartcollection.network.models.DbParam;
+import com.mitkoindo.smartcollection.network.models.Sort;
+import com.mitkoindo.smartcollection.objectdata.DropDownAction;
+import com.mitkoindo.smartcollection.objectdata.DropDownPurpose;
+import com.mitkoindo.smartcollection.objectdata.DropDownReason;
+import com.mitkoindo.smartcollection.objectdata.DropDownRelationship;
+import com.mitkoindo.smartcollection.objectdata.DropDownResult;
+import com.mitkoindo.smartcollection.objectdata.DropDownStatusAgunan;
 import com.mitkoindo.smartcollection.objectdata.HomeMenu;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
 import com.mitkoindo.smartcollection.utilities.HttpsTrustManager;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class HomeActivity extends AppCompatActivity
 {
@@ -75,6 +99,8 @@ public class HomeActivity extends AppCompatActivity
         return intent;
     }
 
+    private CompositeDisposable composites = new CompositeDisposable();
+
     //----------------------------------------------------------------------------------------------
     //  Setup
     //----------------------------------------------------------------------------------------------
@@ -87,6 +113,7 @@ public class HomeActivity extends AppCompatActivity
         //setup
         GetViews();
         SetupViews();
+        getDropdown();
         SetupTransaction();
 
         //ignore certificate
@@ -327,5 +354,217 @@ public class HomeActivity extends AppCompatActivity
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void getDropdown() {
+        String key_AuthToken = getString(R.string.SharedPreferenceKey_AccessToken);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String accessToken =  sharedPreferences.getString(key_AuthToken, "");
+
+        Disposable disposable = ApiUtils.getRestServices(accessToken).getDropDownPurpose(createPurposeBody())
+                .flatMap(new Function<List<DropDownPurpose>, ObservableSource<List<DropDownRelationship>>>() {
+                    @Override
+                    public ObservableSource<List<DropDownRelationship>> apply(List<DropDownPurpose> listPurpose) throws Exception {
+                        RealmHelper.deleteListDropDownPurpose();
+                        RealmHelper.storeListDropDownPurpose(listPurpose);
+
+                        return ApiUtils.getRestServices(accessToken).getDropDownRelationship(createRelationshipBody());
+                    }
+                })
+                .flatMap(new Function<List<DropDownRelationship>, ObservableSource<List<DropDownResult>>>() {
+                    @Override
+                    public ObservableSource<List<DropDownResult>> apply(List<DropDownRelationship> listRelationship) throws Exception {
+                        RealmHelper.deleteListDropDownRelationship();
+                        RealmHelper.storeListDropDownRelationship(listRelationship);
+
+                        return ApiUtils.getRestServices(accessToken).getDropDownResult(createResultBody());
+                    }
+                })
+                .flatMap(new Function<List<DropDownResult>, ObservableSource<List<DropDownReason>>>() {
+                    @Override
+                    public ObservableSource<List<DropDownReason>> apply(List<DropDownResult> listResult) throws Exception {
+                        RealmHelper.deleteListDropDownResult();
+                        RealmHelper.storeListDropDownResult(listResult);
+
+                        return ApiUtils.getRestServices(accessToken).getDropDownReason(createReasonBody());
+                    }
+                })
+                .flatMap(new Function<List<DropDownReason>, ObservableSource<List<DropDownAction>>>() {
+                    @Override
+                    public ObservableSource<List<DropDownAction>> apply(List<DropDownReason> listReason) throws Exception {
+                        RealmHelper.deleteListDropDownReason();
+                        RealmHelper.storeListDropDownReason(listReason);
+
+                        return ApiUtils.getRestServices(accessToken).getDropDownAction(createActionBody());
+                    }
+                })
+                .flatMap(new Function<List<DropDownAction>, ObservableSource<List<DropDownStatusAgunan>>>() {
+                    @Override
+                    public ObservableSource<List<DropDownStatusAgunan>> apply(List<DropDownAction> listAction) throws Exception {
+                        RealmHelper.deleteListDropDownAction();
+                        RealmHelper.storeListDropDownAction(listAction);
+
+                        return ApiUtils.getRestServices(accessToken).getDropDownStatusAgunan(createStatusAgunanBody());
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        genericAlert.ShowLoadingAlert();
+                    }
+                })
+                .doOnTerminate(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        genericAlert.Dismiss();
+                    }
+                })
+                .subscribeWith(new DisposableObserver<List<DropDownStatusAgunan>>() {
+                    @Override
+                    public void onNext(List<DropDownStatusAgunan> listStatusAgunan) {
+                        RealmHelper.deleteListDropDownStatusAgunan();
+                        RealmHelper.storeListDropDownStatusAgunan(listStatusAgunan);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("SplashActivity", e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        composites.add(disposable);
+    }
+
+    private FormVisitDropDownBody createPurposeBody() {
+        Sort sort = new Sort();
+        sort.setProperty(RestConstants.DROP_DOWN_PURPOSE_SORT_PROPERTY);
+        sort.setDirection(RestConstants.ORDER_DIRECTION_ASC_VALUE);
+
+        List<Sort> listSort = new ArrayList<>();
+        listSort.add(sort);
+
+        DbParam dbParam = new DbParam();
+        dbParam.setPage(1);
+        dbParam.setLimit(20);
+        dbParam.setSort(listSort);
+
+        FormVisitDropDownBody formVisitDropDownBody = new FormVisitDropDownBody();
+        formVisitDropDownBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
+        formVisitDropDownBody.setViewName(RestConstants.DROP_DOWN_PURPOSE_VIEW_NAME);
+        formVisitDropDownBody.setdBParam(dbParam);
+
+        return formVisitDropDownBody;
+    }
+
+    private FormVisitDropDownBody createRelationshipBody() {
+        Sort sort = new Sort();
+        sort.setProperty(RestConstants.DROP_DOWN_RELATIONSHIP_SORT_PROPERTY);
+        sort.setDirection(RestConstants.ORDER_DIRECTION_ASC_VALUE);
+
+        List<Sort> listSort = new ArrayList<>();
+        listSort.add(sort);
+
+        DbParam dbParam = new DbParam();
+        dbParam.setPage(1);
+        dbParam.setLimit(20);
+        dbParam.setSort(listSort);
+
+        FormVisitDropDownBody formVisitDropDownBody = new FormVisitDropDownBody();
+        formVisitDropDownBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
+        formVisitDropDownBody.setViewName(RestConstants.DROP_DOWN_RELATIONSHIP_VIEW_NAME);
+        formVisitDropDownBody.setdBParam(dbParam);
+
+        return formVisitDropDownBody;
+    }
+
+    private FormVisitDropDownBody createResultBody() {
+        Sort sort = new Sort();
+        sort.setProperty(RestConstants.DROP_DOWN_RESULT_SORT_PROPERTY);
+        sort.setDirection(RestConstants.ORDER_DIRECTION_ASC_VALUE);
+
+        List<Sort> listSort = new ArrayList<>();
+        listSort.add(sort);
+
+        DbParam dbParam = new DbParam();
+        dbParam.setPage(1);
+        dbParam.setLimit(20);
+        dbParam.setSort(listSort);
+
+        FormVisitDropDownBody formVisitDropDownBody = new FormVisitDropDownBody();
+        formVisitDropDownBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
+        formVisitDropDownBody.setViewName(RestConstants.DROP_DOWN_RESULT_VIEW_NAME);
+        formVisitDropDownBody.setdBParam(dbParam);
+
+        return formVisitDropDownBody;
+    }
+
+    private FormVisitDropDownBody createReasonBody() {
+        Sort sort = new Sort();
+        sort.setProperty(RestConstants.DROP_DOWN_REASON_SORT_PROPERTY);
+        sort.setDirection(RestConstants.ORDER_DIRECTION_ASC_VALUE);
+
+        List<Sort> listSort = new ArrayList<>();
+        listSort.add(sort);
+
+        DbParam dbParam = new DbParam();
+        dbParam.setPage(1);
+        dbParam.setLimit(20);
+        dbParam.setSort(listSort);
+
+        FormVisitDropDownBody formVisitDropDownBody = new FormVisitDropDownBody();
+        formVisitDropDownBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
+        formVisitDropDownBody.setViewName(RestConstants.DROP_DOWN_REASON_VIEW_NAME);
+        formVisitDropDownBody.setdBParam(dbParam);
+
+        return formVisitDropDownBody;
+    }
+
+    private FormVisitDropDownBody createActionBody() {
+        Sort sort = new Sort();
+        sort.setProperty(RestConstants.DROP_DOWN_ACTION_SORT_PROPERTY);
+        sort.setDirection(RestConstants.ORDER_DIRECTION_ASC_VALUE);
+
+        List<Sort> listSort = new ArrayList<>();
+        listSort.add(sort);
+
+        DbParam dbParam = new DbParam();
+        dbParam.setPage(1);
+        dbParam.setLimit(20);
+        dbParam.setSort(listSort);
+
+        FormVisitDropDownBody formVisitDropDownBody = new FormVisitDropDownBody();
+        formVisitDropDownBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
+        formVisitDropDownBody.setViewName(RestConstants.DROP_DOWN_ACTION_VIEW_NAME);
+        formVisitDropDownBody.setdBParam(dbParam);
+
+        return formVisitDropDownBody;
+    }
+
+    private FormVisitDropDownBody createStatusAgunanBody() {
+        Sort sort = new Sort();
+        sort.setProperty(RestConstants.DROP_DOWN_STATUS_AGUNAN_SORT_PROPERTY);
+        sort.setDirection(RestConstants.ORDER_DIRECTION_ASC_VALUE);
+
+        List<Sort> listSort = new ArrayList<>();
+        listSort.add(sort);
+
+        DbParam dbParam = new DbParam();
+        dbParam.setPage(1);
+        dbParam.setLimit(20);
+        dbParam.setSort(listSort);
+
+        FormVisitDropDownBody formVisitDropDownBody = new FormVisitDropDownBody();
+        formVisitDropDownBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
+        formVisitDropDownBody.setViewName(RestConstants.DROP_DOWN_STATUS_AGUNAN_VIEW_NAME);
+        formVisitDropDownBody.setdBParam(dbParam);
+
+        return formVisitDropDownBody;
     }
 }

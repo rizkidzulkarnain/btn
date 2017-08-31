@@ -15,6 +15,7 @@ import com.mitkoindo.smartcollection.utils.FileUtils;
 
 import java.io.File;
 
+import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -79,14 +80,6 @@ public class FormVisitKonfirmasiViewModel extends BaseObservable implements ILif
         RequestBody requestFileFotoAgunan1 = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoAgunan1)), fileFotoAgunan1);
         MultipartBody.Part bodyAgunan1 = MultipartBody.Part.createFormData("file", fileFotoAgunan1.getName(), requestFileFotoAgunan1);
 
-        MultipartBody.Part bodyAgunan2;
-        if (isFotoAgunan2Show.get()) {
-            File fileFotoAgunan2 = new File(spParameter.getPhotoAgunan2Path());
-            Uri uriFotoAgunan2 = Uri.fromFile(fileFotoAgunan2);
-            RequestBody requestFileFotoAgunan2 = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoAgunan2)), fileFotoAgunan2);
-            bodyAgunan2 = MultipartBody.Part.createFormData("file", fileFotoAgunan2.getName(), requestFileFotoAgunan2);
-        }
-
         File fileSignature = new File(spParameter.getSignaturePath());
         Uri uriSignature = Uri.fromFile(fileSignature);
         RequestBody requestFileSignature = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriSignature)), fileSignature);
@@ -105,6 +98,25 @@ public class FormVisitKonfirmasiViewModel extends BaseObservable implements ILif
                     @Override
                     public ObservableSource<MultipartResponse> apply(@NonNull MultipartResponse multipartResponse) throws Exception {
                         spParameter.setPhotoAgunan1(multipartResponse.getRelativePath());
+
+                        if (isFotoAgunan2Show.get()) {
+                            File fileFotoAgunan2 = new File(spParameter.getPhotoAgunan2Path());
+                            Uri uriFotoAgunan2 = Uri.fromFile(fileFotoAgunan2);
+                            RequestBody requestFileFotoAgunan2 = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoAgunan2)), fileFotoAgunan2);
+                            MultipartBody.Part bodyAgunan2 = MultipartBody.Part.createFormData("file", fileFotoAgunan2.getName(), requestFileFotoAgunan2);
+
+                            return ApiUtils.getMultipartServices(accessToken).uploadFile(bodyAgunan2);
+                        } else {
+                            return Observable.just(multipartResponse);
+                        }
+                    }
+                })
+                .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
+                    @Override
+                    public ObservableSource<MultipartResponse> apply(@NonNull MultipartResponse multipartResponse) throws Exception {
+                        if (isFotoAgunan2Show.get()) {
+                            spParameter.setPhotoAgunan2(multipartResponse.getRelativePath());
+                        }
 
                         return ApiUtils.getMultipartServices(accessToken).uploadFile(bodySignature);
                     }
@@ -140,6 +152,7 @@ public class FormVisitKonfirmasiViewModel extends BaseObservable implements ILif
                     @Override
                     public void onError(Throwable e) {
                         error.set(e);
+                        Log.e("FormCallViewModel", e.getMessage());
                     }
 
                     @Override

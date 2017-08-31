@@ -90,4 +90,12 @@ public abstract class BaseFragment extends Fragment {
             return "";
         }
     }
+
+    protected String getUserId() {
+        if (getActivity() instanceof BaseActivity) {
+            return ((BaseActivity) getActivity()).getUserId();
+        } else {
+            return "";
+        }
+    }
 }

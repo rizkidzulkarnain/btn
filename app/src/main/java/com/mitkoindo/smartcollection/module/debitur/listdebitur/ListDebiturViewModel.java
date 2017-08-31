@@ -3,6 +3,7 @@ package com.mitkoindo.smartcollection.module.debitur.listdebitur;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.util.Log;
 
 import com.mitkoindo.smartcollection.base.ILifecycleViewModel;
 import com.mitkoindo.smartcollection.network.ApiUtils;
@@ -29,6 +30,8 @@ public class ListDebiturViewModel extends BaseObservable implements ILifecycleVi
     public ObservableBoolean obsIsLoading = new ObservableBoolean();
     public ObservableField<Throwable> error = new ObservableField<>();
     public ObservableField<List<DebiturItem>> obsDebiturResponse = new ObservableField<>();
+    public ObservableField<List<DebiturItem>> obsDebiturResponseLoadMore = new ObservableField<>();
+    public ObservableBoolean obsIsEmpty = new ObservableBoolean(false);
 
     private String mAccessToken;
     private CompositeDisposable composites = new CompositeDisposable();
@@ -38,16 +41,16 @@ public class ListDebiturViewModel extends BaseObservable implements ILifecycleVi
         mAccessToken = accessToken;
     }
 
-    public void getListDebitur(String status, int page) {
+    public void getListDebitur(String userId, String status, int page) {
         ListDebiturBody listDebiturBody = new ListDebiturBody();
         listDebiturBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
         listDebiturBody.setSpName(RestConstants.LIST_DEBITUR_SP_NAME);
 
         ListDebiturBody.SpParameter spParameter = new ListDebiturBody.SpParameter();
-        spParameter.setUserId("btn0100011");
+        spParameter.setUserId(userId);
         spParameter.setOrderBy(RestConstants.LIST_DEBITUR_ORDER_BY_VALUE);
         spParameter.setPage(page);
-        spParameter.setLimit(10);
+        spParameter.setLimit(15);
         spParameter.setOrderDirection(RestConstants.ORDER_DIRECTION_ASC_VALUE);
         spParameter.setStatus(status);
 
@@ -59,7 +62,9 @@ public class ListDebiturViewModel extends BaseObservable implements ILifecycleVi
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
-                        obsIsLoading.set(true);
+                        if (page == 1) {
+                            obsIsLoading.set(true);
+                        }
                     }
                 })
                 .doOnTerminate(new Action() {
@@ -71,12 +76,17 @@ public class ListDebiturViewModel extends BaseObservable implements ILifecycleVi
                 .subscribeWith(new DisposableObserver<List<DebiturItem>>() {
                     @Override
                     public void onNext(List<DebiturItem> listDebitur) {
-                        obsDebiturResponse.set(listDebitur);
+                        if (page == 1) {
+                            obsDebiturResponse.set(listDebitur);
+                        } else {
+                            obsDebiturResponseLoadMore.set(listDebitur);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         error.set(e);
+                        Log.e("ListDebiturViewModel", e.getMessage());
                     }
 
                     @Override

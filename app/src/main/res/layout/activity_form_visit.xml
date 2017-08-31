@@ -10,6 +10,7 @@
         <variable
             name="formVisitViewModel"
             type="com.mitkoindo.smartcollection.module.formvisit.FormVisitViewModel" />
+
     </data>
 
     <LinearLayout
@@ -59,7 +60,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/FormVisit_TujuanKunjungan"/>
 
-                <!--Tujuan Kunjungan Spinner-->
+                <!--Tujuan Kunjungan value-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_tujuan_kunjungan"
                     android:layout_width="0dp"
@@ -69,33 +70,32 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
                     <!--app:cardBackgroundColor="@color/Background_Login"-->
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_tujuan_kunjungan"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown" />
+                        android:orientation="horizontal">
+                        <TextView
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingStart="@dimen/padding_medium"
+                            android:paddingLeft="@dimen/padding_medium"
+                            android:paddingRight="@dimen/padding_medium"
+                            android:paddingEnd="@dimen/padding_medium"
+                            android:text="@={formVisitViewModel.tujuanKunjungan}" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/padding_medium"
+                            android:layout_marginRight="@dimen/padding_medium"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                    </LinearLayout>
                 </android.support.v7.widget.CardView>
-                <!--bind:selectedValue="@={formVisitViewModel.tujuanKunjungan}"-->
-
-                <!--Tujuan Kunjungan value-->
-                <!--<TextView-->
-                    <!--android:id="@+id/text_view_tujuan_kunjungan_value"-->
-                    <!--style="@style/FontRegular.Medium"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:paddingTop="@dimen/padding_10"-->
-                    <!--android:paddingBottom="@dimen/padding_10"-->
-                    <!--android:paddingStart="@dimen/padding_medium"-->
-                    <!--android:paddingLeft="@dimen/padding_medium"-->
-                    <!--android:paddingRight="@dimen/padding_medium"-->
-                    <!--android:layout_marginRight="@dimen/padding_larger"-->
-                    <!--android:layout_marginEnd="@dimen/padding_larger"-->
-                    <!--app:layout_constraintTop_toTopOf="@+id/card_view_tujuan_kunjungan"-->
-                    <!--app:layout_constraintBottom_toBottomOf="@+id/card_view_tujuan_kunjungan"-->
-                    <!--app:layout_constraintStart_toStartOf="parent"-->
-                    <!--app:layout_constraintEnd_toEndOf="parent"-->
-                    <!--android:text="@={formVisitViewModel.tujuanKunjungan}"-->
-                    <!--android:background="@color/White"/>-->
 
                 <!--Alamat yang dikunjungi-->
                 <TextView
@@ -109,7 +109,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/FormVisit_AlamatYangDiKunjungi"/>
 
-                <!--Alamat yang dikunjungi spinner-->
+                <!--Alamat yang dikunjungi value-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_alamat_yang_dikunjungi"
                     android:layout_width="0dp"
@@ -118,12 +118,33 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_yang_dikunjungi"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_alamat_yang_dikunjungi"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"/>
+                        android:orientation="horizontal">
+                        <TextView
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingStart="@dimen/padding_medium"
+                            android:paddingLeft="@dimen/padding_medium"
+                            android:paddingRight="@dimen/padding_medium"
+                            android:paddingEnd="@dimen/padding_medium"
+                            android:text="@={formVisitViewModel.alamatYangDikunjungi}" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/padding_medium"
+                            android:layout_marginRight="@dimen/padding_medium"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                    </LinearLayout>
                 </android.support.v7.widget.CardView>
+
 
                 <!--Orang yang ditemui-->
                 <TextView
@@ -157,8 +178,10 @@
                         android:paddingLeft="@dimen/padding_medium"
                         android:paddingEnd="@dimen/padding_medium"
                         android:textColor="@color/Grey"
+                        android:textColorHint="@color/Grey"
                         android:hint="@string/FormVisit_OrangYangDiKunjungiHint"
-                        android:background="@color/Transparent"/>
+                        android:background="@color/Transparent"
+                        android:text="@={formVisitViewModel.spParameter.personVisit}"/>
                 </android.support.v7.widget.CardView>
 
                 <!--Hubungan dengan debitur-->
@@ -173,7 +196,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/FormVisit_HubunganDenganDebitur"/>
 
-                <!--Hubungan dengan debitur spinner-->
+                <!--Hubungan dengan debitur-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_hubungan_dengan_debitur"
                     android:layout_width="0dp"
@@ -182,11 +205,31 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_hubungan_dengan_debitur"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_hubungan_dengan_debitur"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"/>
+                        android:orientation="horizontal">
+                        <TextView
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingStart="@dimen/padding_medium"
+                            android:paddingLeft="@dimen/padding_medium"
+                            android:paddingRight="@dimen/padding_medium"
+                            android:paddingEnd="@dimen/padding_medium"
+                            android:text="@={formVisitViewModel.hubunganDenganDebitur}" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/padding_medium"
+                            android:layout_marginRight="@dimen/padding_medium"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                    </LinearLayout>
                 </android.support.v7.widget.CardView>
 
                 <!--Hasil Kunjungan-->
@@ -201,7 +244,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/FormVisit_HasilKunjungan"/>
 
-                <!--Hasil Kunjungan spinner-->
+                <!--Hasil Kunjungan-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_hasil_kunjungan"
                     android:layout_width="0dp"
@@ -210,11 +253,31 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_hasil_kunjungan"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_hasil_kunjungan"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"/>
+                        android:orientation="horizontal">
+                        <TextView
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingStart="@dimen/padding_medium"
+                            android:paddingLeft="@dimen/padding_medium"
+                            android:paddingRight="@dimen/padding_medium"
+                            android:paddingEnd="@dimen/padding_medium"
+                            android:text="@={formVisitViewModel.hasilKunjungan}" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/padding_medium"
+                            android:layout_marginRight="@dimen/padding_medium"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                    </LinearLayout>
                 </android.support.v7.widget.CardView>
 
                 <!--Tanggal Janji Debitur-->
@@ -227,7 +290,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/card_view_hasil_kunjungan"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="@string/FormVisit_TanggalJanjiDebitur"/>
+                    android:text="@string/FormVisit_TanggalJanjiDebitur"
+                    android:visibility="@{formVisitViewModel.obsIsShowTanggalJanjiDebitur ? View.VISIBLE : View.GONE}"/>
 
                 <!--Tanggal Janji Debitur DatePicker-->
                 <android.support.v7.widget.CardView
@@ -237,7 +301,8 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tanggal_janji_debitur"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="@{formVisitViewModel.obsIsShowTanggalJanjiDebitur ? View.VISIBLE : View.GONE}">
                     <TextView
                         android:id="@+id/text_view_tanggal_janji_debitur_date"
                         style="@style/FontRegular.Medium"
@@ -248,7 +313,7 @@
                         android:paddingStart="@dimen/padding_medium"
                         android:paddingLeft="@dimen/padding_medium"
                         android:paddingEnd="@dimen/padding_medium"
-                        android:text="@{formVisitViewModel.tanggalJanjiDebitur}"/>
+                        android:text="@{formVisitViewModel.tanggalJanjiDebitur}" />
                 </android.support.v7.widget.CardView>
 
                 <!--Jumlah yang akan disetor-->
@@ -261,7 +326,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/card_view_tanggal_janji_debitur"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="@string/FormVisit_JumlahYangAkanDisetor"/>
+                    android:text="@string/FormVisit_JumlahYangAkanDisetor"
+                    android:visibility="@{formVisitViewModel.obsIsShowJumlahYangAkanDisetor ? View.VISIBLE : View.GONE}"/>
 
                 <!--Jumlah yang akan disetor edit text-->
                 <android.support.v7.widget.CardView
@@ -271,7 +337,8 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_jumlah_yang_akan_disetor"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="@{formVisitViewModel.obsIsShowJumlahYangAkanDisetor ? View.VISIBLE : View.GONE}">
                     <EditText
                         android:id="@+id/edit_text_jumlah_yang_akan_disetor"
                         style="@style/FontRegular.Medium"
@@ -283,9 +350,11 @@
                         android:paddingLeft="@dimen/padding_medium"
                         android:paddingEnd="@dimen/padding_medium"
                         android:textColor="@color/Grey"
+                        android:textColorHint="@color/Grey"
                         android:hint="@string/FormVisit_JumlahYangAkanDisetorHint"
                         android:inputType="number"
-                        android:background="@color/Transparent"/>
+                        android:background="@color/Transparent"
+                        android:text="@={formVisitViewModel.jumlahYangAkanDisetor}"/>
                 </android.support.v7.widget.CardView>
 
                 <!--Status Agunan-->
@@ -300,7 +369,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/FormVisit_StatusAgunan"/>
 
-                <!--Status Agunan spinner-->
+                <!--Status Agunan-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_status_agunan"
                     android:layout_width="0dp"
@@ -309,11 +378,31 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_status_agunan"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_status_agunan"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"/>
+                        android:orientation="horizontal">
+                        <TextView
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingStart="@dimen/padding_medium"
+                            android:paddingLeft="@dimen/padding_medium"
+                            android:paddingRight="@dimen/padding_medium"
+                            android:paddingEnd="@dimen/padding_medium"
+                            android:text="@={formVisitViewModel.statusAgunan}" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/padding_medium"
+                            android:layout_marginRight="@dimen/padding_medium"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                    </LinearLayout>
                 </android.support.v7.widget.CardView>
 
                 <!--Kondisi Agunan-->
@@ -328,7 +417,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/FormVisit_KondisiAgunan"/>
 
-                <!--Kondisi Agunan spinner-->
+                <!--Kondisi Agunan-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_kondisi_agunan"
                     android:layout_width="0dp"
@@ -337,12 +426,33 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_kondisi_agunan"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_kondisi_agunan"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"/>
+                        android:orientation="horizontal">
+                        <TextView
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingStart="@dimen/padding_medium"
+                            android:paddingLeft="@dimen/padding_medium"
+                            android:paddingRight="@dimen/padding_medium"
+                            android:paddingEnd="@dimen/padding_medium"
+                            android:text="@={formVisitViewModel.kondisiAgunan}" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/padding_medium"
+                            android:layout_marginRight="@dimen/padding_medium"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                    </LinearLayout>
                 </android.support.v7.widget.CardView>
+
 
                 <!--Alasan Menunggak-->
                 <TextView
@@ -356,7 +466,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/FormVisit_AlasanMenunggak"/>
 
-                <!--Alasan Menunggak spinner-->
+                <!--Alasan Menunggak-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_alasan_menunggak"
                     android:layout_width="0dp"
@@ -365,12 +475,33 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_alasan_menunggak"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_alasan_menunggak"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"/>
+                        android:orientation="horizontal">
+                        <TextView
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingStart="@dimen/padding_medium"
+                            android:paddingLeft="@dimen/padding_medium"
+                            android:paddingRight="@dimen/padding_medium"
+                            android:paddingEnd="@dimen/padding_medium"
+                            android:text="@={formVisitViewModel.alasanMenunggak}" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/padding_medium"
+                            android:layout_marginRight="@dimen/padding_medium"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                    </LinearLayout>
                 </android.support.v7.widget.CardView>
+
 
                 <!--Tindak Lanjut-->
                 <TextView
@@ -384,7 +515,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="@string/FormVisit_TindakLanjut"/>
 
-                <!--Tindak Lanjut spinner-->
+                <!--Tindak Lanjut-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_tindak_lanjut"
                     android:layout_width="0dp"
@@ -393,11 +524,31 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tindak_lanjut"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_tindak_lanjut"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown"/>
+                        android:orientation="horizontal">
+                        <TextView
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingStart="@dimen/padding_medium"
+                            android:paddingLeft="@dimen/padding_medium"
+                            android:paddingRight="@dimen/padding_medium"
+                            android:paddingEnd="@dimen/padding_medium"
+                            android:text="@={formVisitViewModel.tindakLanjut}" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/padding_medium"
+                            android:layout_marginRight="@dimen/padding_medium"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                    </LinearLayout>
                 </android.support.v7.widget.CardView>
 
                 <!--Tanggal Tindak Lanjut-->
@@ -469,8 +620,10 @@
                         android:lines="3"
                         android:gravity="top|left"
                         android:textColor="@color/Grey"
+                        android:textColorHint="@color/Grey"
                         android:hint="@string/FormVisit_CatatanHint"
-                        android:background="@color/Transparent"/>
+                        android:background="@color/Transparent"
+                        android:text="@={formVisitViewModel.spParameter.notes}"/>
                 </android.support.v7.widget.CardView>
 
                 <!--Gallery-->

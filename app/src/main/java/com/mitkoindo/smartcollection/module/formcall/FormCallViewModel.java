@@ -3,13 +3,12 @@ package com.mitkoindo.smartcollection.module.formcall;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.util.Log;
 
 import com.mitkoindo.smartcollection.base.ILifecycleViewModel;
 import com.mitkoindo.smartcollection.network.ApiUtils;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.FormCallBody;
-import com.mitkoindo.smartcollection.network.body.FormVisitBody;
-import com.mitkoindo.smartcollection.objectdata.FormCall;
 import com.mitkoindo.smartcollection.utils.Constant;
 
 import java.text.SimpleDateFormat;
@@ -39,6 +38,8 @@ public class FormCallViewModel extends BaseObservable implements ILifecycleViewM
     public ObservableBoolean obsIsLoading = new ObservableBoolean();
     public ObservableField<Throwable> error = new ObservableField<>();
     public ObservableBoolean obsIsSaveSuccess = new ObservableBoolean(false);
+    public ObservableBoolean obsIsShowTanggalJanjiDebitur = new ObservableBoolean(false);
+    public ObservableBoolean obsIsShowJumlahYangAkanDisetor = new ObservableBoolean(false);
 
     public ObservableField<String> tujuan = new ObservableField<>();
     public ObservableField<String> hubunganDenganDebitur = new ObservableField<>();
@@ -95,6 +96,7 @@ public class FormCallViewModel extends BaseObservable implements ILifecycleViewM
                     @Override
                     public void onError(Throwable e) {
                         error.set(e);
+                        Log.e("FormCallViewModel", e.getMessage());
                     }
 
                     @Override

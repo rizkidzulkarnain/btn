@@ -10,9 +10,6 @@ import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.databinding.AdapterListDebiturBinding;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.List;
 
 /**
@@ -154,30 +151,6 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
             super(view);
 
             binding = DataBindingUtil.bind(view);
-        }
-    }
-
-
-
-    //parse form JSON
-    public void ParseData(String jsonString)
-    {
-        try
-        {
-            //converst string to json object
-            JSONObject dataObject = new JSONObject(jsonString);
-
-            //get data
-            nama = dataObject.getString("NamaNasabah");
-            noRekening = dataObject.getString("NomorRekening");
-            tagihan = dataObject.getString("Tagihan");
-            dpd = dataObject.getString("DPD");
-            lastPayment = dataObject.getString("LastPaymentDate");
-
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
         }
     }
 }

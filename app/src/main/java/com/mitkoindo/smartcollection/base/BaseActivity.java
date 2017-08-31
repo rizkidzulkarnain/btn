@@ -166,4 +166,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         return sharedPreferences.getString(key_AuthToken, "");
     }
+
+    public String getUserId() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String key_UserID = getString(R.string.SharedPreferenceKey_UserID);
+        return sharedPreferences.getString(key_UserID, "");
+    }
 }

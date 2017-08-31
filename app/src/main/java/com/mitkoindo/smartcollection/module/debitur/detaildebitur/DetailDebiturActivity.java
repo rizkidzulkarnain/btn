@@ -71,6 +71,7 @@ public class DetailDebiturActivity extends BaseActivity {
 
         setupToolbar(getString(R.string.DetailDebitur_PageTitle));
         getExtra();
+        mDetailDebiturViewModel.getDetailDebitur(mNoRekening);
 
 //        SetupTransaction();
     }
@@ -115,10 +116,7 @@ public class DetailDebiturActivity extends BaseActivity {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (mDetailDebiturViewModel.mErrorType == mDetailDebiturViewModel.GET_PHONE_LIST_ERROR) {
-//                    displayMessage(R.string.GagalMendapatListNomorTelepon);
-                    mListNomorTelepon.clear();
-                    mListNomorTelepon.add("081325765051");
-                    showInstallmentDialogSimpleSpinner(mListNomorTelepon, getString(R.string.DetailDebitur_PilihNomorTelepon), LIST_PHONE);
+                    displayMessage(R.string.GagalMendapatListNomorTelepon);
                 } else {
                     displayMessage(R.string.GagalMendapatkanData);
                 }
@@ -142,8 +140,6 @@ public class DetailDebiturActivity extends BaseActivity {
                 }
             }
         });
-
-        mDetailDebiturViewModel.getDetailDebitur(mNoRekening);
     }
 
     private void getExtra() {
@@ -153,25 +149,6 @@ public class DetailDebiturActivity extends BaseActivity {
     }
 
     private void displayResult(DetailDebitur detailDebitur) {
-//        DetailDebitur detailDebitur = new DetailDebitur();
-//        detailDebitur.setNamaDebitur("Indra Susilo Setiawan");
-//        detailDebitur.setNoRekening("182319283");
-//        detailDebitur.setNoCif("12837918273");
-//        detailDebitur.setTotalTunggakan(5000000);
-//        detailDebitur.setLastPaymentDate("30/04/2017");
-//        detailDebitur.setDpd(10);
-//        detailDebitur.setAngsuranPerBulan(1000000);
-//        detailDebitur.setTotalKewajiban(0);
-//        detailDebitur.setKolektabilitas("");
-//        detailDebitur.setTindakLanjut("surat");
-//        detailDebitur.setStatus("Ditempati");
-//        detailDebitur.setPtp("19/8/2017");
-//        detailDebitur.setBesaranPtp("4.000.000");
-//        detailDebitur.setAlamatRumah("Jl. Riau no 33 RT 005 / RW 012 Jurangmangu Timur, Pondok Aren, Tangerang Selatan");
-//        detailDebitur.setAlamatAgunan("Jl. Riau no 33 RT 005 / RW 012 Jurangmangu Timur, Pondok Aren, Tangerang Selatan");
-//        detailDebitur.setAlamatKantor("Jl. Sudirman kav 1");
-//        detailDebitur.setAlamatSaatIni("Jl. Ceger no 198");
-//
         mBinding.setDetailDebitur(detailDebitur);
     }
 
@@ -204,7 +181,6 @@ public class DetailDebiturActivity extends BaseActivity {
                         Intent intent = new Intent(DetailDebiturActivity.this, HistoriTindakanActivity.class);
                         intent.putExtra(EXTRA_NO_REKENING, mNoRekening);
                         startActivity(intent);
-                        /*startActivity(new Intent(DetailDebiturActivity.this, HistoriTindakanActivity.class));*/
                         break;
                     }
                 }
@@ -241,7 +217,8 @@ public class DetailDebiturActivity extends BaseActivity {
 
     @OnClick(R.id.fab_map)
     public void onFabMapClick(View view) {
-        Uri gmmIntentUri = Uri.parse("geo:-6.1671626,106.8175127");
+//        Uri gmmIntentUri = Uri.parse("geo:-6.1671626,106.8175127");
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + mDetailDebiturViewModel.obsDetailDebitur.get().getAlamatRumah());
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         if (mapIntent.resolveActivity(getPackageManager()) != null) {

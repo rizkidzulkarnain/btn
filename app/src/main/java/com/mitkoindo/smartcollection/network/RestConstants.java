@@ -5,19 +5,19 @@ package com.mitkoindo.smartcollection.network;
  */
 
 public final class RestConstants {
-    public static final String BASE_URL = "https://btn.ejjv.co:888";
+    public static final String BASE_URL = "https://span.btn.co.id/";
 
-    public static final String ENDPOINT_LOGIN = "/api/Account/login";
-    public static final String UPDATE_PASSWORD = "/api/Account/updatePassword";
-    public static final String HISTORY_TINDAKAN = "/api/Data/sp";
-    public static final String ENDPOINT_LIST_DEBITUR = "/api/Data/sp";
-    public static final String ENDPOINT_DETAIL_DEBITUR = "/api/Data/sp";
-    public static final String ENDPOINT_VISIT_DROPDOWN = "/api/Data/view";
+    public static final String ENDPOINT_LOGIN = "wsMobile/api/Account/login";
+    public static final String UPDATE_PASSWORD = "wsMobile/api/Account/updatePassword";
+    public static final String HISTORY_TINDAKAN = "wsMobile/api/Data/sp";
+    public static final String ENDPOINT_LIST_DEBITUR = "wsMobile/api/Data/sp";
+    public static final String ENDPOINT_DETAIL_DEBITUR = "wsMobile/api/Data/sp";
+    public static final String ENDPOINT_VISIT_DROPDOWN = "wsMobile/api/Data/view";
 
-    public static final String FORM_VISIT = "/api/Data/view";
-    public static final String FORM_CALL = "/api/Data/view";
-    public static final String ENDPOINT_LIST_PHONE_NUMBER = "/api/Data/view";
-    public static final String ENDPOINT_UPLOAD_FILE = "/api/File/upload";
+    public static final String FORM_VISIT = "wsMobile/api/Data/view";
+    public static final String FORM_CALL = "wsMobile/api/Data/sp";
+    public static final String ENDPOINT_LIST_PHONE_NUMBER = "wsMobile/api/Data/sp";
+    public static final String ENDPOINT_UPLOAD_FILE = "wsMobile/api/File/upload";
 
 
     public static final String DATABASE_ID_VALUE = "db1";
@@ -60,4 +60,9 @@ public final class RestConstants {
     public static final String LIST_PHONE_NUMBER_SP_NAME = "MKI_SP_DEBITUR_TELFON_LIST";
 
     public static final String ORDER_DIRECTION_ASC_VALUE = "ASC";
+
+    public static final String RESULT_ID_AKAN_SETOR_TANGGAL_VALUE = "R0012";
+    public static final String RESULT_ID_AKAN_DATANG_KE_BTN_TANGGAL_VALUE = "R0013";
+    public static final String RESULT_ID_MINTA_DIHUBUNGI_TANGGAL_VALUE = "R0016";
+
 }
