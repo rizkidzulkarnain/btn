@@ -135,9 +135,9 @@ public class HomeActivity extends AppCompatActivity
     //setup view
     private void SetupViews()
     {
-        //load menu array
-        String[] menuTitle = getResources().getStringArray(R.array.HomeMenu);
-        /*String[] menuTitle = getResources().getStringArray(R.array.HomeMenu_BC);*/
+        //Setup menu
+        String[] menuTitle = SetupMenuBasedOnRole();
+        /*String[] menuTitle = getResources().getStringArray(R.array.HomeMenu);*/
 
         //create menu object
         homeMenus = new ArrayList<>();
@@ -196,6 +196,36 @@ public class HomeActivity extends AppCompatActivity
 
         //load auth token
         authToken = ResourceLoader.LoadAuthToken(this);
+    }
+
+    //setup menu berdasarkan role
+    private String[] SetupMenuBasedOnRole()
+    {
+        String[] menuItems;
+
+        //cek group ID user ini
+        String userGroupID = ResourceLoader.LoadGroupID(this);
+
+        //get user group
+        final String userGroup_Staff1 = getString(R.string.UserGroup_Staff1);
+        final String userGroup_Staff2 = getString(R.string.UserGroup_Staff2);
+        final String userGroup_Staff3 = getString(R.string.UserGroup_Staff3);
+        final String userGroup_Supervisor1 = getString(R.string.UserGroup_Supervisor1);
+        final String userGroup_Supervisor2 = getString(R.string.UserGroup_Supervisor2);
+        final String userGroup_BranchCoordinator = getString(R.string.UserGroup_BranchCoordinator);
+        final String userGroup_BranchManager = getString(R.string.UserGroup_BranchManager);
+
+        //cek tipe user
+        if (userGroupID.equals(userGroup_Staff1) || userGroupID.equals(userGroup_Staff2) || userGroupID.equals(userGroup_Staff3))
+            menuItems = getResources().getStringArray(R.array.HomeMenu_Staff);
+        else if (userGroupID.equals(userGroup_Supervisor1) || userGroupID.equals(userGroup_Supervisor2))
+            menuItems = getResources().getStringArray(R.array.HomeMenu_Supervisor);
+        else if (userGroupID.equals(userGroup_BranchCoordinator) || userGroupID.equals(userGroup_BranchManager))
+            menuItems = getResources().getStringArray(R.array.HomeMenu_BC);
+        else
+            menuItems = getResources().getStringArray(R.array.HomeMenu_BC);
+
+        return menuItems;
     }
 
     //----------------------------------------------------------------------------------------------

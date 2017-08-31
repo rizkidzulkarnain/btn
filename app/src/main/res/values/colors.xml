@@ -12,6 +12,7 @@
     <color name="White_Transparent">#55ffffff</color>
     <color name="Grey">#808080</color>
     <color name="Grey15">#888888</color>
+    <color name="Red">#FF0000</color>
 
     <!--color by usage-->
     <color name="Background_Login">#0d568d</color>

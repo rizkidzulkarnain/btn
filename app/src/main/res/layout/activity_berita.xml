@@ -53,9 +53,35 @@
 
         <android.support.v4.view.ViewPager
             android:id="@+id/BeritaActivity_ViewPager"
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="0dp"/>
 
+        <!--Button buat broadcast berita-->
+        <LinearLayout
+            android:id="@+id/BeritaActivity_CreateBroadcast"
+            android:onClick="HandleInput_Berita_CreateBroadcast"
+            android:background="@color/Background_PageTitle"
+            android:gravity="center"
+            android:padding="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_message_white_36dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="@string/Berita_Broadcast_Title"
+                android:textSize="16sp"
+                android:textColor="@color/White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
         <!--Recycler view untuk hold item berita-->
         <!--<android.support.v7.widget.RecyclerView
             android:id="@+id/BeritaActivity_ListBerita"
@@ -83,7 +109,7 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
 
-    <!--Button buat add berita baru-->
+    <!--&lt;!&ndash;Button buat add berita baru&ndash;&gt;
     <RelativeLayout
         android:id="@+id/BeritaActivity_CreateBroadcast"
         android:onClick="HandleInput_Berita_CreateBroadcast"
@@ -101,5 +127,5 @@
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+    </RelativeLayout>-->
 </RelativeLayout>

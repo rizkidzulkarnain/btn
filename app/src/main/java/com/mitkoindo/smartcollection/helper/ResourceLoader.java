@@ -94,4 +94,12 @@ public class ResourceLoader
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getString(key_UserID, "");
     }
+
+    //load group ID
+    public static String LoadGroupID(Context context)
+    {
+        String userGroupIDKey = context.getString(R.string.SharedPreferenceKey_UserGroupID);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(userGroupIDKey, "");
+    }
 }

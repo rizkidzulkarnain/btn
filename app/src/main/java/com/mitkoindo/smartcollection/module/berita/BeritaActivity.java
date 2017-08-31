@@ -140,6 +140,19 @@ public class BeritaActivity extends AppCompatActivity
         //set adapter to tab
         view_ViewPager.setAdapter(dashboardTabAdapter);
         view_TabLayout.setupWithViewPager(view_ViewPager);
+
+        //hide broadcast news option jika user ada di level petugas
+        /*String userGroupID = ResourceLoader.LoadGroupID(this);
+        final String userGroup_Staff1 = getString(R.string.UserGroup_Staff1);
+        final String userGroup_Staff2 = getString(R.string.UserGroup_Staff2);
+        final String userGroup_Staff3 = getString(R.string.UserGroup_Staff3);
+        if (userGroupID.equals(userGroup_Staff1) || userGroupID.equals(userGroup_Staff2) || userGroupID.equals(userGroup_Staff3))
+            view_CreateBroadcast.setVisibility(View.GONE);
+        else
+            view_CreateBroadcast.setVisibility(View.VISIBLE);*/
+
+        //test open broadcast menu
+        view_CreateBroadcast.setVisibility(View.VISIBLE);
     }
 
     //----------------------------------------------------------------------------------------------

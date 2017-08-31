@@ -581,7 +581,7 @@ public class BroadcastBeritaActivity extends AppCompatActivity
             }});*/
 
              //ignore certificate
-            HttpsTrustManager.allowAllSSL();
+            /*HttpsTrustManager.allowAllSSL();*/
 
             Ion.with(BroadcastBeritaActivity.this)
                     .load(usedURL)

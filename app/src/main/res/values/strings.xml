@@ -217,6 +217,7 @@
 
     <!--PTP Reminder-->
     <string name="PTP_Reminder_Title">PTP Reminder</string>
+    <string name="PTP_Reminder_Label">PTP</string>
 
     <!--Update password page-->
     <string name="UpdatePassword_PageTitle">Update Password</string>
@@ -293,6 +294,15 @@
     <string name="ChangeBaseURL_UrlChanged">Base URL berhasil diubah</string>
     <string name="ChangeBaseURL_UrlReset">Base URL berhasil direset</string>
 
+    <!--User group id-->
+    <string name="UserGroup_Staff1">CCRD26</string>
+    <string name="UserGroup_Staff2">CCRD27</string>
+    <string name="UserGroup_Staff3">CCRD31</string>
+    <string name="UserGroup_Supervisor1">CCRD18</string>
+    <string name="UserGroup_Supervisor2">CCRD19</string>
+    <string name="UserGroup_BranchCoordinator">CCRD28</string>
+    <string name="UserGroup_BranchManager">CCRD35</string>
+    
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_update_password">UpdatePasswordActivity</string>

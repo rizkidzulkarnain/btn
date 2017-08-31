@@ -48,7 +48,7 @@ public class ListDebiturViewModel extends BaseObservable implements ILifecycleVi
 
         ListDebiturBody.SpParameter spParameter = new ListDebiturBody.SpParameter();
         spParameter.setUserId(userId);
-        spParameter.setOrderBy(RestConstants.LIST_DEBITUR_ORDER_BY_VALUE);
+        /*spParameter.setOrderBy(RestConstants.LIST_DEBITUR_ORDER_BY_VALUE);*/
         spParameter.setPage(page);
         spParameter.setLimit(15);
         spParameter.setOrderDirection(RestConstants.ORDER_DIRECTION_ASC_VALUE);
