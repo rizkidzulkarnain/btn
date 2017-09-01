@@ -11,14 +11,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/BeritaGroupFragment_ListBerita"
-            android:visibility="gone"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:clipToPadding="false"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/BeritaGroupFragment_ListBerita"
+                android:visibility="gone"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:clipToPadding="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <!--Progress bar sebagai indikator load page baru-->
+            <ProgressBar
+                android:id="@+id/BeritaGrupFragment_PageLoadingIndicator"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <!--Progress bar-->

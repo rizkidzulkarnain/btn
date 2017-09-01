@@ -60,6 +60,9 @@ public class BeritaGrupFragment extends Fragment
     //layout buat refresh
     private SwipeRefreshLayout view_SwipeRefresher;
 
+    //progress bar buat indicator load page baru
+    private ProgressBar view_ProgressBar_PageIndicator;
+
     //----------------------------------------------------------------------------------------------
     //  Data
     //----------------------------------------------------------------------------------------------
@@ -98,7 +101,7 @@ public class BeritaGrupFragment extends Fragment
         view_ListBerita = thisView.findViewById(R.id.BeritaGroupFragment_ListBerita);
         view_ProgressBar = thisView.findViewById(R.id.BeritaGroupFragment_ProgressBar);
         view_Message = thisView.findViewById(R.id.BeritaGroupFragment_Message);
-
+        view_ProgressBar_PageIndicator = thisView.findViewById(R.id.BeritaGrupFragment_PageLoadingIndicator);
         view_SwipeRefresher = thisView.findViewById(R.id.BeritaGroupFragment_SwipeRefresh);
 
         //set listener
@@ -108,6 +111,23 @@ public class BeritaGrupFragment extends Fragment
             public void onRefresh()
             {
                 CreateGetNewsRequest();
+            }
+        });
+
+        //set listener pada list
+        view_ListBerita.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                super.onScrolled(recyclerView, dx, dy);
+
+                //pastikan adapter tidak null
+                if (beritaAdapter == null)
+                    return;
+
+                //load new page
+                beritaAdapter.CreateLoadNewPageRequest();
             }
         });
     }
@@ -233,6 +253,8 @@ public class BeritaGrupFragment extends Fragment
 
             //create mobile news adapter
             beritaAdapter = new BeritaAdapter(getActivity(), mobileNews);
+            beritaAdapter.SetView_ProgressBar(view_ProgressBar_PageIndicator);
+            beritaAdapter.SetupTransaction(baseURL, url_GetNews, authToken, userID);
 
             //set click listener ke adapter
             beritaAdapter.setClickListener(new ItemClickListener()

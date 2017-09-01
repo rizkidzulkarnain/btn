@@ -1,11 +1,13 @@
 package com.mitkoindo.smartcollection.adapter;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
@@ -13,6 +15,11 @@ import com.mitkoindo.smartcollection.helper.ItemClickListener;
 import com.mitkoindo.smartcollection.module.berita.BeritaGrupFragment;
 import com.mitkoindo.smartcollection.objectdata.GlobalNews;
 import com.mitkoindo.smartcollection.objectdata.MobileNews;
+import com.mitkoindo.smartcollection.utilities.NetworkConnection;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -31,11 +38,36 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
     //data berita
     private ArrayList<MobileNews> news;
 
+    //flag boleh load data baru atau tidak
+    private boolean allowLoadData;
+
+    //counter page
+    private int currentPage;
+
     //----------------------------------------------------------------------------------------------
     //  Input
     //----------------------------------------------------------------------------------------------
     //click listener
     private ItemClickListener itemClickListener;
+
+    //----------------------------------------------------------------------------------------------
+    //  Views
+    //----------------------------------------------------------------------------------------------
+    //indicator buat load page baru
+    private ProgressBar view_ProgressBar_PageIndicator;
+
+    //----------------------------------------------------------------------------------------------
+    //  Transaksi
+    //----------------------------------------------------------------------------------------------
+    //url
+    private String baseURL;
+    private String url_DataSP;
+
+    //auth token
+    private String authToken;
+
+    //user id
+    private String userID;
 
     //----------------------------------------------------------------------------------------------
     //  Setup
@@ -45,6 +77,12 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
     {
         this.context = context;
         this.news = news;
+
+        //set allow load data jadi true
+        allowLoadData = true;
+
+        //set current page jadi 2, karena page pertama sudah diload di fragment
+        currentPage = 2;
     }
 
     @Override
@@ -121,6 +159,26 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
     }
 
     //----------------------------------------------------------------------------------------------
+    //  Set views
+    //----------------------------------------------------------------------------------------------
+    //set progress bar
+    public void SetView_ProgressBar(ProgressBar progressBar)
+    {
+        this.view_ProgressBar_PageIndicator = progressBar;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Set transaksi
+    //----------------------------------------------------------------------------------------------
+    public void SetupTransaction(String baseURL, String url_DataSP, String authToken, String userID)
+    {
+        this.baseURL = baseURL;
+        this.url_DataSP = url_DataSP;
+        this.authToken = authToken;
+        this.userID = userID;
+    }
+
+    //----------------------------------------------------------------------------------------------
     //  View holder
     //----------------------------------------------------------------------------------------------
     //Viewholder
@@ -161,6 +219,148 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
         {
             if (itemClickListener != null)
                 itemClickListener.onItemClick(view, getAdapterPosition());
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Create request buat load next page
+    //----------------------------------------------------------------------------------------------
+    public void CreateLoadNewPageRequest()
+    {
+        //cek apakah adapter ini boleh load data baru atau tidak
+        if (!allowLoadData)
+            return;
+
+        //jika boleh, show progress bar
+        view_ProgressBar_PageIndicator.setVisibility(View.VISIBLE);
+
+        //disable load data permission
+        allowLoadData = false;
+
+        //dan execute request buat load page baru
+        new SendLoadNewPageRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+    }
+
+    //send request
+    private class SendLoadNewPageRequest extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected String doInBackground(String... strings)
+        {
+            //set url
+            String usedURL = baseURL + url_DataSP;
+
+            //create request object
+            JSONObject requestObject = CreateGetNewsRequestObject();
+
+            //create network connection
+            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
+            networkConnection.SetRequestObject(requestObject);
+            return networkConnection.SendPostRequest(usedURL);
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+            HandleLoadNewPageResult(s);
+        }
+    }
+
+    //create request object
+    private JSONObject CreateGetNewsRequestObject()
+    {
+        //create empty object
+        JSONObject requestObject = new JSONObject();
+
+        //populate request object
+        try
+        {
+            //create sorting object
+            JSONObject sortingObject = new JSONObject();
+            sortingObject.put("Property", "CreatedDate");
+            sortingObject.put("Direction", "DESC");
+
+            //create sorting array
+            JSONArray sortingArray = new JSONArray();
+            sortingArray.put(sortingObject);
+
+            //create dbParam
+            JSONObject dbParam = new JSONObject();
+            dbParam.put("Page", currentPage);
+            dbParam.put("Limit", 10);
+            dbParam.put("Sort", sortingArray);
+
+            //create filter object
+            JSONObject filterObject = new JSONObject();
+            filterObject.put("Property", "ToUserID");
+            filterObject.put("Operator", "eq");
+            filterObject.put("Value", userID);
+
+            //create filter array
+            JSONArray filterArray = new JSONArray();
+            filterArray.put(filterObject);
+
+            //create request object
+            requestObject.put("DatabaseID", "db1");
+            requestObject.put("ViewName", "MKI_VW_NEWS_GROUP");
+            requestObject.put("DBParam", dbParam);
+            requestObject.put("Filter", filterArray);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        //return object
+        return requestObject;
+    }
+
+    //handle result transaksi
+    private void HandleLoadNewPageResult(String resultString)
+    {
+        //hide progressbar
+        view_ProgressBar_PageIndicator.setVisibility(View.GONE);
+
+        //pastikan hasil transaksi tidak null
+        if (resultString == null || resultString.isEmpty())
+        {
+            return;
+        }
+
+        //jika return 404, maka sudah tidak ada page baru lagi
+        if (resultString.equals("Not Found"))
+        {
+            allowLoadData = false;
+            return;
+        }
+
+        try
+        {
+            //parse data
+            JSONArray dataArray = new JSONArray(resultString);
+
+            //extract data
+            for (int i = 0; i < dataArray.length(); i++)
+            {
+                //extract data dari json
+                MobileNews newMobileNews = new MobileNews();
+                newMobileNews.ParseData(dataArray.getJSONObject(i));
+                news.add(newMobileNews);
+            }
+
+            //refresh adapter
+            notifyDataSetChanged();
+
+            //naikkan page counter
+            currentPage++;
+
+            //enable load data permission
+            allowLoadData = true;
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
         }
     }
 }

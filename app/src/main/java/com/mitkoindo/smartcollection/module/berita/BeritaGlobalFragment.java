@@ -55,6 +55,9 @@ public class BeritaGlobalFragment extends Fragment
     //layout buat refresh
     private SwipeRefreshLayout view_SwipeRefresher;
 
+    //progress bar buat indicator load page baru
+    private ProgressBar view_ProgressBar_PageIndicator;
+
     //----------------------------------------------------------------------------------------------
     //  Data
     //----------------------------------------------------------------------------------------------
@@ -91,14 +94,30 @@ public class BeritaGlobalFragment extends Fragment
         view_ProgressBar = thisView.findViewById(R.id.BeritaGlobalFragment_ProgressBar);
         view_Message = thisView.findViewById(R.id.BeritaGlobalFragment_Message);
         view_SwipeRefresher = thisView.findViewById(R.id.BeritaGlobalFragment_SwipeRefresh);
+        view_ProgressBar_PageIndicator = thisView.findViewById(R.id.BeritaGlobalFragment_PageLoadingIndicator);
 
-        //set listener
+        //set listener pada swipe refresh
         view_SwipeRefresher.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
             @Override
             public void onRefresh()
             {
                 CreateGetNewsRequest();
+            }
+        });
+
+        //set listener pada list
+        view_ListBerita.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                //pastikan adapter tidak null
+                if (beritaAdapter == null)
+                    return;
+
+                //load more data
+                beritaAdapter.CreateLoadNewPageRequest();
             }
         });
     }
@@ -221,6 +240,10 @@ public class BeritaGlobalFragment extends Fragment
 
             //create news adapter
             beritaAdapter = new BeritaGlobalAdapter(getActivity(), news);
+            beritaAdapter.SetView_ProgressBar(view_ProgressBar_PageIndicator);
+            beritaAdapter.SetupTransaction(baseURL, url_GetNews, authToken);
+
+            //attach adapter to list
             AttachNewsData();
         }
         catch (JSONException e)

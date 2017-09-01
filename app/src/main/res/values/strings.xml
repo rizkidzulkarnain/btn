@@ -270,7 +270,7 @@
     <string name="font_default_bold">fonts/Roboto-Bold.ttf</string>
 
     <!--Transaksi-->
-    <string name="BaseURL">https://eaf186b7.ngrok.io/btn_new/</string>
+    <string name="BaseURL">https://span.btn.co.id/wsMobile/</string>
     <string name="URL_Login">api/Account/login</string>
     <string name="URL_Logout">api/Account/logout</string>
     <string name="URL_UpdatePassword">api/Account/updatePassword</string>
