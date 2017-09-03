@@ -5,35 +5,91 @@
     android:layout_height="match_parent"
     tools:context="com.mitkoindo.smartcollection.module.berita.BeritaGlobalFragment">
 
-    <!--Recycler view untuk hold item berita-->
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/BeritaGlobalFragment_SwipeRefresh"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <!--Search bar-->
+        <RelativeLayout
+            android:padding="5dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/BeritaGlobalFragment_ListBerita"
-                android:visibility="gone"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:clipToPadding="false"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"/>
+            <!--Search button-->
+            <RelativeLayout
+                android:id="@+id/BeritaGlobalFragment_SearchControl"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            <!--Progress bar sebagai indikator load page baru-->
-            <ProgressBar
-                android:id="@+id/BeritaGlobalFragment_PageLoadingIndicator"
-                android:visibility="gone"
+                <ImageView
+                    android:id="@+id/BeritaGlobalFragment_SearchButton"
+                    android:src="@drawable/ic_play_arrow_white_36dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!--Clear button-->
+                <ImageView
+                    android:id="@+id/BeritaGlobalFragment_ClearButton"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_close_white_36dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <!--Search form-->
+            <EditText
+                android:id="@+id/BeritaGlobalFragment_SearchForm"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:hint="@string/Berita_Search_CariJudul"
+                android:textColor="@color/White"
+                android:textColorHint="@color/White"
+                android:theme="@style/EditText.Login"
+                android:layout_toLeftOf="@id/BeritaGlobalFragment_SearchControl"
+                android:layout_toStartOf="@id/BeritaGlobalFragment_SearchControl"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_centerVertical="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-        </LinearLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+        </RelativeLayout>
+
+        <!--Recycler view untuk hold item berita-->
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/BeritaGlobalFragment_SwipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/BeritaGlobalFragment_ListBerita"
+                    android:visibility="gone"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:clipToPadding="false"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"/>
+
+                <!--Progress bar sebagai indikator load page baru-->
+                <ProgressBar
+                    android:id="@+id/BeritaGlobalFragment_PageLoadingIndicator"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
 
     <!--Progress bar-->
     <ProgressBar

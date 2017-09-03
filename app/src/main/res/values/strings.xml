@@ -82,6 +82,7 @@
     <string name="Berita_Broadcast_Alert_StartDateAfterEndDate">Start date tidak boleh melebihi expired date</string>
     <string name="Berita_Broadcast_Alert_EndDateBeforeStartDate">Expired date tidak boleh mendahului start date</string>
     <string name="Berita_Broadcast_Alert_BroadcastSuccess">Berita berhasil dikirim</string>
+    <string name="Berita_Search_CariJudul">Cari judul berita</string>
 
     <!--List debitur page-->
     <string name="ListDebitur_PageTitle">List Debitur</string>

@@ -11,9 +11,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -58,11 +61,23 @@ public class BeritaGlobalFragment extends Fragment
     //progress bar buat indicator load page baru
     private ProgressBar view_ProgressBar_PageIndicator;
 
+    //search form
+    private EditText view_SearchForm;
+
+    //search button
+    private ImageView view_SearchButton;
+
+    //clear button
+    private ImageView view_ClearButton;
+
     //----------------------------------------------------------------------------------------------
     //  Data
     //----------------------------------------------------------------------------------------------
     //adapter for berita
     private BeritaGlobalAdapter beritaAdapter;
+
+    //search query
+    private String searchQuery;
 
     //----------------------------------------------------------------------------------------------
     //  Transaksi
@@ -95,6 +110,9 @@ public class BeritaGlobalFragment extends Fragment
         view_Message = thisView.findViewById(R.id.BeritaGlobalFragment_Message);
         view_SwipeRefresher = thisView.findViewById(R.id.BeritaGlobalFragment_SwipeRefresh);
         view_ProgressBar_PageIndicator = thisView.findViewById(R.id.BeritaGlobalFragment_PageLoadingIndicator);
+        view_SearchForm = thisView.findViewById(R.id.BeritaGlobalFragment_SearchForm);
+        view_SearchButton = thisView.findViewById(R.id.BeritaGlobalFragment_SearchButton);
+        view_ClearButton = thisView.findViewById(R.id.BeritaGlobalFragment_ClearButton);
 
         //set listener pada swipe refresh
         view_SwipeRefresher.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
@@ -118,6 +136,40 @@ public class BeritaGlobalFragment extends Fragment
 
                 //load more data
                 beritaAdapter.CreateLoadNewPageRequest();
+            }
+        });
+
+        //add listener to search form
+        view_SearchForm.setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent)
+            {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (i == KeyEvent.KEYCODE_ENTER))
+                {
+                    //Handle search
+                    CreateSearchRequest();
+
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+        //add listener pada search button
+        view_SearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HandleInput_SearchButton();
+            }
+        });
+
+        //add listener pada clear button
+        view_ClearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HandleInput_ClearButton();
             }
         });
     }
@@ -204,6 +256,16 @@ public class BeritaGlobalFragment extends Fragment
             JSONArray filterArray = new JSONArray();
             filterArray.put(filterObject);
 
+            //create search object jika searchquery tidak kosong
+            if (searchQuery != null && !searchQuery.isEmpty())
+            {
+                JSONObject searchObject = new JSONObject();
+                searchObject.put("Property", "Subject");
+                searchObject.put("Operator", "in");
+                searchObject.put("Value", searchQuery);
+                filterArray.put(searchObject);
+            }
+
             //create request object
             requestObject.put("DatabaseID", "db1");
             requestObject.put("ViewName", "MKI_VW_NEWS_GLOBAL");
@@ -242,6 +304,7 @@ public class BeritaGlobalFragment extends Fragment
             beritaAdapter = new BeritaGlobalAdapter(getActivity(), news);
             beritaAdapter.SetView_ProgressBar(view_ProgressBar_PageIndicator);
             beritaAdapter.SetupTransaction(baseURL, url_GetNews, authToken);
+            beritaAdapter.SetSearchQuery(searchQuery);
 
             //attach adapter to list
             AttachNewsData();
@@ -278,5 +341,55 @@ public class BeritaGlobalFragment extends Fragment
         view_ListBerita.setVisibility(View.VISIBLE);
         view_Message.setVisibility(View.GONE);
         view_ProgressBar.setVisibility(View.GONE);
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Create request buat search
+    //----------------------------------------------------------------------------------------------
+    private void CreateSearchRequest()
+    {
+        //set search query
+        searchQuery = view_SearchForm.getText().toString();
+
+        //jika search query tidak kosong, ubah tombol search jadi tombol clear
+        if (!searchQuery.isEmpty())
+        {
+            view_ClearButton.setVisibility(View.VISIBLE);
+            view_SearchButton.setVisibility(View.GONE);
+        }
+        else
+        {
+            //tapi kalo kosong, tampilkan kembali search button
+            view_ClearButton.setVisibility(View.GONE);
+            view_SearchButton.setVisibility(View.VISIBLE);
+        }
+
+        //send request
+        CreateGetNewsRequest();
+    }
+
+    //Handle input pada search button
+    private void HandleInput_SearchButton()
+    {
+        CreateSearchRequest();
+    }
+
+    //Handle input pada clear button
+    private void HandleInput_ClearButton()
+    {
+        //jika search form tidak kosong, clear textnya
+        if (!view_SearchForm.getText().toString().isEmpty())
+        {
+            view_SearchForm.setText("");
+        }
+        else
+        {
+            //jika kosong, show search button & hide clear button
+            view_ClearButton.setVisibility(View.GONE);
+            view_SearchForm.setVisibility(View.VISIBLE);
+
+            //dan refresh data
+            CreateSearchRequest();
+        }
     }
 }

@@ -44,6 +44,9 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
     //counter page
     private int currentPage;
 
+    //search query
+    private String searchQuery;
+
     //----------------------------------------------------------------------------------------------
     //  Input
     //----------------------------------------------------------------------------------------------
@@ -178,6 +181,12 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
         this.userID = userID;
     }
 
+    //set search query
+    public void SetSearchQuery(String searchQuery)
+    {
+        this.searchQuery = searchQuery;
+    }
+
     //----------------------------------------------------------------------------------------------
     //  View holder
     //----------------------------------------------------------------------------------------------
@@ -295,11 +304,21 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
             JSONObject filterObject = new JSONObject();
             filterObject.put("Property", "ToUserID");
             filterObject.put("Operator", "eq");
-            filterObject.put("Value", userID);
+            filterObject.put("Value", "'" + userID + "'");
 
             //create filter array
             JSONArray filterArray = new JSONArray();
             filterArray.put(filterObject);
+
+            //create search object jika searchquery tidak kosong
+            if (searchQuery != null && !searchQuery.isEmpty())
+            {
+                JSONObject searchObject = new JSONObject();
+                searchObject.put("Property", "Title");
+                searchObject.put("Operator", "in");
+                searchObject.put("Value", searchQuery);
+                filterArray.put(searchObject);
+            }
 
             //create request object
             requestObject.put("DatabaseID", "db1");

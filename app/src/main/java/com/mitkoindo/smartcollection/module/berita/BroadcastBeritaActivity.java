@@ -40,6 +40,7 @@ import java.io.File;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -86,6 +87,9 @@ public class BroadcastBeritaActivity extends AppCompatActivity
 
     //data staff list
     private ArrayList<Staff> staffs;
+
+    //data staff + groupnya
+    private ArrayList<Staff> staffAndGroups;
 
     //adapter staff list
     private StaffBroadcastAdapter staffBroadcastAdapter;
@@ -356,7 +360,7 @@ public class BroadcastBeritaActivity extends AppCompatActivity
         RecyclerView view_List = popupView.findViewById(R.id.BroadcastPopup_ListPetugas);
 
         //create list adapter
-        staffBroadcastAdapter = new StaffBroadcastAdapter(this, staffs);
+        staffBroadcastAdapter = new StaffBroadcastAdapter(this, staffAndGroups);
 
         //attach stafflist di popup
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -480,6 +484,52 @@ public class BroadcastBeritaActivity extends AppCompatActivity
 
                 //add data ke list
                 staffs.add(newStaff);
+            }
+
+            //get all group
+            ArrayList<String> groupList = new ArrayList<>();
+            for (int i = 0; i < staffs.size(); i++)
+            {
+                String currentGroup = staffs.get(i).GROUP;
+
+                //cek apakah groupnya sudah ada di grouplist atau belum
+                boolean groupExist = false;
+                for (int j = 0; j < groupList.size(); j++)
+                {
+                    if (currentGroup.equals(groupList.get(j)))
+                    {
+                        groupExist = true;
+                        break;
+                    }
+                }
+
+                if (!groupExist)
+                {
+                    groupList.add(currentGroup);
+                }
+            }
+
+            //save staff & group list
+            staffAndGroups = new ArrayList<>();
+            for (int i = 0; i < groupList.size(); i++)
+            {
+                //get current group
+                String currentGroup = groupList.get(i);
+
+                //create new staff data
+                Staff groupHolder = new Staff();
+                groupHolder.FLAG_CHECKED = true;
+                groupHolder.GROUP = groupList.get(i);
+                staffAndGroups.add(groupHolder);
+
+                //add all staff yang memiliki group yang sama
+                for (int j = 0; j < staffs.size(); j++)
+                {
+                    if (currentGroup.equals(staffs.get(j).GROUP))
+                    {
+                        staffAndGroups.add(staffs.get(j));
+                    }
+                }
             }
 
             int x = 0;

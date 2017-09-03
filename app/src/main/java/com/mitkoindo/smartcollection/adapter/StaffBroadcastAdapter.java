@@ -29,6 +29,11 @@ public class StaffBroadcastAdapter extends RecyclerView.Adapter<StaffBroadcastAd
     private Activity context;
 
     //----------------------------------------------------------------------------------------------
+    //  Views
+    //----------------------------------------------------------------------------------------------
+    private boolean onBind;
+
+    //----------------------------------------------------------------------------------------------
     //  Setup
     //----------------------------------------------------------------------------------------------
     //constructor
@@ -54,8 +59,45 @@ public class StaffBroadcastAdapter extends RecyclerView.Adapter<StaffBroadcastAd
         if (position >= getItemCount())
             return;
 
+        onBind = true;
+
         //get current item
         Staff currentStaff = staffList.get(position);
+
+        //set listener
+        final int currentPos = position;
+
+        //cek apakah data selain group null atau tidak
+        if (currentStaff.FULL_NAME == null || currentStaff.FULL_NAME.isEmpty())
+        {
+            //show groupCheckbox & hide staffcheckbox
+            holder.groupCheckBox.setVisibility(View.VISIBLE);
+            holder.checkBox.setVisibility(View.GONE);
+
+            //set value
+            holder.groupCheckBox.setText(currentStaff.GROUP);
+            if (currentStaff.FLAG_CHECKED)
+                holder.groupCheckBox.setChecked(true);
+            else
+                holder.groupCheckBox.setChecked(false);
+
+            /*//add listener pada checkbox
+            holder.groupCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+            {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+                {
+                    ChangeStaffState(currentPos, compoundButton.isChecked());
+                }
+            });*/
+
+            onBind = false;
+            return;
+        }
+
+        //hide group checkbox dan show name checkbox
+        holder.groupCheckBox.setVisibility(View.GONE);
+        holder.checkBox.setVisibility(View.VISIBLE);
 
         //attach di holder
         holder.checkBox.setText(currentStaff.FULL_NAME);
@@ -64,17 +106,16 @@ public class StaffBroadcastAdapter extends RecyclerView.Adapter<StaffBroadcastAd
         else
             holder.checkBox.setChecked(false);
 
-        //set listener
-        final int currentPos = position;
-        final boolean checkBoxState = holder.checkBox.isChecked();
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        /*holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b)
             {
-                ChangeStaffState(currentPos, checkBoxState);
+                ChangeStaffState(currentPos, compoundButton.isChecked());
             }
-        });
+        });*/
+
+        onBind = false;
     }
 
     @Override
@@ -95,8 +136,10 @@ public class StaffBroadcastAdapter extends RecyclerView.Adapter<StaffBroadcastAd
         //populate user ID
         for (int i = 0; i < staffList.size(); i++)
         {
-            if (staffList.get(i).FLAG_CHECKED)
-                selectedUserID.add(staffList.get(i).USERID);
+            Staff currentStaff = staffList.get(i);
+            if (currentStaff.USERID != null && !currentStaff.USERID.isEmpty())
+                if (staffList.get(i).FLAG_CHECKED)
+                    selectedUserID.add(staffList.get(i).USERID);
         }
 
         //return user list
@@ -108,13 +151,22 @@ public class StaffBroadcastAdapter extends RecyclerView.Adapter<StaffBroadcastAd
     {
         //count jumlah user yang diselect
         int selectedCount = 0;
+        int allStaffCount = 0;
         for (int i = 0; i < staffList.size(); i++)
         {
-            if (staffList.get(i).FLAG_CHECKED)
-                selectedCount++;
+            Staff currentStaff = staffList.get(i);
+
+            if (currentStaff.USERID != null && !currentStaff.USERID.isEmpty())
+            {
+                if (currentStaff.FLAG_CHECKED)
+                    selectedCount++;
+
+                allStaffCount++;
+            }
+
         }
 
-        return selectedCount == getItemCount();
+        return selectedCount == allStaffCount;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -129,28 +181,53 @@ public class StaffBroadcastAdapter extends RecyclerView.Adapter<StaffBroadcastAd
 
         //ganti state staff
         staffList.get(position).FLAG_CHECKED = checked;
+
+        //cek apakah entry ini group atau bukan
+        if (staffList.get(position).FULL_NAME == null || staffList.get(position).FULL_NAME.isEmpty())
+        {
+            //get group name
+            String groupName = staffList.get(position).GROUP;
+
+            //change state seluruh item yang ada di dalam group ini
+            for (int i = 0; i < staffList.size(); i++)
+            {
+                //cek apakah groupnya sama atau bukan
+                if (groupName.equals(staffList.get(i).GROUP))
+                {
+                    //set flag statenya biar sama
+                    staffList.get(i).FLAG_CHECKED = checked;
+                }
+            }
+        }
+
+        if (!onBind)
+            notifyDataSetChanged();
     }
 
     //handle select all input
     public void HandleInput_BroadcastAdapter_SelectAllTrigger(CheckBox checkBox)
     {
+        boolean selectedFlag = checkBox.isChecked();
+
         //set all user sesuai state checkbox
         for (int i = 0; i < staffList.size(); i++)
         {
-            staffList.get(i).FLAG_CHECKED = checkBox.isChecked();
+            staffList.get(i).FLAG_CHECKED = selectedFlag;
         }
 
         //update view
-        notifyDataSetChanged();
+        if (!onBind)
+            notifyDataSetChanged();
     }
 
     //----------------------------------------------------------------------------------------------
     //  View holder
     //----------------------------------------------------------------------------------------------
-    class StaffBroadcastViewHolder extends RecyclerView.ViewHolder
+    class StaffBroadcastViewHolder extends RecyclerView.ViewHolder implements CheckBox.OnCheckedChangeListener
     {
         //checkbox
         CheckBox checkBox;
+        CheckBox groupCheckBox;
 
         public StaffBroadcastViewHolder(View itemView)
         {
@@ -158,6 +235,16 @@ public class StaffBroadcastAdapter extends RecyclerView.Adapter<StaffBroadcastAd
 
             //get checkbox
             checkBox = itemView.findViewById(R.id.AdapterStaffBroadcast_StaffName);
+            groupCheckBox = itemView.findViewById(R.id.AdapterStaffBroadcast_GroupName);
+
+            checkBox.setOnCheckedChangeListener(this);
+            groupCheckBox.setOnCheckedChangeListener(this);
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+        {
+            ChangeStaffState(getAdapterPosition(), b);
         }
     }
 }

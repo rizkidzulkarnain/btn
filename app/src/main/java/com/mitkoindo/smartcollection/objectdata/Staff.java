@@ -3,6 +3,8 @@ package com.mitkoindo.smartcollection.objectdata;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Comparator;
+
 /**
  * Created by W8 on 25/08/2017.
  */

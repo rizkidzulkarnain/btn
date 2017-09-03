@@ -41,6 +41,9 @@ public class BeritaGlobalAdapter extends RecyclerView.Adapter<BeritaGlobalAdapte
     //counter page
     private int currentPage;
 
+    //search query
+    private String searchQuery;
+
     //----------------------------------------------------------------------------------------------
     //  Views
     //----------------------------------------------------------------------------------------------
@@ -121,6 +124,12 @@ public class BeritaGlobalAdapter extends RecyclerView.Adapter<BeritaGlobalAdapte
         this.baseURL = baseURL;
         this.url_DataSP = url_DataSP;
         this.authToken = authToken;
+    }
+
+    //set search query
+    public void SetSearchQuery(String searchQuery)
+    {
+        this.searchQuery = searchQuery;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -219,6 +228,16 @@ public class BeritaGlobalAdapter extends RecyclerView.Adapter<BeritaGlobalAdapte
             //create filter array
             JSONArray filterArray = new JSONArray();
             filterArray.put(filterObject);
+
+            //create search object jika searchquery tidak kosong
+            if (searchQuery != null && !searchQuery.isEmpty())
+            {
+                JSONObject searchObject = new JSONObject();
+                searchObject.put("Property", "Subject");
+                searchObject.put("Operator", "in");
+                searchObject.put("Value", searchQuery);
+                filterArray.put(searchObject);
+            }
 
             //create request object
             requestObject.put("DatabaseID", "db1");
