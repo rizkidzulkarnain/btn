@@ -17,9 +17,12 @@ public class ListDebiturViewPagerAdapter extends FragmentPagerAdapter {
     private static final int TAB_INDEX_LANCAR = 1;
     private static final int TAB_INDEX_MATURED = 2;
     private static final int TAB_INDEX_IN_PROGRESS = 3;
+    private String mType = ListDebiturActivity.EXTRA_TYPE_PENUGASAN_VALUE;
 
-    public ListDebiturViewPagerAdapter(FragmentManager fragmentManager) {
+    public ListDebiturViewPagerAdapter(FragmentManager fragmentManager, String type) {
         super(fragmentManager);
+
+        mType = type;
     }
 
     @Override
@@ -31,13 +34,13 @@ public class ListDebiturViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case TAB_INDEX_PENDING:
-                return ListDebiturFragment.getInstance(RestConstants.LIST_DEBITUR_STATUS_PENDING_VALUE);
+                return ListDebiturFragment.getInstance(RestConstants.LIST_DEBITUR_STATUS_PENDING_VALUE, mType);
             case TAB_INDEX_LANCAR:
-                return ListDebiturFragment.getInstance(RestConstants.LIST_DEBITUR_STATUS_LANCAR_VALUE);
+                return ListDebiturFragment.getInstance(RestConstants.LIST_DEBITUR_STATUS_LANCAR_VALUE, mType);
             case TAB_INDEX_MATURED:
-                return ListDebiturFragment.getInstance(RestConstants.LIST_DEBITUR_STATUS_MATURED_VALUE);
+                return ListDebiturFragment.getInstance(RestConstants.LIST_DEBITUR_STATUS_MATURED_VALUE, mType);
             case TAB_INDEX_IN_PROGRESS:
-                return ListDebiturFragment.getInstance(RestConstants.LIST_DEBITUR_STATUS_IN_PROGRESS_VALUE);
+                return ListDebiturFragment.getInstance(RestConstants.LIST_DEBITUR_STATUS_IN_PROGRESS_VALUE, mType);
             default:
                 return null;
         }

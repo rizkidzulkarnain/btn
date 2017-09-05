@@ -14,11 +14,11 @@ public final class RestConstants {
     public static final String ENDPOINT_DETAIL_DEBITUR = "wsMobile/api/Data/sp";
     public static final String ENDPOINT_VISIT_DROPDOWN = "wsMobile/api/Data/view";
 
-    public static final String FORM_VISIT = "wsMobile/api/Data/view";
+    public static final String FORM_VISIT = "wsMobile/api/Data/sp";
     public static final String FORM_CALL = "wsMobile/api/Data/sp";
     public static final String ENDPOINT_LIST_PHONE_NUMBER = "wsMobile/api/Data/sp";
     public static final String ENDPOINT_UPLOAD_FILE = "wsMobile/api/File/upload";
-
+    public static final String DATA_SP = "wsMobile/api/Data/sp";
 
     public static final String DATABASE_ID_VALUE = "db1";
 
@@ -49,6 +49,9 @@ public final class RestConstants {
     public static final String DROP_DOWN_STATUS_AGUNAN_VIEW_NAME = "RFCOLSTATUS";
     public static final String DROP_DOWN_STATUS_AGUNAN_SORT_PROPERTY = "COLSTA_CODE";
 
+    public static final String DROP_DOWN_TELEPON_TYPE_VIEW_NAME = "RFCONTACTTYPE";
+    public static final String DROP_DOWN_TELEPON_TYPE_SORT_PROPERTY = "CT_CODE";
+
     public static final String DROP_DOWN_ADDRESS_VIEW_NAME = "MKI_VW_DEBITUR_ADDRESS_LIST";
     public static final String DROP_DOWN_ADDRESS_SORT_PROPERTY = "ACC_NO";
     public static final String DROP_DOWN_ADDRESS_FILTER_PROPERTY = "ACC_NO";
@@ -58,6 +61,12 @@ public final class RestConstants {
     public static final String FORM_CALL_SP_NAME = "MKI_SP_SAVE_CALL_HISTORY";
 
     public static final String LIST_PHONE_NUMBER_SP_NAME = "MKI_SP_DEBITUR_TELFON_LIST";
+
+    public static final String CHECK_IN_SP_NAME = "MKI_SP_STAFF_CHECKIN";
+
+    public static final String TAMBAH_TELEPON_SP_NAME = "MKI_SP_DEBITUR_TAMBAH_TELFON";
+
+    public static final String TAMBAH_ALAMAT_SP_NAME = "MKI_SP_DEBITUR_TAMBAH_ALAMAT";
 
     public static final String ORDER_DIRECTION_ASC_VALUE = "ASC";
 

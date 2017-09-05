@@ -12,12 +12,20 @@ import android.widget.Switch;
 
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.module.misc.ChangeBaseURLActivity;
+import com.mitkoindo.smartcollection.network.ApiUtils;
+import com.mitkoindo.smartcollection.network.body.LoginBody;
+import com.mitkoindo.smartcollection.network.response.LoginResponse;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
 import com.mitkoindo.smartcollection.utilities.HttpsTrustManager;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class LoginActivity extends AppCompatActivity
 {
@@ -119,6 +127,7 @@ public class LoginActivity extends AppCompatActivity
 
         //execute request
         new SendLoginRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+//        login(text_Username, text_Password);
     }
 
     //toggle switch button
@@ -296,5 +305,42 @@ public class LoginActivity extends AppCompatActivity
 
         int x = 0;
         int z = x + 1;
+    }
+
+    private void login(String userName, String password) {
+        String key_AuthToken = getString(R.string.SharedPreferenceKey_AccessToken);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String accessToken =  sharedPreferences.getString(key_AuthToken, "");
+
+        LoginBody loginBody = new LoginBody();
+        loginBody.setUserId(userName);
+        loginBody.setPassword(password);
+
+        ApiUtils.getRestServices(accessToken).login(loginBody)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<LoginResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(LoginResponse loginResponse) {
+                        genericAlert.Dismiss();
+                        SaveToken(loginResponse.getAccessToken());
+                        OpenHomeActivity();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        genericAlert.Dismiss();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

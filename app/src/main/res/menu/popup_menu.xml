@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item android:id="@+id/popup_menu_call"
         android:title="@string/DetailDebitur_MenuCall" />
     <item android:id="@+id/popup_menu_check_in"
@@ -8,4 +9,9 @@
         android:title="@string/DetailDebitur_MenuIsiFormVisit" />
     <item android:id="@+id/popup_menu_lihat_history"
         android:title="@string/DetailDebitur_MenuLihatHistory" />
+    <item android:id="@+id/popup_menu_tambah_telepon"
+        android:title="@string/DetailDebitur_TambahTelepon" />
+    <item android:id="@+id/popup_menu_tambah_alamat"
+        android:title="@string/DetailDebitur_TambahAlamatDanTelepon" />
+
 </menu>

@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/tv_dialog_simple_spinner_title"
-        style="@style/FontRegular.Medium"
+        style="@style/FontBold.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -16,6 +16,11 @@
         android:lines="1"
         android:padding="@dimen/padding_medium"
         android:background="@color/White"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/Grey"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_dialog_simple_spinner"

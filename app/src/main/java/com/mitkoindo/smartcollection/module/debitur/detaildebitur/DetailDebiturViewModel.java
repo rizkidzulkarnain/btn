@@ -8,8 +8,10 @@ import android.util.Log;
 import com.mitkoindo.smartcollection.base.ILifecycleViewModel;
 import com.mitkoindo.smartcollection.network.ApiUtils;
 import com.mitkoindo.smartcollection.network.RestConstants;
+import com.mitkoindo.smartcollection.network.body.CheckInBody;
 import com.mitkoindo.smartcollection.network.body.DetailDebiturBody;
 import com.mitkoindo.smartcollection.network.body.ListPhoneNumberBody;
+import com.mitkoindo.smartcollection.network.response.CheckInResponse;
 import com.mitkoindo.smartcollection.objectdata.DetailDebitur;
 import com.mitkoindo.smartcollection.objectdata.PhoneNumber;
 
@@ -31,11 +33,13 @@ public class DetailDebiturViewModel extends BaseObservable implements ILifecycle
 
     public static int GET_DETAIL_DEBITUR_ERROR = 0;
     public static int GET_PHONE_LIST_ERROR = 1;
+    public static int CHECK_IN_ERROR = 2;
 
     public ObservableBoolean obsIsLoading = new ObservableBoolean();
     public ObservableField<Throwable> error = new ObservableField<>();
     public ObservableField<DetailDebitur> obsDetailDebitur = new ObservableField<>();
     public ObservableField<List<PhoneNumber>> obsListPhoneNumber = new ObservableField<>();
+    public ObservableBoolean obsCheckInSuccess = new ObservableBoolean();
     public int mErrorType;
 
     private String mAccessToken;
@@ -131,6 +135,56 @@ public class DetailDebiturViewModel extends BaseObservable implements ILifecycle
                         mErrorType = GET_PHONE_LIST_ERROR;
                         error.set(e);
                         Log.e("DetailDebiturViewModel", "getPhoneList" + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        composites.add(disposable);
+    }
+
+    public void checkIn(String userId, double latitude, double longitude, String address) {
+        CheckInBody checkInBody = new CheckInBody();
+        checkInBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
+        checkInBody.setSpName(RestConstants.CHECK_IN_SP_NAME);
+
+        CheckInBody.SpParameter spParameter = new CheckInBody.SpParameter();
+        spParameter.setUserID(userId);
+        spParameter.setLatitude(latitude);
+        spParameter.setLongitude(longitude);
+        spParameter.setAddress(address);
+
+        checkInBody.setSpParameter(spParameter);
+
+        Disposable disposable = ApiUtils.getRestServices(mAccessToken).checkIn(checkInBody)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        obsIsLoading.set(true);
+                    }
+                })
+                .doOnTerminate(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        obsIsLoading.set(false);
+                    }
+                })
+                .subscribeWith(new DisposableObserver<List<CheckInResponse>>() {
+                    @Override
+                    public void onNext(List<CheckInResponse> listCheckInResponse) {
+                        obsCheckInSuccess.set(true);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mErrorType = CHECK_IN_ERROR;
+                        error.set(e);
+                        Log.e("DetailDebiturViewModel", "checkIn" + e.getMessage());
                     }
 
                     @Override

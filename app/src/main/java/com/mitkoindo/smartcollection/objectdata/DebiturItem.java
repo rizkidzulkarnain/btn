@@ -49,6 +49,15 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
     @Expose
     private String useAssignDate;
 
+    @SerializedName("CustomerReference")
+    @Expose
+    private String customerReference;
+
+    @SerializedName("RESULT_DATE")
+    @Expose
+    private String resultDate;
+
+
     public DebiturItem() {
     }
 
@@ -114,6 +123,22 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
 
     public void setUseAssignDate(String useAssignDate) {
         this.useAssignDate = useAssignDate;
+    }
+
+    public String getCustomerReference() {
+        return customerReference;
+    }
+
+    public void setCustomerReference(String customerReference) {
+        this.customerReference = customerReference;
+    }
+
+    public String getResultDate() {
+        return resultDate;
+    }
+
+    public void setResultDate(String resultDate) {
+        this.resultDate = resultDate;
     }
 
     @Override

@@ -72,6 +72,9 @@ public class DashboardPTPFragment extends Fragment
     private TextView view_Nominal_Realisasi;
     private TextView view_Nominal_Outstanding;
 
+    //data perbulan
+    private View holder_MonthlyData;
+
     //----------------------------------------------------------------------------------------------
     //  Transaksi
     //----------------------------------------------------------------------------------------------
@@ -130,6 +133,8 @@ public class DashboardPTPFragment extends Fragment
         view_Nominal_Target = thisView.findViewById(R.id.DashboardPTPFragment_Nominal_Target);
         view_Nominal_Realisasi = thisView.findViewById(R.id.DashboardPTPFragment_Nominal_Realisasi);
         view_Nominal_Outstanding = thisView.findViewById(R.id.DashboardPTPFragment_Nominal_Outstanding);
+
+        holder_MonthlyData = thisView.findViewById(R.id.DashboardPTPFragment_MonthlyData);
     }
 
     //setup views
@@ -155,11 +160,19 @@ public class DashboardPTPFragment extends Fragment
                     case 0 :
                         //show data hari ini
                         currentDashboardMode = DASHBOARDMODE_CURRENT;
+
+                        //hide monthly data
+                        holder_MonthlyData.setVisibility(View.GONE);
+
                         CreateGetDashboardPTPRequest();
                         break;
                     case 1 :
                         //show data monthly
                         currentDashboardMode = DASHBOARDMODE_MONTH;
+
+                        //show monthly data
+                        holder_MonthlyData.setVisibility(View.VISIBLE);
+
                         CreateGetDashboardPTPRequest();
                     default:break;
                 }
@@ -308,7 +321,9 @@ public class DashboardPTPFragment extends Fragment
                 if (currentdashboardData.Kategori.equals("debitur"))
                 {
                     //Add data ke pie entry debitur
-                    PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentase, "Realisasi");
+                    /*PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentase, "Realisasi");
+                    PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentase, "Outstanding");*/
+                    PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentase, "Janji Bayar");
                     PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentase, "Outstanding");
 
                     //add ke list
@@ -330,7 +345,9 @@ public class DashboardPTPFragment extends Fragment
                 else
                 {
                     //add data ke pie entry nominal
-                    PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentase, "Realisasi");
+                    /*PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentase, "Realisasi");
+                    PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentase, "Outstanding");*/
+                    PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentase, "Janji Bayar");
                     PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentase, "Outstanding");
 
                     //add ke list
@@ -338,7 +355,8 @@ public class DashboardPTPFragment extends Fragment
                     pieEntries_Nominal.add(pieEntry1);
 
                     //create chart
-                    PieDataSet pieDataSet = new PieDataSet(pieEntries_Nominal, "Nominal");
+                    /*PieDataSet pieDataSet = new PieDataSet(pieEntries_Nominal, "Nominal");*/
+                    PieDataSet pieDataSet = new PieDataSet(pieEntries_Nominal, "Monthly");
                     pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
                     PieData pieData = new PieData(pieDataSet);
                     chart_Nominal.setData(pieData);

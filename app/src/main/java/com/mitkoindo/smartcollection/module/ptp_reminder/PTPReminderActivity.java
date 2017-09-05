@@ -174,17 +174,23 @@ public class PTPReminderActivity extends AppCompatActivity
     //handle result
     private void HandleGetPTPResult(String resultString)
     {
+        view_ProgressBar.setVisibility(View.GONE);
+
         //pastikan result tidak kosong
         if (resultString == null || resultString.isEmpty())
         {
             //show alert
+            view_Alert.setText(R.string.Text_SomethingWrong);
+            view_Alert.setVisibility(View.VISIBLE);
             return;
         }
 
         //pastikan balasan tidak 404
-        if (resultString.equals("404"))
+        if (resultString.equals("Not Found"))
         {
             //show alert
+            view_Alert.setText(R.string.Text_NoData);
+            view_Alert.setVisibility(View.VISIBLE);
             return;
         }
 
@@ -208,10 +214,16 @@ public class PTPReminderActivity extends AppCompatActivity
             //create adapter dari item
             ptpReminderAdapter = new PTPReminderAdapter(this, debiturItems);
             SetupPTPList();
+
+            view_List.setVisibility(View.VISIBLE);
+            view_Alert.setVisibility(View.GONE);
         }
         catch (JSONException e)
         {
             e.printStackTrace();
+
+            view_Alert.setText(R.string.Text_SomethingWrong);
+            view_Alert.setVisibility(View.VISIBLE);
         }
     }
 

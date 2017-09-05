@@ -1,5 +1,6 @@
 package com.mitkoindo.smartcollection.network;
 
+import com.mitkoindo.smartcollection.network.body.CheckInBody;
 import com.mitkoindo.smartcollection.network.body.DetailDebiturBody;
 import com.mitkoindo.smartcollection.network.body.FormCallBody;
 import com.mitkoindo.smartcollection.network.body.FormVisitBody;
@@ -7,8 +8,15 @@ import com.mitkoindo.smartcollection.network.body.FormVisitDropDownBody;
 import com.mitkoindo.smartcollection.network.body.ListDebiturBody;
 import com.mitkoindo.smartcollection.network.body.ListPhoneNumberBody;
 import com.mitkoindo.smartcollection.network.body.LoginBody;
+import com.mitkoindo.smartcollection.network.body.TambahAlamatBody;
+import com.mitkoindo.smartcollection.network.body.TambahTeleponBody;
+import com.mitkoindo.smartcollection.network.response.CheckInResponse;
+import com.mitkoindo.smartcollection.network.response.FormCallResponse;
+import com.mitkoindo.smartcollection.network.response.FormVisitResponse;
 import com.mitkoindo.smartcollection.network.response.LoginResponse;
 import com.mitkoindo.smartcollection.network.response.MultipartResponse;
+import com.mitkoindo.smartcollection.network.response.TambahAlamatResponse;
+import com.mitkoindo.smartcollection.network.response.TambahTeleponResponse;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
 import com.mitkoindo.smartcollection.objectdata.DetailDebitur;
 import com.mitkoindo.smartcollection.objectdata.DropDownAction;
@@ -18,6 +26,7 @@ import com.mitkoindo.smartcollection.objectdata.DropDownReason;
 import com.mitkoindo.smartcollection.objectdata.DropDownRelationship;
 import com.mitkoindo.smartcollection.objectdata.DropDownResult;
 import com.mitkoindo.smartcollection.objectdata.DropDownStatusAgunan;
+import com.mitkoindo.smartcollection.objectdata.DropDownTeleponType;
 import com.mitkoindo.smartcollection.objectdata.PhoneNumber;
 
 import java.util.List;
@@ -66,14 +75,26 @@ public interface RestServices {
     @POST(RestConstants.ENDPOINT_VISIT_DROPDOWN)
     Observable<List<DropDownAddress>> getDropDownAddress(@Body FormVisitDropDownBody formVisitDropDownBody);
 
+    @POST(RestConstants.ENDPOINT_VISIT_DROPDOWN)
+    Observable<List<DropDownTeleponType>> getDropDownTeleponType(@Body FormVisitDropDownBody formVisitDropDownBody);
+
     @POST(RestConstants.FORM_VISIT)
-    Observable<Void> saveFormVisit(@Body FormVisitBody formVisitBody);
+    Observable<List<FormVisitResponse>> saveFormVisit(@Body FormVisitBody formVisitBody);
 
     @POST(RestConstants.FORM_CALL)
-    Observable<Void> saveFormCall(@Body FormCallBody formCallBody);
+    Observable<List<FormCallResponse>> saveFormCall(@Body FormCallBody formCallBody);
 
     @POST(RestConstants.ENDPOINT_LIST_PHONE_NUMBER)
     Observable<List<PhoneNumber>> getListPhoneNumber(@Body ListPhoneNumberBody listPhoneNumberBody);
+
+    @POST(RestConstants.DATA_SP)
+    Observable<List<CheckInResponse>> checkIn(@Body CheckInBody checkInBody);
+
+    @POST(RestConstants.DATA_SP)
+    Observable<List<TambahTeleponResponse>> tambahTelepon(@Body TambahTeleponBody tambahTeleponBody);
+
+    @POST(RestConstants.DATA_SP)
+    Observable<List<TambahAlamatResponse>> tambahAlamat(@Body TambahAlamatBody tambahAlamatBody);
 
 
     @Headers({"Content-Type: multipart/form-data"})

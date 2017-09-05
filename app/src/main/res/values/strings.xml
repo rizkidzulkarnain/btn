@@ -86,7 +86,11 @@
 
     <!--List debitur page-->
     <string name="ListDebitur_PageTitle">List Debitur</string>
+    <string name="ListDebitur_PageTitleTambahKontak">Tambah Kontak</string>
     <string name="ListDebitur_Empty">Tidak ada data debitur</string>
+    <string name="ListDebitur_PilihTambah">Pilih</string>
+    <string name="ListDebitur_TambahTelepon">Tambah Telepon</string>
+    <string name="ListDebitur_TambahAlamat">Tambah Alamat</string>
 
     <!--Detail debitur page-->
     <string name="DetailDebitur_PageTitle">Detail Debitur</string>
@@ -111,6 +115,10 @@
     <string name="DetailDebitur_MenuIsiFormVisit">Isi form visit</string>
     <string name="DetailDebitur_MenuLihatHistory">Lihat history</string>
     <string name="DetailDebitur_PilihNomorTelepon">Pilih nomor telepon</string>
+    <string name="DetailDebitur_TambahTelepon">Tambah telepon</string>
+    <string name="DetailDebitur_TambahAlamatDanTelepon">Tambah alamat</string>
+    <string name="DetailDebitur_SuksesCheckIn">Sukses melakukan check in</string>
+    <string name="DetailDebitur_PilihAlamat">Pilih Alamat</string>
 
     <!--Form visit page-->
     <string name="FormVisit_PageTitle">Form Visit</string>
@@ -211,6 +219,44 @@
 	<!--Form Visit Konfirmasi Page-->
     <string name="FormKonfirmasi_PageTitle">Konfimasi Form Visit</string>
 
+    <!--Tambah Alamat dan Telepon-->
+    <string name="TambahAlamat_PageTitle">Tambahkan Kontak</string>
+    <string name="TambahAlamat_NoRekening">No. Rekening :      %1$s</string>
+    <string name="TambahAlamat_NoTelepon">Tambahkan Nomor Telepon</string>
+    <string name="TambahAlamat_Alamat">Tambahkan Alamat</string>
+    <string name="TambahAlamat_NoTeleponHint">Nomor Telepon</string>
+    <string name="TambahAlamat_AlamatHint">Alamat</string>
+    <string name="TambahAlamat_SimpanTelepon">Simpan Telepon</string>
+    <string name="TambahAlamat_SimpanAlamat">Simpan Alamat</string>
+
+    <!--Tambah Telepon-->
+    <string name="TambahTelepon_PageTitle">Tambah Telepon</string>
+    <string name="TambahTelepon_Nama">Nama</string>
+    <string name="TambahTelepon_NamaHint">Tuliskan nama pemilik telepon</string>
+    <string name="TambahTelepon_HubunganDenganDebitur">Hubungan dengan debitur</string>
+    <string name="TambahTelepon_TypeTelepon">Jenis Telepon</string>
+    <string name="TambahTelepon_NomorTelepon">Nomor Telepon</string>
+    <string name="TambahTelepon_NomorTeleponHint">Isi nomor telepon</string>
+    <string name="TambahTelepon_Simpan">Simpan</string>
+    <string name="TambahTelepon_TeleponTypeInitial">Pilih telepon type</string>
+    <string name="TambahTelepon_HubunganDenganDebiturInitial">Pilih hubungan dengan debitur</string>
+    <string name="TambahTelepon_Success">Sukses menambah nomor telepon</string>
+
+    <!--Tambah Alamat-->
+    <string name="TambahAlamatSaja_PageTitle">Tambah Alamat</string>
+    <string name="TambahAlamatSaja_Nama">Nama</string>
+    <string name="TambahAlamatSaja_NamaHint">Tuliskan nama pemilik alamat</string>
+    <string name="TambahAlamatSaja_HubunganDenganDebitur">Hubungan dengan debitur</string>
+    <string name="TambahAlamatSaja_HubunganDenganDebiturInitial">Pilih hubungan dengan debitur</string>
+    <string name="TambahAlamatSaja_Alamat">Alamat</string>
+    <string name="TambahAlamatSaja_AlamatHint">Isi alamat</string>
+    <string name="TambahAlamatSaja_Kota">Kota</string>
+    <string name="TambahAlamatSaja_KotaHint">Isi kota</string>
+    <string name="TambahAlamatSaja_Propinsi">Propinsi</string>
+    <string name="TambahAlamatSaja_PropinsiHint">Isi propinsi</string>
+    <string name="TambahAlamatSaja_Success">Sukses menambah alamat</string>
+    <string name="TambahAlamatSaja_Simpan">Simpan</string>
+
     <!--Account assignment-->
     <string name="AccountAssignment_PageTitle">Account Assignment</string>
     <string name="AccountAssignment_Assign">Assign</string>
@@ -227,6 +273,7 @@
     <string name="UpdatePassword_ConfirmPassword">Confirm Password</string>
     <string name="UpdatePassword_Button_Submit">Update Password</string>
     <string name="UpdatePassword_Alert_UpdatePasswordSuccess">Password berhasil diubah</string>
+    <string name="UpdatePassword_Alert_PanjangPasswordKurang">Panjang password minimal 8 karakter</string>
 
     <!--Page histori tindakan-->
     <string name="HistoriTindakan_Title">Histori Tindakan</string>
@@ -265,6 +312,23 @@
     <string name="GagalMenyimpanFormVisit">Gagal mengirim Form Visit</string>
     <string name="GagalMenyimpanFormCall">Gagal mengirim Form Call</string>
     <string name="GagalMendapatListNomorTelepon">Gagal mendapatkan list nomor telepon</string>
+    <string name="GagalMenambahkanAlamatDanTelepon">Gagal menambahkan alamat / telepon</string>
+    <string name="GagalCheckIn">Gagal melakukan check in</string>
+    <string name="GagalMenambahNomorTelepon">Gagal menambah nomor telepon</string>
+    <string name="GagalMenambahAlamat">Gagal menambah alamat</string>
+
+    <!--Geocoder-->
+    <string name="no_geocoder_available">No geocoder available</string>
+    <string name="fetch_address">Fetch address</string>
+    <string name="address_found">Address found</string>
+    <string name="no_address_found">Sorry, no address found</string>
+    <string name="no_location_data_provided">No location data provided</string>
+    <string name="service_not_available">Sorry, the service is not available</string>
+    <string name="invalid_lat_long_used">Invalid latitude or longitude used</string>
+    <string name="permission_rationale">Location permission is needed for core functionality</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for core
+        functionality.</string>
+    <string name="settings">Settings</string>
 
     <!--Font path-->
     <string name="font_default_reg">fonts/Roboto-Regular.ttf</string>

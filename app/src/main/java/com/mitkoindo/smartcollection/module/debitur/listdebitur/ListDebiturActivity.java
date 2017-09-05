@@ -18,13 +18,20 @@ import com.mitkoindo.smartcollection.databinding.ActivityListDebiturBinding;
 
 public class ListDebiturActivity extends BaseActivity {
 
+    public static final String EXTRA_TYPE = "extra_type";
+    public static final String EXTRA_TYPE_PENUGASAN_VALUE = "penugasan";
+    public static final String EXTRA_TYPE_TAMBAH_KONTAK_VALUE = "tambah_kontak";
+
     private ActivityListDebiturBinding mBinding;
     private ListDebiturViewPagerAdapter mViewPagerAdapter;
     private ViewPager.SimpleOnPageChangeListener mPageChangeListener;
 
+    private String mType;
 
-    public static Intent instantiate(Context context) {
+
+    public static Intent instantiate(Context context, String type) {
         Intent intent = new Intent(context, ListDebiturActivity.class);
+        intent.putExtra(EXTRA_TYPE, type);
         return intent;
     }
 
@@ -32,7 +39,11 @@ public class ListDebiturActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setupToolbar(getString(R.string.ListDebitur_PageTitle));
+        if (mType.equals(ListDebiturActivity.EXTRA_TYPE_PENUGASAN_VALUE)) {
+            setupToolbar(getString(R.string.ListDebitur_PageTitle));
+        } else {
+            setupToolbar(getString(R.string.ListDebitur_PageTitleTambahKontak));
+        }
         setupViewPager();
     }
 
@@ -43,11 +54,12 @@ public class ListDebiturActivity extends BaseActivity {
 
     @Override
     protected void setupDataBinding(View contentView) {
+        getExtra();
         mBinding = DataBindingUtil.bind(contentView);
     }
 
     private void setupViewPager() {
-        mViewPagerAdapter = new ListDebiturViewPagerAdapter(getSupportFragmentManager());
+        mViewPagerAdapter = new ListDebiturViewPagerAdapter(getSupportFragmentManager(), mType);
         mBinding.viewPager.setOffscreenPageLimit(4);
         mBinding.viewPager.setAdapter(mViewPagerAdapter);
         mBinding.tabLayout.setupWithViewPager(mBinding.viewPager);
@@ -61,5 +73,11 @@ public class ListDebiturActivity extends BaseActivity {
             }
         };
         mBinding.viewPager.addOnPageChangeListener(mPageChangeListener);
+    }
+
+    private void getExtra() {
+        if (getIntent().getExtras() != null) {
+            mType = getIntent().getExtras().getString(EXTRA_TYPE);
+        }
     }
 }

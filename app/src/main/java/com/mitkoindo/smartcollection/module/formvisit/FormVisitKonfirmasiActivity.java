@@ -11,10 +11,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Parcelable;
+import android.os.ResultReceiver;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,11 +27,18 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.mitkoindo.smartcollection.FetchAddressIntentService;
 import com.mitkoindo.smartcollection.HomeActivity;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.base.BaseActivity;
 import com.mitkoindo.smartcollection.databinding.ActivityFormVisitKonfirmasiBinding;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
+import com.mitkoindo.smartcollection.module.formcall.FormCallActivity;
 import com.mitkoindo.smartcollection.network.body.FormVisitBody;
 import com.mitkoindo.smartcollection.objectdata.DropDownAction;
 import com.mitkoindo.smartcollection.objectdata.DropDownPurpose;
@@ -54,18 +64,25 @@ import butterknife.OnClick;
  * Created by ericwijaya on 8/26/17.
  */
 
-public class FormVisitKonfirmasiActivity extends BaseActivity {
+public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final String EXTRA_DATA_FORM_VISIT = "extra_data_form_visit";
     private static final String EXTRA_NO_REKENING = "extra_no_rekening";
     private static final String EXTRA_ADDRESS = "extra_address";
+    private static final int REQ_CODE_LOCATION_PERMISSION = 1;
 
     private FormVisitKonfirmasiViewModel mFormVisitKonfirmasiViewModel;
     private ActivityFormVisitKonfirmasiBinding mBinding;
 
+    private GoogleApiClient mGoogleApiClient;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private FormVisitKonfirmasiActivity.AddressResultReceiver mResultReceiver;
+
     private FormVisitBody.SpParameter mSpParameter;
     private String mNoRekening;
     private String mAddress;
+    private String mAddressOutput;
+    private boolean mAddressRequested;
 
 
     public static Intent instantiate(Context context, FormVisitBody.SpParameter spParameter, String noRekening, String alamatYangDikunjungi) {
@@ -91,6 +108,10 @@ public class FormVisitKonfirmasiActivity extends BaseActivity {
     @Override
     protected void setupDataBinding(View contentView) {
         getExtra();
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mResultReceiver = new FormVisitKonfirmasiActivity.AddressResultReceiver(new Handler());
+        mAddressOutput = "";
+        mAddressRequested = false;
 
         mFormVisitKonfirmasiViewModel = new FormVisitKonfirmasiViewModel();
         mBinding = DataBindingUtil.bind(contentView);
@@ -117,7 +138,7 @@ public class FormVisitKonfirmasiActivity extends BaseActivity {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (mFormVisitKonfirmasiViewModel.obsIsSaveSuccess.get()) {
-                    displayErrorDialog("", getString(R.string.FormVisit_SaveFormSuccess));
+                    displayMessage(R.string.FormVisit_SaveFormSuccess);
                     startActivity(HomeActivity.instantiateClearTask(FormVisitKonfirmasiActivity.this));
                 }
             }
@@ -177,13 +198,24 @@ public class FormVisitKonfirmasiActivity extends BaseActivity {
         }
 
 //        Set tanggal janji debitur
-        mFormVisitKonfirmasiViewModel.tanggalJanjiDebitur.set(Utils.changeDateFormat(
+        if (mSpParameter.getResultDate() != null) {
+            mFormVisitKonfirmasiViewModel.tanggalJanjiDebitur.set(Utils.changeDateFormat(
                     mSpParameter.getResultDate(),
                     Constant.DATE_FORMAT_SEND_DATE,
                     Constant.DATE_FORMAT_DISPLAY_DATE));
 
+            mFormVisitKonfirmasiViewModel.obsIsShowTanggalJanjiDebitur.set(true);
+        } else {
+            mFormVisitKonfirmasiViewModel.obsIsShowTanggalJanjiDebitur.set(false);
+        }
+
 //        Set jumlah yang akan disetor
-        mFormVisitKonfirmasiViewModel.jumlahYangAkanDisetor.set(Utils.convertDoubleToString(mSpParameter.getPtpAmount(), ".0"));
+        if (mSpParameter.getPtpAmount() == 0) {
+            mFormVisitKonfirmasiViewModel.obsIsShowJumlahYangAkanDisetor.set(false);
+        } else {
+            mFormVisitKonfirmasiViewModel.jumlahYangAkanDisetor.set(Utils.convertDoubleToString(mSpParameter.getPtpAmount(), ".0"));
+            mFormVisitKonfirmasiViewModel.obsIsShowJumlahYangAkanDisetor.set(true);
+        }
 
 //        Set Status Agunan
         List<DropDownStatusAgunan> listDropDownStatusAgunan = RealmHelper.getListDropDownStatusAgunan();
@@ -231,62 +263,62 @@ public class FormVisitKonfirmasiActivity extends BaseActivity {
         mFormVisitKonfirmasiViewModel.catatan.set(mSpParameter.getNotes());
 
 //        Set Foto Debitur
-        int widthHeight = Utils.convertDensityPixel(90, getResources());
-        if (!TextUtils.isEmpty(mSpParameter.getPhotoDebiturPath())) {
-            Bitmap resizeBmp = Utils.decodeSampledBitmapFromFile(mSpParameter.getPhotoDebiturPath(), widthHeight, widthHeight);
-            int rotate = Utils.getOrientationFromExif(mSpParameter.getPhotoDebiturPath());
-            if (rotate > 0) {
-                int w = resizeBmp.getWidth();
-                int h = resizeBmp.getHeight();
-
-                Matrix mtx = new Matrix();
-                mtx.preRotate(rotate);
-                resizeBmp = Bitmap.createBitmap(resizeBmp, 0, 0, w, h, mtx, false);
-                resizeBmp = resizeBmp.copy(Bitmap.Config.ARGB_8888, true);
-            }
-            mBinding.cardViewFotoDebitur.setVisibility(View.VISIBLE);
-            mBinding.imageViewFotoDebitur.setImageBitmap(resizeBmp);
-        } else {
-            mBinding.cardViewFotoDebitur.setVisibility(View.GONE);
-        }
+//        int widthHeight = Utils.convertDensityPixel(90, getResources());
+//        if (!TextUtils.isEmpty(mSpParameter.getPhotoDebiturPath())) {
+//            Bitmap resizeBmp = Utils.decodeSampledBitmapFromFile(mSpParameter.getPhotoDebiturPath(), widthHeight, widthHeight);
+//            int rotate = Utils.getOrientationFromExif(mSpParameter.getPhotoDebiturPath());
+//            if (rotate > 0) {
+//                int w = resizeBmp.getWidth();
+//                int h = resizeBmp.getHeight();
+//
+//                Matrix mtx = new Matrix();
+//                mtx.preRotate(rotate);
+//                resizeBmp = Bitmap.createBitmap(resizeBmp, 0, 0, w, h, mtx, false);
+//                resizeBmp = resizeBmp.copy(Bitmap.Config.ARGB_8888, true);
+//            }
+//            mBinding.cardViewFotoDebitur.setVisibility(View.VISIBLE);
+//            mBinding.imageViewFotoDebitur.setImageBitmap(resizeBmp);
+//        } else {
+//            mBinding.cardViewFotoDebitur.setVisibility(View.GONE);
+//        }
 
 //        Set Foto Agunan 1
-        if (!TextUtils.isEmpty(mSpParameter.getPhotoAgunan1Path())) {
-            Bitmap resizeBmpAgunan1 = Utils.decodeSampledBitmapFromFile(mSpParameter.getPhotoAgunan1Path(), widthHeight, widthHeight);
-            int rotate1 = Utils.getOrientationFromExif(mSpParameter.getPhotoAgunan1Path());
-            if (rotate1 > 0) {
-                int w = resizeBmpAgunan1.getWidth();
-                int h = resizeBmpAgunan1.getHeight();
-
-                Matrix mtx = new Matrix();
-                mtx.preRotate(rotate1);
-                resizeBmpAgunan1 = Bitmap.createBitmap(resizeBmpAgunan1, 0, 0, w, h, mtx, false);
-                resizeBmpAgunan1 = resizeBmpAgunan1.copy(Bitmap.Config.ARGB_8888, true);
-            }
-            mBinding.cardViewFotoAgunan1.setVisibility(View.VISIBLE);
-            mBinding.imageViewFotoAgunan1.setImageBitmap(resizeBmpAgunan1);
-        } else {
-            mBinding.cardViewFotoAgunan1.setVisibility(View.GONE);
-        }
+//        if (!TextUtils.isEmpty(mSpParameter.getPhotoAgunan1Path())) {
+//            Bitmap resizeBmpAgunan1 = Utils.decodeSampledBitmapFromFile(mSpParameter.getPhotoAgunan1Path(), widthHeight, widthHeight);
+//            int rotate1 = Utils.getOrientationFromExif(mSpParameter.getPhotoAgunan1Path());
+//            if (rotate1 > 0) {
+//                int w = resizeBmpAgunan1.getWidth();
+//                int h = resizeBmpAgunan1.getHeight();
+//
+//                Matrix mtx = new Matrix();
+//                mtx.preRotate(rotate1);
+//                resizeBmpAgunan1 = Bitmap.createBitmap(resizeBmpAgunan1, 0, 0, w, h, mtx, false);
+//                resizeBmpAgunan1 = resizeBmpAgunan1.copy(Bitmap.Config.ARGB_8888, true);
+//            }
+//            mBinding.cardViewFotoAgunan1.setVisibility(View.VISIBLE);
+//            mBinding.imageViewFotoAgunan1.setImageBitmap(resizeBmpAgunan1);
+//        } else {
+//            mBinding.cardViewFotoAgunan1.setVisibility(View.GONE);
+//        }
 
 //        Set Foto Agunan 2
-        if (!TextUtils.isEmpty(mSpParameter.getPhotoAgunan2Path())) {
-            Bitmap resizeBmpAgunan2 = Utils.decodeSampledBitmapFromFile(mSpParameter.getPhotoAgunan2Path(), widthHeight, widthHeight);
-            int rotate2 = Utils.getOrientationFromExif(mSpParameter.getPhotoAgunan2Path());
-            if (rotate2 > 0) {
-                int w = resizeBmpAgunan2.getWidth();
-                int h = resizeBmpAgunan2.getHeight();
-
-                Matrix mtx = new Matrix();
-                mtx.preRotate(rotate2);
-                resizeBmpAgunan2 = Bitmap.createBitmap(resizeBmpAgunan2, 0, 0, w, h, mtx, false);
-                resizeBmpAgunan2 = resizeBmpAgunan2.copy(Bitmap.Config.ARGB_8888, true);
-            }
-            mBinding.imageViewFotoAgunan2.setImageBitmap(resizeBmpAgunan2);
-            mFormVisitKonfirmasiViewModel.isFotoAgunan2Show.set(true);
-        } else {
-            mFormVisitKonfirmasiViewModel.isFotoAgunan2Show.set(false);
-        }
+//        if (!TextUtils.isEmpty(mSpParameter.getPhotoAgunan2Path())) {
+//            Bitmap resizeBmpAgunan2 = Utils.decodeSampledBitmapFromFile(mSpParameter.getPhotoAgunan2Path(), widthHeight, widthHeight);
+//            int rotate2 = Utils.getOrientationFromExif(mSpParameter.getPhotoAgunan2Path());
+//            if (rotate2 > 0) {
+//                int w = resizeBmpAgunan2.getWidth();
+//                int h = resizeBmpAgunan2.getHeight();
+//
+//                Matrix mtx = new Matrix();
+//                mtx.preRotate(rotate2);
+//                resizeBmpAgunan2 = Bitmap.createBitmap(resizeBmpAgunan2, 0, 0, w, h, mtx, false);
+//                resizeBmpAgunan2 = resizeBmpAgunan2.copy(Bitmap.Config.ARGB_8888, true);
+//            }
+//            mBinding.imageViewFotoAgunan2.setImageBitmap(resizeBmpAgunan2);
+//            mFormVisitKonfirmasiViewModel.isFotoAgunan2Show.set(true);
+//        } else {
+//            mFormVisitKonfirmasiViewModel.isFotoAgunan2Show.set(false);
+//        }
     }
 
     final private int REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_SIGNATURE = 124;
@@ -338,6 +370,15 @@ public class FormVisitKonfirmasiActivity extends BaseActivity {
                 }
                 break;
             }
+            case REQ_CODE_LOCATION_PERMISSION: {
+                if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    requestAccessLocationPermission();
+                } else {
+//                showLocationAndPopup(CENTRAL_JAKATAR_LAT, CENTRAL_JAKATAR_LONG, false);
+//                if not get location permission
+                }
+                break;
+            }
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
@@ -353,7 +394,7 @@ public class FormVisitKonfirmasiActivity extends BaseActivity {
 
             File file = new File(dir, "signature_" + mNoRekening +".jpg");
             saveBitmapToJPG(signature, file);
-            mFormVisitKonfirmasiViewModel.spParameter.setSignaturePath(file.getAbsolutePath());
+//            mFormVisitKonfirmasiViewModel.spParameter.setSignaturePath(file.getAbsolutePath());
             result = true;
 
             mFormVisitKonfirmasiViewModel.saveFormVisit(getAccessToken());
@@ -375,7 +416,102 @@ public class FormVisitKonfirmasiActivity extends BaseActivity {
 
     @OnClick(R.id.button_submit)
     public void onSubmitClicked(View view) {
-        getPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_SIGNATURE,
-                getString(R.string.FormVisit_external_storage_permission_description));
+//        getPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_SIGNATURE,
+//                getString(R.string.FormVisit_external_storage_permission_description));
+
+        requestAccessLocationPermission();
+    }
+
+    // Create a GoogleApiClient instance
+    private void initGoogleService() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */,
+                        this /* OnConnectionFailedListener */)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    private void requestAccessLocationPermission() {
+        if (!isLocationPermissionGranted()) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQ_CODE_LOCATION_PERMISSION);
+        } else {
+            getLastKnownLocation();
+        }
+    }
+
+    private boolean isLocationPermissionGranted() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void getLastKnownLocation() {
+        try {
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                mFormVisitKonfirmasiViewModel.spParameter.setGeoLatitude(location.getLatitude());
+                                mFormVisitKonfirmasiViewModel.spParameter.setGeoLongitude(location.getLongitude());
+
+                                if (mFormVisitKonfirmasiViewModel.spParameter.getResultDate() == null) {
+                                    mFormVisitKonfirmasiViewModel.spParameter.setResultDate("");
+                                    mFormVisitKonfirmasiViewModel.spParameter.setPtpAmount(0);
+                                }
+
+//                                Get Address string
+                                startIntentService(location);
+                                mAddressRequested = true;
+                            } else {
+                                mFormVisitKonfirmasiViewModel.obsIsLoading.set(false);
+                            }
+                        }
+                    });
+        } catch (SecurityException e) {
+            mFormVisitKonfirmasiViewModel.obsIsLoading.set(false);
+        }
+    }
+
+    private void startIntentService(Location location) {
+        // Create an intent for passing to the intent service responsible for fetching the address.
+        Intent intent = new Intent(this, FetchAddressIntentService.class);
+
+        // Pass the result receiver as an extra to the service.
+        intent.putExtra(FetchAddressIntentService.Constants.RECEIVER, mResultReceiver);
+
+        // Pass the location data as an extra to the service.
+        intent.putExtra(FetchAddressIntentService.Constants.LOCATION_DATA_EXTRA, location);
+
+        // Start the service. If the service isn't already running, it is instantiated and started
+        // (creating a process for it if needed); if it is running then it remains running. The
+        // service kills itself automatically once all intents are processed.
+        startService(intent);
+    }
+
+    private class AddressResultReceiver extends ResultReceiver {
+        AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        /**
+         *  Receives data sent from FetchAddressIntentService and updates the UI in Activity.
+         */
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+
+            // Display the address string or an error message sent from the intent service.
+            mAddressOutput = resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY);
+            mFormVisitKonfirmasiViewModel.spParameter.setGeoAddress(mAddressOutput);
+
+            mFormVisitKonfirmasiViewModel.saveFormVisitNoFile(getAccessToken());
+
+            // Reset. Enable the Fetch Address button and stop showing the progress bar.
+            mAddressRequested = false;
+        }
     }
 }

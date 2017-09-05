@@ -9,10 +9,12 @@ import com.mitkoindo.smartcollection.base.ILifecycleViewModel;
 import com.mitkoindo.smartcollection.network.ApiUtils;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.FormCallBody;
+import com.mitkoindo.smartcollection.network.response.FormCallResponse;
 import com.mitkoindo.smartcollection.utils.Constant;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -87,9 +89,9 @@ public class FormCallViewModel extends BaseObservable implements ILifecycleViewM
                         obsIsLoading.set(false);
                     }
                 })
-                .subscribeWith(new DisposableObserver<Void>() {
+                .subscribeWith(new DisposableObserver<List<FormCallResponse>>() {
                     @Override
-                    public void onNext(Void v) {
+                    public void onNext(List<FormCallResponse> listFormCall) {
                         obsIsSaveSuccess.set(true);
                     }
 

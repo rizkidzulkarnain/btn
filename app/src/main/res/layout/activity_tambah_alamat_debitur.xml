@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="tambahAlamatDebiturViewModel"
+            type="com.mitkoindo.smartcollection.module.debitur.tambahalamatdebitur.TambahAlamatDebiturViewModel" />
+
+        <variable
+            name="namaDebitur"
+            type="String"/>
+
+        <variable
+            name="nomorRekening"
+            type="String"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_medium_large"
+        android:background="@drawable/background_bluegradient"
+        tools:context="com.mitkoindo.smartcollection.UpdatePasswordActivity">
+
+        <!--Header-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+            <!--Lock icon-->
+            <ImageView
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/misc_lock"
+                android:layout_width="150dp"
+                android:layout_height="150dp" />
+
+            <!--text update password-->
+            <TextView
+                android:text="@string/TambahAlamat_PageTitle"
+                android:textColor="@color/White"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="30dp"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--back button-->
+            <RelativeLayout
+                android:id="@+id/back_button"
+                android:background="@drawable/background_circle_blacktransparent"
+                android:layout_width="66dp"
+                android:layout_height="66dp">
+
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_chevron_left_white_36dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <!--Nama Debitur-->
+                <TextView
+                    android:id="@+id/text_view_nama_debitur"
+                    style="@style/FontBold.Title.White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_larger"
+                    android:text="@{namaDebitur}"
+                    tools:text="Nama Debitur"/>
+
+                <!--No Rekening-->
+                <TextView
+                    android:id="@+id/text_view_no_rekening"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/TambahAlamat_NoRekening(nomorRekening)}"
+                    tools:text="Nomor Rekening"/>
+
+                <!--Tambahkan Nomor Telepon Title-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="@dimen/padding_larger"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/text_view_tambah_no_telepon"
+                        style="@style/FontRegular.Medium.White"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/TambahAlamat_NoTelepon"
+                        tools:text="Nomor Rekening"/>
+
+                    <info.hoang8f.widget.FButton
+                        android:id="@+id/button_kurang_no_telepon"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="@dimen/padding_medium"
+                        android:layout_marginRight="@dimen/padding_medium"
+                        fbutton:buttonColor="@color/colorAccent"
+                        fbutton:shadowColor="@color/Black_Transparent"
+                        fbutton:shadowEnabled="true"
+                        fbutton:shadowHeight="@dimen/padding_smaller"
+                        fbutton:cornerRadius="@dimen/padding_small"
+                        android:drawablePadding="@dimen/padding_6"
+                        android:drawableStart="@drawable/ic_minus_white_36dp"
+                        android:drawableLeft="@drawable/ic_minus_white_36dp"
+                        android:visibility="gone"/>
+
+                    <info.hoang8f.widget.FButton
+                        android:id="@+id/button_tambah_no_telepon"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        fbutton:buttonColor="@color/colorAccent"
+                        fbutton:shadowColor="@color/Black_Transparent"
+                        fbutton:shadowEnabled="true"
+                        fbutton:shadowHeight="@dimen/padding_smaller"
+                        fbutton:cornerRadius="@dimen/padding_small"
+                        android:drawablePadding="@dimen/padding_6"
+                        android:drawableStart="@drawable/ic_plus_white_36dp"
+                        android:drawableLeft="@drawable/ic_plus_white_36dp"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+                <!--Tambahkan Nomor Telepon Value-->
+                <LinearLayout
+                    android:id="@+id/linear_layout_tambah_no_telepon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/edit_text_no_telepon_1"
+                        android:theme="@style/EditText.TambahAlamat"
+                        android:inputType="number"
+                        android:textColor="@color/White"
+                        android:textColorHint="@color/White"
+                        android:hint="@string/TambahAlamat_NoTeleponHint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={tambahAlamatDebiturViewModel.teleponBaru}"/>
+
+                </LinearLayout>
+
+                <!--Button Simpan Telepon-->
+                <info.hoang8f.widget.FButton
+                    android:id="@+id/button_simpan_telepom"
+                    style="@style/FontBold.Small.White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_large"
+                    android:paddingStart="@dimen/padding_large"
+                    android:paddingRight="@dimen/padding_large"
+                    android:paddingEnd="@dimen/padding_large"
+                    android:layout_marginTop="@dimen/padding_larger"
+                    android:layout_gravity="center_horizontal"
+                    fbutton:buttonColor="@color/colorAccent"
+                    fbutton:shadowColor="@color/Black_Transparent"
+                    fbutton:shadowEnabled="true"
+                    fbutton:shadowHeight="@dimen/padding_smaller"
+                    fbutton:cornerRadius="@dimen/padding_small"
+                    android:text="@string/TambahAlamat_SimpanTelepon" />
+
+
+                <!--Tambahkan Alamat Title-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="@dimen/padding_larger"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/text_view_tambah_alamat"
+                        style="@style/FontRegular.Medium.White"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/TambahAlamat_Alamat"
+                        tools:text="Tambahkan Alamat"/>
+
+                    <info.hoang8f.widget.FButton
+                        android:id="@+id/button_kurang_alamat"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="@dimen/padding_medium"
+                        android:layout_marginRight="@dimen/padding_medium"
+                        fbutton:buttonColor="@color/colorAccent"
+                        fbutton:shadowColor="@color/Black_Transparent"
+                        fbutton:shadowEnabled="true"
+                        fbutton:shadowHeight="@dimen/padding_smaller"
+                        fbutton:cornerRadius="@dimen/padding_small"
+                        android:drawablePadding="@dimen/padding_6"
+                        android:drawableStart="@drawable/ic_minus_white_36dp"
+                        android:drawableLeft="@drawable/ic_minus_white_36dp"
+                        android:visibility="gone"/>
+
+                    <info.hoang8f.widget.FButton
+                        android:id="@+id/button_tambah_alamat"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        fbutton:buttonColor="@color/colorAccent"
+                        fbutton:shadowColor="@color/Black_Transparent"
+                        fbutton:shadowEnabled="true"
+                        fbutton:shadowHeight="@dimen/padding_smaller"
+                        fbutton:cornerRadius="@dimen/padding_small"
+                        android:drawablePadding="@dimen/padding_6"
+                        android:drawableStart="@drawable/ic_plus_white_36dp"
+                        android:drawableLeft="@drawable/ic_plus_white_36dp"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+                <!--Tambahkan Alamat Value-->
+                <LinearLayout
+                    android:id="@+id/linear_layout_tambah_alamat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/edit_text_alamat_1"
+                        android:theme="@style/EditText.TambahAlamat"
+                        android:inputType="text"
+                        android:textColor="@color/White"
+                        android:textColorHint="@color/White"
+                        android:hint="@string/TambahAlamat_AlamatHint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={tambahAlamatDebiturViewModel.alamatBaru}"/>
+
+                </LinearLayout>
+
+                <!--Button Simpan Alamat-->
+                <info.hoang8f.widget.FButton
+                    android:id="@+id/button_simpan_alamat"
+                    style="@style/FontBold.Small.White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_large"
+                    android:paddingStart="@dimen/padding_large"
+                    android:paddingRight="@dimen/padding_large"
+                    android:paddingEnd="@dimen/padding_large"
+                    android:layout_marginTop="@dimen/padding_larger"
+                    android:layout_marginBottom="@dimen/padding_medium_large"
+                    android:layout_gravity="center_horizontal"
+                    fbutton:buttonColor="@color/colorAccent"
+                    fbutton:shadowColor="@color/Black_Transparent"
+                    fbutton:shadowEnabled="true"
+                    fbutton:shadowHeight="@dimen/padding_smaller"
+                    fbutton:cornerRadius="@dimen/padding_small"
+                    android:text="@string/TambahAlamat_SimpanAlamat" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+</layout>

@@ -70,6 +70,9 @@
             <TextView
                 android:id="@+id/PTP_Reminder_Alert"
                 android:visibility="gone"
+                android:textColor="@color/White"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

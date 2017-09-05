@@ -1,16 +1,22 @@
 package com.mitkoindo.smartcollection.module.formcall;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
+import android.location.Location;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.os.Handler;
+import android.os.ResultReceiver;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +24,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.mitkoindo.smartcollection.FetchAddressIntentService;
 import com.mitkoindo.smartcollection.HomeActivity;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.base.BaseActivity;
@@ -50,14 +62,19 @@ import butterknife.OnClick;
  * Created by ericwijaya on 8/20/17.
  */
 
-public class FormCallActivity extends BaseActivity {
+public class FormCallActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final String EXTRA_NO_REKENING = "extra_no_rekening";
+    private static final String EXTRA_NO_TELPON = "extra_no_telpon";
+    private static final int REQ_CODE_LOCATION_PERMISSION = 1;
 
     private FormCallViewModel mFormCallViewModel;
     private ActivityFormCallBinding mBinding;
 
     private Dialog mSpinnerDialog;
+    private GoogleApiClient mGoogleApiClient;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private AddressResultReceiver mResultReceiver;
 
     private List<DropDownPurpose> mListDropDownPurpose;
     private List<DropDownRelationship> mListDropDownRelationship;
@@ -71,11 +88,15 @@ public class FormCallActivity extends BaseActivity {
     private List<String> mListTindakLanjut = new ArrayList<String>();
 
     private String mNoRekening;
+    private String mNoTelepon;
+    private String mAddressOutput;
+    private boolean mAddressRequested;
 
 
-    public static Intent instantiate(Context context, String noRekening) {
+    public static Intent instantiate(Context context, String noRekening, String noTelepon) {
         Intent intent = new Intent(context, FormCallActivity.class);
         intent.putExtra(EXTRA_NO_REKENING, noRekening);
+        intent.putExtra(EXTRA_NO_TELPON, noTelepon);
         return intent;
     }
 
@@ -110,6 +131,11 @@ public class FormCallActivity extends BaseActivity {
     @Override
     protected void setupDataBinding(View contentView) {
         getExtra();
+        initGoogleService();
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mResultReceiver = new AddressResultReceiver(new Handler());
+        mAddressOutput = "";
+        mAddressRequested = false;
 
         mFormCallViewModel = new FormCallViewModel();
         mBinding = DataBindingUtil.bind(contentView);
@@ -147,7 +173,7 @@ public class FormCallActivity extends BaseActivity {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (mFormCallViewModel.obsIsSaveSuccess.get()) {
-                    displayErrorDialog("", getString(R.string.FormCall_SaveFormSuccess));
+                    displayMessage(R.string.FormCall_SaveFormSuccess);
                     startActivity(HomeActivity.instantiateClearTask(FormCallActivity.this));
                 }
             }
@@ -188,6 +214,7 @@ public class FormCallActivity extends BaseActivity {
     private void getExtra() {
         if (getIntent().getExtras() != null) {
             mNoRekening = getIntent().getExtras().getString(EXTRA_NO_REKENING);
+            mNoTelepon = getIntent().getExtras().getString(EXTRA_NO_TELPON);
         }
     }
 
@@ -302,6 +329,7 @@ public class FormCallActivity extends BaseActivity {
                     for (DropDownReason dropDownReason : mListDropDownReason) {
                         if (!TextUtils.isEmpty(dropDownReason.getReasonDesc()) && dropDownReason.getReasonDesc().equals(event.getName())) {
                             mFormCallViewModel.spParameter.setReasonNoPayment(dropDownReason.getReasonId());
+                            mFormCallViewModel.spParameter.setReasonNonPaymentDesc(dropDownReason.getReasonDesc());
                             mFormCallViewModel.alasanTidakBayar.set(dropDownReason.getReasonDesc());
                             break;
                         }
@@ -400,7 +428,8 @@ public class FormCallActivity extends BaseActivity {
                     .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            mFormCallViewModel.saveFormCall(getAccessToken());
+//                            mFormCallViewModel.saveFormCall(getAccessToken());
+                            requestAccessLocationPermission();
                         }
                     })
                     .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -416,6 +445,7 @@ public class FormCallActivity extends BaseActivity {
 
     private boolean isValid() {
         mFormCallViewModel.spParameter.setAccountNo(mNoRekening);
+        mFormCallViewModel.spParameter.setContactNo(mNoTelepon);
         mFormCallViewModel.spParameter.setUserId(getUserId());
         FormCallBody.SpParameter spParameter = mFormCallViewModel.spParameter;
         if (TextUtils.isEmpty(spParameter.getTujuan())) {
@@ -450,5 +480,112 @@ public class FormCallActivity extends BaseActivity {
             return false;
         }
         return true;
+    }
+
+    // Create a GoogleApiClient instance
+    private void initGoogleService() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */,
+                        this /* OnConnectionFailedListener */)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    private void requestAccessLocationPermission() {
+        if (!isLocationPermissionGranted()) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQ_CODE_LOCATION_PERMISSION);
+        } else {
+            getLastKnownLocation();
+        }
+    }
+
+    private boolean isLocationPermissionGranted() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQ_CODE_LOCATION_PERMISSION) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                requestAccessLocationPermission();
+            } else {
+//                showLocationAndPopup(CENTRAL_JAKATAR_LAT, CENTRAL_JAKATAR_LONG, false);
+//                if not get location permission
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    private void getLastKnownLocation() {
+        try {
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                mFormCallViewModel.spParameter.setGeoLatitude(location.getLatitude());
+                                mFormCallViewModel.spParameter.setGeoLongitude(location.getLongitude());
+
+                                if (!mFormCallViewModel.obsIsShowTanggalJanjiDebitur.get()) {
+                                    mFormCallViewModel.spParameter.setResultDate("");
+                                    mFormCallViewModel.spParameter.setPtpAmount(0);
+                                }
+
+//                                Get Address string
+                                startIntentService(location);
+                                mAddressRequested = true;
+                            } else {
+                                mFormCallViewModel.obsIsLoading.set(false);
+                            }
+                        }
+                    });
+        } catch (SecurityException e) {
+            mFormCallViewModel.obsIsLoading.set(false);
+        }
+    }
+
+    private void startIntentService(Location location) {
+        // Create an intent for passing to the intent service responsible for fetching the address.
+        Intent intent = new Intent(this, FetchAddressIntentService.class);
+
+        // Pass the result receiver as an extra to the service.
+        intent.putExtra(FetchAddressIntentService.Constants.RECEIVER, mResultReceiver);
+
+        // Pass the location data as an extra to the service.
+        intent.putExtra(FetchAddressIntentService.Constants.LOCATION_DATA_EXTRA, location);
+
+        // Start the service. If the service isn't already running, it is instantiated and started
+        // (creating a process for it if needed); if it is running then it remains running. The
+        // service kills itself automatically once all intents are processed.
+        startService(intent);
+    }
+
+    private class AddressResultReceiver extends ResultReceiver {
+        AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        /**
+         *  Receives data sent from FetchAddressIntentService and updates the UI in Activity.
+         */
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+
+            // Display the address string or an error message sent from the intent service.
+            mAddressOutput = resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY);
+            mFormCallViewModel.spParameter.setGeoAddress(mAddressOutput);
+
+            mFormCallViewModel.saveFormCall(getAccessToken());
+
+            // Reset. Enable the Fetch Address button and stop showing the progress bar.
+            mAddressRequested = false;
+        }
     }
 }

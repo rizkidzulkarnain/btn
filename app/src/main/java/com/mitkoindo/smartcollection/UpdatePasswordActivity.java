@@ -179,9 +179,12 @@ public class UpdatePasswordActivity extends AppCompatActivity
             DeleteAuthToken();
             ShowPasswordChangedAlert();
         }
-        else
+        else if (resultString.equals("Bad Request"))
         {
-            //show error message
+            //show alert bahwa password kurang panjang
+            String alertTitle = getString(R.string.Text_MohonMaaf);
+            String alertMessage = getString(R.string.UpdatePassword_Alert_PanjangPasswordKurang);
+            genericAlert.DisplayAlert(alertMessage, alertTitle);
         }
 
         /*try

@@ -7,6 +7,7 @@ import com.mitkoindo.smartcollection.objectdata.DropDownReason;
 import com.mitkoindo.smartcollection.objectdata.DropDownRelationship;
 import com.mitkoindo.smartcollection.objectdata.DropDownResult;
 import com.mitkoindo.smartcollection.objectdata.DropDownStatusAgunan;
+import com.mitkoindo.smartcollection.objectdata.DropDownTeleponType;
 
 import java.util.List;
 
@@ -232,6 +233,43 @@ public class RealmHelper {
         try {
             RealmResults<DropDownStatusAgunan> results = realm
                     .where(DropDownStatusAgunan.class)
+                    .findAll();
+            realm.beginTransaction();
+            results.deleteAllFromRealm();
+            realm.commitTransaction();
+        } finally {
+            realm.close();
+        }
+    }
+
+    public static void storeListDropDownTeleponType(List<DropDownTeleponType> listDropDownTeleponType) {
+        Realm realm = MyApplication.getRealmInstance();
+        try {
+            realm.beginTransaction();
+            realm.copyToRealmOrUpdate(listDropDownTeleponType);
+            realm.commitTransaction();
+        } finally {
+            realm.close();
+        }
+    }
+
+    public static List<DropDownTeleponType> getListDropDownTeleponType() {
+        Realm realm = MyApplication.getRealmInstance();
+        try {
+            RealmResults<DropDownTeleponType> results = realm
+                    .where(DropDownTeleponType.class)
+                    .findAll();
+            return realm.copyFromRealm(results);
+        } finally {
+            realm.close();
+        }
+    }
+
+    public static void deleteListDropDownTeleponType() {
+        Realm realm = MyApplication.getRealmInstance();
+        try {
+            RealmResults<DropDownTeleponType> results = realm
+                    .where(DropDownTeleponType.class)
                     .findAll();
             realm.beginTransaction();
             results.deleteAllFromRealm();

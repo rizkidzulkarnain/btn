@@ -14,6 +14,7 @@ import com.mitkoindo.smartcollection.network.body.FormVisitDropDownBody;
 import com.mitkoindo.smartcollection.network.models.DbParam;
 import com.mitkoindo.smartcollection.network.models.Filter;
 import com.mitkoindo.smartcollection.network.models.Sort;
+import com.mitkoindo.smartcollection.network.response.FormVisitResponse;
 import com.mitkoindo.smartcollection.network.response.MultipartResponse;
 import com.mitkoindo.smartcollection.objectdata.DropDownAddress;
 import com.mitkoindo.smartcollection.utils.Constant;
@@ -149,9 +150,9 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
                         obsIsLoading.set(false);
                     }
                 })
-                .subscribeWith(new DisposableObserver<Void>() {
+                .subscribeWith(new DisposableObserver<List<FormVisitResponse>>() {
                     @Override
-                    public void onNext(Void v) {
+                    public void onNext(List<FormVisitResponse> v) {
                         obsIsSaveSuccess.set(true);
                     }
 

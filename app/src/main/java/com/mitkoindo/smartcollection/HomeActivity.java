@@ -13,6 +13,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.adapter.HomeMenuAdapter;
@@ -35,6 +36,7 @@ import com.mitkoindo.smartcollection.objectdata.DropDownReason;
 import com.mitkoindo.smartcollection.objectdata.DropDownRelationship;
 import com.mitkoindo.smartcollection.objectdata.DropDownResult;
 import com.mitkoindo.smartcollection.objectdata.DropDownStatusAgunan;
+import com.mitkoindo.smartcollection.objectdata.DropDownTeleponType;
 import com.mitkoindo.smartcollection.objectdata.HomeMenu;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
 import com.mitkoindo.smartcollection.utilities.HttpsTrustManager;
@@ -55,6 +57,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class HomeActivity extends AppCompatActivity
 {
+
+    private CompositeDisposable composites = new CompositeDisposable();
+
     //----------------------------------------------------------------------------------------------
     //  View
     //----------------------------------------------------------------------------------------------
@@ -99,8 +104,6 @@ public class HomeActivity extends AppCompatActivity
         return intent;
     }
 
-    private CompositeDisposable composites = new CompositeDisposable();
-
     //----------------------------------------------------------------------------------------------
     //  Setup
     //----------------------------------------------------------------------------------------------
@@ -110,6 +113,8 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        genericAlert = new GenericAlert(this);
+
         //setup
         GetViews();
         SetupViews();
@@ -118,6 +123,13 @@ public class HomeActivity extends AppCompatActivity
 
         //ignore certificate
         HttpsTrustManager.allowAllSSL();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        composites.clear();
     }
 
     //get views
@@ -287,7 +299,10 @@ public class HomeActivity extends AppCompatActivity
                 intent = new Intent(this, BeritaActivity.class);
                 break;
             case "Penugasan" :
-                intent = new Intent(this, ListDebiturActivity.class);
+                intent = ListDebiturActivity.instantiate(this, ListDebiturActivity.EXTRA_TYPE_PENUGASAN_VALUE);
+                break;
+            case "Tambah Kontak" :
+                intent = ListDebiturActivity.instantiate(this, ListDebiturActivity.EXTRA_TYPE_TAMBAH_KONTAK_VALUE);
                 break;
             case "Account Assignment" :
                 intent = new Intent(this, AccountAssignmentActivity.class);
@@ -437,6 +452,15 @@ public class HomeActivity extends AppCompatActivity
                         return ApiUtils.getRestServices(accessToken).getDropDownStatusAgunan(createStatusAgunanBody());
                     }
                 })
+                .flatMap(new Function<List<DropDownStatusAgunan>, ObservableSource<List<DropDownTeleponType>>>() {
+                    @Override
+                    public ObservableSource<List<DropDownTeleponType>> apply(List<DropDownStatusAgunan> listStatusAgunan) throws Exception {
+                        RealmHelper.deleteListDropDownStatusAgunan();
+                        RealmHelper.storeListDropDownStatusAgunan(listStatusAgunan);
+
+                        return ApiUtils.getRestServices(accessToken).getDropDownTeleponType(createTeleponTypeBody());
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(new Consumer<Disposable>() {
@@ -451,11 +475,11 @@ public class HomeActivity extends AppCompatActivity
                         genericAlert.Dismiss();
                     }
                 })
-                .subscribeWith(new DisposableObserver<List<DropDownStatusAgunan>>() {
+                .subscribeWith(new DisposableObserver<List<DropDownTeleponType>>() {
                     @Override
-                    public void onNext(List<DropDownStatusAgunan> listStatusAgunan) {
-                        RealmHelper.deleteListDropDownStatusAgunan();
-                        RealmHelper.storeListDropDownStatusAgunan(listStatusAgunan);
+                    public void onNext(List<DropDownTeleponType> listTeleponType) {
+                        RealmHelper.deleteListDropDownTeleponType();
+                        RealmHelper.storeListDropDownTeleponType(listTeleponType);
                     }
 
                     @Override
@@ -593,6 +617,27 @@ public class HomeActivity extends AppCompatActivity
         FormVisitDropDownBody formVisitDropDownBody = new FormVisitDropDownBody();
         formVisitDropDownBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
         formVisitDropDownBody.setViewName(RestConstants.DROP_DOWN_STATUS_AGUNAN_VIEW_NAME);
+        formVisitDropDownBody.setdBParam(dbParam);
+
+        return formVisitDropDownBody;
+    }
+
+    private FormVisitDropDownBody createTeleponTypeBody() {
+        Sort sort = new Sort();
+        sort.setProperty(RestConstants.DROP_DOWN_TELEPON_TYPE_SORT_PROPERTY);
+        sort.setDirection(RestConstants.ORDER_DIRECTION_ASC_VALUE);
+
+        List<Sort> listSort = new ArrayList<>();
+        listSort.add(sort);
+
+        DbParam dbParam = new DbParam();
+        dbParam.setPage(1);
+        dbParam.setLimit(20);
+        dbParam.setSort(listSort);
+
+        FormVisitDropDownBody formVisitDropDownBody = new FormVisitDropDownBody();
+        formVisitDropDownBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
+        formVisitDropDownBody.setViewName(RestConstants.DROP_DOWN_TELEPON_TYPE_VIEW_NAME);
         formVisitDropDownBody.setdBParam(dbParam);
 
         return formVisitDropDownBody;

@@ -6,9 +6,9 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+
 public class SplashActivity extends AppCompatActivity
 {
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -24,14 +24,15 @@ public class SplashActivity extends AppCompatActivity
         Intent intent;
 
         //cek keberadaan auth token
-        if (AuthTokenExist())
+        if (AuthTokenExist()) {
             //jika ada, langsung buka home screen
             intent = new Intent(this, HomeActivity.class);
-        else
+        } else {
             //jika tidak, buka login screen
             intent = new Intent(this, LoginActivity.class);
+        }
 
-        //start intent
+//        start activity
         startActivity(intent);
         finish();
     }

@@ -261,7 +261,7 @@ public class BeritaGlobalFragment extends Fragment
             {
                 JSONObject searchObject = new JSONObject();
                 searchObject.put("Property", "Subject");
-                searchObject.put("Operator", "in");
+                searchObject.put("Operator", "like");
                 searchObject.put("Value", searchQuery);
                 filterArray.put(searchObject);
             }

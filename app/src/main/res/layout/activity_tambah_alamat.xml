@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="tambahAlamatViewModel"
+            type="com.mitkoindo.smartcollection.module.debitur.tambahalamat.TambahAlamatViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/background_bluegradient">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_general"
+            style="@style/AppToolbar.Line">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <include layout="@layout/include_toolbar_back_button"/>
+
+                <include layout="@layout/include_toolbar_title" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_medium_large"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <!--Nama-->
+                <TextView
+                    android:id="@+id/text_view_nama"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_medium_large"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@string/TambahAlamatSaja_Nama"/>
+
+                <!--Nama edit text-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view_nama"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_nama"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+                    <EditText
+                        android:id="@+id/edit_text_nama"
+                        style="@style/FontRegular.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingStart="@dimen/padding_medium"
+                        android:paddingLeft="@dimen/padding_medium"
+                        android:paddingEnd="@dimen/padding_medium"
+                        android:textColor="@color/Grey"
+                        android:textColorHint="@color/Grey"
+                        android:hint="@string/TambahAlamatSaja_NamaHint"
+                        android:background="@color/Transparent"
+                        android:text="@={tambahAlamatViewModel.nama}"/>
+                </android.support.v7.widget.CardView>
+
+                <!--Hubungan dengan debitur-->
+                <TextView
+                    android:id="@+id/text_view_hubungan_dengan_debitur"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_medium_large"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view_nama"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@string/TambahAlamatSaja_HubunganDenganDebitur"/>
+
+                <!--Hubungan dengan debitur value-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view_hubungan_dengan_debitur"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_hubungan_dengan_debitur"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingStart="@dimen/padding_medium"
+                            android:paddingLeft="@dimen/padding_medium"
+                            android:paddingRight="@dimen/padding_medium"
+                            android:paddingEnd="@dimen/padding_medium"
+                            android:text="@={tambahAlamatViewModel.hubunganDenganDebitur}" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/padding_medium"
+                            android:layout_marginRight="@dimen/padding_medium"
+                            android:scaleType="centerInside"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <!--Alamat 1-->
+                <TextView
+                    android:id="@+id/text_view_alamat_1"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_medium_large"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view_hubungan_dengan_debitur"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@string/TambahAlamatSaja_Alamat"/>
+
+                <!--Alamat 1 edit text-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view_alamat_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+                    <EditText
+                        android:id="@+id/edit_text_alamat_1"
+                        style="@style/FontRegular.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingStart="@dimen/padding_medium"
+                        android:paddingLeft="@dimen/padding_medium"
+                        android:paddingEnd="@dimen/padding_medium"
+                        android:inputType="text"
+                        android:textColor="@color/Grey"
+                        android:textColorHint="@color/Grey"
+                        android:hint="@string/TambahAlamatSaja_AlamatHint"
+                        android:background="@color/Transparent"
+                        android:text="@={tambahAlamatViewModel.alamat1}"/>
+                </android.support.v7.widget.CardView>
+
+                <!--Alamat 2 Kota-->
+                <TextView
+                    android:id="@+id/text_view_alamat_2"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_medium_large"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view_alamat_1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@string/TambahAlamatSaja_Kota"/>
+
+                <!--Alamat 2 Kota edit text-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view_alamat_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+                    <EditText
+                        android:id="@+id/edit_text_alamat_2"
+                        style="@style/FontRegular.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingStart="@dimen/padding_medium"
+                        android:paddingLeft="@dimen/padding_medium"
+                        android:paddingEnd="@dimen/padding_medium"
+                        android:inputType="text"
+                        android:textColor="@color/Grey"
+                        android:textColorHint="@color/Grey"
+                        android:hint="@string/TambahAlamatSaja_KotaHint"
+                        android:background="@color/Transparent"
+                        android:text="@={tambahAlamatViewModel.alamat2}"/>
+                </android.support.v7.widget.CardView>
+
+                <!--Alamat 3 Propinsi-->
+                <TextView
+                    android:id="@+id/text_view_alamat_3"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_medium_large"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view_alamat_2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@string/TambahAlamatSaja_Propinsi"/>
+
+                <!--Alamat 3 Propinsi edit text-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view_alamat_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+                    <EditText
+                        android:id="@+id/edit_text_alamat_3"
+                        style="@style/FontRegular.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingStart="@dimen/padding_medium"
+                        android:paddingLeft="@dimen/padding_medium"
+                        android:paddingEnd="@dimen/padding_medium"
+                        android:inputType="text"
+                        android:textColor="@color/Grey"
+                        android:textColorHint="@color/Grey"
+                        android:hint="@string/TambahAlamatSaja_PropinsiHint"
+                        android:background="@color/Transparent"
+                        android:text="@={tambahAlamatViewModel.alamat3}"/>
+                </android.support.v7.widget.CardView>
+
+                <!--Submit Button-->
+                <Button
+                    android:id="@+id/button_submit"
+                    style="@style/FontRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_64"
+                    android:layout_marginBottom="@dimen/padding_medium_large"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view_alamat_3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@string/TambahAlamatSaja_Simpan"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</layout>

@@ -195,7 +195,38 @@ public class FormVisitActivity extends BaseActivity {
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (!mFormVisitViewModel.isFotoAgunan2Show.get()) {
                     mBinding.imageViewFotoAgunan2.setImageResource(R.drawable.ic_home_variant_grey600_48dp);
-                    mFormVisitViewModel.spParameter.setPhotoAgunan2Path("");
+//                    mFormVisitViewModel.spParameter.setPhotoAgunan2Path("");
+                }
+            }
+        });
+        mFormVisitViewModel.hasilKunjungan.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                String hasilKunjungan = mFormVisitViewModel.hasilKunjungan.get();
+                String hasilKunjunganId = "";
+                for (DropDownResult dropDownResult : mListDropDownResult) {
+                    if (!TextUtils.isEmpty(dropDownResult.getResultDesc()) && dropDownResult.getResultDesc().equals(hasilKunjungan)) {
+                        hasilKunjunganId = dropDownResult.getResultId();
+                        break;
+                    }
+                }
+
+//                Jika hasil kunjungan = akan setor tanggal / akan datang ke btn tanggal / minta dihubungi tanggal, maka show field tanggal janji debitur
+                if (hasilKunjunganId.equals(RestConstants.RESULT_ID_AKAN_SETOR_TANGGAL_VALUE)
+                        || hasilKunjunganId.equals(RestConstants.RESULT_ID_AKAN_DATANG_KE_BTN_TANGGAL_VALUE)
+                        || hasilKunjunganId.equals(RestConstants.RESULT_ID_MINTA_DIHUBUNGI_TANGGAL_VALUE)) {
+
+                    mFormVisitViewModel.obsIsShowTanggalJanjiDebitur.set(true);
+
+//                    Jika hasil kunjungan = akan setor tanggal, maka show field jumlah yang akan disetor
+                    if (hasilKunjunganId.equals(RestConstants.RESULT_ID_AKAN_SETOR_TANGGAL_VALUE)) {
+                        mFormVisitViewModel.obsIsShowJumlahYangAkanDisetor.set(true);
+                    } else {
+                        mFormVisitViewModel.obsIsShowJumlahYangAkanDisetor.set(false);
+                    }
+                } else {
+                    mFormVisitViewModel.obsIsShowTanggalJanjiDebitur.set(false);
+                    mFormVisitViewModel.obsIsShowJumlahYangAkanDisetor.set(false);
                 }
             }
         });
@@ -452,13 +483,13 @@ public class FormVisitActivity extends BaseActivity {
                     }
                     if (requestCode == ACTION_TAKE_PICTURE_DEBITUR) {
                         mBinding.imageViewFotoDebitur.setImageBitmap(resizeBmp);
-                        mFormVisitViewModel.spParameter.setPhotoDebiturPath(file.getAbsolutePath());
+//                        mFormVisitViewModel.spParameter.setPhotoDebiturPath(file.getAbsolutePath());
                     } else if (requestCode == ACTION_TAKE_PICTURE_AGUNAN_1) {
                         mBinding.imageViewFotoAgunan1.setImageBitmap(resizeBmp);
-                        mFormVisitViewModel.spParameter.setPhotoAgunan1Path(file.getAbsolutePath());
+//                        mFormVisitViewModel.spParameter.setPhotoAgunan1Path(file.getAbsolutePath());
                     } else {
                         mBinding.imageViewFotoAgunan2.setImageBitmap(resizeBmp);
-                        mFormVisitViewModel.spParameter.setPhotoAgunan2Path(file.getAbsolutePath());
+//                        mFormVisitViewModel.spParameter.setPhotoAgunan2Path(file.getAbsolutePath());
                     }
                     break;
                 }
@@ -545,6 +576,7 @@ public class FormVisitActivity extends BaseActivity {
                     for (DropDownReason dropDownReason : mListDropDownReason) {
                         if (!TextUtils.isEmpty(dropDownReason.getReasonDesc()) && dropDownReason.getReasonDesc().equals(event.getName())) {
                             mFormVisitViewModel.spParameter.setReasonNonPayment(dropDownReason.getReasonId());
+                            mFormVisitViewModel.spParameter.setReasonNonPaymentDesc(dropDownReason.getReasonDesc());
                             mFormVisitViewModel.alasanMenunggak.set(dropDownReason.getReasonDesc());
                             break;
                         }
@@ -743,13 +775,15 @@ public class FormVisitActivity extends BaseActivity {
         } else if (TextUtils.isEmpty(spParameter.getNotes())) {
             displayMessage(getString(R.string.FormVisit_CatatanHint));
             return false;
-        } else if (TextUtils.isEmpty(spParameter.getPhotoDebiturPath())) {
-            displayMessage(getString(R.string.FormVisit_FotoDebiturHint));
-            return false;
-        } else if (TextUtils.isEmpty(spParameter.getPhotoAgunan1Path())) {
-            displayMessage(getString(R.string.FormVisit_FotoAgunanHint));
-            return false;
         }
+//        else if (TextUtils.isEmpty(spParameter.getPhotoDebiturPath())) {
+//            displayMessage(getString(R.string.FormVisit_FotoDebiturHint));
+//            return false;
+//        } else if (TextUtils.isEmpty(spParameter.getPhotoAgunan1Path())) {
+//            displayMessage(getString(R.string.FormVisit_FotoAgunanHint));
+//            return false;
+//        }
+
         return true;
     }
 }

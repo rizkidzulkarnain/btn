@@ -76,6 +76,20 @@
         <activity
             android:name=".module.formcall.FormCallActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".module.debitur.tambahalamatdebitur.TambahAlamatDebiturActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".module.debitur.tambahtelepon.TambahTeleponActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".module.debitur.tambahalamat.TambahAlamatActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".FetchAddressIntentService"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

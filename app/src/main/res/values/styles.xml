@@ -30,6 +30,17 @@
         <item name="colorControlHighlight">@color/Line_UpdatePassword</item>
     </style>
 
+    <style name="EditText.TambahAlamat" parent="Widget.AppCompat.EditText">
+        <item name="fontPath">@string/font_default_reg</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">@color/Background_Fragment</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="colorControlNormal">@color/Line_UpdatePassword</item>
+        <item name="colorControlActivated">@color/Line_UpdatePassword</item>
+        <item name="colorControlHighlight">@color/Line_UpdatePassword</item>
+    </style>
+
+
     <style name="EditText.BroadcastBerita" parent="Widget.AppCompat.EditText">
         <item name="android:textColor">@color/Font_BroadcastBerita_Form</item>
         <item name="android:textColorHint">@color/Font_BroadcastBerita_Form</item>

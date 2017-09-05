@@ -273,7 +273,7 @@ public class BeritaGrupFragment extends Fragment
             {
                 JSONObject searchObject = new JSONObject();
                 searchObject.put("Property", "Title");
-                searchObject.put("Operator", "in");
+                searchObject.put("Operator", "like");
                 searchObject.put("Value", searchQuery);
                 filterArray.put(searchObject);
             }
