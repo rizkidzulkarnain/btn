@@ -33,19 +33,6 @@
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
-            <!--Search button-->
-            <ImageView
-                android:id="@+id/AccountAssignment_SearchButton"
-                android:src="@drawable/ic_search_white_24dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
         </RelativeLayout>
 
         <!--Divider-->
@@ -57,55 +44,30 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
 
-        <Button
-            android:id="@+id/AccountAssignmentLayout_AssignButton"
-            android:text="@string/AccountAssignment_Assign"
-            android:textAllCaps="false"
-            android:textColor="@color/White"
-            android:background="@color/Background_PageTitle"
-            android:visibility="gone"
-            android:layout_alignParentBottom="true"
-            android:onClick="HandleInput_AccountAssignment_AssignButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <!--List tindakan-->
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_below="@id/AccountAssignmentLayout_Divider"
-            android:layout_above="@id/AccountAssignmentLayout_AssignButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/AccountAssignment_ListDebitur"
-                android:overScrollMode="never"
-                android:clipToPadding="false"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+            <android.support.design.widget.TabLayout
+                android:id="@+id/AccountAssignmentLayout_TabLayout"
+                android:background="@color/Background_PageTitle"
+                app:tabTextColor="@color/White"
+                app:tabSelectedTextColor="@color/White"
+                app:tabIndicatorColor="@color/White"
+                app:tabTextAppearance="@style/TabLayoutNotAllCaps"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <!--Progress-->
-            <ProgressBar
-                android:id="@+id/AccountAssignment_Progress"
-                android:visibility="gone"
-                android:layout_centerInParent="true"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/AccountAssignmentLayout_ViewPager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/AccountAssignment_NoData"
-                android:text="@string/Text_NoData"
-                android:textSize="18sp"
-                android:textColor="@color/White"
-                android:visibility="gone"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
+                android:layout_height="match_parent"/>
+        </LinearLayout>
     </RelativeLayout>
 
     <!--Back button-->

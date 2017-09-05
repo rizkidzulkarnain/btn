@@ -1,0 +1,112 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mitkoindo.smartcollection.module.assignment.UnassignedDebiturFragment">
+
+    <!--Search form-->
+    <RelativeLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Search button-->
+        <RelativeLayout
+            android:id="@+id/UnassignedDebiturFragment_SearchControl"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/UnassignedDebiturFragment_SearchButton"
+                android:src="@drawable/ic_play_arrow_white_36dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!--Clear button-->
+            <ImageView
+                android:id="@+id/UnassignedDebiturFragment_ClearButton"
+                android:visibility="gone"
+                android:src="@drawable/ic_close_white_36dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <!--Search form-->
+        <EditText
+            android:id="@+id/UnassignedDebiturFragment_SearchForm"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:hint="@string/Berita_Search_CariJudul"
+            android:textColor="@color/White"
+            android:textColorHint="@color/White"
+            android:theme="@style/EditText.Login"
+            android:layout_toLeftOf="@id/UnassignedDebiturFragment_SearchControl"
+            android:layout_toStartOf="@id/UnassignedDebiturFragment_SearchControl"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/UnassignedDebiturFragment_AssignButton"
+            android:text="@string/AccountAssignment_Assign"
+            android:textAllCaps="false"
+            android:textColor="@color/White"
+            android:background="@color/Background_PageTitle"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--Content-->
+        <RelativeLayout
+            android:layout_above="@id/UnassignedDebiturFragment_AssignButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--Swipe refresh layout-->
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/UnassignedDebiturFragment_Refresher"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--Recycler view-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/UnassignedDebiturFragment_List"
+                    android:padding="10dp"
+                    android:clipToPadding="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+            <!--Progress bar-->
+            <ProgressBar
+                android:id="@+id/UnassignedDebiturFragment_ProgressBar"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--alert text-->
+            <TextView
+                android:id="@+id/UnassignedDebiturFragment_AlertView"
+                android:textColor="@color/White"
+                android:textSize="16sp"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

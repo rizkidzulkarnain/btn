@@ -57,7 +57,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".module.assignment.AccountAssignmentActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".module.ptp_reminder.PTPReminderActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".module.misc.ChangeBaseURLActivity" />

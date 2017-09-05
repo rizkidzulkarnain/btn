@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.adapter.BeritaAdapter;
 import com.mitkoindo.smartcollection.helper.ItemClickListener;
+import com.mitkoindo.smartcollection.helper.RecyclerViewHelper;
 import com.mitkoindo.smartcollection.objectdata.MobileNews;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
@@ -145,7 +146,8 @@ public class BeritaGrupFragment extends Fragment
                     return;
 
                 //load new page
-                beritaAdapter.CreateLoadNewPageRequest();
+                if (RecyclerViewHelper.isLastItemDisplaying(view_ListBerita))
+                    beritaAdapter.CreateLoadNewPageRequest();
             }
         });
 

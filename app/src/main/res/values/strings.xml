@@ -52,7 +52,7 @@
     <string name="Dashboard_Outstanding">Outstanding</string>
     <string name="Dashboard_NPL">NPL</string>
     <string name="Dashboard_SaldoPokokNPL">Saldo Pokok NPL</string>
-    
+
     <!--Dashboard mode-->
     <string name="dashboardKunjungan_Mode_Today">MKI_SP_DASHBOARD_KUNJUNGAN_TODAY</string>
     <string name="dashboardKunjungan_Mode_Monthly">MKI_SP_DASHBOARD_KUNJUNGAN_MONTH</string>
@@ -215,8 +215,8 @@
     <string name="FormCall_AlasanTidakBayarInitial">Pilih alasan tidak bayar</string>
     <string name="FormCall_TindakLanjutInitial">Pilih tindak lanjut</string>
     <string name="FormCall_TanggalTindakLanjutInitial">Pilih tanggal tindak lanjut</string>
-	
-	<!--Form Visit Konfirmasi Page-->
+
+    <!--Form Visit Konfirmasi Page-->
     <string name="FormKonfirmasi_PageTitle">Konfimasi Form Visit</string>
 
     <!--Tambah Alamat dan Telepon-->
@@ -261,6 +261,8 @@
     <string name="AccountAssignment_PageTitle">Account Assignment</string>
     <string name="AccountAssignment_Assign">Assign</string>
     <string name="AccountAssignment_Alert_NoDebiturSelected">Mohon memilih minimal satu orang debitur</string>
+    <string name="AccountAssignment_FragmentTitle_Unassigned">Belum diassign</string>
+    <string name="AccountAssignment_FragmentTitle_Assigned">Sudah diassign</string>
 
     <!--PTP Reminder-->
     <string name="PTP_Reminder_Title">PTP Reminder</string>
@@ -367,7 +369,7 @@
     <string name="UserGroup_Supervisor2">CCRD19</string>
     <string name="UserGroup_BranchCoordinator">CCRD28</string>
     <string name="UserGroup_BranchManager">CCRD35</string>
-    
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_update_password">UpdatePasswordActivity</string>
