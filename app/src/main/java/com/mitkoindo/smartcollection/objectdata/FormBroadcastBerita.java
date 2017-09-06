@@ -10,6 +10,7 @@ public class FormBroadcastBerita
 {
     public String Judul;
     public String Isi;
+    public String Summary;
     public String Filepath;
     public String StartDate_Formatted;
     public Date StartDate;

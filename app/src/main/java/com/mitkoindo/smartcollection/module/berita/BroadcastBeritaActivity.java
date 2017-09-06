@@ -62,6 +62,7 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     //form
     private TextView view_Title;
     private TextView view_Content;
+    private TextView view_Summary;
 
     //start date & expired date text
     private TextView view_StartDate;
@@ -140,6 +141,7 @@ public class BroadcastBeritaActivity extends AppCompatActivity
         //get title & content
         view_Title = findViewById(R.id.BroadcastBerita_Title);
         view_Content = findViewById(R.id.BroadcastBerita_Isi);
+        view_Summary = findViewById(R.id.BroadcastBerita_Summary);
 
         //create datepicker
         datePickerFragment = new DatePickerFragment();
@@ -185,9 +187,11 @@ public class BroadcastBeritaActivity extends AppCompatActivity
         //get data dari form
         formBroadcastBerita.Judul = view_Title.getText().toString();
         formBroadcastBerita.Isi = view_Content.getText().toString();
+        formBroadcastBerita.Summary = view_Summary.getText().toString();
 
         //pastikan judul, isi, dan start / end date sudah diisi
         if (formBroadcastBerita.Judul.isEmpty() ||
+                formBroadcastBerita.Summary.isEmpty() ||
                 formBroadcastBerita.Isi.isEmpty() ||
                 formBroadcastBerita.StartDate == null ||
                 formBroadcastBerita.ExpiredDate == null)
@@ -298,6 +302,12 @@ public class BroadcastBeritaActivity extends AppCompatActivity
                 staffBroadcastAdapter.HandleInput_BroadcastAdapter_SelectAllTrigger(selectAllButton);
             }
         });
+    }
+
+    //handle back button
+    public void HandleInput_BroadcastBerita_Back(View view)
+    {
+        finish();
     }
 
     //----------------------------------------------------------------------------------------------
@@ -744,7 +754,7 @@ public class BroadcastBeritaActivity extends AppCompatActivity
             /*spParameterObject.put("AuthorID", userID);*/
             spParameterObject.put("AuthorID", "BTN0013887");
             spParameterObject.put("Title", formBroadcastBerita.Judul);
-            spParameterObject.put("Summary", formBroadcastBerita.Isi);
+            spParameterObject.put("Summary", formBroadcastBerita.Summary);
             spParameterObject.put("NewsContent", formBroadcastBerita.Isi);
             spParameterObject.put("StartDate", formBroadcastBerita.StartDate_Formatted);
             spParameterObject.put("EndDate", formBroadcastBerita.ExpiredDate_Formatted);

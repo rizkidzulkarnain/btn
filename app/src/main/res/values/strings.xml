@@ -71,6 +71,8 @@
     <string name="Berita_Broadcast_JudulHint">Masukkan judul berita</string>
     <string name="Berita_Broadcast_Isi">Isi Berita</string>
     <string name="Berita_Broadcast_IsiHint">Masukkan isi berita</string>
+    <string name="Berita_Broadcast_Summary">Summary Berita</string>
+    <string name="Berita_Broadcast_SummaryHint">Masukkan summary berita</string>
     <string name="Berita_Broadcast_File">File</string>
     <string name="Berita_Broadcast_NoFile">Belum ada file &#8230;</string>
     <string name="Berita_Broadcast_StartDate">Start Date</string>
