@@ -42,7 +42,7 @@
             android:id="@+id/UnassignedDebiturFragment_SearchForm"
             android:inputType="text"
             android:imeOptions="actionSearch"
-            android:hint="@string/Berita_Search_CariJudul"
+            android:hint="@string/AccountAssignment_CariDebitur"
             android:textColor="@color/White"
             android:textColorHint="@color/White"
             android:theme="@style/EditText.Login"

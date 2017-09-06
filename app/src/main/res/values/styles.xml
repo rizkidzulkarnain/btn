@@ -40,7 +40,6 @@
         <item name="colorControlHighlight">@color/Line_UpdatePassword</item>
     </style>
 
-
     <style name="EditText.BroadcastBerita" parent="Widget.AppCompat.EditText">
         <item name="android:textColor">@color/Font_BroadcastBerita_Form</item>
         <item name="android:textColorHint">@color/Font_BroadcastBerita_Form</item>

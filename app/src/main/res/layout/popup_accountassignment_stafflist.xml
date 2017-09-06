@@ -1,6 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:minHeight="400dp"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--Assignment date-->
+    <TextView
+        android:text="@string/Berita_Broadcast_ExpiredDate"
+        android:textColor="@color/White"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:background="@drawable/background_rounded_rectangle_pagetitle"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--Date picker-->
+    <TextView
+        android:id="@+id/Popup_Assignment_ExpiredDate"
+        android:layout_marginTop="10dp"
+        android:text="@string/AccountAssignment_Popup_SetExpired"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--Divider-->
+    <View
+        android:background="@color/Grey15"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--Assign ke-->
+    <TextView
+        android:text="@string/AccountAssignment_Popup_AssignTo"
+        android:textColor="@color/White"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:background="@drawable/background_rounded_rectangle_pagetitle"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--Search form-->
+    <RelativeLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Search button-->
+        <RelativeLayout
+            android:id="@+id/AccountAssignmentPopup_SearchControl"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/AccountAssignmentPopup_SearchButton"
+                android:src="@drawable/ic_play_arrow_white_36dp"
+                android:tint="@color/Black"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!--Clear button-->
+            <ImageView
+                android:id="@+id/AccountAssignmentPopup_ClearButton"
+                android:visibility="gone"
+                android:src="@drawable/ic_close_white_36dp"
+                android:tint="@color/Black"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <!--Search form-->
+        <EditText
+            android:id="@+id/AccountAssignmentPopup_SearchForm"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:hint="@string/AccountAssignment_Popup_CariStaff"
+            android:layout_toLeftOf="@id/AccountAssignmentPopup_SearchControl"
+            android:layout_toStartOf="@id/AccountAssignmentPopup_SearchControl"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <!--List petugas-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/AccountAssignmentPopup_RecyclerView"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:clipToPadding="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <!--Alert jika tidak ada petugas-->
+        <TextView
+            android:id="@+id/AccountAssignmentPopup_NoDataAlert"
+            android:text="@string/AccountAssignment_Popup_NoStaff"
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <!--Control button-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Assign button-->
+        <TextView
+            android:id="@+id/AccountAssignmentButton_AssignButton"
+            android:text="@string/AccountAssignment_Assign"
+            android:textColor="@color/White"
+            android:background="@drawable/background_rounded_rectangle_pagetitle"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <!--Cancel button-->
+        <TextView
+            android:id="@+id/AccountAssignmentButton_CancelButton"
+            android:text="@string/Text_Batal"
+            android:textColor="@color/White"
+            android:background="@drawable/background_rounded_rectangle_button_cancel"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </LinearLayout>

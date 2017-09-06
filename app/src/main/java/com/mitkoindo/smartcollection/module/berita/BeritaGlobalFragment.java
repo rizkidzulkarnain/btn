@@ -1,6 +1,7 @@
 package com.mitkoindo.smartcollection.module.berita;
 
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.adapter.BeritaGlobalAdapter;
+import com.mitkoindo.smartcollection.helper.ItemClickListener;
 import com.mitkoindo.smartcollection.helper.RecyclerViewHelper;
 import com.mitkoindo.smartcollection.objectdata.GlobalNews;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
@@ -340,10 +342,44 @@ public class BeritaGlobalFragment extends Fragment
         view_ListBerita.addItemDecoration(dividerItemDecoration);
         view_ListBerita.setAdapter(beritaAdapter);
 
+        //add listener to adapter
+        beritaAdapter.setClickListener(new ItemClickListener()
+        {
+            @Override
+            public void onItemClick(View view, int position)
+            {
+                OpenNewsDetail(position);
+            }
+        });
+
         //show list
         view_ListBerita.setVisibility(View.VISIBLE);
         view_Message.setVisibility(View.GONE);
         view_ProgressBar.setVisibility(View.GONE);
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Open news detail
+    //----------------------------------------------------------------------------------------------
+    private void OpenNewsDetail(int position)
+    {
+        //get selected item
+        GlobalNews globalNews = beritaAdapter.GetNews(position);
+
+        //pastikan item nggak null
+        if (globalNews == null)
+            return;
+
+        //create intent
+        Intent intent = new Intent(getActivity(), DetailBeritaGlobalActivity.class);
+
+        //attach extra data
+        intent.putExtra("Subject", globalNews.Subject);
+        intent.putExtra("Date", globalNews.TanggalBerita);
+        intent.putExtra("Content", globalNews.Content);
+
+        //start activity
+        startActivity(intent);
     }
 
     //----------------------------------------------------------------------------------------------

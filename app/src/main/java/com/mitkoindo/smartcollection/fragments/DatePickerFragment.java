@@ -5,8 +5,10 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.widget.DatePicker;
 
+import com.mitkoindo.smartcollection.module.assignment.UnassignedDebiturFragment;
 import com.mitkoindo.smartcollection.module.berita.BroadcastBeritaActivity;
 
 import java.text.DateFormat;
@@ -48,6 +50,9 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     //Activity yang memanggil datepicker
     private Activity caller;
 
+    //Fragment yang memanggil datepicker
+    private Fragment callerFragment;
+
     //date format
     /*private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());*/
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -56,6 +61,12 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public void SetCallerActivity(Activity caller)
     {
         this.caller = caller;
+    }
+
+    //set reference ke fragment yang memanggil
+    public void SetCallerFragment(Fragment callerFragment)
+    {
+        this.callerFragment = callerFragment;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -77,11 +88,35 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         //dan format jadi string
         String formattedDate = simpleDateFormat.format(date);
 
+        if (caller != null)
+        {
+            PassInfoToCaller(date, formattedDate);
+        }
+        else if (callerFragment != null)
+        {
+            PassInfoToFragment(date, formattedDate);
+        }
+    }
+
+    //pass info ke caller
+    private void PassInfoToCaller(Date date, String formattedDate)
+    {
         //cek instancenya caller activity
         if (caller instanceof BroadcastBeritaActivity)
         {
             BroadcastBeritaActivity broadcastBeritaActivity = (BroadcastBeritaActivity)caller;
             broadcastBeritaActivity.SetDate(date, formattedDate);
+        }
+    }
+
+    //pass info ke fragment
+    private void PassInfoToFragment(Date date, String formattedDate)
+    {
+        //cek instance unassigned debitur fragment
+        if (callerFragment instanceof UnassignedDebiturFragment)
+        {
+            UnassignedDebiturFragment unassignedDebiturFragment = (UnassignedDebiturFragment)callerFragment;
+            unassignedDebiturFragment.SetDate(date, formattedDate);
         }
     }
 }

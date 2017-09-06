@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_bluegradient"
+    tools:context="com.mitkoindo.smartcollection.module.berita.DetailBeritaGlobalActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Page title-->
+        <TextView
+            android:text="@string/Berita_Fragment_Global_Title"
+            android:textColor="@color/White"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@drawable/background_rounded_rectangle_pagetitle"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!--Divider-->
+        <View
+            android:background="@color/Background_PageTitle"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <!--News content-->
+        <ScrollView
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:background="@drawable/background_card_white"
+            android:clipToPadding="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--Subject-->
+                <TextView
+                    android:id="@+id/DetailBeritaGlobal_Subject"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!--Divider-->
+                <View
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/Black"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+                <!--News date-->
+                <TextView
+                    android:id="@+id/DetailBeritaGlobal_Date"
+                    android:layout_gravity="end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!--Content-->
+                <TextView
+                    android:id="@+id/DetailBeritaGlobal_Content"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <!--Back button-->
+    <RelativeLayout
+        android:onClick="HandleInput_DetailBeritaGlobal_Back"
+        android:background="@drawable/background_circle_blacktransparent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="66dp"
+        android:layout_height="66dp">
+
+        <ImageView
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_chevron_left_white_36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>

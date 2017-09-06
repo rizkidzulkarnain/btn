@@ -1,6 +1,7 @@
 package com.mitkoindo.smartcollection.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.helper.ItemClickListener;
 import com.mitkoindo.smartcollection.module.berita.BeritaGrupFragment;
+import com.mitkoindo.smartcollection.module.berita.DetailBeritaGroupActivity;
 import com.mitkoindo.smartcollection.objectdata.GlobalNews;
 import com.mitkoindo.smartcollection.objectdata.MobileNews;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
@@ -114,7 +116,7 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
         //attach to view
         holder.Title.setText(currentNews.Title);
         holder.Sender.setText(currentNews.AuthorID);
-        holder.Content.setText(currentNews.NewsContent);
+        holder.Content.setText(currentNews.Summary);
         holder.SendTime.setText(currentNews.StartDate);
 
         //cek attachment
@@ -133,6 +135,17 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
             //set filename
             holder.FileName.setText(currentNews.Attachment);
         }
+
+        //add listener to main view
+        final int currentPos = position;
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                OpenNewsDetail(currentPos);
+            }
+        });
     }
 
     @Override
@@ -159,6 +172,31 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
     public void setClickListener(ItemClickListener itemClickListener)
     {
         this.itemClickListener = itemClickListener;
+    }
+
+    //open news detail
+    private void OpenNewsDetail(int position)
+    {
+        //pastikan posisi tidak melebihi index
+        if (position >= getItemCount())
+            return;
+
+        //get current item
+        MobileNews mobileNews = news.get(position);
+
+        //create intent
+        Intent intent = new Intent(context, DetailBeritaGroupActivity.class);
+
+        //attach extra data
+        intent.putExtra("Title", mobileNews.Title);
+        intent.putExtra("Sender", mobileNews.AuthorID);
+        intent.putExtra("StartDate", mobileNews.StartDate);
+        intent.putExtra("EndDate", mobileNews.EndDate);
+        intent.putExtra("Content", mobileNews.NewsContent);
+        intent.putExtra("Attachment", mobileNews.Attachment);
+
+        //start intent
+        context.startActivity(intent);
     }
 
     //----------------------------------------------------------------------------------------------

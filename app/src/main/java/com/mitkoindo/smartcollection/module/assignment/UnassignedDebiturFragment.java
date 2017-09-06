@@ -1,12 +1,14 @@
 package com.mitkoindo.smartcollection.module.assignment;
 
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,8 +26,12 @@ import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.adapter.AccountAssignmentAdapter;
+import com.mitkoindo.smartcollection.adapter.StaffAssignmentAdapter;
+import com.mitkoindo.smartcollection.fragments.DatePickerFragment;
+import com.mitkoindo.smartcollection.helper.ItemClickListener;
 import com.mitkoindo.smartcollection.helper.RecyclerViewHelper;
 import com.mitkoindo.smartcollection.objectdata.DebiturItemWithFlag;
+import com.mitkoindo.smartcollection.objectdata.Staff;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
 import org.json.JSONArray;
@@ -32,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,6 +79,22 @@ public class UnassignedDebiturFragment extends Fragment
     //assign button
     private Button view_AssignButton;
 
+    //popup buat assign debitur ke staff
+    private AlertDialog popup_Assignment;
+
+    //popup views
+    private TextView view_ExpiredDate;
+    private EditText view_SearchPetugasForm;
+    private TextView view_AlertNoPetugas;
+    private ImageView view_Popup_SearchButton;
+    private ImageView view_Popup_ClearButton;
+
+    //----------------------------------------------------------------------------------------------
+    //  Utilities
+    //----------------------------------------------------------------------------------------------
+    //date picker
+    private DatePickerFragment datePickerFragment;
+
     //----------------------------------------------------------------------------------------------
     //  Transaksi
     //----------------------------------------------------------------------------------------------
@@ -89,6 +113,9 @@ public class UnassignedDebiturFragment extends Fragment
     //----------------------------------------------------------------------------------------------
     //adapter
     private AccountAssignmentAdapter accountAssignmentAdapter;
+
+    //adapter staff list
+    private StaffAssignmentAdapter staffAssignmentAdapter;
 
     //----------------------------------------------------------------------------------------------
     //  Setup
@@ -115,6 +142,10 @@ public class UnassignedDebiturFragment extends Fragment
         view_SearchButton = thisView.findViewById(R.id.UnassignedDebiturFragment_SearchButton);
         view_ClearButton = thisView.findViewById(R.id.UnassignedDebiturFragment_ClearButton);
         view_AssignButton = thisView.findViewById(R.id.UnassignedDebiturFragment_AssignButton);
+
+        //set date picker
+        datePickerFragment = new DatePickerFragment();
+        datePickerFragment.SetCallerFragment(this);
     }
 
     //Setup listener
@@ -180,6 +211,16 @@ public class UnassignedDebiturFragment extends Fragment
             @Override
             public void onClick(View view) {
                 HandleInput_ClearButton();
+            }
+        });
+
+        //add listener pada assign button
+        view_AssignButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                CreatePopup_AssignToPetugas();
             }
         });
     }
@@ -353,5 +394,209 @@ public class UnassignedDebiturFragment extends Fragment
 
         //show list
         view_Recycler.setVisibility(View.VISIBLE);
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Create popup buat assign debitur ke petugas
+    //----------------------------------------------------------------------------------------------
+    private void CreatePopup_AssignToPetugas()
+    {
+        //setup dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setCancelable(false);
+
+        //set view
+        LayoutInflater inflater = getLayoutInflater();
+        View popupView = inflater.inflate(R.layout.popup_accountassignment_stafflist, null, false);
+        builder.setView(popupView);
+
+        //populate views
+        SetupStaffList(popupView.findViewById(R.id.AccountAssignmentPopup_RecyclerView));
+
+        //setup listener
+        SetupStaffAssignmentListener(popupView);
+
+        //show popup
+        popup_Assignment = builder.create();
+        popup_Assignment.show();
+    }
+
+    //setup list
+    private void SetupStaffList(RecyclerView recyclerView)
+    {
+        //get staff list
+        if (getActivity() instanceof AccountAssignmentActivity)
+        {
+            AccountAssignmentActivity thisActivity = (AccountAssignmentActivity)getActivity();
+            ArrayList<Staff> staffs = thisActivity.GetClearedStaffList();
+
+            //create adapter
+            staffAssignmentAdapter = new StaffAssignmentAdapter(getActivity(), staffs);
+
+            //set click listener pada adapter
+            staffAssignmentAdapter.setClickListener(new ItemClickListener()
+            {
+                @Override
+                public void onItemClick(View view, int position)
+                {
+                    HandleSelectStaffListener(position);
+                }
+            });
+
+            //setup recyclerview
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            Drawable dividerDrawable = ContextCompat.getDrawable(getActivity(), R.drawable.divider_vertical_10dp);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+            dividerItemDecoration.setDrawable(dividerDrawable);
+            recyclerView.addItemDecoration(dividerItemDecoration);
+            recyclerView.setAdapter(staffAssignmentAdapter);
+        }
+    }
+
+    //handle select staff listener
+    private void HandleSelectStaffListener(int position)
+    {
+        staffAssignmentAdapter.ChangeStaffState(position);
+    }
+
+    //setup listener pada popup
+    private void SetupStaffAssignmentListener(View popupView)
+    {
+        //get views
+        view_ExpiredDate = popupView.findViewById(R.id.Popup_Assignment_ExpiredDate);
+        TextView view_AssignButton = popupView.findViewById(R.id.AccountAssignmentButton_AssignButton);
+        TextView view_CancelButton = popupView.findViewById(R.id.AccountAssignmentButton_CancelButton);
+        view_SearchPetugasForm = popupView.findViewById(R.id.AccountAssignmentPopup_SearchForm);
+        view_AlertNoPetugas = popupView.findViewById(R.id.AccountAssignmentPopup_NoDataAlert);
+        view_Popup_SearchButton = popupView.findViewById(R.id.AccountAssignmentPopup_SearchButton);
+        view_Popup_ClearButton = popupView.findViewById(R.id.AccountAssignmentPopup_ClearButton);
+
+        //set visibility
+        view_AlertNoPetugas.setVisibility(View.GONE);
+        view_Popup_ClearButton.setVisibility(View.GONE);
+
+        //set listener to cancel button
+        view_CancelButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                //pastkan popup tidak null & sedang showing
+                if (popup_Assignment!= null && popup_Assignment.isShowing())
+                    popup_Assignment.dismiss();
+            }
+        });
+
+        //set listener to expired date text
+        view_ExpiredDate.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                //show date picker
+                datePickerFragment.show(getActivity().getFragmentManager(), "datePicker");
+            }
+        });
+
+        //add listener to search form
+        view_SearchPetugasForm.setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent)
+            {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (i == KeyEvent.KEYCODE_ENTER))
+                {
+                    SearchStaffByName();
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        //add listener to search button
+        view_Popup_SearchButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                SearchStaffByName();
+            }
+        });
+
+        //add listener to clear button
+        view_Popup_ClearButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                ClearStaffSearch();
+            }
+        });
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Manipulasi views
+    //----------------------------------------------------------------------------------------------
+    //set date
+    public void SetDate(Date date, String formattedDate)
+    {
+        //pastikan expired date tidak kosong
+        if (view_ExpiredDate == null)
+            return;
+
+        //set expired date
+        view_ExpiredDate.setText(formattedDate);
+    }
+
+    //search staff by name
+    private void SearchStaffByName()
+    {
+        //hide keyboard
+        InputMethodManager inputManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.toggleSoftInput(0, 0);
+
+        //hide search button & show clear button
+        view_Popup_SearchButton.setVisibility(View.GONE);
+        view_Popup_ClearButton.setVisibility(View.VISIBLE);
+
+        //get query
+        String searchQuery = view_SearchPetugasForm.getText().toString();
+
+        //search by query
+        staffAssignmentAdapter.SearchStaff(searchQuery);
+
+        //cek apakah ada data petugas atau tidak
+        if (staffAssignmentAdapter.getItemCount() <= 0)
+            view_AlertNoPetugas.setVisibility(View.VISIBLE);
+        else
+            view_AlertNoPetugas.setVisibility(View.GONE);
+    }
+
+    //clear search
+    private void ClearStaffSearch()
+    {
+        //cek apakah ada query atau tidak
+        String searchQuery = view_SearchPetugasForm.getText().toString();
+        if (searchQuery.isEmpty())
+        {
+            //clear search
+            SearchStaffByName();
+
+            //show search button & hide clear button
+            view_Popup_SearchButton.setVisibility(View.VISIBLE);
+            view_Popup_ClearButton.setVisibility(View.GONE);
+
+            //hide keyboard
+            InputMethodManager inputManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.toggleSoftInput(0, 0);
+        }
+        else
+        {
+            //clear query
+            view_SearchPetugasForm.setText("");
+        }
     }
 }

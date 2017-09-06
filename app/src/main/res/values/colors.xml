@@ -13,6 +13,7 @@
     <color name="Grey">#808080</color>
     <color name="Grey15">#888888</color>
     <color name="Red">#FF0000</color>
+    <color name="Grey30">#4d4d4d</color>
 
     <!--color by usage-->
     <color name="Background_Login">#0d568d</color>
@@ -23,6 +24,7 @@
     <color name="Background_Fragment">#999999</color>
     <color name="Background_PageTitle">#00BCD4</color>
     <color name="Background_Spinner1">#D9183C</color>
+    <color name="Background_CancelButton">#f7115d</color>
 
     <color name="Font_LoginForm">#747373</color>
     <color name="Font_HomeMenu">#0ba1ff</color>

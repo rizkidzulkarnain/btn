@@ -58,8 +58,13 @@
         <activity
             android:name=".module.assignment.AccountAssignmentActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".module.ptp_reminder.PTPReminderActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".module.ptp_reminder.PTPReminderActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".module.berita.DetailBeritaGlobalActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".module.berita.DetailBeritaGroupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".module.misc.ChangeBaseURLActivity" />
         <activity
@@ -89,8 +94,7 @@
 
         <service
             android:name=".FetchAddressIntentService"
-            android:exported="false"/>
-
+            android:exported="false" />
     </application>
 
 </manifest>

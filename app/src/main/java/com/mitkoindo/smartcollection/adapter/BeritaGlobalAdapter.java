@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
+import com.mitkoindo.smartcollection.helper.ItemClickListener;
 import com.mitkoindo.smartcollection.objectdata.GlobalNews;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
@@ -61,6 +62,12 @@ public class BeritaGlobalAdapter extends RecyclerView.Adapter<BeritaGlobalAdapte
     private String authToken;
 
     //----------------------------------------------------------------------------------------------
+    //  Input
+    //----------------------------------------------------------------------------------------------
+    //click listener
+    private ItemClickListener itemClickListener;
+
+    //----------------------------------------------------------------------------------------------
     //  Setup
     //----------------------------------------------------------------------------------------------
     //constructor
@@ -107,6 +114,24 @@ public class BeritaGlobalAdapter extends RecyclerView.Adapter<BeritaGlobalAdapte
         return globalNews.size();
     }
 
+    //get item
+    public GlobalNews GetNews(int index)
+    {
+        if (index >= getItemCount())
+            return null;
+
+        return globalNews.get(index);
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Handle Input
+    //----------------------------------------------------------------------------------------------
+    // allows clicks events to be caught
+    public void setClickListener(ItemClickListener itemClickListener)
+    {
+        this.itemClickListener = itemClickListener;
+    }
+
     //----------------------------------------------------------------------------------------------
     //  Set views
     //----------------------------------------------------------------------------------------------
@@ -135,7 +160,7 @@ public class BeritaGlobalAdapter extends RecyclerView.Adapter<BeritaGlobalAdapte
     //----------------------------------------------------------------------------------------------
     //  View holder
     //----------------------------------------------------------------------------------------------
-    class BeritaGlobalViewHolder extends RecyclerView.ViewHolder
+    class BeritaGlobalViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         TextView Title;
         TextView SendTime;
@@ -148,6 +173,16 @@ public class BeritaGlobalAdapter extends RecyclerView.Adapter<BeritaGlobalAdapte
             Title = itemView.findViewById(R.id.AdapterBeritaGlobal_Title);
             SendTime = itemView.findViewById(R.id.AdapterBeritaGlobal_SendTime);
             Content = itemView.findViewById(R.id.AdapterBeritaGlobal_Content);
+
+            //add input listener
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view)
+        {
+            if (itemClickListener != null)
+                itemClickListener.onItemClick(view, getAdapterPosition());
         }
     }
 

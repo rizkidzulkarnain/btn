@@ -260,9 +260,14 @@
     <!--Account assignment-->
     <string name="AccountAssignment_PageTitle">Account Assignment</string>
     <string name="AccountAssignment_Assign">Assign</string>
+    <string name="AccountAssignment_CariDebitur">Cari debitur</string>
     <string name="AccountAssignment_Alert_NoDebiturSelected">Mohon memilih minimal satu orang debitur</string>
     <string name="AccountAssignment_FragmentTitle_Unassigned">Belum diassign</string>
     <string name="AccountAssignment_FragmentTitle_Assigned">Sudah diassign</string>
+    <string name="AccountAssignment_Popup_SetExpired">Set expired date</string>
+    <string name="AccountAssignment_Popup_AssignTo">Assign To :</string>
+    <string name="AccountAssignment_Popup_CariStaff">Cari petugas</string>
+    <string name="AccountAssignment_Popup_NoStaff">Tidak ada petugas yang ditemukan</string>
 
     <!--PTP Reminder-->
     <string name="PTP_Reminder_Title">PTP Reminder</string>

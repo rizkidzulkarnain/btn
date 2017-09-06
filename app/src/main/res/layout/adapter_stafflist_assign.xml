@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-</LinearLayout>
+    <!--Background_normal-->
+    <RelativeLayout
+        android:id="@+id/AdapterStaffAssign_UnselectedStaffHolder"
+        android:background="@drawable/background_rounded_rectangle_stroke_black"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Staff name-->
+        <TextView
+            android:id="@+id/AdapterStaffAssign_StaffName"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <!--Background_Selected-->
+    <RelativeLayout
+        android:id="@+id/AdapterStaffAssign_SelectedStaffHolder"
+        android:background="@drawable/background_rounded_rectangle_stroke_selected"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Staff name-->
+        <TextView
+            android:id="@+id/AdapterStaffAssign_StaffName_Selected"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>
