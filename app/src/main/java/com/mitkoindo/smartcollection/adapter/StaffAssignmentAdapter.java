@@ -141,6 +141,9 @@ public class StaffAssignmentAdapter extends RecyclerView.Adapter<StaffAssignment
         //isi dengan data yang namanya contains query
         for (int i = 0; i < staffs.size(); i++)
         {
+            //clear flag
+            staffs.get(i).FLAG_CHECKED = false;
+
             //cek apakah query kosong atau tidak
             if (query.isEmpty())
             {
@@ -157,6 +160,26 @@ public class StaffAssignmentAdapter extends RecyclerView.Adapter<StaffAssignment
         //refresh list
         if (!onBind)
             notifyDataSetChanged();
+    }
+
+    //get selected staff
+    public Staff GetSelectedStaff()
+    {
+        //inisialisasi variable
+        Staff selectedStaff = null;
+
+        //cari staff yang diselect
+        for (int i = 0; i < displayedStaff.size(); i++)
+        {
+            if (displayedStaff.get(i).FLAG_CHECKED)
+            {
+                selectedStaff = displayedStaff.get(i);
+                break;
+            }
+        }
+
+        //return staff
+        return selectedStaff;
     }
 
     //----------------------------------------------------------------------------------------------

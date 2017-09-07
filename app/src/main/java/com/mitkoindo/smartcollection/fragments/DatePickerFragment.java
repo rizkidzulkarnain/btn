@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.DatePicker;
 
+import com.mitkoindo.smartcollection.module.assignment.AssignedDebiturFragment;
 import com.mitkoindo.smartcollection.module.assignment.UnassignedDebiturFragment;
 import com.mitkoindo.smartcollection.module.berita.BroadcastBeritaActivity;
 
@@ -117,6 +118,11 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         {
             UnassignedDebiturFragment unassignedDebiturFragment = (UnassignedDebiturFragment)callerFragment;
             unassignedDebiturFragment.SetDate(date, formattedDate);
+        }
+        else if (callerFragment instanceof AssignedDebiturFragment)
+        {
+            AssignedDebiturFragment assignedDebiturFragment = (AssignedDebiturFragment)callerFragment;
+            assignedDebiturFragment.SetDate(date, formattedDate);
         }
     }
 }

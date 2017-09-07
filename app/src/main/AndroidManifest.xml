@@ -62,10 +62,15 @@
         <activity
             android:name=".module.ptp_reminder.PTPReminderActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".module.berita.DetailBeritaGlobalActivity"
+        <activity
+            android:name=".module.berita.DetailBeritaGlobalActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".module.berita.DetailBeritaGroupActivity"
+        <activity
+            android:name=".module.berita.DetailBeritaGroupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".module.chat.ChatListActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".module.misc.ChangeBaseURLActivity" />
         <activity
             android:name=".module.debitur.listdebitur.ListDebiturActivity"

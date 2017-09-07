@@ -11,8 +11,10 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
+import com.mitkoindo.smartcollection.helper.StringHelper;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
 import com.mitkoindo.smartcollection.objectdata.DebiturItemWithFlag;
+import com.mitkoindo.smartcollection.utilities.GenericAlert;
 
 import java.util.ArrayList;
 
@@ -33,11 +35,17 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
     //counter debiture yang diselect
     private int count_SelectedDebitur;
 
+    //max jumlah debitur yang boleh diselect
+    private final int maxSelectedDebitur = 10;
+
     //----------------------------------------------------------------------------------------------
     //  Views
     //----------------------------------------------------------------------------------------------
     //assign button
     private Button button_Assign;
+
+    //generic alert
+    private GenericAlert genericAlert;
 
     //----------------------------------------------------------------------------------------------
     //  Setup
@@ -50,6 +58,9 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
 
         //set jumlah debitur yang diselect jadi nol
         count_SelectedDebitur = 0;
+
+        //create generic alert
+        genericAlert = new GenericAlert(context);
     }
 
     //set reference ke assign button
@@ -85,10 +96,48 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
         holder.LastPayment.setText(currentDebitur.getLastPayment());
 
         //set checkbox
+        holder.checkBox.setOnCheckedChangeListener(null);
         if (currentDebitur.Checked)
             holder.checkBox.setChecked(true);
         else
             holder.checkBox.setChecked(false);
+
+        //add listener to checkbox
+        final int currentPos = position;
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+            {
+                //update jumlah debitur yang diselect
+                if (compoundButton.isChecked())
+                {
+                    //tes, tidak bisa select lebih dari 5 orang
+                    if (count_SelectedDebitur >= maxSelectedDebitur)
+                    {
+                        String title = context.getString(R.string.Text_MohonMaaf);
+                        String message = context.getString(R.string.AccountAssignment_Alert_MaxDebiturReached);
+                        genericAlert.DisplayAlert(message, title);
+                        compoundButton.setChecked(!b);
+                        return;
+                    }
+
+                    //tambah jumlah debitur yang diselect
+                    count_SelectedDebitur++;
+                }
+                else
+                {
+                    //kurangi jumlah debitur yang diselect
+                    count_SelectedDebitur--;
+                }
+
+                //update checked status
+                debiturItems.get(currentPos).Checked = compoundButton.isChecked();
+
+                //update display assign button
+                UpdateView_AssignButton();
+            }
+        });
     }
 
     @Override
@@ -97,10 +146,40 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
         return debiturItems.size();
     }
 
+    //----------------------------------------------------------------------------------------------
+    //  Manipulasi views
+    //----------------------------------------------------------------------------------------------
     //get jumlah user yang diselect
     public int GetSelectedDebiturCount()
     {
         return count_SelectedDebitur;
+    }
+
+    //get id debitur yang diselect
+    public String GetSelectedDebiturAccount()
+    {
+        //initialize variable
+        String selectedDebiturAccount = "";
+
+        //populate data
+        for (int i = 0; i < debiturItems.size(); i++)
+        {
+            //get current item
+            DebiturItemWithFlag currentItem = debiturItems.get(i);
+
+            //cek apakah dia selected atau nggak
+            if (!currentItem.Checked)
+                continue;
+
+            //kalo selected, add ke string
+            selectedDebiturAccount += currentItem.getNoRekening() + ",";
+        }
+
+        //element terakhir pasti koma, maka remove
+        selectedDebiturAccount = StringHelper.RemoveLastElement(selectedDebiturAccount);
+
+        //return item
+        return selectedDebiturAccount;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -134,7 +213,7 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
     //----------------------------------------------------------------------------------------------
     //  View holder
     //----------------------------------------------------------------------------------------------
-    class AccountAssignmentViewHolder extends RecyclerView.ViewHolder implements CheckBox.OnCheckedChangeListener
+    class AccountAssignmentViewHolder extends RecyclerView.ViewHolder/* implements CheckBox.OnCheckedChangeListener*/
     {
         TextView Name;
         TextView NoRekening;
@@ -154,10 +233,10 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
             LastPayment = itemView.findViewById(R.id.text_view_last_payment_value);
             checkBox = itemView.findViewById(R.id.AccountAssignmentAdapter_CheckBox);
 
-            checkBox.setOnCheckedChangeListener(this);
+            /*checkBox.setOnCheckedChangeListener(this);*/
         }
 
-        @Override
+        /*@Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b)
         {
             //update checked status
@@ -178,15 +257,14 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
             //update display assign button
             UpdateView_AssignButton();
 
-            /*CheckboxStateListener(getAdapterPosition(), compoundButton.isChecked());
+            CheckboxStateListener(getAdapterPosition(), compoundButton.isChecked());
 
             //pastikan index nggak keluar dari posisi
             if (adapterPos >= getItemCount())
                 return;
-            */
 
-            /*//notify changes
-            notifyDataSetChanged();*/
-        }
+            //notify changes
+            notifyDataSetChanged();
+        }*/
     }
 }

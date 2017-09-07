@@ -270,10 +270,20 @@
     <string name="AccountAssignment_Popup_AssignTo">Assign To :</string>
     <string name="AccountAssignment_Popup_CariStaff">Cari petugas</string>
     <string name="AccountAssignment_Popup_NoStaff">Tidak ada petugas yang ditemukan</string>
+    <string name="AccountAssignment_Popup_InformasiTambahanTitle">Informasi Tambahan</string>
+    <string name="AccountAssignment_Popup_InformasiTambahanHint">Masukkan informasi tambahan</string>
+    <string name="AccountAssignment_Alert_NoExpiredDate">Expired date belum diset</string>
+    <string name="AccountAssignmeny_Alert_NoPetugas">Tidak ada petugas yang dipilih</string>
+    <string name="AccountAssignment_Alert_AssignmentSukses">Assignment berhasil</string>
+    <string name="AccountAssignment_Alert_MaxDebiturReached">Hanya bisa memilih maksimum 10 debitur</string>
 
     <!--PTP Reminder-->
     <string name="PTP_Reminder_Title">PTP Reminder</string>
     <string name="PTP_Reminder_Label">PTP</string>
+
+    <!--Chat-->
+    <string name="Chat_Title">Chat</string>
+    <string name="Chat_Hint_CariPetugas">Cari Petugas</string>
 
     <!--Update password page-->
     <string name="UpdatePassword_PageTitle">Update Password</string>

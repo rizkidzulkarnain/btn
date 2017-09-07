@@ -22,6 +22,7 @@ import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.module.assignment.AccountAssignmentActivity;
 import com.mitkoindo.smartcollection.module.berita.BeritaActivity;
+import com.mitkoindo.smartcollection.module.chat.ChatListActivity;
 import com.mitkoindo.smartcollection.module.dashboard.DashboardActivity;
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.module.ptp_reminder.PTPReminderActivity;
@@ -309,6 +310,9 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case "PTP Reminder" :
                 intent = new Intent(this, PTPReminderActivity.class);
+                break;
+            case "Chat" :
+                intent = new Intent(this, ChatListActivity.class);
                 break;
             default:break;
         }
