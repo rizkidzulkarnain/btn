@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!--People icon-->
+    <ImageView
+        android:src="@drawable/menuicon_tambahkontak"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:tint="@color/Tint_ChatList_Element"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+    <!--Nama staff-->
+    <TextView
+        android:id="@+id/ChatListAdapter_Staffname"
+        android:textColor="@color/Tint_ChatList_Element"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

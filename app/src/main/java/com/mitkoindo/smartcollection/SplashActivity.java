@@ -6,6 +6,9 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.mitkoindo.smartcollection.module.chat.ChatListActivity;
+import com.mitkoindo.smartcollection.module.chat.ChatWindowActivity;
+
 
 public class SplashActivity extends AppCompatActivity
 {
@@ -15,13 +18,11 @@ public class SplashActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        //test langsung buka login activity
-        /*Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();*/
-
+        //------------------------------------------------------------------------------------------
+        //  Real start point
+        //------------------------------------------------------------------------------------------
         //create intent
-        Intent intent;
+        /*Intent intent;
 
         //cek keberadaan auth token
         if (AuthTokenExist()) {
@@ -32,7 +33,14 @@ public class SplashActivity extends AppCompatActivity
             intent = new Intent(this, LoginActivity.class);
         }
 
-//        start activity
+        //start activity
+        startActivity(intent);
+        finish();*/
+
+        //------------------------------------------------------------------------------------------
+        //  Test start point
+        //------------------------------------------------------------------------------------------
+        Intent intent = new Intent(this, ChatWindowActivity.class);
         startActivity(intent);
         finish();
     }

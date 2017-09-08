@@ -26,6 +26,7 @@
     <color name="Background_Spinner1">#D9183C</color>
     <color name="Background_CancelButton">#f7115d</color>
     <color name="Background_ChatSearchBar">#D5F3FC</color>
+    <color name="Background_ChatForm">#535e64</color>
 
     <color name="Font_LoginForm">#747373</color>
     <color name="Font_HomeMenu">#0ba1ff</color>
@@ -36,6 +37,9 @@
     <color name="Tint_Logout_Button">#da2928</color>
     <color name="Tint_HomeMenu_Button">#68c2fa</color>
     <color name="Tint_Chat_SearchControl">#72C0F0</color>
+    <color name="Tint_ChatList_Element">#0a81c3</color>
+    <color name="Tint_ChatForm_Send">#0ac3ba</color>
+    <color name="Tint_Chat_SentMessageTheme">#0ac3ba</color>
 
     <color name="Line_UpdatePassword">#0ba1ff</color>
     <color name="Line_HomeMenu">#0ba1ff</color>

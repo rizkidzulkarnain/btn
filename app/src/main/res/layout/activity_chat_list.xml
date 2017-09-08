@@ -105,14 +105,36 @@
                     android:layout_height="wrap_content" />
             </RelativeLayout>
 
-            <!--List of staff-->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/ChatList_StaffList"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:clipToPadding="false"
+            <!--Content-->
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent">
+
+                <!--List of staff-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/ChatList_StaffList"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:clipToPadding="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <!--Progress bar-->
+                <ProgressBar
+                    android:id="@+id/ChatList_ProgressBar"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!--Alert text-->
+                <TextView
+                    android:id="@+id/ChatList_AlertText"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 

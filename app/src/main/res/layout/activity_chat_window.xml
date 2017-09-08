@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_bluegradient"
+    tools:context="com.mitkoindo.smartcollection.module.chat.ChatWindowActivity">
+
+    <!--Content-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--Staff name-->
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--People icon-->
+            <ImageView
+                android:src="@drawable/menuicon_tambahkontak"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:tint="@color/White"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <!--Nama staff-->
+            <TextView
+                android:id="@+id/ChatWindow_Staffname"
+                android:textSize="20sp"
+                android:textColor="@color/White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!--Chat content-->
+        <RelativeLayout
+            android:background="@color/White"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--Chat form-->
+            <RelativeLayout
+                android:id="@+id/ChatWindow_ChatControl"
+                android:layout_alignParentBottom="true"
+                android:padding="10dp"
+                android:background="@color/Background_ChatForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--Send button-->
+                <ImageView
+                    android:id="@+id/ChatWindow_SendButton"
+                    android:src="@drawable/ic_play_arrow_white_36dp"
+                    android:tint="@color/Tint_ChatForm_Send"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!--Chat form-->
+                <EditText
+                    android:id="@+id/ChatWindow_ChatForm"
+                    android:background="@drawable/background_card_white"
+                    android:padding="5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/ChatWindow_SendButton"
+                    android:layout_toStartOf="@id/ChatWindow_SendButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <!--Content-->
+            <RelativeLayout
+                android:layout_above="@id/ChatWindow_ChatControl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--List chat-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/ChatWindow_RecyclerView"
+                    app:stackFromEnd="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <!--Progress bar-->
+                <ProgressBar
+                    android:id="@+id/ChatWindow_ProgressBar"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!--Alert text-->
+                <TextView
+                    android:id="@+id/ChatWindow_AlertText"
+                    android:textColor="@color/White"
+                    android:textSize="18sp"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!--Back button-->
+    <RelativeLayout
+        android:onClick="HandleInput_ChatWindow_BackButton"
+        android:background="@drawable/background_circle_blacktransparent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="66dp"
+        android:layout_height="66dp">
+
+        <ImageView
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_chevron_left_white_36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>

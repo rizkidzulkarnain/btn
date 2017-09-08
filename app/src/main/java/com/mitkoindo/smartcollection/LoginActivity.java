@@ -251,7 +251,7 @@ public class LoginActivity extends AppCompatActivity
 
         //save user ID
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sharedPr  eferences.edit();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(userIDKey, text_Username);
         editor.apply();
     }
