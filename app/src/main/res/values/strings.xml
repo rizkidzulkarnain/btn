@@ -284,6 +284,7 @@
     <!--Chat-->
     <string name="Chat_Title">Chat</string>
     <string name="Chat_Hint_CariPetugas">Cari Petugas</string>
+    <string name="ChatWindow_Alert_NoChat">Tidak ada pesan</string>
 
     <!--Update password page-->
     <string name="UpdatePassword_PageTitle">Update Password</string>

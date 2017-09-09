@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity
         //  Real start point
         //------------------------------------------------------------------------------------------
         //create intent
-        /*Intent intent;
+        Intent intent;
 
         //cek keberadaan auth token
         if (AuthTokenExist()) {
@@ -35,14 +35,14 @@ public class SplashActivity extends AppCompatActivity
 
         //start activity
         startActivity(intent);
-        finish();*/
+        finish();
 
         //------------------------------------------------------------------------------------------
         //  Test start point
         //------------------------------------------------------------------------------------------
-        Intent intent = new Intent(this, ChatWindowActivity.class);
+        /*Intent intent = new Intent(this, ChatWindowActivity.class);
         startActivity(intent);
-        finish();
+        finish();*/
     }
 
     //cek apakah ada auth token atau tidak

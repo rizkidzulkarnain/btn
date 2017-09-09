@@ -59,6 +59,7 @@
                 <!--Send button-->
                 <ImageView
                     android:id="@+id/ChatWindow_SendButton"
+                    android:onClick="HandleInput_ChatWindow_SendButton"
                     android:src="@drawable/ic_play_arrow_white_36dp"
                     android:tint="@color/Tint_ChatForm_Send"
                     android:layout_alignParentRight="true"
@@ -69,6 +70,9 @@
                 <!--Chat form-->
                 <EditText
                     android:id="@+id/ChatWindow_ChatForm"
+                    android:imeOptions="actionSend"
+                    android:inputType="text"
+                    android:maxLines="1"
                     android:background="@drawable/background_card_white"
                     android:padding="5dp"
                     android:layout_centerVertical="true"
@@ -88,6 +92,9 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/ChatWindow_RecyclerView"
                     app:stackFromEnd="true"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:clipToPadding="false"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
 
@@ -102,7 +109,6 @@
                 <!--Alert text-->
                 <TextView
                     android:id="@+id/ChatWindow_AlertText"
-                    android:textColor="@color/White"
                     android:textSize="18sp"
                     android:visibility="gone"
                     android:gravity="center"

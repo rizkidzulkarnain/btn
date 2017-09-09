@@ -1,5 +1,6 @@
 package com.mitkoindo.smartcollection.module.chat;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
@@ -117,7 +118,10 @@ public class ChatListActivity extends AppCompatActivity
         if (selectedStaff == null)
             return;
 
-        //else, open chat window untuk staff ini
+        //open chat window untuk staff ini
+        Intent intent = new Intent(this, ChatWindowActivity.class);
+        intent.putExtra("PartnerID", selectedStaff.USERID);
+        startActivity(intent);
     }
 
     //----------------------------------------------------------------------------------------------
