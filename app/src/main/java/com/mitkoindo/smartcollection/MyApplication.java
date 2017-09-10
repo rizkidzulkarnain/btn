@@ -3,9 +3,11 @@ package com.mitkoindo.smartcollection;
 import android.app.Application;
 
 import com.facebook.stetho.Stetho;
+import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import timber.log.Timber;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -21,6 +23,7 @@ public class MyApplication extends Application {
         super.onCreate();
 
         sInstance = this;
+        initTimber();
         initCalligraphy();
         initRealm();
         initStetho();
@@ -28,6 +31,17 @@ public class MyApplication extends Application {
 
     public static Application getInstance() {
         return sInstance;
+    }
+
+    private void initTimber() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree() {
+                @Override
+                protected String createStackElementTag(StackTraceElement element) {
+                    return super.createStackElementTag(element) + ":" + element.getLineNumber();
+                }
+            });
+        }
     }
 
     private void initCalligraphy() {
@@ -49,6 +63,14 @@ public class MyApplication extends Application {
     }
 
     private void initStetho() {
-        Stetho.initializeWithDefaults(this);
+//        Default Stetho init
+//        Stetho.initializeWithDefaults(this);
+
+//        Stetho with Realm
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
+                        .build());
     }
 }

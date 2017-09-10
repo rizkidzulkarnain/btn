@@ -13,5 +13,7 @@
         android:title="@string/DetailDebitur_TambahTelepon" />
     <item android:id="@+id/popup_menu_tambah_alamat"
         android:title="@string/DetailDebitur_TambahAlamatDanTelepon" />
+    <!--<item android:id="@+id/popup_menu_gallery"-->
+        <!--android:title="@string/DetailDebitur_Gallery" />-->
 
 </menu>

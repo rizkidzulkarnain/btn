@@ -120,7 +120,7 @@ public class AccountAssignmentActivity extends AppCompatActivity
         //create fragment titles
         ArrayList<String> fragmentTitles = new ArrayList<>();
         fragmentTitles.add(getString(R.string.AccountAssignment_FragmentTitle_Unassigned));
-        fragmentTitles.add(getString(R.string.AccountAssignment_FragmentTitle_Assigned));
+        /*fragmentTitles.add(getString(R.string.AccountAssignment_FragmentTitle_Assigned));*/
 
         //create fragments
         assignedDebiturFragment = new AssignedDebiturFragment();
@@ -133,7 +133,7 @@ public class AccountAssignmentActivity extends AppCompatActivity
         //create fragment array
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(unassignedDebiturFragment);
-        fragments.add(assignedDebiturFragment);
+        /*fragments.add(assignedDebiturFragment);*/
 
         //create tab adapter
         CommonTabAdapter assignmentAdapter = new CommonTabAdapter(getSupportFragmentManager(), fragments, fragmentTitles);

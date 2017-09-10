@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="dialogTwoLineSpinnerItemVM"
+            type="com.mitkoindo.smartcollection.dialog.DialogTwoLineSpinnerItemViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/padding_12"
+        android:paddingLeft="@dimen/padding_medium"
+        android:paddingRight="@dimen/padding_medium"
+        android:paddingBottom="@dimen/padding_12"
+        android:onClick="@{dialogTwoLineSpinnerItemVM.onItemClicked}">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/FontBold.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{dialogTwoLineSpinnerItemVM.title}"
+            android:background="@color/White" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            style="@style/FontRegular.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{dialogTwoLineSpinnerItemVM.description}"
+            android:background="@color/White" />
+
+    </LinearLayout>
+
+</layout>

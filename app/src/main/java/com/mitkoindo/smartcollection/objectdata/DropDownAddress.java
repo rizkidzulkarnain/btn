@@ -3,127 +3,161 @@ package com.mitkoindo.smartcollection.objectdata;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-
 /**
- * Created by ericwijaya on 8/25/17.
+ * Created by ericwijaya on 9/9/17.
  */
 
-public class DropDownAddress extends RealmObject {
+public class DropDownAddress {
 
-    @PrimaryKey
     @SerializedName("RowNumber")
     @Expose
-    private Integer rowNumber;
+    private int rowNumber;
+
     @SerializedName("ACC_NO")
     @Expose
     private String accNo;
+
     @SerializedName("AT_DESC")
     @Expose
     private String atDesc;
+
     @SerializedName("Alamat")
     @Expose
     private String alamat;
+
     @SerializedName("CU_REF")
     @Expose
     private String cuRef;
+
     @SerializedName("CA_ID")
     @Expose
-    private Integer caId;
+    private int caId;
+
     @SerializedName("CA_CONTACTNAME")
     @Expose
     private String caContactName;
+
     @SerializedName("CA_RELATIONSHIP")
     @Expose
     private String caRelationship;
+
     @SerializedName("CA_ADDRTYPE")
     @Expose
     private String caAddrType;
+
     @SerializedName("CA_ADDRNAME")
     @Expose
     private String caAddrName;
+
     @SerializedName("CA_ADDR1")
     @Expose
     private String caAddr1;
+
     @SerializedName("CA_ADDR2")
     @Expose
     private String caAddr2;
+
     @SerializedName("CA_ADDR3")
     @Expose
     private String caAddr3;
+
     @SerializedName("CA_RT")
     @Expose
     private String caRt;
+
     @SerializedName("CA_RW")
     @Expose
     private String caRw;
+
     @SerializedName("CA_KEL")
     @Expose
     private String caKel;
+
     @SerializedName("CA_KEC")
     @Expose
     private String caKec;
+
     @SerializedName("CA_CITY")
     @Expose
     private String caCity;
+
     @SerializedName("CA_PROVINSI")
     @Expose
     private String caProvinsi;
+
     @SerializedName("CA_ZIPCODE")
     @Expose
     private String caZipCode;
+
     @SerializedName("CA_BI_CITY_CODE")
     @Expose
     private String caBiCityCode;
+
     @SerializedName("CA_ADDR_INVALID")
     @Expose
     private String caAddrInvalid;
+
     @SerializedName("CA_PHNAREA")
     @Expose
     private String caPhnArea;
+
     @SerializedName("CA_PHNNUM")
     @Expose
     private String caPhnNum;
+
     @SerializedName("CA_PHNEXT")
     @Expose
     private String caPhNext;
+
     @SerializedName("CA_PHNNUM_INVALID")
     @Expose
     private String caPhnNumInvalid;
+
     @SerializedName("CA_HPPHNNUM")
     @Expose
     private String caHpPhnNum;
+
     @SerializedName("CA_HPPHNNUM_INVALID")
     @Expose
     private String caHpPhnNumInvalid;
+
     @SerializedName("CA_FAXAREA")
     @Expose
     private String caFaxArea;
+
     @SerializedName("CA_FAXNUM")
     @Expose
     private String caFaxNum;
+
     @SerializedName("CA_FAXEXT")
     @Expose
     private String caFaxExt;
+
     @SerializedName("CA_FAXNUM_INVALID")
     @Expose
     private String caFaxNumInvalid;
+
     @SerializedName("CA_NOTE")
     @Expose
     private String caNote;
+
     @SerializedName("CA_PRIORITY")
     @Expose
-    private Integer caPriority;
+    private int caPriority;
+
     @SerializedName("CA_BAGIAN")
     @Expose
     private String caBagian;
 
-    public Integer getRowNumber() {
+
+    public DropDownAddress() {
+    }
+
+    public int getRowNumber() {
         return rowNumber;
     }
 
-    public void setRowNumber(Integer rowNumber) {
+    public void setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
     }
 
@@ -151,7 +185,7 @@ public class DropDownAddress extends RealmObject {
         this.alamat = alamat;
     }
 
-    public String getCuRed() {
+    public String getCuRef() {
         return cuRef;
     }
 
@@ -159,11 +193,11 @@ public class DropDownAddress extends RealmObject {
         this.cuRef = cuRef;
     }
 
-    public Integer getCaId() {
+    public int getCaId() {
         return caId;
     }
 
-    public void setCaId(Integer caId) {
+    public void setCaId(int caId) {
         this.caId = caId;
     }
 
@@ -383,11 +417,11 @@ public class DropDownAddress extends RealmObject {
         this.caNote = caNote;
     }
 
-    public Integer getCaPrioriy() {
+    public int getCaPrioriy() {
         return caPriority;
     }
 
-    public void setCaPriority(Integer caPriority) {
+    public void setCaPriority(int caPriority) {
         this.caPriority = caPriority;
     }
 

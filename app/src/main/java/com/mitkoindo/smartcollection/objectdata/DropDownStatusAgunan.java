@@ -15,28 +15,37 @@ public class DropDownStatusAgunan extends RealmObject {
     @PrimaryKey
     @SerializedName("RowNumber")
     @Expose
-    private Integer rowNumber;
+    private int rowNumber;
+
     @SerializedName("COLSTA_CODE")
     @Expose
     private String colstaCode;
+
     @SerializedName("COL_TYPE")
     @Expose
     private String colType;
+
     @SerializedName("COLSTA_DESC")
     @Expose
     private String colstaDesc;
+
     @SerializedName("CORE_CODE")
     @Expose
     private String coreCode;
+
     @SerializedName("ACTIVE")
     @Expose
-    private Boolean active;
+    private boolean active;
 
-    public Integer getRowNumber() {
+
+    public DropDownStatusAgunan() {
+    }
+
+    public int getRowNumber() {
         return rowNumber;
     }
 
-    public void setRowNumber(Integer rowNumber) {
+    public void setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
     }
 
@@ -72,11 +81,11 @@ public class DropDownStatusAgunan extends RealmObject {
         this.coreCode = coreCode;
     }
 
-    public Boolean getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 

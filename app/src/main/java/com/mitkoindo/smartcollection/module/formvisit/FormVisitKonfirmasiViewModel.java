@@ -7,12 +7,14 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.mitkoindo.smartcollection.base.ILifecycleViewModel;
+import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.network.ApiUtils;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.FormVisitBody;
 import com.mitkoindo.smartcollection.network.response.FormCallResponse;
 import com.mitkoindo.smartcollection.network.response.FormVisitResponse;
 import com.mitkoindo.smartcollection.network.response.MultipartResponse;
+import com.mitkoindo.smartcollection.objectdata.databasemodel.SpParameterFormVisitDb;
 import com.mitkoindo.smartcollection.utils.FileUtils;
 
 import java.io.File;
@@ -194,6 +196,8 @@ public class FormVisitKonfirmasiViewModel extends BaseObservable implements ILif
                     @Override
                     public void onError(Throwable e) {
                         error.set(e);
+                        SpParameterFormVisitDb spParameterFormVisitDb = new SpParameterFormVisitDb(spParameter);
+                        RealmHelper.storeFormVisit(spParameterFormVisitDb);
                         Log.e("FormCallViewModel", e.getMessage());
                     }
 

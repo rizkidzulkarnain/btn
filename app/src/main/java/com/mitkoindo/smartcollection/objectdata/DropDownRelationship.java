@@ -15,28 +15,37 @@ public class DropDownRelationship extends RealmObject {
     @SerializedName("RowNumber")
     @Expose
     @PrimaryKey
-    private Integer rowNumber;
+    private int rowNumber;
+
     @SerializedName("REL_ID")
     @Expose
     private String relId;
+
     @SerializedName("REL_DESC")
     @Expose
     private String relDesc;
+
     @SerializedName("CD_SIBS")
     @Expose
     private String cdsibs;
+
     @SerializedName("ACTIVE")
     @Expose
-    private Boolean active;
+    private boolean active;
+
     @SerializedName("URUTAN")
     @Expose
-    private Integer urutan;
+    private int urutan;
 
-    public Integer getRowNumber() {
+
+    public DropDownRelationship() {
+    }
+
+    public int getRowNumber() {
         return rowNumber;
     }
 
-    public void setRowNumber(Integer rowNumber) {
+    public void setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
     }
 
@@ -64,19 +73,19 @@ public class DropDownRelationship extends RealmObject {
         this.cdsibs = cdsibs;
     }
 
-    public Boolean getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 
-    public Integer getUrutan() {
+    public int getUrutan() {
         return urutan;
     }
 
-    public void setUrutan(Integer urutan) {
+    public void setUrutan(int urutan) {
         this.urutan = urutan;
     }
 

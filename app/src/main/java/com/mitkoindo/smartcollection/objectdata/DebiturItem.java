@@ -17,6 +17,7 @@ import java.util.List;
  */
 
 public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHolder> {
+
     @SerializedName("No")
     @Expose
     private String no;

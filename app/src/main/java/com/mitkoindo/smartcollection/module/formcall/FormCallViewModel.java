@@ -6,10 +6,12 @@ import android.databinding.ObservableField;
 import android.util.Log;
 
 import com.mitkoindo.smartcollection.base.ILifecycleViewModel;
+import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.network.ApiUtils;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.FormCallBody;
 import com.mitkoindo.smartcollection.network.response.FormCallResponse;
+import com.mitkoindo.smartcollection.objectdata.databasemodel.SpParameterFormCallDb;
 import com.mitkoindo.smartcollection.utils.Constant;
 
 import java.text.SimpleDateFormat;
@@ -52,7 +54,7 @@ public class FormCallViewModel extends BaseObservable implements ILifecycleViewM
     public ObservableField<String> tanggalHasilPanggilan = new ObservableField<>();
     public ObservableField<String> tanggalTindakLanjut = new ObservableField<>();
 
-    public FormCallBody.SpParameter spParameter = new FormCallBody.SpParameter();
+    public FormCallBody.SpParameterFormCall spParameterFormCall = new FormCallBody.SpParameterFormCall();
 
     public FormCallViewModel() {
 
@@ -64,12 +66,12 @@ public class FormCallViewModel extends BaseObservable implements ILifecycleViewM
     }
 
     public void setTanggalHasilPanggilan(Date tanggalHasilPanggilan) {
-        spParameter.setResultDate(dateFormatterSend.format(tanggalHasilPanggilan));
+        spParameterFormCall.setResultDate(dateFormatterSend.format(tanggalHasilPanggilan));
         this.tanggalHasilPanggilan.set(dateFormatterDisplay.format(tanggalHasilPanggilan));
     }
 
     public void setTanggalTindakLanjut(Date tanggalTindakLanjut) {
-        spParameter.setDateAction(dateFormatterSend.format(tanggalTindakLanjut));
+        spParameterFormCall.setDateAction(dateFormatterSend.format(tanggalTindakLanjut));
         this.tanggalTindakLanjut.set(dateFormatterDisplay.format(tanggalTindakLanjut));
     }
 
@@ -98,6 +100,8 @@ public class FormCallViewModel extends BaseObservable implements ILifecycleViewM
                     @Override
                     public void onError(Throwable e) {
                         error.set(e);
+                        SpParameterFormCallDb spParameterFormCallDb = new SpParameterFormCallDb(spParameterFormCall);
+                        RealmHelper.storeFormCall(spParameterFormCallDb);
                         Log.e("FormCallViewModel", e.getMessage());
                     }
 
@@ -114,7 +118,7 @@ public class FormCallViewModel extends BaseObservable implements ILifecycleViewM
         FormCallBody formCallBody = new FormCallBody();
         formCallBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
         formCallBody.setSpName(RestConstants.FORM_CALL_SP_NAME);
-        formCallBody.setSpParameter(spParameter);
+        formCallBody.setSpParameterFormCall(spParameterFormCall);
 
         return formCallBody;
     }

@@ -52,27 +52,35 @@ public class TambahAlamatBody {
         @SerializedName("userID")
         @Expose
         private String userID;
+
         @SerializedName("cuRef")
         @Expose
         private String cuRef;
+
         @SerializedName("contactName")
         @Expose
         private String contactName;
+
         @SerializedName("relationship")
         @Expose
         private String relationship;
+
         @SerializedName("addressType")
         @Expose
         private String addressType;
+
         @SerializedName("address1")
         @Expose
         private String address1;
+
         @SerializedName("address2")
         @Expose
         private String address2;
+
         @SerializedName("address3")
         @Expose
         private String address3;
+
 
         public String getUserID() {
             return userID;

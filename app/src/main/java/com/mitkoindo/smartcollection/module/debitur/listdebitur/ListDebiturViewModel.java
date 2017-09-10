@@ -3,13 +3,15 @@ package com.mitkoindo.smartcollection.module.debitur.listdebitur;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
-import android.util.Log;
 
 import com.mitkoindo.smartcollection.base.ILifecycleViewModel;
+import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.network.ApiUtils;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.ListDebiturBody;
+import com.mitkoindo.smartcollection.network.response.OfflineBundleResponse;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
+import com.mitkoindo.smartcollection.objectdata.databasemodel.DebiturItemDb;
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Created by ericwijaya on 8/17/17.
@@ -31,6 +34,7 @@ public class ListDebiturViewModel extends BaseObservable implements ILifecycleVi
     public ObservableField<Throwable> error = new ObservableField<>();
     public ObservableField<List<DebiturItem>> obsDebiturResponse = new ObservableField<>();
     public ObservableField<List<DebiturItem>> obsDebiturResponseLoadMore = new ObservableField<>();
+    public ObservableField<OfflineBundleResponse> obsOfflineBundleResponse = new ObservableField<>();
     public ObservableBoolean obsIsEmpty = new ObservableBoolean(false);
 
     private String mAccessToken;
@@ -81,12 +85,13 @@ public class ListDebiturViewModel extends BaseObservable implements ILifecycleVi
                         } else {
                             obsDebiturResponseLoadMore.set(listDebitur);
                         }
+                        Timber.i("getListDebitur success");
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         error.set(e);
-                        Log.e("ListDebiturViewModel", e.getMessage());
+                        Timber.e("getListDebitur " + e.getMessage());
                     }
 
                     @Override
@@ -96,6 +101,49 @@ public class ListDebiturViewModel extends BaseObservable implements ILifecycleVi
                 });
 
         composites.add(disposable);
+    }
+
+    public void getBundle() {
+
+        Disposable disposable = ApiUtils.getRestServices(mAccessToken).getBundle(RestConstants.DATABASE_ID_VALUE, "20")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        obsIsLoading.set(true);
+                    }
+                })
+                .doOnTerminate(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        obsIsLoading.set(false);
+                    }
+                })
+                .subscribeWith(new DisposableObserver<OfflineBundleResponse>() {
+                    @Override
+                    public void onNext(OfflineBundleResponse offlineBundleResponse) {
+                        obsOfflineBundleResponse.set(offlineBundleResponse);
+                        Timber.i("getBundle success");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        error.set(e);
+                        Timber.e("getBundle " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        composites.add(disposable);
+    }
+
+    public List<DebiturItemDb> getListDebiturFromDb() {
+        return RealmHelper.getListDebiturItem();
     }
 
     @Override

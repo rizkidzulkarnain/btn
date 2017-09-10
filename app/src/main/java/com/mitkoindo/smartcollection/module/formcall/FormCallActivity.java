@@ -34,18 +34,17 @@ import com.mitkoindo.smartcollection.HomeActivity;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.base.BaseActivity;
 import com.mitkoindo.smartcollection.databinding.ActivityFormCallBinding;
+import com.mitkoindo.smartcollection.dialog.DialogFactory;
 import com.mitkoindo.smartcollection.dialog.DialogSimpleSpinnerAdapter;
 import com.mitkoindo.smartcollection.event.EventDialogSimpleSpinnerSelected;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.FormCallBody;
 import com.mitkoindo.smartcollection.objectdata.DropDownAction;
-import com.mitkoindo.smartcollection.objectdata.DropDownAddress;
 import com.mitkoindo.smartcollection.objectdata.DropDownPurpose;
 import com.mitkoindo.smartcollection.objectdata.DropDownReason;
 import com.mitkoindo.smartcollection.objectdata.DropDownRelationship;
 import com.mitkoindo.smartcollection.objectdata.DropDownResult;
-import com.mitkoindo.smartcollection.objectdata.DropDownStatusAgunan;
 import com.mitkoindo.smartcollection.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -154,7 +153,16 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
         mFormCallViewModel.error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                displayMessage(R.string.GagalMenyimpanFormCall);
+                DialogFactory.createDialog(FormCallActivity.this,
+                        getString(R.string.FormCall_PageTitle),
+                        getString(R.string.GagalMenyimpanFormCall),
+                        getString(R.string.ok),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                startActivity(HomeActivity.instantiateClearTask(FormCallActivity.this));
+                            }
+                        }).show();
             }
         });
         mFormCallViewModel.jumlahYangAkanDisetor.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
@@ -162,10 +170,10 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
             public void onPropertyChanged(Observable sender, int propertyId) {
                 try {
                     Double jumlahYangAkanDisetor = Double.parseDouble(mFormCallViewModel.jumlahYangAkanDisetor.get());
-                    mFormCallViewModel.spParameter.setPtpAmount(jumlahYangAkanDisetor);
+                    mFormCallViewModel.spParameterFormCall.setPtpAmount(jumlahYangAkanDisetor);
                 } catch(NumberFormatException nfe) {
                     System.out.println("Could not parse " + nfe);
-                    mFormCallViewModel.spParameter.setPtpAmount(0);
+                    mFormCallViewModel.spParameterFormCall.setPtpAmount(0);
                 }
             }
         });
@@ -298,7 +306,7 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
                 case R.id.card_view_tujuan: {
                     for (DropDownPurpose dropDownPurpose : mListDropDownPurpose) {
                         if (!TextUtils.isEmpty(dropDownPurpose.getPDesc()) && dropDownPurpose.getPDesc().equals(event.getName())) {
-                            mFormCallViewModel.spParameter.setTujuan(dropDownPurpose.getPId());
+                            mFormCallViewModel.spParameterFormCall.setTujuan(dropDownPurpose.getPId());
                             mFormCallViewModel.tujuan.set(dropDownPurpose.getPDesc());
                             break;
                         }
@@ -308,7 +316,7 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
                 case R.id.card_view_hubungan_dengan_debitur: {
                     for (DropDownRelationship dropDownRelationship : mListDropDownRelationship) {
                         if (!TextUtils.isEmpty(dropDownRelationship.getRelDesc()) && dropDownRelationship.getRelDesc().equals(event.getName())) {
-                            mFormCallViewModel.spParameter.setRelationship(dropDownRelationship.getRelId());
+                            mFormCallViewModel.spParameterFormCall.setRelationship(dropDownRelationship.getRelId());
                             mFormCallViewModel.hubunganDenganDebitur.set(dropDownRelationship.getRelDesc());
                             break;
                         }
@@ -318,7 +326,7 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
                 case R.id.card_view_hasil_panggilan: {
                     for (DropDownResult dropDownResult : mListDropDownResult) {
                         if (!TextUtils.isEmpty(dropDownResult.getResultDesc()) && dropDownResult.getResultDesc().equals(event.getName())) {
-                            mFormCallViewModel.spParameter.setResult(dropDownResult.getResultId());
+                            mFormCallViewModel.spParameterFormCall.setResult(dropDownResult.getResultId());
                             mFormCallViewModel.hasilPanggilan.set(dropDownResult.getResultDesc());
                             break;
                         }
@@ -328,8 +336,8 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
                 case R.id.card_view_alasan_tidak_bayar: {
                     for (DropDownReason dropDownReason : mListDropDownReason) {
                         if (!TextUtils.isEmpty(dropDownReason.getReasonDesc()) && dropDownReason.getReasonDesc().equals(event.getName())) {
-                            mFormCallViewModel.spParameter.setReasonNoPayment(dropDownReason.getReasonId());
-                            mFormCallViewModel.spParameter.setReasonNonPaymentDesc(dropDownReason.getReasonDesc());
+                            mFormCallViewModel.spParameterFormCall.setReasonNoPayment(dropDownReason.getReasonId());
+                            mFormCallViewModel.spParameterFormCall.setReasonNonPaymentDesc(dropDownReason.getReasonDesc());
                             mFormCallViewModel.alasanTidakBayar.set(dropDownReason.getReasonDesc());
                             break;
                         }
@@ -339,7 +347,7 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
                 case R.id.card_view_tindak_lanjut: {
                     for (DropDownAction dropDownAction : mListDropDownAction) {
                         if (!TextUtils.isEmpty(dropDownAction.getActionDesc()) && dropDownAction.getActionDesc().equals(event.getName())) {
-                            mFormCallViewModel.spParameter.setNextAction(dropDownAction.getActionId());
+                            mFormCallViewModel.spParameterFormCall.setNextAction(dropDownAction.getActionId());
                             mFormCallViewModel.tindakLanjut.set(dropDownAction.getActionDesc());
                             break;
                         }
@@ -444,38 +452,38 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
     }
 
     private boolean isValid() {
-        mFormCallViewModel.spParameter.setAccountNo(mNoRekening);
-        mFormCallViewModel.spParameter.setContactNo(mNoTelepon);
-        mFormCallViewModel.spParameter.setUserId(getUserId());
-        FormCallBody.SpParameter spParameter = mFormCallViewModel.spParameter;
-        if (TextUtils.isEmpty(spParameter.getTujuan())) {
+        mFormCallViewModel.spParameterFormCall.setAccountNo(mNoRekening);
+        mFormCallViewModel.spParameterFormCall.setContactNo(mNoTelepon);
+        mFormCallViewModel.spParameterFormCall.setUserId(getUserId());
+        FormCallBody.SpParameterFormCall spParameterFormCall = mFormCallViewModel.spParameterFormCall;
+        if (TextUtils.isEmpty(spParameterFormCall.getTujuan())) {
             displayMessage(getString(R.string.FormCall_TujuanCallInitial));
             return false;
-        } else if (TextUtils.isEmpty(spParameter.getSpokeTo())) {
+        } else if (TextUtils.isEmpty(spParameterFormCall.getSpokeTo())) {
             displayMessage(getString(R.string.FormCall_BerbicaraDenganHint));
             return false;
-        } else if (TextUtils.isEmpty(spParameter.getRelationship())) {
+        } else if (TextUtils.isEmpty(spParameterFormCall.getRelationship())) {
             displayMessage(getString(R.string.FormCall_HubunganDenganDebiturInitial));
             return false;
-        } else if (TextUtils.isEmpty(spParameter.getResult())) {
+        } else if (TextUtils.isEmpty(spParameterFormCall.getResult())) {
             displayMessage(getString(R.string.FormCall_HasilPanggilanInitial));
             return false;
-        } else if (TextUtils.isEmpty(spParameter.getResultDate()) && mFormCallViewModel.obsIsShowTanggalJanjiDebitur.get()) {
+        } else if (TextUtils.isEmpty(spParameterFormCall.getResultDate()) && mFormCallViewModel.obsIsShowTanggalJanjiDebitur.get()) {
             displayMessage(getString(R.string.FormCall_TanggalHasilPanggilanInitial));
             return false;
-        } else if (spParameter.getPtpAmount() == 0 && mFormCallViewModel.obsIsShowJumlahYangAkanDisetor.get()) {
+        } else if (spParameterFormCall.getPtpAmount() == 0 && mFormCallViewModel.obsIsShowJumlahYangAkanDisetor.get()) {
             displayMessage(getString(R.string.FormCall_JumlahYangAkanDisetorHint));
             return false;
-        } else if (TextUtils.isEmpty(spParameter.getReasonNoPayment())) {
+        } else if (TextUtils.isEmpty(spParameterFormCall.getReasonNoPayment())) {
             displayMessage(getString(R.string.FormCall_AlasanTidakBayarInitial));
             return false;
-        } else if (TextUtils.isEmpty(spParameter.getNextAction())) {
+        } else if (TextUtils.isEmpty(spParameterFormCall.getNextAction())) {
             displayMessage(getString(R.string.FormCall_TindakLanjutInitial));
             return false;
-        } else if (TextUtils.isEmpty(spParameter.getDateAction())) {
+        } else if (TextUtils.isEmpty(spParameterFormCall.getDateAction())) {
             displayMessage(getString(R.string.FormCall_TanggalTindakLanjutInitial));
             return false;
-        } else if (TextUtils.isEmpty(spParameter.getNotes())) {
+        } else if (TextUtils.isEmpty(spParameterFormCall.getNotes())) {
             displayMessage(getString(R.string.FormCall_CatatanHint));
             return false;
         }
@@ -530,12 +538,12 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
                         public void onSuccess(Location location) {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
-                                mFormCallViewModel.spParameter.setGeoLatitude(location.getLatitude());
-                                mFormCallViewModel.spParameter.setGeoLongitude(location.getLongitude());
+                                mFormCallViewModel.spParameterFormCall.setGeoLatitude(location.getLatitude());
+                                mFormCallViewModel.spParameterFormCall.setGeoLongitude(location.getLongitude());
 
                                 if (!mFormCallViewModel.obsIsShowTanggalJanjiDebitur.get()) {
-                                    mFormCallViewModel.spParameter.setResultDate("");
-                                    mFormCallViewModel.spParameter.setPtpAmount(0);
+                                    mFormCallViewModel.spParameterFormCall.setResultDate("");
+                                    mFormCallViewModel.spParameterFormCall.setPtpAmount(0);
                                 }
 
 //                                Get Address string
@@ -580,7 +588,8 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
 
             // Display the address string or an error message sent from the intent service.
             mAddressOutput = resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY);
-            mFormCallViewModel.spParameter.setGeoAddress(mAddressOutput);
+
+            mFormCallViewModel.spParameterFormCall.setGeoAddress(mAddressOutput);
 
             mFormCallViewModel.saveFormCall(getAccessToken());
 

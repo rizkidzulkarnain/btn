@@ -3,6 +3,9 @@ package com.mitkoindo.smartcollection.network.body;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by ericwijaya on 8/24/17.
  */
@@ -19,7 +22,7 @@ public class FormCallBody {
 
     @SerializedName("SpParameter")
     @Expose
-    private SpParameter spParameter;
+    private SpParameterFormCall spParameterFormCall;
 
 
     public String getDatabaseId() {
@@ -38,16 +41,16 @@ public class FormCallBody {
         this.spName = spName;
     }
 
-    public SpParameter getSpParameter() {
-        return spParameter;
+    public SpParameterFormCall getSpParameterFormCall() {
+        return spParameterFormCall;
     }
 
-    public void setSpParameter(SpParameter spParameter) {
-        this.spParameter = spParameter;
+    public void setSpParameterFormCall(SpParameterFormCall spParameterFormCall) {
+        this.spParameterFormCall = spParameterFormCall;
     }
 
 
-    public static class SpParameter {
+    public static class SpParameterFormCall {
 
         @SerializedName("ACC_NO")
         @Expose

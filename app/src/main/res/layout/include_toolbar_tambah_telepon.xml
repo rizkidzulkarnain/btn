@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/image_btn_toolbar_tambah_telepon"
+    style="@style/AppToolbarActionButton"
+    android:src="@drawable/ic_plus_white_36dp"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"/>

@@ -1,6 +1,7 @@
 package com.mitkoindo.smartcollection.adapter;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +9,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.helper.StringHelper;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
 import com.mitkoindo.smartcollection.objectdata.DebiturItemWithFlag;
+import com.mitkoindo.smartcollection.objectdata.DebiturItemWithPetugas;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
+import com.mitkoindo.smartcollection.utilities.NetworkConnection;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -27,7 +35,7 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
     //----------------------------------------------------------------------------------------------
     //  Data
     //----------------------------------------------------------------------------------------------
-    private ArrayList<DebiturItemWithFlag> debiturItems;
+    private ArrayList<DebiturItemWithPetugas> debiturItems = new ArrayList<>();
 
     //reference ke context
     private Activity context;
@@ -47,14 +55,41 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
     //generic alert
     private GenericAlert genericAlert;
 
+    //recyclerview
+    private RecyclerView view_Recycler;
+
+    //progress bar
+    private ProgressBar view_ProgressBar;
+
+    //alert text
+    private TextView view_Alert;
+
+    //flag binding
+    private boolean onBind;
+
+    //----------------------------------------------------------------------------------------------
+    //  Transaksi
+    //----------------------------------------------------------------------------------------------
+    //url
+    private String baseURL;
+    private String url_DataSP;
+
+    //auth token;
+    private String authToken;
+
+    //user id
+    private String userID;
+
+    //search query
+    private String searchQuery = "";
+
     //----------------------------------------------------------------------------------------------
     //  Setup
     //----------------------------------------------------------------------------------------------
     //constructor
-    public AccountAssignmentAdapter(Activity context, ArrayList<DebiturItemWithFlag> debiturItems)
+    public AccountAssignmentAdapter(Activity context)
     {
         this.context = context;
-        this.debiturItems = debiturItems;
 
         //set jumlah debitur yang diselect jadi nol
         count_SelectedDebitur = 0;
@@ -85,8 +120,11 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
         if (position >= getItemCount())
             return;
 
+        //set data ke bind
+        onBind = true;
+
         //get current data
-        DebiturItemWithFlag currentDebitur = debiturItems.get(position);
+        DebiturItemWithPetugas currentDebitur = debiturItems.get(position);
 
         //set item
         holder.Name.setText(currentDebitur.getNama());
@@ -138,12 +176,32 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
                 UpdateView_AssignButton();
             }
         });
+
+        //release bind
+        onBind = false;
     }
 
     @Override
     public int getItemCount()
     {
         return debiturItems.size();
+    }
+
+    //set transaction data
+    public void SetTransactionData(String baseURL, String url_DataSP, String authToken, String userID)
+    {
+        this.baseURL = baseURL;
+        this.url_DataSP = url_DataSP;
+        this.authToken = authToken;
+        this.userID = userID;
+    }
+
+    //set view
+    public void SetViews(ProgressBar view_ProgressBar, RecyclerView view_Recycler, TextView view_Alert)
+    {
+        this.view_ProgressBar = view_ProgressBar;
+        this.view_Recycler = view_Recycler;
+        this.view_Alert = view_Alert;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -165,7 +223,7 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
         for (int i = 0; i < debiturItems.size(); i++)
         {
             //get current item
-            DebiturItemWithFlag currentItem = debiturItems.get(i);
+            DebiturItemWithPetugas currentItem = debiturItems.get(i);
 
             //cek apakah dia selected atau nggak
             if (!currentItem.Checked)
@@ -196,19 +254,160 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
             button_Assign.setVisibility(View.VISIBLE);
     }
 
-    /*//listen to checkbox's state change
-    private void CheckboxStateListener(int adapterPos, boolean isChecked)
+    //----------------------------------------------------------------------------------------------
+    //  Create request
+    //----------------------------------------------------------------------------------------------
+    //create request buat get list debitur
+    public void CreateGetListDebiturRequest()
     {
-        //pastikan index nggak keluar dari posisi
-        if (adapterPos >= getItemCount())
+        //set views
+        view_Alert.setVisibility(View.GONE);
+        view_Recycler.setVisibility(View.GONE);
+        view_ProgressBar.setVisibility(View.VISIBLE);
+        button_Assign.setVisibility(View.GONE);
+        count_SelectedDebitur = 0;
+
+        //send request buat get list debitur
+        new SendGetListDebitureRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+    }
+
+    //create request buat search
+    public void CreateSearchRequest(String searchQuery)
+    {
+        this.searchQuery = searchQuery;
+
+        CreateGetListDebiturRequest();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Execute transaksi
+    //----------------------------------------------------------------------------------------------
+    //send request buat get list debitur
+    private class SendGetListDebitureRequest extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected String doInBackground(String... strings)
+        {
+            //create url
+            String usedURL = baseURL + url_DataSP;
+
+            //create request object
+            JSONObject requestObject = CreateGetDebiturRequestObject();
+
+            //execute request
+            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
+            networkConnection.SetRequestObject(requestObject);
+            return networkConnection.SendPostRequest(usedURL);
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+            HandleGetDebiturResult(s);
+        }
+    }
+
+    //create request object
+    private JSONObject CreateGetDebiturRequestObject()
+    {
+        //create request object
+        JSONObject requestObject = new JSONObject();
+
+        try
+        {
+            //create sp parameter object
+            JSONObject spParameterObject = new JSONObject();
+            spParameterObject.put("userID", "BTN0013887");
+            spParameterObject.put("isAssign", 0);
+            spParameterObject.put("filterKeyword", searchQuery);
+            spParameterObject.put("filterByField", "NamaNasabah");
+            spParameterObject.put("filterOperator", "LIKE");
+            spParameterObject.put("sortByField", "LD.TOT_KEWAJIBAN");
+            spParameterObject.put("sortDirection", "DESC");
+            spParameterObject.put("page", 1);
+            spParameterObject.put("limit", 10);
+
+            //populate request object
+            requestObject.put("DatabaseID", "db1");
+            requestObject.put("SpName", "MKI_SP_ACCOUNT_ASSIGNMENT_LIST");
+            requestObject.put("SpParameter", spParameterObject);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        //return request object
+        return requestObject;
+    }
+
+    //handle result
+    private void HandleGetDebiturResult(String result)
+    {
+        view_ProgressBar.setVisibility(View.GONE);
+
+        //pastikan result nggak kosong
+        if (result == null || result.isEmpty())
+        {
+            view_Alert.setText(R.string.Text_SomethingWrong);
+            view_Alert.setVisibility(View.VISIBLE);
             return;
+        }
 
-        //update checked status
-        debiturItems.get(adapterPos).Checked = isChecked;
+        //pastikan response nggak 404
+        if (result.equals("Not Found"))
+        {
+            view_Alert.setText(R.string.Text_NoData);
+            view_Alert.setVisibility(View.VISIBLE);
+            return;
+        }
 
-        //notify changes
-        notifyDataSetChanged();
-    }*/
+        try
+        {
+            //parse result ke json array
+            JSONArray resultArray = new JSONArray(result);
+
+            //initialize array
+            ArrayList<DebiturItemWithPetugas> newDebiturItems = new ArrayList<>();
+
+            //add item to debitur
+            for (int i = 0; i < resultArray.length(); i++)
+            {
+                //parse item
+                DebiturItemWithPetugas debiturItem = new DebiturItemWithPetugas();
+                debiturItem.ParseData(resultArray.getString(i));
+
+                //add to list
+                newDebiturItems.add(debiturItem);
+            }
+
+            //create adapter
+            AddItemsToList(newDebiturItems);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    //Add item to list
+    private void AddItemsToList(ArrayList<DebiturItemWithPetugas> newDebiturItems)
+    {
+        debiturItems = new ArrayList<>();
+        for (int i = 0; i < newDebiturItems.size(); i++)
+        {
+            debiturItems.add(newDebiturItems.get(i));
+        }
+
+        if (!onBind)
+            notifyDataSetChanged();
+
+        //update view
+        view_Recycler.setVisibility(View.VISIBLE);
+        view_Alert.setVisibility(View.GONE);
+        view_ProgressBar.setVisibility(View.GONE);
+    }
 
     //----------------------------------------------------------------------------------------------
     //  View holder
@@ -232,39 +431,6 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
             DPD = itemView.findViewById(R.id.text_view_dpd_value);
             LastPayment = itemView.findViewById(R.id.text_view_last_payment_value);
             checkBox = itemView.findViewById(R.id.AccountAssignmentAdapter_CheckBox);
-
-            /*checkBox.setOnCheckedChangeListener(this);*/
         }
-
-        /*@Override
-        public void onCheckedChanged(CompoundButton compoundButton, boolean b)
-        {
-            //update checked status
-            debiturItems.get(getAdapterPosition()).Checked = compoundButton.isChecked();
-
-            //update jumlah debitur yang diselect
-            if (compoundButton.isChecked())
-            {
-                //tambah jumlah debitur yang diselect
-                count_SelectedDebitur++;
-            }
-            else
-            {
-                //kurangi jumlah debitur yang diselect
-                count_SelectedDebitur--;
-            }
-
-            //update display assign button
-            UpdateView_AssignButton();
-
-            CheckboxStateListener(getAdapterPosition(), compoundButton.isChecked());
-
-            //pastikan index nggak keluar dari posisi
-            if (adapterPos >= getItemCount())
-                return;
-
-            //notify changes
-            notifyDataSetChanged();
-        }*/
     }
 }

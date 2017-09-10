@@ -24,6 +24,8 @@
 
                 <include layout="@layout/include_toolbar_title" />
 
+                <include layout="@layout/include_toolbar_download_button" />
+
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>

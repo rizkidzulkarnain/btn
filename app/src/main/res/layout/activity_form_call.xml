@@ -132,7 +132,7 @@
                         android:textColorHint="@color/Grey"
                         android:hint="@string/FormCall_BerbicaraDenganHint"
                         android:background="@color/Transparent"
-                        android:text="@={formCallViewModel.spParameter.spokeTo}"/>
+                        android:text="@={formCallViewModel.spParameterFormCall.spokeTo}"/>
                 </android.support.v7.widget.CardView>
 
                 <!--Hubungan dengan debitur-->
@@ -480,7 +480,7 @@
                         android:textColorHint="@color/Grey"
                         android:hint="@string/FormCall_CatatanHint"
                         android:background="@color/Transparent"
-                        android:text="@={formCallViewModel.spParameter.notes}"/>
+                        android:text="@={formCallViewModel.spParameterFormCall.notes}"/>
                 </android.support.v7.widget.CardView>
 
                 <!--Submit Button-->

@@ -19,6 +19,7 @@ public final class RestConstants {
     public static final String ENDPOINT_LIST_PHONE_NUMBER = "wsMobile/api/Data/sp";
     public static final String ENDPOINT_UPLOAD_FILE = "wsMobile/api/File/upload";
     public static final String DATA_SP = "wsMobile/api/Data/sp";
+    public static final String BUNDLE = "wsMobile/api/Data/bundle/{dbName}/{limit}";
 
     public static final String DATABASE_ID_VALUE = "db1";
 
@@ -51,6 +52,9 @@ public final class RestConstants {
 
     public static final String DROP_DOWN_TELEPON_TYPE_VIEW_NAME = "RFCONTACTTYPE";
     public static final String DROP_DOWN_TELEPON_TYPE_SORT_PROPERTY = "CT_CODE";
+
+    public static final String DROP_DOWN_ADDRESS_TYPE_VIEW_NAME = "RFADDRTYPE";
+    public static final String DROP_DOWN_ADDRESS_TYPE_SORT_PROPERTY = "AT_CODE";
 
     public static final String DROP_DOWN_ADDRESS_VIEW_NAME = "MKI_VW_DEBITUR_ADDRESS_LIST";
     public static final String DROP_DOWN_ADDRESS_SORT_PROPERTY = "ACC_NO";

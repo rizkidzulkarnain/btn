@@ -37,6 +37,7 @@ import com.mitkoindo.smartcollection.HomeActivity;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.base.BaseActivity;
 import com.mitkoindo.smartcollection.databinding.ActivityFormVisitKonfirmasiBinding;
+import com.mitkoindo.smartcollection.dialog.DialogFactory;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.module.formcall.FormCallActivity;
 import com.mitkoindo.smartcollection.network.body.FormVisitBody;
@@ -131,7 +132,16 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
         mFormVisitKonfirmasiViewModel.error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                displayMessage(R.string.GagalMenyimpanFormVisit);
+                DialogFactory.createDialog(FormVisitKonfirmasiActivity.this,
+                        getString(R.string.FormKonfirmasi_PageTitle),
+                        getString(R.string.GagalMenyimpanFormVisit),
+                        getString(R.string.ok),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                startActivity(HomeActivity.instantiateClearTask(FormVisitKonfirmasiActivity.this));
+                            }
+                        }).show();
             }
         });
         mFormVisitKonfirmasiViewModel.obsIsSaveSuccess.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {

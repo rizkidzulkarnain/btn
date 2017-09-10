@@ -15,22 +15,29 @@ public class DropDownReason extends RealmObject {
     @PrimaryKey
     @SerializedName("RowNumber")
     @Expose
-    private Integer rowNumber;
+    private int rowNumber;
+
     @SerializedName("REASON_ID")
     @Expose
     private String reasonId;
+
     @SerializedName("REASON_DESC")
     @Expose
     private String reasonDesc;
+
     @SerializedName("ACTIVE")
     @Expose
-    private Boolean active;
+    private boolean active;
 
-    public Integer getRowNumber() {
+
+    public DropDownReason() {
+    }
+
+    public int getRowNumber() {
         return rowNumber;
     }
 
-    public void setRowNumber(Integer rowNumber) {
+    public void setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
     }
 
@@ -50,11 +57,11 @@ public class DropDownReason extends RealmObject {
         this.reasonDesc = reasonDesc;
     }
 
-    public Boolean getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 }

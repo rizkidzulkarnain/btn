@@ -15,12 +15,14 @@ import com.mitkoindo.smartcollection.network.response.FormCallResponse;
 import com.mitkoindo.smartcollection.network.response.FormVisitResponse;
 import com.mitkoindo.smartcollection.network.response.LoginResponse;
 import com.mitkoindo.smartcollection.network.response.MultipartResponse;
+import com.mitkoindo.smartcollection.network.response.OfflineBundleResponse;
 import com.mitkoindo.smartcollection.network.response.TambahAlamatResponse;
 import com.mitkoindo.smartcollection.network.response.TambahTeleponResponse;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
 import com.mitkoindo.smartcollection.objectdata.DetailDebitur;
 import com.mitkoindo.smartcollection.objectdata.DropDownAction;
 import com.mitkoindo.smartcollection.objectdata.DropDownAddress;
+import com.mitkoindo.smartcollection.objectdata.DropDownAddressType;
 import com.mitkoindo.smartcollection.objectdata.DropDownPurpose;
 import com.mitkoindo.smartcollection.objectdata.DropDownReason;
 import com.mitkoindo.smartcollection.objectdata.DropDownRelationship;
@@ -34,10 +36,12 @@ import java.util.List;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 /**
  * Created by ericwijaya on 8/20/17.
@@ -78,6 +82,9 @@ public interface RestServices {
     @POST(RestConstants.ENDPOINT_VISIT_DROPDOWN)
     Observable<List<DropDownTeleponType>> getDropDownTeleponType(@Body FormVisitDropDownBody formVisitDropDownBody);
 
+    @POST(RestConstants.ENDPOINT_VISIT_DROPDOWN)
+    Observable<List<DropDownAddressType>> getDropDownAddressType(@Body FormVisitDropDownBody formVisitDropDownBody);
+
     @POST(RestConstants.FORM_VISIT)
     Observable<List<FormVisitResponse>> saveFormVisit(@Body FormVisitBody formVisitBody);
 
@@ -95,6 +102,9 @@ public interface RestServices {
 
     @POST(RestConstants.DATA_SP)
     Observable<List<TambahAlamatResponse>> tambahAlamat(@Body TambahAlamatBody tambahAlamatBody);
+
+    @GET(RestConstants.BUNDLE)
+    Observable<OfflineBundleResponse> getBundle(@Path("dbName") String dbName, @Path("limit") String limit);
 
 
     @Headers({"Content-Type: multipart/form-data"})

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/popup_menu_lihat_history"
+        android:title="@string/DetailDebitur_MenuLihatHistory" />
+    <item android:id="@+id/popup_menu_gallery"
+        android:title="@string/DetailDebitur_Gallery" />
+
+</menu>

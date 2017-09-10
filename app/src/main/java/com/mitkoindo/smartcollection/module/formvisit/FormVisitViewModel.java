@@ -37,8 +37,8 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.HttpException;
+import timber.log.Timber;
 
 /**
  * Created by ericwijaya on 8/17/17.
@@ -123,6 +123,7 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
                     @Override
                     public void onError(Throwable e) {
                         error.set(e);
+                        Timber.e("getListAddress " + e.getMessage());
                     }
 
                     @Override

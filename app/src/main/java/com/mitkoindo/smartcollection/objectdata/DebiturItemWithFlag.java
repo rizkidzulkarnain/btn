@@ -26,12 +26,15 @@ public class DebiturItemWithFlag extends DebiturItem
             JSONObject dataObject = new JSONObject(jsonString);
 
             //get data
+            setNo(dataObject.getString("No"));
+            setNoCif(dataObject.getString("NoCIF"));
             setNama(dataObject.getString("NamaNasabah"));
             setNoRekening(dataObject.getString("NomorRekening"));
             setTagihan(dataObject.getString("Tagihan"));
             setDpd(dataObject.getString("DPD"));
             setLastPayment(dataObject.getString("LastPaymentDate"));
-
+            setUseAssignDate(dataObject.getString("UserAssignDate"));
+            setCustomerReference(dataObject.getString("CustomerReference"));
         }
         catch (JSONException e)
         {

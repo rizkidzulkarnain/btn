@@ -1,6 +1,7 @@
 package com.mitkoindo.smartcollection.module.debitur.listdebitur;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.os.Bundle;
@@ -25,14 +26,16 @@ import com.mikepenz.fastadapter_extensions.scroll.EndlessRecyclerOnScrollListene
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.base.BaseFragment;
 import com.mitkoindo.smartcollection.databinding.FragmentListDebiturBinding;
+import com.mitkoindo.smartcollection.dialog.DialogFactory;
 import com.mitkoindo.smartcollection.dialog.DialogSimpleSpinnerAdapter;
 import com.mitkoindo.smartcollection.event.EventDialogSimpleSpinnerSelected;
+import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturActivity;
 import com.mitkoindo.smartcollection.module.debitur.tambahalamat.TambahAlamatActivity;
 import com.mitkoindo.smartcollection.module.debitur.tambahtelepon.TambahTeleponActivity;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
-import com.mitkoindo.smartcollection.objectdata.DropDownRelationship;
+import com.mitkoindo.smartcollection.objectdata.databasemodel.DebiturItemDb;
 import com.mitkoindo.smartcollection.utils.SimpleListItemDecoration;
 import com.mitkoindo.smartcollection.utils.ToastUtils;
 
@@ -61,6 +64,7 @@ public class ListDebiturFragment extends BaseFragment {
     private String mType = ListDebiturActivity.EXTRA_TYPE_PENUGASAN_VALUE;
     private List<String> mListTambah = new ArrayList<>();
     private DebiturItem selectedDebitur;
+    private int mPage = 1;
 
 
     public static ListDebiturFragment getInstance() {
@@ -122,7 +126,21 @@ public class ListDebiturFragment extends BaseFragment {
         mListDebiturViewModel.error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                displayMessage(R.string.GagalMendapatkanData);
+
+                if (mStatus.equals(RestConstants.LIST_DEBITUR_STATUS_PENDING_VALUE) && mPage == 1) {
+
+                    displayMessage(R.string.GagalMendapatListDebitur);
+
+                    List<DebiturItem> debiturItemList = new ArrayList<DebiturItem>();
+                    List<DebiturItemDb> debiturItemDbList = RealmHelper.getListDebiturItem();
+                    for (DebiturItemDb debiturItemDb : debiturItemDbList) {
+                        debiturItemList.add(debiturItemDb.toDebiturItem());
+                    }
+
+                    mListDebiturViewModel.obsDebiturResponse.set(debiturItemList);
+                } else {
+//                    displayMessage(R.string.GagalMendapatkanData);
+                }
             }
         });
         mListDebiturViewModel.obsDebiturResponse.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
@@ -147,7 +165,8 @@ public class ListDebiturFragment extends BaseFragment {
         setupArrayTambah();
         setupRecyclerView();
 
-        mListDebiturViewModel.getListDebitur(getUserId(), mStatus, 1);
+        mPage = 1;
+        mListDebiturViewModel.getListDebitur(getUserId(), mStatus, mPage);
     }
 
     private void setupArrayTambah() {
@@ -171,12 +190,12 @@ public class ListDebiturFragment extends BaseFragment {
         mFastAdapter.withOnClickListener(new FastAdapter.OnClickListener<DebiturItem>() {
             @Override
             public boolean onClick(View v, IAdapter<DebiturItem> adapter, DebiturItem item, int position) {
-                if (mType.equals(ListDebiturActivity.EXTRA_TYPE_PENUGASAN_VALUE)) {
-                    startActivity(DetailDebiturActivity.instantiate(getActivity(), item.getNoRekening(), item.getCustomerReference()));
-                } else if (mType.equals(ListDebiturActivity.EXTRA_TYPE_TAMBAH_KONTAK_VALUE)) {
-                    selectedDebitur = item;
-                    showInstallmentDialogSimpleSpinner(mListTambah, getString(R.string.ListDebitur_PilihTambah), PILIH_TAMBAH);
-                }
+//                if (mType.equals(ListDebiturActivity.EXTRA_TYPE_PENUGASAN_VALUE)) {
+                    startActivity(DetailDebiturActivity.instantiate(getActivity(), item.getNoRekening(), item.getCustomerReference(), mType));
+//                } else if (mType.equals(ListDebiturActivity.EXTRA_TYPE_TAMBAH_KONTAK_VALUE)) {
+//                    selectedDebitur = item;
+//                    showInstallmentDialogSimpleSpinner(mListTambah, getString(R.string.ListDebitur_PilihTambah), PILIH_TAMBAH);
+//                }
 
                 return true;
             }
@@ -187,7 +206,8 @@ public class ListDebiturFragment extends BaseFragment {
                 mFooterAdapter.clear();
                 mFooterAdapter.add(new ProgressItem().withEnabled(false));
 
-                mListDebiturViewModel.getListDebitur(getUserId(), mStatus, currentPage);
+                mPage = currentPage;
+                mListDebiturViewModel.getListDebitur(getUserId(), mStatus, mPage);
             }
         });
 
@@ -195,7 +215,8 @@ public class ListDebiturFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 mBinding.swipeRefreshLayoutDebitur.setRefreshing(true);
-                mListDebiturViewModel.getListDebitur(getUserId(), mStatus, 1);
+                mPage = 1;
+                mListDebiturViewModel.getListDebitur(getUserId(), mStatus, mPage);
             }
         });
     }

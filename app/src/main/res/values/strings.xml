@@ -118,9 +118,15 @@
     <string name="DetailDebitur_MenuLihatHistory">Lihat history</string>
     <string name="DetailDebitur_PilihNomorTelepon">Pilih nomor telepon</string>
     <string name="DetailDebitur_TambahTelepon">Tambah telepon</string>
+    <string name="DetailDebitur_ViewTelepon">Lihat telepon</string>
     <string name="DetailDebitur_TambahAlamatDanTelepon">Tambah alamat</string>
+    <string name="DetailDebitur_Gallery">Gallery</string>
     <string name="DetailDebitur_SuksesCheckIn">Sukses melakukan check in</string>
     <string name="DetailDebitur_PilihAlamat">Pilih Alamat</string>
+
+    <!--View Telepon page-->
+    <string name="ViewTelepon_PageTitle">Daftar Telepon</string>
+    <string name="ViewTelepon_Empty">Tidak ada data telepon</string>
 
     <!--Form visit page-->
     <string name="FormVisit_PageTitle">Form Visit</string>
@@ -250,6 +256,8 @@
     <string name="TambahAlamatSaja_NamaHint">Tuliskan nama pemilik alamat</string>
     <string name="TambahAlamatSaja_HubunganDenganDebitur">Hubungan dengan debitur</string>
     <string name="TambahAlamatSaja_HubunganDenganDebiturInitial">Pilih hubungan dengan debitur</string>
+    <string name="TambahAlamatSaja_AddressType">Jenis Alamat</string>
+    <string name="TambahAlamatSaja_AddressTypeInitial">Pilih jenis alamat</string>
     <string name="TambahAlamatSaja_Alamat">Alamat</string>
     <string name="TambahAlamatSaja_AlamatHint">Isi alamat</string>
     <string name="TambahAlamatSaja_Kota">Kota</string>
@@ -285,6 +293,14 @@
     <string name="Chat_Title">Chat</string>
     <string name="Chat_Hint_CariPetugas">Cari Petugas</string>
     <string name="ChatWindow_Alert_NoChat">Tidak ada pesan</string>
+
+    <!--Laporan-->
+    <string name="Laporan_Title">Laporan</string>
+    <string name="Laporan_Tab_Arsip">Arsip</string>
+    <string name="Laporan_Tab_Monitoring">Monitoring Debitur</string>
+    <string name="Laporan_Tab_AgentTracking">Agent Tracking</string>
+    <string name="Laporan_Tab_StaffProductivity">Staff Productivity</string>
+    <string name="Laporan_Arsip_Hint_CariDebitur">Cari Debitur</string>
 
     <!--Update password page-->
     <string name="UpdatePassword_PageTitle">Update Password</string>
@@ -336,6 +352,7 @@
     <string name="GagalCheckIn">Gagal melakukan check in</string>
     <string name="GagalMenambahNomorTelepon">Gagal menambah nomor telepon</string>
     <string name="GagalMenambahAlamat">Gagal menambah alamat</string>
+    <string name="GagalMendapatListDebitur">Gagal mendapatkan list debitur, memakai data offline record</string>
 
     <!--Geocoder-->
     <string name="no_geocoder_available">No geocoder available</string>

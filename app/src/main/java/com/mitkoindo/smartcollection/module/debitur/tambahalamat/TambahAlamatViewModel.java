@@ -9,9 +9,7 @@ import com.mitkoindo.smartcollection.base.ILifecycleViewModel;
 import com.mitkoindo.smartcollection.network.ApiUtils;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.TambahAlamatBody;
-import com.mitkoindo.smartcollection.network.body.TambahTeleponBody;
 import com.mitkoindo.smartcollection.network.response.TambahAlamatResponse;
-import com.mitkoindo.smartcollection.network.response.TambahTeleponResponse;
 
 import java.util.List;
 
@@ -38,6 +36,10 @@ public class TambahAlamatViewModel extends BaseObservable implements ILifecycleV
     public ObservableField<String> nama = new ObservableField<>();
     public ObservableField<String> hubunganDenganDebiturId = new ObservableField<>();
     public ObservableField<String> hubunganDenganDebitur = new ObservableField<>();
+
+    public ObservableField<String> typeAddressId = new ObservableField<>();
+    public ObservableField<String> typeAddress = new ObservableField<>();
+
     public ObservableField<String> alamat1 = new ObservableField<>();
     public ObservableField<String> alamat2 = new ObservableField<>();
     public ObservableField<String> alamat3 = new ObservableField<>();
@@ -61,7 +63,7 @@ public class TambahAlamatViewModel extends BaseObservable implements ILifecycleV
         spParameter.setCuRef(customerReference);
         spParameter.setContactName(nama.get());
         spParameter.setRelationship(hubunganDenganDebiturId.get());
-        spParameter.setAddressType("02");
+        spParameter.setAddressType(typeAddressId.get());
         spParameter.setAddress1(alamat1.get());
         spParameter.setAddress2(alamat2.get());
         spParameter.setAddress3(alamat3.get());

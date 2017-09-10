@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
@@ -15,7 +14,6 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -40,6 +38,7 @@ import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.FormVisitBody;
 import com.mitkoindo.smartcollection.objectdata.DropDownAction;
 import com.mitkoindo.smartcollection.objectdata.DropDownAddress;
+import com.mitkoindo.smartcollection.objectdata.DropDownAddressDb;
 import com.mitkoindo.smartcollection.objectdata.DropDownPurpose;
 import com.mitkoindo.smartcollection.objectdata.DropDownReason;
 import com.mitkoindo.smartcollection.objectdata.DropDownRelationship;
@@ -147,7 +146,15 @@ public class FormVisitActivity extends BaseActivity {
         mFormVisitViewModel.error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                displayMessage(R.string.GagalMendapatkanData);
+//                displayMessage(R.string.GagalMendapatkanData);
+
+                List<DropDownAddress> dropDownAddressList = new ArrayList<DropDownAddress>();
+                List<DropDownAddressDb> dropDownAddressDbList = RealmHelper.getAddress(mNoRekening);
+                for (DropDownAddressDb dropDownAddressDb : dropDownAddressDbList) {
+                    dropDownAddressList.add(dropDownAddressDb.toDropDownAddress());
+                }
+
+                mFormVisitViewModel.mObsListDropDownAddress.set(dropDownAddressList);
             }
         });
         mFormVisitViewModel.errorSave.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {

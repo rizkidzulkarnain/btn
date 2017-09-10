@@ -143,9 +143,8 @@
                             app:layout_constraintTop_toBottomOf="@+id/text_view_no_rekening"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/guideline"
-                            android:maxLines="1"
                             android:text="@string/DetailDebitur_TotalTunggakan"
-                            tools:text="Rekening"/>
+                            tools:text="Total tunggakan teks yang panjang loh"/>
 
                         <!--Total Tunggakan value-->
                         <TextView
@@ -161,6 +160,14 @@
                             android:text="@{detailDebitur.totalTunggakan}"
                             tools:text="1.000.000"/>
 
+                        <!--Tunggakan barrier-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_tunggakan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_total_tunggakan,text_view_total_tunggakan_value"/>
+
                         <!--Last Payment Date-->
                         <TextView
                             android:id="@+id/text_view_last_payment_date"
@@ -168,10 +175,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_total_tunggakan_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_tunggakan"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/guideline"
-                            android:maxLines="1"
                             android:text="@string/DetailDebitur_LastPaymentDate"
                             tools:text="Last Payment Date"/>
 
@@ -182,12 +188,20 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_total_tunggakan_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_tunggakan"
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_last_payment_date"
                             android:text="@{detailDebitur.lastPaymentDate}"
                             tools:text="17/8/2017"/>
+
+                        <!--Last Payment Date barrier-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_last_payment_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_last_payment_date,text_view_last_payment_date_value"/>
 
                         <!--DPD-->
                         <TextView
@@ -196,10 +210,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_last_payment_date_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_last_payment_date"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/guideline"
-                            android:maxLines="1"
                             android:text="@string/DetailDebitur_Dpd"
                             tools:text="DPD"/>
 
@@ -210,12 +223,20 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_last_payment_date_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_last_payment_date"
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_dpd"
                             android:text="@{detailDebitur.dpd}"
                             tools:text="10"/>
+
+                        <!--DPD barrier-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_dpd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_dpd,text_view_dpd_value"/>
 
                         <!--Angsuran / bulan-->
                         <TextView
@@ -224,10 +245,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_dpd_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_dpd"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/guideline"
-                            android:maxLines="1"
                             android:text="@string/DetailDebitur_AngsuanPerBulan"
                             tools:text="Angsuran / Bulan"/>
 
@@ -238,12 +258,20 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_dpd_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_dpd"
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_angsuran_per_bulan"
                             android:text="@{detailDebitur.angsuranPerBulan}"
                             tools:text="1.000.000"/>
+
+                        <!--Angsuran / bulan barrier-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_angsuran_per_bulan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_angsuran_per_bulan,text_view_angsuran_per_bulan_value"/>
 
                         <!--Total Kewajiban-->
                         <TextView
@@ -252,10 +280,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_angsuran_per_bulan_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_angsuran_per_bulan"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/guideline"
-                            android:maxLines="1"
                             android:text="@string/DetailDebitur_TotalKewajiban"
                             tools:text="Total Kewajiban"/>
 
@@ -266,12 +293,20 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_angsuran_per_bulan_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_angsuran_per_bulan"
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_total_kewajiban"
                             android:text="@{detailDebitur.totalKewajiban}"
                             tools:text="500.000"/>
+
+                        <!--Total Kewajiban barrier-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_total_kewajiban"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_total_kewajiban,text_view_total_kewajiban_value"/>
 
                         <!--Kolektabilitas-->
                         <TextView
@@ -280,10 +315,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_total_kewajiban_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_total_kewajiban"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/guideline"
-                            android:maxLines="1"
                             android:text="@string/DetailDebitur_Kolektabilitas"
                             tools:text="Kolektabilitas"/>
 
@@ -294,12 +328,20 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_total_kewajiban_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_total_kewajiban"
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_kolektabilitas"
                             android:text="@{detailDebitur.kolektabilitas}"
                             tools:text=""/>
+
+                        <!--Kolektabilitas barrier-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_kolektabilitas"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_kolektabilitas,text_view_kolektabilitas_value"/>
 
                         <!--Tindak Lanjut-->
                         <TextView
@@ -308,10 +350,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_kolektabilitas_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_kolektabilitas"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/guideline"
-                            android:maxLines="1"
                             android:text="@string/DetailDebitur_TindakLanjut"
                             tools:text="Tindak Lanjut"/>
 
@@ -322,12 +363,20 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_kolektabilitas_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_kolektabilitas"
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_tindak_lanjut"
                             android:text="@{detailDebitur.tindakLanjut}"
                             tools:text="Surat"/>
+
+                        <!--Tindak Lanjut barrier-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_tindak_lanjut"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_tindak_lanjut,text_view_tindak_lanjut_value"/>
 
                         <!--Status-->
                         <TextView
@@ -336,10 +385,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_tindak_lanjut_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_tindak_lanjut"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/guideline"
-                            android:maxLines="1"
                             android:text="@string/DetailDebitur_Status"
                             tools:text="Status"/>
 
@@ -350,12 +398,20 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_tindak_lanjut_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_tindak_lanjut"
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_status"
                             android:text="@{detailDebitur.status}"
                             tools:text="Ditempati"/>
+
+                        <!--Status barrier-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_status,text_view_status_value"/>
 
                         <!--PTP-->
                         <TextView
@@ -364,10 +420,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_status_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_status"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/guideline"
-                            android:maxLines="1"
                             android:text="@string/DetailDebitur_Ptp"
                             tools:text="PTP"/>
 
@@ -378,12 +433,20 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_status_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_status"
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_ptp"
                             android:text="@{detailDebitur.ptp}"
                             tools:text="19/8/2017"/>
+
+                        <!--PTP barrier-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_ptp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_ptp,text_view_ptp_value"/>
 
                         <!--Besaran PTP-->
                         <TextView
@@ -392,10 +455,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_ptp_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_ptp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/guideline"
-                            android:maxLines="1"
                             android:text="@string/DetailDebitur_BesaranPtp"
                             tools:text="Besaran PTP"/>
 
@@ -406,12 +468,20 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_ptp_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_ptp"
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_besaran_ptp"
                             android:text="@{detailDebitur.besaranPtp}"
                             tools:text="4.000.0000"/>
+
+                        <!--Besaran PTP barrier-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_besaran_ptp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_besaran_ptp,text_view_besaran_ptp_value"/>
 
                         <!--Alamat Rumah-->
                         <TextView
@@ -420,10 +490,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_besaran_ptp_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_besaran_ptp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/guideline"
-                            android:maxLines="1"
                             android:text="@string/DetailDebitur_AlamatRumah"
                             tools:text="Alamat Rumah"/>
 
@@ -434,12 +503,20 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_besaran_ptp_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_besaran_ptp"
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_alamat_rumah"
                             android:text="@{detailDebitur.alamatRumah}"
                             tools:text="Jl. Papua 33, Jurangmangu Timur, Pondok Aren, Tangerang Selatan"/>
+
+                        <!--Alamat Rumah barrier-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_alamat_rumah"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_alamat_rumah,text_view_alamat_rumah_value"/>
 
                         <!--Alamat Agunan-->
                         <TextView
@@ -448,10 +525,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_rumah_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_alamat_rumah"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/guideline"
-                            android:maxLines="1"
                             android:text="@string/DetailDebitur_AlamatAgunan"
                             tools:text="Alamat Agunan"/>
 
@@ -462,12 +538,20 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_rumah_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_alamat_rumah"
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_alamat_agunan"
                             android:text="@{detailDebitur.alamatAgunan}"
                             tools:text="Jl. Papua 33, Jurangmangu Timur, Pondok Aren, Tangerang Selatan"/>
+
+                        <!--Alamat Agunan barrier-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_alamat_agunan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_alamat_agunan,text_view_alamat_agunan_value"/>
 
                         <!--Alamat Kantor-->
                         <TextView
@@ -476,10 +560,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_agunan_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_alamat_agunan"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/guideline"
-                            android:maxLines="1"
                             android:text="@string/DetailDebitur_AlamatKantor"
                             tools:text="Alamat Kantor"/>
 
@@ -490,12 +573,20 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_agunan_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_alamat_agunan"
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_alamat_kantor"
                             android:text="@{detailDebitur.alamatKantor}"
                             tools:text="Jl. Papua 33, Jurangmangu Timur, Pondok Aren, Tangerang Selatan"/>
+
+                        <!--Alamat Kantor barrier-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_alamat_kantor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_alamat_kantor,text_view_alamat_kantor_value"/>
 
                         <!--Alamat saat ini-->
                         <TextView
@@ -504,10 +595,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_kantor_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_alamat_kantor"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/guideline"
-                            android:maxLines="1"
                             android:text="@string/DetailDebitur_AlamatSaatIni"
                             tools:text="Alamat saat ini"/>
 
@@ -518,7 +608,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_medium"
-                            app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_kantor_value"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_alamat_kantor"
                             app:layout_constraintStart_toStartOf="@+id/guideline"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_alamat_saat_ini"

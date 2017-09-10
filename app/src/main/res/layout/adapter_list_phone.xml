@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="phoneNumber"
+            type="com.mitkoindo.smartcollection.objectdata.PhoneNumber" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_medium_large"
+        android:layout_marginEnd="@dimen/padding_medium_large">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_medium">
+
+            <!--Phone Name-->
+            <TextView
+                android:id="@+id/text_view_phone_name"
+                style="@style/FontBold.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@{phoneNumber.namaKontak}"
+                tools:text="Hamdani Hartanto" />
+
+            <!--Phone Relationship-->
+            <TextView
+                android:id="@+id/text_view_phone_relationship"
+                style="@style/FontRegular.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_phone_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@{phoneNumber.hubungan}"
+                tools:text="Ayah"/>
+
+            <!--Phone Type-->
+            <TextView
+                android:id="@+id/text_view_phone_type"
+                style="@style/FontRegular.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_phone_relationship"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@{phoneNumber.jenisKontak}"
+                tools:text="Telepon Rumah"/>
+
+            <!--Phone Number-->
+            <TextView
+                android:id="@+id/text_view_phone_number"
+                style="@style/FontRegular.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_phone_type"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@{phoneNumber.nomorKontak}"
+                tools:text="021 5698239"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+</layout>

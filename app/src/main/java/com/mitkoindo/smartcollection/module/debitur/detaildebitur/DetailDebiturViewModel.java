@@ -3,7 +3,6 @@ package com.mitkoindo.smartcollection.module.debitur.detaildebitur;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
-import android.util.Log;
 
 import com.mitkoindo.smartcollection.base.ILifecycleViewModel;
 import com.mitkoindo.smartcollection.network.ApiUtils;
@@ -24,6 +23,7 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Created by ericwijaya on 8/17/17.
@@ -40,6 +40,7 @@ public class DetailDebiturViewModel extends BaseObservable implements ILifecycle
     public ObservableField<DetailDebitur> obsDetailDebitur = new ObservableField<>();
     public ObservableField<List<PhoneNumber>> obsListPhoneNumber = new ObservableField<>();
     public ObservableBoolean obsCheckInSuccess = new ObservableBoolean();
+    public ObservableBoolean obsIsPhoneEmpty = new ObservableBoolean(false);
     public int mErrorType;
 
     private String mAccessToken;
@@ -87,7 +88,7 @@ public class DetailDebiturViewModel extends BaseObservable implements ILifecycle
                     public void onError(Throwable e) {
                         mErrorType = GET_DETAIL_DEBITUR_ERROR;
                         error.set(e);
-                        Log.e("DetailDebiturViewModel", "getDetailDebitur" + e.getMessage());
+                        Timber.e("getDetailDebitur " + e.getMessage());
                     }
 
                     @Override
@@ -134,7 +135,7 @@ public class DetailDebiturViewModel extends BaseObservable implements ILifecycle
                     public void onError(Throwable e) {
                         mErrorType = GET_PHONE_LIST_ERROR;
                         error.set(e);
-                        Log.e("DetailDebiturViewModel", "getPhoneList" + e.getMessage());
+                        Timber.e("getPhoneList " + e.getMessage());
                     }
 
                     @Override
@@ -184,7 +185,7 @@ public class DetailDebiturViewModel extends BaseObservable implements ILifecycle
                     public void onError(Throwable e) {
                         mErrorType = CHECK_IN_ERROR;
                         error.set(e);
-                        Log.e("DetailDebiturViewModel", "checkIn" + e.getMessage());
+                        Timber.e("checkIn " + e.getMessage());
                     }
 
                     @Override

@@ -15,26 +15,31 @@ public class DropDownResult extends RealmObject {
     @SerializedName("RowNumber")
     @Expose
     @PrimaryKey
-    private Integer rowNumber;
+    private int rowNumber;
+
     @SerializedName("RESULT_ID")
     @Expose
     private String resultId;
+
     @SerializedName("RESULT_DESC")
     @Expose
     private String resultDesc;
+
     @SerializedName("ACTIVE")
     @Expose
-    private Boolean active;
+    private boolean active;
+
     @SerializedName("RESULT_MAXDAY")
     @Expose
-    private Integer resultMaxDay;
+    private int resultMaxDay;
 
 
-    public Integer getRowNumber() {
+
+    public int getRowNumber() {
         return rowNumber;
     }
 
-    public void setRowNumber(Integer rowNumber) {
+    public void setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
     }
 
@@ -54,19 +59,19 @@ public class DropDownResult extends RealmObject {
         this.resultDesc = resultDesc;
     }
 
-    public Boolean getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 
-    public Integer getResultMaxDay() {
+    public int getResultMaxDay() {
         return resultMaxDay;
     }
 
-    public void setResultMaxDay(Integer resultMaxDay) {
+    public void setResultMaxDay(int resultMaxDay) {
         this.resultMaxDay = resultMaxDay;
     }
 }

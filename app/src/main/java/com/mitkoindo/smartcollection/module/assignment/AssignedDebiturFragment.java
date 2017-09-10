@@ -379,7 +379,7 @@ public class AssignedDebiturFragment extends Fragment
             }
 
             //create adapter
-            accountAssignmentAdapter = new AccountAssignmentAdapter(getActivity(), debiturItems);
+            /*accountAssignmentAdapter = new AccountAssignmentAdapter(getActivity(), debiturItems);*/
             accountAssignmentAdapter.SetAssignButton(view_AssignButton);
             SetupRecyclerView();
         }

@@ -1,0 +1,111 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mitkoindo.smartcollection.module.laporan.ArchiveFragment">
+
+    <!--Search bar-->
+    <RelativeLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/ArchiveFragment_SearchControl"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!--Search button-->
+            <ImageView
+                android:id="@+id/ArchiveFragment_SearchButton"
+                android:src="@drawable/ic_play_arrow_white_36dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!--Clear button-->
+            <ImageView
+                android:id="@+id/ArchiveFragment_ClearButton"
+                android:visibility="gone"
+                android:src="@drawable/ic_close_white_36dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <!--Search form-->
+        <EditText
+            android:id="@+id/ArchiveFragment_SearchForm"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:hint="@string/Laporan_Arsip_Hint_CariDebitur"
+            android:textColor="@color/White"
+            android:textColorHint="@color/White"
+            android:theme="@style/EditText.Login"
+            android:layout_toLeftOf="@id/ArchiveFragment_SearchControl"
+            android:layout_toStartOf="@id/ArchiveFragment_SearchControl"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <!--Content-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/ArchiveFragment_SwipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--Recycler view untuk hold item berita-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/ArchiveFragment_List"
+                    android:visibility="gone"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:clipToPadding="false"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"/>
+
+                <!--Progress bar sebagai indikator load page baru-->
+                <ProgressBar
+                    android:id="@+id/ArchiveFragment_PageLoadingIndicator"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <!--Progress bar-->
+        <ProgressBar
+            android:id="@+id/ArchiveFragment_ProgressBar"
+            android:visibility="visible"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--Message text-->
+        <TextView
+            android:id="@+id/ArchiveFragment_AlertText"
+            android:visibility="gone"
+            android:textColor="@color/White"
+            android:textSize="16sp"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>

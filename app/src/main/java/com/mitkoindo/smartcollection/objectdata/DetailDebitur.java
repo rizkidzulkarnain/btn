@@ -230,9 +230,6 @@ public class DetailDebitur {
     }
 
 
-
-
-
     //parse form JSON
     public void ParseData(String jsonString)
     {

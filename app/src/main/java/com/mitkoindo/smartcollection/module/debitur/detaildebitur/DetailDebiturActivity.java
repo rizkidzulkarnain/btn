@@ -10,6 +10,7 @@ import android.databinding.Observable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.support.annotation.NonNull;
@@ -30,13 +31,17 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.mikepenz.fastadapter_extensions.items.TwoLineItem;
 import com.mitkoindo.smartcollection.FetchAddressIntentService;
 import com.mitkoindo.smartcollection.HistoriTindakanActivity;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.base.BaseActivity;
 import com.mitkoindo.smartcollection.databinding.ActivityDetailDebiturBinding;
 import com.mitkoindo.smartcollection.dialog.DialogSimpleSpinnerAdapter;
+import com.mitkoindo.smartcollection.dialog.DialogTwoLineSpinnerAdapter;
 import com.mitkoindo.smartcollection.event.EventDialogSimpleSpinnerSelected;
+import com.mitkoindo.smartcollection.helper.RealmHelper;
+import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.module.debitur.tambahalamat.TambahAlamatActivity;
 import com.mitkoindo.smartcollection.module.debitur.tambahalamatdebitur.TambahAlamatDebiturActivity;
 import com.mitkoindo.smartcollection.module.debitur.tambahtelepon.TambahTeleponActivity;
@@ -44,11 +49,14 @@ import com.mitkoindo.smartcollection.module.formcall.FormCallActivity;
 import com.mitkoindo.smartcollection.module.formvisit.FormVisitActivity;
 import com.mitkoindo.smartcollection.objectdata.DetailDebitur;
 import com.mitkoindo.smartcollection.objectdata.PhoneNumber;
+import com.mitkoindo.smartcollection.objectdata.databasemodel.DetailDebiturDb;
+import com.mitkoindo.smartcollection.objectdata.databasemodel.PhoneNumberDb;
 import com.mitkoindo.smartcollection.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +71,7 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
 
     public static final String EXTRA_NO_REKENING = "extra_no_rekening";
     private static final String EXTRA_CUSTOMER_REFERENCE = "extra_customer_reference";
+    private static final String EXTRA_TYPE = "extra_type";
     private static final int REQ_CODE_LOCATION_PERMISSION = 1;
 
     private DetailDebiturViewModel mDetailDebiturViewModel;
@@ -74,18 +83,22 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
     private PopupMenu mPopUpMenu;
     private Dialog mListPhoneNumberDialog;
     private Dialog mListAddressDialog;
-    private ArrayList<String> mListNomorTelepon = new ArrayList<>();
+    private ArrayList<DialogTwoLineSpinnerAdapter.TwoLineSpinner> mListNomorTelepon = new ArrayList<>();
     private String mNoRekening = "";
     private String mCustomerReference = "";
     private Location mLastKnownLocation;
     private String mAddressOutput;
     private boolean mAddressRequested;
 
+    private String mType = ListDebiturActivity.EXTRA_TYPE_PENUGASAN_VALUE;
 
-    public static Intent instantiate(Context context, String noRekening, String customerReference) {
+
+    public static Intent instantiate(Context context, String noRekening, String customerReference, String type) {
         Intent intent = new Intent(context, DetailDebiturActivity.class);
         intent.putExtra(EXTRA_NO_REKENING, noRekening);
         intent.putExtra(EXTRA_CUSTOMER_REFERENCE, customerReference);
+        intent.putExtra(EXTRA_TYPE, type);
+
         return intent;
     }
 
@@ -142,19 +155,32 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
         mDetailDebiturViewModel.error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                if (mDetailDebiturViewModel.mErrorType == mDetailDebiturViewModel.GET_PHONE_LIST_ERROR) {
-                    displayMessage(R.string.GagalMendapatListNomorTelepon);
-                } else if (mDetailDebiturViewModel.mErrorType == mDetailDebiturViewModel.CHECK_IN_ERROR) {
+                if (mDetailDebiturViewModel.mErrorType == DetailDebiturViewModel.GET_PHONE_LIST_ERROR) {
+//                    displayMessage(R.string.GagalMendapatListNomorTelepon);
+
+                    List<PhoneNumber> phoneNumberList = new ArrayList<PhoneNumber>();
+                    List<PhoneNumberDb> phoneNumberDbList = RealmHelper.getPhoneNumber(mNoRekening);
+                    for (PhoneNumberDb phoneNumberDb : phoneNumberDbList) {
+                        phoneNumberList.add(phoneNumberDb.toPhoneNumber());
+                    }
+
+                    mDetailDebiturViewModel.obsListPhoneNumber.set(phoneNumberList);
+                } else if (mDetailDebiturViewModel.mErrorType == DetailDebiturViewModel.CHECK_IN_ERROR) {
                     displayMessage(R.string.GagalCheckIn);
                 } else {
-                    displayMessage(R.string.GagalMendapatkanData);
+//                    displayMessage(R.string.GagalMendapatkanData);
+
+                    DetailDebiturDb detailDebiturDb = RealmHelper.getDetailDebitur(mNoRekening);
+                    mDetailDebiturViewModel.obsDetailDebitur.set(detailDebiturDb.toDetailDebitur());
                 }
             }
         });
         mDetailDebiturViewModel.obsDetailDebitur.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                displayResult(mDetailDebiturViewModel.obsDetailDebitur.get());
+                if (mDetailDebiturViewModel.obsDetailDebitur.get() != null) {
+                    displayResult(mDetailDebiturViewModel.obsDetailDebitur.get());
+                }
             }
         });
         mDetailDebiturViewModel.obsListPhoneNumber.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
@@ -163,7 +189,10 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
                 if (mDetailDebiturViewModel.obsListPhoneNumber.get() != null) {
                     mListNomorTelepon.clear();
                     for (PhoneNumber phoneNumber : mDetailDebiturViewModel.obsListPhoneNumber.get()) {
-                        mListNomorTelepon.add(phoneNumber.getNomorKontak());
+                        DialogTwoLineSpinnerAdapter.TwoLineSpinner twoLineSpinner = new DialogTwoLineSpinnerAdapter.TwoLineSpinner();
+                        twoLineSpinner.title = phoneNumber.getJenisKontak();
+                        twoLineSpinner.description = phoneNumber.getNomorKontak();
+                        mListNomorTelepon.add(twoLineSpinner);
                     }
                     showPhoneNumberDialogSimpleSpinner(mListNomorTelepon, getString(R.string.DetailDebitur_PilihNomorTelepon), LIST_PHONE);
                 }
@@ -183,6 +212,7 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
         if (getIntent().getExtras() != null) {
             mNoRekening = getIntent().getExtras().getString(EXTRA_NO_REKENING);
             mCustomerReference = getIntent().getExtras().getString(EXTRA_CUSTOMER_REFERENCE);
+            mType = getIntent().getExtras().getString(EXTRA_TYPE);
         }
     }
 
@@ -198,7 +228,13 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
 
     private void showShortcutMenu(View anchorView) {
         mPopUpMenu = new PopupMenu(this, anchorView);
-        mPopUpMenu.getMenuInflater().inflate(R.menu.popup_menu, mPopUpMenu.getMenu());
+        if (mType.equals(ListDebiturActivity.EXTRA_TYPE_PENUGASAN_VALUE)) {
+            mPopUpMenu.getMenuInflater().inflate(R.menu.popup_menu, mPopUpMenu.getMenu());
+        } else if (mType.equals(ListDebiturActivity.EXTRA_TYPE_TAMBAH_KONTAK_VALUE)) {
+            mPopUpMenu.getMenuInflater().inflate(R.menu.popup_menu_tambah_kontak, mPopUpMenu.getMenu());
+        } else if (mType.equals(ListDebiturActivity.EXTRA_TYPE_ACCOUNT_ASSIGNMENT_VALUE)) {
+            mPopUpMenu.getMenuInflater().inflate(R.menu.popup_menu_account_assignment, mPopUpMenu.getMenu());
+        }
         mPopUpMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
@@ -224,8 +260,16 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
                         startActivity(TambahTeleponActivity.instantiate(DetailDebiturActivity.this, mNoRekening, mCustomerReference));
                         break;
                     }
+                    case R.id.popup_menu_view_telepon: {
+                        startActivity(ViewTeleponActivity.instantiate(DetailDebiturActivity.this, mNoRekening, mCustomerReference));
+                        break;
+                    }
                     case R.id.popup_menu_tambah_alamat: {
                         startActivity(TambahAlamatActivity.instantiate(DetailDebiturActivity.this, mNoRekening, mCustomerReference));
+                        break;
+                    }
+                    case R.id.popup_menu_gallery: {
+                        openGallery();
                         break;
                     }
                 }
@@ -236,8 +280,12 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
         mPopUpMenu.show();
     }
 
+    private void openGallery() {
+
+    }
+
     private static final int LIST_PHONE = 123;
-    private void showPhoneNumberDialogSimpleSpinner(List<String> nameList, String dialogTitle, int viewId) {
+    private void showPhoneNumberDialogSimpleSpinner(List<DialogTwoLineSpinnerAdapter.TwoLineSpinner> itemList, String dialogTitle, int viewId) {
         if (mListPhoneNumberDialog == null) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
             dialogBuilder
@@ -247,12 +295,12 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
                     .setView(R.layout.dialog_simple_spinner);
             mListPhoneNumberDialog = dialogBuilder.create();
         }
-        if (nameList.size() > 0) {
+        if (itemList.size() > 0) {
             mListPhoneNumberDialog.show();
             RecyclerView recyclerView = (RecyclerView) mListPhoneNumberDialog.findViewById(R.id.rv_dialog_simple_spinner);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
             recyclerView.setLayoutManager(layoutManager);
-            DialogSimpleSpinnerAdapter adapter = new DialogSimpleSpinnerAdapter(nameList, viewId);
+            DialogTwoLineSpinnerAdapter adapter = new DialogTwoLineSpinnerAdapter(itemList, viewId);
             recyclerView.setAdapter(adapter);
             TextView title = (TextView) mListPhoneNumberDialog.findViewById(R.id.tv_dialog_simple_spinner_title);
             title.setText(dialogTitle);
@@ -327,21 +375,23 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
 
     @OnClick(R.id.fab_map)
     public void onFabMapClick(View view) {
-        List<String> addressList = new ArrayList<>();
-        if (!TextUtils.isEmpty(mDetailDebiturViewModel.obsDetailDebitur.get().getAlamatRumah())) {
-            addressList.add(getString(R.string.DetailDebitur_AlamatRumah));
-        }
-        if (!TextUtils.isEmpty(mDetailDebiturViewModel.obsDetailDebitur.get().getAlamatKantor())) {
-            addressList.add(getString(R.string.DetailDebitur_AlamatKantor));
-        }
-        if (!TextUtils.isEmpty(mDetailDebiturViewModel.obsDetailDebitur.get().getAlamatAgunan())) {
-            addressList.add(getString(R.string.DetailDebitur_AlamatAgunan));
-        }
-        if (!TextUtils.isEmpty(mDetailDebiturViewModel.obsDetailDebitur.get().getAlamatSaatIni())) {
-            addressList.add(getString(R.string.DetailDebitur_AlamatSaatIni));
-        }
+        if (mDetailDebiturViewModel.obsDetailDebitur.get() != null) {
+            List<String> addressList = new ArrayList<>();
+            if (!TextUtils.isEmpty(mDetailDebiturViewModel.obsDetailDebitur.get().getAlamatRumah())) {
+                addressList.add(getString(R.string.DetailDebitur_AlamatRumah));
+            }
+            if (!TextUtils.isEmpty(mDetailDebiturViewModel.obsDetailDebitur.get().getAlamatKantor())) {
+                addressList.add(getString(R.string.DetailDebitur_AlamatKantor));
+            }
+            if (!TextUtils.isEmpty(mDetailDebiturViewModel.obsDetailDebitur.get().getAlamatAgunan())) {
+                addressList.add(getString(R.string.DetailDebitur_AlamatAgunan));
+            }
+            if (!TextUtils.isEmpty(mDetailDebiturViewModel.obsDetailDebitur.get().getAlamatSaatIni())) {
+                addressList.add(getString(R.string.DetailDebitur_AlamatSaatIni));
+            }
 
-        showAddressDialogSimpleSpinner(addressList, getString(R.string.DetailDebitur_PilihAlamat), LIST_ADDRESS);
+            showAddressDialogSimpleSpinner(addressList, getString(R.string.DetailDebitur_PilihAlamat), LIST_ADDRESS);
+        }
     }
 
     // Create a GoogleApiClient instance

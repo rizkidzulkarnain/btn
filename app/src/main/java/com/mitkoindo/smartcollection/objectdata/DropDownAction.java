@@ -15,23 +15,29 @@ public class DropDownAction extends RealmObject {
     @PrimaryKey
     @SerializedName("RowNumber")
     @Expose
-    private Integer rowNumber;
+    private int rowNumber;
+
     @SerializedName("ACTION_ID")
     @Expose
     private String actionId;
+
     @SerializedName("ACTION_DESC")
     @Expose
     private String actionDesc;
+
     @SerializedName("ACTIVE")
     @Expose
     private String active;
 
 
-    public Integer getRowNumber() {
+    public DropDownAction() {
+    }
+
+    public int getRowNumber() {
         return rowNumber;
     }
 
-    public void setRowNumber(Integer rowNumber) {
+    public void setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
     }
 

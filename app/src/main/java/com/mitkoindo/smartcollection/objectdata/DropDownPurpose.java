@@ -15,23 +15,29 @@ public class DropDownPurpose extends RealmObject {
     @SerializedName("RowNumber")
     @Expose
     @PrimaryKey
-    private Integer rowNumber;
+    private int rowNumber;
+
     @SerializedName("P_ID")
     @Expose
     private String pId;
+
     @SerializedName("P_DESC")
     @Expose
     private String pDesc;
+
     @SerializedName("ACTIVE")
     @Expose
-    private Boolean active;
+    private boolean active;
 
 
-    public Integer getRowNumber() {
+    public DropDownPurpose() {
+    }
+
+    public int getRowNumber() {
         return rowNumber;
     }
 
-    public void setRowNumber(Integer rowNumber) {
+    public void setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
     }
 
@@ -51,11 +57,11 @@ public class DropDownPurpose extends RealmObject {
         this.pDesc = pDesc;
     }
 
-    public Boolean getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 }

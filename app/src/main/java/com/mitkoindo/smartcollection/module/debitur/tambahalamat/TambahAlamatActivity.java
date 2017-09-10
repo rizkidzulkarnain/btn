@@ -21,6 +21,7 @@ import com.mitkoindo.smartcollection.databinding.ActivityTambahAlamatBinding;
 import com.mitkoindo.smartcollection.dialog.DialogSimpleSpinnerAdapter;
 import com.mitkoindo.smartcollection.event.EventDialogSimpleSpinnerSelected;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
+import com.mitkoindo.smartcollection.objectdata.DropDownAddressType;
 import com.mitkoindo.smartcollection.objectdata.DropDownRelationship;
 import com.mitkoindo.smartcollection.utils.ToastUtils;
 
@@ -45,9 +46,9 @@ public class TambahAlamatActivity extends BaseActivity {
     private ActivityTambahAlamatBinding mBinding;
     private Dialog mSpinnerDialog;
 
+    private List<DropDownAddressType> mListDropDownAddressType;
     private List<DropDownRelationship> mListDropDownRelationship;
-
-    private List<String> mListAlamat = new ArrayList<String>();
+    private List<String> mListAddressType = new ArrayList<String>();
     private List<String> mListHubunganDenganDebitur = new ArrayList<String>();
 
     private String mNomorRekening;
@@ -138,9 +139,17 @@ public class TambahAlamatActivity extends BaseActivity {
                 mListHubunganDenganDebitur.add(dropDownRelationship.getRelDesc());
             }
         }
+
+        mListDropDownAddressType = RealmHelper.getListDropDownAddressType();
+        for (DropDownAddressType dropDownAddressType : mListDropDownAddressType) {
+            if (dropDownAddressType.getAtDesc() != null) {
+                mListAddressType.add(dropDownAddressType.getAtDesc());
+            }
+        }
     }
 
     private void initNoSelectValue() {
+        mTambahAlamatViewModel.typeAddress.set(getString(R.string.TambahAlamatSaja_AddressTypeInitial));
         mTambahAlamatViewModel.hubunganDenganDebitur.set(getString(R.string.TambahAlamatSaja_HubunganDenganDebiturInitial));
     }
 
@@ -174,6 +183,16 @@ public class TambahAlamatActivity extends BaseActivity {
             mSpinnerDialog.dismiss();
 
             switch (event.getViewId()) {
+                case R.id.card_view_jenis_alamat: {
+                    for (DropDownAddressType dropDownAddressType : mListDropDownAddressType) {
+                        if (!TextUtils.isEmpty(dropDownAddressType.getAtDesc()) && dropDownAddressType.getAtDesc().equals(event.getName())) {
+                            mTambahAlamatViewModel.typeAddressId.set(dropDownAddressType.getAtCode());
+                            mTambahAlamatViewModel.typeAddress.set(dropDownAddressType.getAtDesc());
+                            break;
+                        }
+                    }
+                    break;
+                }
                 case R.id.card_view_hubungan_dengan_debitur: {
                     for (DropDownRelationship dropDownRelationship : mListDropDownRelationship) {
                         if (!TextUtils.isEmpty(dropDownRelationship.getRelDesc()) && dropDownRelationship.getRelDesc().equals(event.getName())) {
@@ -186,6 +205,11 @@ public class TambahAlamatActivity extends BaseActivity {
                 }
             }
         }
+    }
+
+    @OnClick(R.id.card_view_jenis_alamat)
+    public void onTypeAddressClicked(View view) {
+        showInstallmentDialogSimpleSpinner(mListAddressType, getString(R.string.TambahAlamatSaja_AddressTypeInitial), R.id.card_view_jenis_alamat);
     }
 
     @OnClick(R.id.card_view_hubungan_dengan_debitur)
@@ -223,6 +247,10 @@ public class TambahAlamatActivity extends BaseActivity {
         } else if (TextUtils.isEmpty(mTambahAlamatViewModel.hubunganDenganDebitur.get())
                 || mTambahAlamatViewModel.hubunganDenganDebitur.get().equals(getString(R.string.TambahAlamatSaja_HubunganDenganDebiturInitial))) {
             displayMessage(getString(R.string.TambahAlamatSaja_HubunganDenganDebiturInitial));
+            return false;
+        } else if (TextUtils.isEmpty(mTambahAlamatViewModel.typeAddress.get())
+                || mTambahAlamatViewModel.typeAddress.get().equals(getString(R.string.TambahAlamatSaja_AddressTypeInitial))) {
+            displayMessage(getString(R.string.TambahAlamatSaja_AddressTypeInitial));
             return false;
         } else if (TextUtils.isEmpty(mTambahAlamatViewModel.alamat1.get())
                 || mTambahAlamatViewModel.alamat1.get().equals(getString(R.string.TambahAlamatSaja_AlamatHint))) {

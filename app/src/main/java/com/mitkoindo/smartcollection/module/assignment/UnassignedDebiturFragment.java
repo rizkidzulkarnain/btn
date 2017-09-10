@@ -138,7 +138,7 @@ public class UnassignedDebiturFragment extends Fragment
         View thisView = inflater.inflate(R.layout.fragment_unassigned_debitur, container, false);
         GetViews(thisView);
         SetupListener();
-        CreateGetListDebiturRequest();
+        SetupRecyclerView();
         return thisView;
     }
 
@@ -171,7 +171,8 @@ public class UnassignedDebiturFragment extends Fragment
             @Override
             public void onRefresh()
             {
-                CreateGetListDebiturRequest();
+                view_Refresher.setRefreshing(false);
+                accountAssignmentAdapter.CreateGetListDebiturRequest();
             }
         });
 
@@ -203,7 +204,7 @@ public class UnassignedDebiturFragment extends Fragment
                 if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (i == KeyEvent.KEYCODE_ENTER))
                 {
                     //Handle search
-                    /*CreateSearchRequest();*/
+                    HandleInput_SearchButton();
 
                     return true;
                 }
@@ -254,7 +255,12 @@ public class UnassignedDebiturFragment extends Fragment
     //Handle input pada search button
     private void HandleInput_SearchButton()
     {
-        /*CreateSearchRequest();*/
+        //hide search button, show clear button
+        view_SearchButton.setVisibility(View.GONE);
+        view_ClearButton.setVisibility(View.VISIBLE);
+
+        //Handle search
+        accountAssignmentAdapter.CreateSearchRequest(view_SearchForm.getText().toString());
     }
 
     //Handle input pada clear button
@@ -269,129 +275,23 @@ public class UnassignedDebiturFragment extends Fragment
         {
             //jika kosong, show search button & hide clear button
             view_ClearButton.setVisibility(View.GONE);
-            view_SearchForm.setVisibility(View.VISIBLE);
+            view_SearchButton.setVisibility(View.VISIBLE);
 
             //dan refresh data
-            /*CreateSearchRequest();*/
-        }
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //  Create request buat get list debitur
-    //----------------------------------------------------------------------------------------------
-    private void CreateGetListDebiturRequest()
-    {
-        //set views
-        view_Refresher.setRefreshing(false);
-        view_Alert.setVisibility(View.GONE);
-        view_Recycler.setVisibility(View.GONE);
-        view_ProgressBar.setVisibility(View.VISIBLE);
-
-        //send request buat get list debitur
-        new SendGetListDebitureRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
-    }
-
-    //send request buat get list debitur
-    private class SendGetListDebitureRequest extends AsyncTask<String, Void, String>
-    {
-        @Override
-        protected String doInBackground(String... strings)
-        {
-            //create url
-            String usedURL = baseURL + url_DataSP;
-
-            //create request object
-            JSONObject requestObject = CreateGetDebiturRequestObject();
-
-            //execute request
-            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
-            networkConnection.SetRequestObject(requestObject);
-            return networkConnection.SendPostRequest(usedURL);
-        }
-
-        @Override
-        protected void onPostExecute(String s)
-        {
-            super.onPostExecute(s);
-            HandleGetDebiturResult(s);
-        }
-    }
-
-    //create request object
-    private JSONObject CreateGetDebiturRequestObject()
-    {
-        //create request object
-        JSONObject requestObject = new JSONObject();
-
-        try
-        {
-            //create sp parameter object
-            JSONObject spParameterObject = new JSONObject();
-            spParameterObject.put("userID", userID);
-            spParameterObject.put("status", "'PENDING'");
-
-            //populate request object
-            requestObject.put("DatabaseID", "db1");
-            requestObject.put("SpName", "MKI_SP_DEBITUR_LIST");
-            requestObject.put("SpParameter", spParameterObject);
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-
-        //return request object
-        return requestObject;
-    }
-
-    //handle result
-    private void HandleGetDebiturResult(String result)
-    {
-        //pastikan result nggak kosong
-        if (result == null || result.isEmpty())
-        {
-            return;
-        }
-
-        //pastikan response nggak 404
-        if (result.equals("404"))
-        {
-            return;
-        }
-
-        try
-        {
-            //parse result ke json array
-            JSONArray resultArray = new JSONArray(result);
-
-            //initialize array
-            ArrayList<DebiturItemWithFlag> debiturItems = new ArrayList<>();
-
-            //add item to debitur
-            for (int i = 0; i < resultArray.length(); i++)
-            {
-                //parse item
-                DebiturItemWithFlag debiturItem = new DebiturItemWithFlag();
-                debiturItem.ParseData(resultArray.getString(i));
-
-                //add to list
-                debiturItems.add(debiturItem);
-            }
-
-            //create adapter
-            accountAssignmentAdapter = new AccountAssignmentAdapter(getActivity(), debiturItems);
-            accountAssignmentAdapter.SetAssignButton(view_AssignButton);
-            SetupRecyclerView();
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
+            accountAssignmentAdapter.CreateSearchRequest(view_SearchForm.getText().toString());
         }
     }
 
     //setup views
     private void SetupRecyclerView()
     {
+        //create load data request
+        accountAssignmentAdapter = new AccountAssignmentAdapter(getActivity());
+        accountAssignmentAdapter.SetTransactionData(baseURL, url_DataSP, authToken, userID);
+        accountAssignmentAdapter.SetViews(view_ProgressBar, view_Recycler, view_Alert);
+        accountAssignmentAdapter.SetAssignButton(view_AssignButton);
+        accountAssignmentAdapter.CreateGetListDebiturRequest();
+
         //attach adapter to recyclerview
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         view_Recycler.setLayoutManager(layoutManager);
@@ -401,13 +301,6 @@ public class UnassignedDebiturFragment extends Fragment
         dividerItemDecoration.setDrawable(dividerDrawable);
         view_Recycler.addItemDecoration(dividerItemDecoration);
         view_Recycler.setAdapter(accountAssignmentAdapter);
-
-        //hide progress bar & error text
-        view_ProgressBar.setVisibility(View.GONE);
-        view_Alert.setVisibility(View.GONE);
-
-        //show list
-        view_Recycler.setVisibility(View.VISIBLE);
     }
 
     //----------------------------------------------------------------------------------------------

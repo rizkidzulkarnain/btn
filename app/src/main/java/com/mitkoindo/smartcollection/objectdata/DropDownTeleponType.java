@@ -14,15 +14,22 @@ public class DropDownTeleponType extends RealmObject {
     @SerializedName("RowNumber")
     @Expose
     private int rowNumber;
+
     @SerializedName("CT_CODE")
     @Expose
     private String ctCode;
+
     @SerializedName("CT_DESC")
     @Expose
     private String ctDesc;
+
     @SerializedName("ACTIVE")
     @Expose
     private boolean active;
+
+
+    public DropDownTeleponType() {
+    }
 
     public int getRowNumber() {
         return rowNumber;
