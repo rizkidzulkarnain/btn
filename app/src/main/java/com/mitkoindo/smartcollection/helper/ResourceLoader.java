@@ -47,6 +47,9 @@ public class ResourceLoader
             case "Account Assignment" :
                 icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.menuicon_accountasignment);
                 break;
+            case "Check-In" :
+                icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.menuicon_checkin);
+                break;
             default:
                 break;
         }

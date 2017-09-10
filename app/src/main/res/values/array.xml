@@ -9,6 +9,7 @@
         <item>Chat</item>
         <item>Laporan</item>
         <item>Pusat Notifikasi</item>
+        <item>Check-In</item>
     </string-array>
 
     <string-array name="HomeMenu_Staff">
@@ -20,6 +21,7 @@
         <item>Chat</item>
         <item>Laporan</item>
         <item>Pusat Notifikasi</item>
+        <item>Check-In</item>
     </string-array>
 
     <string-array name="HomeMenu_Supervisor">
@@ -30,6 +32,7 @@
         <item>Chat</item>
         <item>Laporan</item>
         <item>Pusat Notifikasi</item>
+        <item>Check-In</item>
     </string-array>
 
     <string-array name="HomeMenu_BC">
@@ -40,5 +43,6 @@
         <item>Chat</item>
         <item>Laporan</item>
         <item>Pusat Notifikasi</item>
+        <item>Check-In</item>
     </string-array>
 </resources>
