@@ -25,6 +25,7 @@
         </RelativeLayout>
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/AccountAssignmentAdapter_InfoSection"
             android:layout_weight="5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

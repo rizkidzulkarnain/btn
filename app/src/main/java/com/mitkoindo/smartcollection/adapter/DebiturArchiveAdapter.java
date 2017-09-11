@@ -10,6 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
+import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturActivity;
+import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.objectdata.DebiturItemWithFlag;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
@@ -117,6 +119,17 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
         holder.tagihan.setText(currentDebitur.getTagihan());
         holder.dpd.setText(currentDebitur.getDpd());
 
+        //set listener
+        final int currentPos = position;
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                OpenDetail(currentPos);
+            }
+        });
+
         //release bind
         onBind = false;
     }
@@ -144,6 +157,17 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
         this.view_PageLoadIndicator = view_PageLoadIndicator;
         this.view_Recycler = view_Recycler;
         this.view_Alert = view_Alert;
+    }
+
+    //open detail
+    private void OpenDetail(int position)
+    {
+        //get current item
+        DebiturItemWithFlag currentDebitur = debiturItems.get(position);
+
+        //open detail page
+        context.startActivity(DetailDebiturActivity.instantiate(context, currentDebitur.getNoRekening(),
+                currentDebitur.getCustomerReference(), ListDebiturActivity.EXTRA_TYPE_ACCOUNT_ASSIGNMENT_VALUE));
     }
 
     //----------------------------------------------------------------------------------------------
@@ -256,6 +280,10 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
     //handle result
     private void HandleGetArchiveResult(String resultString)
     {
+        //hide progress bar
+        view_PageLoadIndicator.setVisibility(View.GONE);
+        view_ProgressBar.setVisibility(View.GONE);
+
         //pastikan response tidak kosong / null
         if (resultString == null || resultString.isEmpty())
         {

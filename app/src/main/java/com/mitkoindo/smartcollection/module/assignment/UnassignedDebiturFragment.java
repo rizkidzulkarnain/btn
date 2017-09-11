@@ -18,10 +18,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
@@ -65,6 +68,9 @@ public class UnassignedDebiturFragment extends Fragment
     //progress bar
     private ProgressBar view_ProgressBar;
 
+    //indicator buat load page baru
+    private ProgressBar view_PageLoadIndicator;
+
     //alert text
     private TextView view_Alert;
 
@@ -79,6 +85,9 @@ public class UnassignedDebiturFragment extends Fragment
 
     //assign button
     private Button view_AssignButton;
+
+    //spinner
+    private Spinner view_SortOptions;
 
     //popup buat assign debitur ke staff
     private AlertDialog popup_Assignment;
@@ -115,6 +124,22 @@ public class UnassignedDebiturFragment extends Fragment
 
     //user id
     private String userID;
+
+    //sort parameter
+    private String[] value_SortParameter = new String[]
+            {
+                "LD.TOT_KEWAJIBAN", //total kewajiban
+                "LH.User_Assign_Date", //assign date
+                "LD.Last_Payment_Date" //last payment date
+            };
+
+    //sort parameter name
+    private String[] value_SortParameterName = new String[]
+            {
+                "Pokok Kredit",
+                "Tanggal Penugasan",
+                "Last Payment Date"
+            };
 
     //----------------------------------------------------------------------------------------------
     //  Data
@@ -153,6 +178,8 @@ public class UnassignedDebiturFragment extends Fragment
         view_SearchButton = thisView.findViewById(R.id.UnassignedDebiturFragment_SearchButton);
         view_ClearButton = thisView.findViewById(R.id.UnassignedDebiturFragment_ClearButton);
         view_AssignButton = thisView.findViewById(R.id.UnassignedDebiturFragment_AssignButton);
+        view_PageLoadIndicator = thisView.findViewById(R.id.UnassignedDebiturFragment_PageLoadingIndicator);
+        view_SortOptions = thisView.findViewById(R.id.UnassignedDebiturFragment_SortOptions);
 
         //set date picker
         datePickerFragment = new DatePickerFragment();
@@ -160,6 +187,12 @@ public class UnassignedDebiturFragment extends Fragment
 
         //create generic alert
         genericAlert = new GenericAlert(getActivity());
+
+        //set sort options
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(getActivity(), R.layout.preset_spinneritem,
+                value_SortParameterName);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        view_SortOptions.setAdapter(adapter);
     }
 
     //Setup listener
@@ -191,6 +224,7 @@ public class UnassignedDebiturFragment extends Fragment
                 if (RecyclerViewHelper.isLastItemDisplaying(view_Recycler))
                 {
                     //load new data
+                    accountAssignmentAdapter.CreateLoadNewPageRequest();
                 }
             }
         });
@@ -236,6 +270,22 @@ public class UnassignedDebiturFragment extends Fragment
             public void onClick(View view)
             {
                 CreatePopup_AssignToPetugas();
+            }
+        });
+
+        view_SortOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                accountAssignmentAdapter.SetSortParameter(value_SortParameter[i]);
+                accountAssignmentAdapter.CreateGetListDebiturRequest();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+
             }
         });
     }
@@ -288,8 +338,9 @@ public class UnassignedDebiturFragment extends Fragment
         //create load data request
         accountAssignmentAdapter = new AccountAssignmentAdapter(getActivity());
         accountAssignmentAdapter.SetTransactionData(baseURL, url_DataSP, authToken, userID);
-        accountAssignmentAdapter.SetViews(view_ProgressBar, view_Recycler, view_Alert);
+        accountAssignmentAdapter.SetViews(view_ProgressBar, view_Recycler, view_Alert, view_PageLoadIndicator);
         accountAssignmentAdapter.SetAssignButton(view_AssignButton);
+        accountAssignmentAdapter.SetSortParameter(value_SortParameter[0]);
         accountAssignmentAdapter.CreateGetListDebiturRequest();
 
         //attach adapter to recyclerview

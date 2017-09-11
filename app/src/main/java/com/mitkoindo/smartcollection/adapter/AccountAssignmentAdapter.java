@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.helper.StringHelper;
+import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturActivity;
+import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
 import com.mitkoindo.smartcollection.objectdata.DebiturItemWithFlag;
 import com.mitkoindo.smartcollection.objectdata.DebiturItemWithPetugas;
@@ -61,6 +63,9 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
     //progress bar
     private ProgressBar view_ProgressBar;
 
+    //indicator load new page
+    private ProgressBar view_PageLoadIndicator;
+
     //alert text
     private TextView view_Alert;
 
@@ -83,6 +88,15 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
     //search query
     private String searchQuery = "";
 
+    //page counter
+    private int currentPage;
+
+    //flag boleh load page baru atau tidak
+    private boolean flag_AllowLoadNewPage;
+
+    //sorting
+    private String sortParameter;
+
     //----------------------------------------------------------------------------------------------
     //  Setup
     //----------------------------------------------------------------------------------------------
@@ -93,6 +107,9 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
 
         //set jumlah debitur yang diselect jadi nol
         count_SelectedDebitur = 0;
+
+        //set page
+        currentPage = 1;
 
         //create generic alert
         genericAlert = new GenericAlert(context);
@@ -177,6 +194,15 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
             }
         });
 
+        holder.infoSection.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                OpenDetail(position);
+            }
+        });
+
         //release bind
         onBind = false;
     }
@@ -197,11 +223,30 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
     }
 
     //set view
-    public void SetViews(ProgressBar view_ProgressBar, RecyclerView view_Recycler, TextView view_Alert)
+    public void SetViews(ProgressBar view_ProgressBar, RecyclerView view_Recycler, TextView view_Alert,
+                         ProgressBar view_PageLoadIndicator)
     {
         this.view_ProgressBar = view_ProgressBar;
         this.view_Recycler = view_Recycler;
         this.view_Alert = view_Alert;
+        this.view_PageLoadIndicator = view_PageLoadIndicator;
+    }
+
+    //set sorting parameter
+    public void SetSortParameter(String sortParameter)
+    {
+        this.sortParameter = sortParameter;
+    }
+
+    //open detail
+    private void OpenDetail(int position)
+    {
+        //get current data
+        DebiturItemWithPetugas currentDebitur = debiturItems.get(position);
+
+        //open detail page
+        context.startActivity(DetailDebiturActivity.instantiate(context, currentDebitur.getNoRekening(),
+                currentDebitur.getCustomerReference(), ListDebiturActivity.EXTRA_TYPE_ACCOUNT_ASSIGNMENT_VALUE));
     }
 
     //----------------------------------------------------------------------------------------------
@@ -266,6 +311,10 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
         view_ProgressBar.setVisibility(View.VISIBLE);
         button_Assign.setVisibility(View.GONE);
         count_SelectedDebitur = 0;
+        currentPage = 1;
+
+        //don't allow data load lagi ketika transaksi
+        flag_AllowLoadNewPage = false;
 
         //send request buat get list debitur
         new SendGetListDebitureRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
@@ -277,6 +326,22 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
         this.searchQuery = searchQuery;
 
         CreateGetListDebiturRequest();
+    }
+
+    //create request buat load page baru
+    public void CreateLoadNewPageRequest()
+    {
+        if (!flag_AllowLoadNewPage)
+            return;
+
+        //Show page load indicator
+        view_PageLoadIndicator.setVisibility(View.VISIBLE);
+
+        //don't allow data load lagi ketika transaksi
+        flag_AllowLoadNewPage = false;
+
+        //send request
+        new SendGetListDebitureRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
     }
 
     //----------------------------------------------------------------------------------------------
@@ -318,14 +383,15 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
         {
             //create sp parameter object
             JSONObject spParameterObject = new JSONObject();
-            spParameterObject.put("userID", "BTN0013887");
+            spParameterObject.put("userID", userID);
+            /*spParameterObject.put("userID", "BTN0013887");*/
             spParameterObject.put("isAssign", 0);
             spParameterObject.put("filterKeyword", searchQuery);
             spParameterObject.put("filterByField", "NamaNasabah");
             spParameterObject.put("filterOperator", "LIKE");
-            spParameterObject.put("sortByField", "LD.TOT_KEWAJIBAN");
+            spParameterObject.put("sortByField", sortParameter);
             spParameterObject.put("sortDirection", "DESC");
-            spParameterObject.put("page", 1);
+            spParameterObject.put("page", currentPage);
             spParameterObject.put("limit", 10);
 
             //populate request object
@@ -345,6 +411,8 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
     //handle result
     private void HandleGetDebiturResult(String result)
     {
+        //hide progress bar
+        view_PageLoadIndicator.setVisibility(View.GONE);
         view_ProgressBar.setVisibility(View.GONE);
 
         //pastikan result nggak kosong
@@ -360,6 +428,7 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
         {
             view_Alert.setText(R.string.Text_NoData);
             view_Alert.setVisibility(View.VISIBLE);
+            flag_AllowLoadNewPage = false;
             return;
         }
 
@@ -383,7 +452,16 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
             }
 
             //create adapter
-            AddItemsToList(newDebiturItems);
+            if (currentPage == 1)
+                AddItemsToList(newDebiturItems);
+            else
+                AddNewItems(newDebiturItems);
+
+            //increase page count
+            currentPage++;
+
+            //saat transaksi sudah beres, allow load page
+            flag_AllowLoadNewPage = true;
         }
         catch (JSONException e)
         {
@@ -409,6 +487,18 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
         view_ProgressBar.setVisibility(View.GONE);
     }
 
+    //add new item
+    private void AddNewItems(ArrayList<DebiturItemWithPetugas> newDebiturItems)
+    {
+        for (int i = 0; i < newDebiturItems.size(); i++)
+        {
+            debiturItems.add(newDebiturItems.get(i));
+        }
+
+        if (!onBind)
+            notifyDataSetChanged();
+    }
+
     //----------------------------------------------------------------------------------------------
     //  View holder
     //----------------------------------------------------------------------------------------------
@@ -421,6 +511,8 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
         TextView LastPayment;
         CheckBox checkBox;
 
+        View infoSection;
+
         public AccountAssignmentViewHolder(View itemView)
         {
             super(itemView);
@@ -431,6 +523,7 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
             DPD = itemView.findViewById(R.id.text_view_dpd_value);
             LastPayment = itemView.findViewById(R.id.text_view_last_payment_value);
             checkBox = itemView.findViewById(R.id.AccountAssignmentAdapter_CheckBox);
+            infoSection = itemView.findViewById(R.id.AccountAssignmentAdapter_InfoSection);
         }
     }
 }

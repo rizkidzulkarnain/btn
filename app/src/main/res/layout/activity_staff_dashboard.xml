@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:paddingTop="10dp"
     android:background="@drawable/background_bluegradient"
-    tools:context="com.mitkoindo.smartcollection.module.dashboard.DashboardActivity">
+    tools:context="com.mitkoindo.smartcollection.module.dashboard.StaffDashboardActivity">
 
     <LinearLayout
         android:orientation="vertical"
@@ -22,7 +22,7 @@
             android:layout_height="50dp" />
 
         <TextView
-            android:text="@string/Dashboard_Title"
+            android:text="@string/DashboardStaff_Title"
             android:textSize="18sp"
             android:textColor="@color/White"
             android:textStyle="bold"
@@ -49,22 +49,9 @@
             android:layout_height="match_parent"/>
     </LinearLayout>
 
-    <!--option menu-->
-    <ImageView
-        android:id="@+id/DashboardActivity_OptionMenu"
-        android:onClick="HandleInput_Dashboard_Option"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_more_vert_white_36dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <!--back button-->
     <RelativeLayout
-        android:onClick="HandleInput_Dashboard_Back"
+        android:onClick="HandleInput_DashboardStaff_Back"
         android:background="@drawable/background_circle_blacktransparent"
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"

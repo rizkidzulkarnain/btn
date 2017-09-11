@@ -186,8 +186,8 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
     private void SetupViews()
     {
         //Setup menu
-        /*String[] menuTitle = SetupMenuBasedOnRole();*/
-        String[] menuTitle = getResources().getStringArray(R.array.HomeMenu_BC);
+        String[] menuTitle = SetupMenuBasedOnRole();
+        /*String[] menuTitle = getResources().getStringArray(R.array.HomeMenu_BC);*/
 
         //create menu object
         homeMenus = new ArrayList<>();

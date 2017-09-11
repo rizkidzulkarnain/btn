@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity
     //  Views
     //----------------------------------------------------------------------------------------------
     //checkbox buat remember password
-    private Switch view_RememberMe;
+    /*private Switch view_RememberMe;*/
 
     //username & password field
     private EditText form_Username;
@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity
     //get views
     private void GetViews()
     {
-        view_RememberMe = findViewById(R.id.LoginActivity_RememberMe);
+        /*view_RememberMe = findViewById(R.id.LoginActivity_RememberMe);*/
 
         //get form username & password
         form_Username = findViewById(R.id.LoginActivity_Username);
@@ -133,11 +133,11 @@ public class LoginActivity extends AppCompatActivity
     //toggle switch button
     public void HandleInput_Login_ToggleSwitch(View view)
     {
-        //get switch state
+        /*//get switch state
         if (view_RememberMe.isChecked())
             view_RememberMe.setChecked(false);
         else
-            view_RememberMe.setChecked(true);
+            view_RememberMe.setChecked(true);*/
     }
 
     //secret feature, change base url

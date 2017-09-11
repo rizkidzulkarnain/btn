@@ -55,6 +55,31 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
 
+    <!--Spinner untuk sorting-->
+    <LinearLayout
+        android:background="@color/Background_PageTitle"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Text sort by-->
+        <TextView
+            android:text="@string/Text_SortBy"
+            android:textColor="@color/White"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/UnassignedDebiturFragment_SortOptions"
+            android:dropDownSelector="@color/White"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -76,20 +101,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--Swipe refresh layout-->
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/UnassignedDebiturFragment_Refresher"
+            <!--List + load page indiator-->
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <!--Recycler view-->
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/UnassignedDebiturFragment_List"
-                    android:padding="10dp"
-                    android:clipToPadding="false"
+                <!--Swipe refresh layout-->
+                <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/UnassignedDebiturFragment_Refresher"
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </android.support.v4.widget.SwipeRefreshLayout>
+                    android:layout_height="0dp">
+
+                    <!--Recycler view-->
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/UnassignedDebiturFragment_List"
+                        android:padding="10dp"
+                        android:clipToPadding="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </android.support.v4.widget.SwipeRefreshLayout>
+
+                <!--Page load indicator-->
+                <ProgressBar
+                    android:id="@+id/UnassignedDebiturFragment_PageLoadingIndicator"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <!--Progress bar-->
             <ProgressBar

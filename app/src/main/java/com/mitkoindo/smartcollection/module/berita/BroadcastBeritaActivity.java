@@ -454,8 +454,10 @@ public class BroadcastBeritaActivity extends AppCompatActivity
         {
             //create SpParameter object
             JSONObject spParameterObject = new JSONObject();
-            /*spParameterObject.put("userID", userID);*/
-            spParameterObject.put("userID", "BTN0013887");
+            spParameterObject.put("userID", userID);
+            spParameterObject.put("keyword", null);
+            spParameterObject.put("top", 9999);
+            /*spParameterObject.put("userID", "BTN0013887");*/
 
             //populate request object
             requestObject.put("DatabaseID", "db1");
@@ -751,8 +753,8 @@ public class BroadcastBeritaActivity extends AppCompatActivity
         {
             //populate sp parameter request object
             JSONObject spParameterObject = new JSONObject();
-            /*spParameterObject.put("AuthorID", userID);*/
-            spParameterObject.put("AuthorID", "BTN0013887");
+            spParameterObject.put("AuthorID", userID);
+            /*spParameterObject.put("AuthorID", "BTN0013887");*/
             spParameterObject.put("Title", formBroadcastBerita.Judul);
             spParameterObject.put("Summary", formBroadcastBerita.Summary);
             spParameterObject.put("NewsContent", formBroadcastBerita.Isi);

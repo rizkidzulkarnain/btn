@@ -86,7 +86,6 @@ dependencies {
     compile 'com.uphyca:stetho_realm:2.1.0'
     compile 'info.hoang8f:fbutton:1.0.5'
     compile 'com.jakewharton.timber:timber:4.5.1'
-
     testCompile 'junit:junit:4.12'
     annotationProcessor 'org.parceler:parceler:1.1.9'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

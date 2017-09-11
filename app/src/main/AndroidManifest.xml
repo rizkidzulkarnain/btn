@@ -75,7 +75,13 @@
         <activity
             android:name=".module.chat.ChatWindowActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".module.laporan.LaporanActivity"
+        <activity
+            android:name=".module.laporan.LaporanActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".module.dashboard.StaffDashboardSelectorActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".module.dashboard.StaffDashboardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".module.misc.ChangeBaseURLActivity" />
         <activity
@@ -106,12 +112,11 @@
         <service
             android:name=".FetchAddressIntentService"
             android:exported="false" />
-
         <service
-            android:exported="false"
-            android:name=".backgroundservice.MyJobService">
+            android:name=".backgroundservice.MyJobService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
     </application>

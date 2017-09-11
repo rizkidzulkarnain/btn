@@ -20,6 +20,7 @@
     <string name="Text_UploadFailed">Upload gagal, mohon coba kembali</string>
     <string name="Text_MohonMaaf">Mohon Maaf</string>
     <string name="Text_IsianBelumLengkap">Form belum lengkap</string>
+    <string name="Text_SortBy">Sort By :</string>
     <string name="Misc_Copyright">\u00A9 Copyright Bank BTN 2017</string>
 
     <!--Login page-->
@@ -38,6 +39,7 @@
 
     <!--Dashboard page-->
     <string name="Dashboard_Title">Dashboard</string>
+    <string name="DashboardStaff_Title">Dashboard Staff</string>
     <string name="Dashboard_Nominal">Nominal</string>
     <string name="Dashboard_Debitur">Debitur</string>
     <string name="Dashboard_FragmentTitle_Kunjungan">Kunjungan</string>
@@ -52,6 +54,11 @@
     <string name="Dashboard_Outstanding">Outstanding</string>
     <string name="Dashboard_NPL">NPL</string>
     <string name="Dashboard_SaldoPokokNPL">Saldo Pokok NPL</string>
+    <string name="Dashboard_NPL_Note_SaldoPokok">*Saldo pokok dalam satuan milyar</string>
+    <string name="Dashboard_Menu_StaffDashboard">Dashboard Staff</string>
+
+    <!--Dashboard. staff selector-->
+    <string name="StaffSelector_Title">Pilih Staff</string>
 
     <!--Dashboard mode-->
     <string name="dashboardKunjungan_Mode_Today">MKI_SP_DASHBOARD_KUNJUNGAN_TODAY</string>

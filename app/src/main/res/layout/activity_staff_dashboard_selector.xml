@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_bluegradient"
+    tools:context="com.mitkoindo.smartcollection.module.dashboard.StaffDashboardSelectorActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--Page title-->
+        <TextView
+            android:text="@string/StaffSelector_Title"
+            android:textColor="@color/White"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@drawable/background_rounded_rectangle_pagetitle"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!--Divider-->
+        <View
+            android:background="@color/Background_PageTitle"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <!--Search form-->
+        <RelativeLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--Search button-->
+            <RelativeLayout
+                android:id="@+id/StaffSelector_SearchControl"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/StaffSelector_SearchButton"
+                    android:onClick="HandleInput_StaffDashboardSelector_Search"
+                    android:src="@drawable/ic_play_arrow_white_36dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!--Clear button-->
+                <ImageView
+                    android:id="@+id/StaffSelector_ClearButton"
+                    android:onClick="HandleInput_StaffDashboardSelector_Clear"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_close_white_36dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <!--Search form-->
+            <EditText
+                android:id="@+id/StaffSelector_SearchForm"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:hint="@string/AccountAssignment_CariDebitur"
+                android:textColor="@color/White"
+                android:textColorHint="@color/White"
+                android:theme="@style/EditText.Login"
+                android:layout_toLeftOf="@id/StaffSelector_SearchControl"
+                android:layout_toStartOf="@id/StaffSelector_SearchControl"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <!--Content-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--List-->
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--Swipe refresh layout-->
+                <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/StaffSelector_Refresher"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+
+                    <!--Recycler view-->
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/StaffSelector_List"
+                        android:padding="10dp"
+                        android:clipToPadding="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </android.support.v4.widget.SwipeRefreshLayout>
+
+                <!--Page load indicator-->
+                <ProgressBar
+                    android:id="@+id/StaffSelector_PageLoadingIndicator"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!--Progress bar-->
+            <ProgressBar
+                android:id="@+id/StaffSelector_ProgressBar"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--alert text-->
+            <TextView
+                android:id="@+id/StaffSelector_AlertView"
+                android:textColor="@color/White"
+                android:textSize="16sp"
+                android:visibility="gone"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!--back button-->
+    <RelativeLayout
+        android:onClick="HandleInput_StaffDashboardSelector_Back"
+        android:background="@drawable/background_circle_blacktransparent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_width="66dp"
+        android:layout_height="66dp">
+
+        <ImageView
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_chevron_left_white_36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>

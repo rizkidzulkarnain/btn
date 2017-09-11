@@ -147,8 +147,10 @@ public class ChatListActivity extends AppCompatActivity
         {
             //create SpParameter object
             JSONObject spParameterObject = new JSONObject();
-            /*spParameterObject.put("userID", userID);*/
-            spParameterObject.put("userID", "BTN0013887");
+            spParameterObject.put("userID", userID);
+            spParameterObject.put("keyword", null);
+            spParameterObject.put("top", 9999);
+            /*spParameterObject.put("userID", "BTN0013887");*/
 
             //populate request object
             requestObject.put("DatabaseID", "db1");

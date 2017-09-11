@@ -17,7 +17,7 @@ import com.mitkoindo.smartcollection.helper.ResourceLoader;
 
 import java.util.ArrayList;
 
-public class DashboardActivity extends AppCompatActivity
+public class StaffDashboardActivity extends AppCompatActivity
 {
     //----------------------------------------------------------------------------------------------
     //  Views
@@ -55,11 +55,12 @@ public class DashboardActivity extends AppCompatActivity
     //----------------------------------------------------------------------------------------------
     //  Setup
     //----------------------------------------------------------------------------------------------
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.activity_staff_dashboard);
 
         //Setup
         GetViews();
@@ -79,9 +80,6 @@ public class DashboardActivity extends AppCompatActivity
     //setup views
     private void SetupViews()
     {
-        //cek apakah user boleh akses dashboard npl
-        boolean allowAccessNPLDashboard = AllowAccessNPLDashboard();
-
         //dashboard mode
         String DASHBOARDMODE_CURRENT = getString(R.string.dashboardKunjungan_Mode_Today);
         String DASHBOARDMODE_MONTH = getString(R.string.dashboardKunjungan_Mode_Monthly);
@@ -95,8 +93,6 @@ public class DashboardActivity extends AppCompatActivity
         fragmentTitles.add(getString(R.string.Dashboard_FragmentTitle_Kunjungan));
         fragmentTitles.add(getString(R.string.Dashboard_FragmentTitle_Penyelesaian));
         fragmentTitles.add(getString(R.string.Dashboard_FragmentTitle_PTP));
-        if (allowAccessNPLDashboard)
-            fragmentTitles.add(getString(R.string.Dashboard_FragmentTitle_NPL));
 
         //create fragments
         dashboardKunjunganFragment = new DashboardKunjunganFragment();
@@ -118,13 +114,6 @@ public class DashboardActivity extends AppCompatActivity
         fragments.add(dashboardKunjunganFragment);
         fragments.add(dashboardPenyelesaianFragment);
         fragments.add(dashboardPTPFragment);
-        if (allowAccessNPLDashboard)
-        {
-            //create npl dashboard (nanti cuma BC aja yang bisa akses)
-            dashboardNPLFragment = new DashboardNPLFragment();
-            dashboardNPLFragment.SetupTransactionProperties(baseURL, url_DataSP, authToken, userID);
-            fragments.add(dashboardNPLFragment);
-        }
 
         //create tab adapter
         CommonTabAdapter dashboardTabAdapter = new CommonTabAdapter(getSupportFragmentManager(), fragments, fragmentTitles);
@@ -132,35 +121,6 @@ public class DashboardActivity extends AppCompatActivity
         //set adapter to tab
         view_ViewPager.setAdapter(dashboardTabAdapter);
         view_Tablayout.setupWithViewPager(view_ViewPager);
-
-        //hide option menu jika user ini tipe petugas
-        SetupOptionMenu();
-    }
-
-    //cek apakah user ini boleh akses dashboard npl
-    private boolean AllowAccessNPLDashboard()
-    {
-        //cek group ID user ini
-        String userGroupID = ResourceLoader.LoadGroupID(this);
-
-        //get user group
-        final String userGroup_BranchCoordinator = getString(R.string.UserGroup_BranchCoordinator);
-        final String userGroup_BranchManager = getString(R.string.UserGroup_BranchManager);
-
-        return  (userGroupID.equals(userGroup_BranchCoordinator) || userGroupID.equals(userGroup_BranchManager));
-    }
-
-    //kalo user ini tipe bc / supervisor, dia bisa akses dashboard bawahan, kalo tipe petugas, nggak bisa
-    private void SetupOptionMenu()
-    {
-        //cek group ID user ini
-        String userGroupID = ResourceLoader.LoadGroupID(this);
-
-        final String userGroup_Staff1 = getString(R.string.UserGroup_Staff1);
-        final String userGroup_Staff2 = getString(R.string.UserGroup_Staff2);
-        final String userGroup_Staff3 = getString(R.string.UserGroup_Staff3);
-        if (userGroupID.equals(userGroup_Staff1) || userGroupID.equals(userGroup_Staff2) || userGroupID.equals(userGroup_Staff3))
-            button_OptionMenu.setVisibility(View.GONE);
     }
 
     //setup transaksi
@@ -173,51 +133,21 @@ public class DashboardActivity extends AppCompatActivity
         //load auth token
         authToken = ResourceLoader.LoadAuthToken(this);
 
-        //load user id
-        userID = ResourceLoader.LoadUserID(this);
+        //get bundle
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null)
+            return;
+
+        userID = bundle.getString("StaffID");
     }
 
     //----------------------------------------------------------------------------------------------
     //  Handle input
     //----------------------------------------------------------------------------------------------
     //handle back button
-    public void HandleInput_Dashboard_Back(View view)
+    public void HandleInput_DashboardStaff_Back(View view)
     {
         finish();
     }
 
-    //open option men
-    public void HandleInput_Dashboard_Option(View view)
-    {
-        //create popup menu
-        PopupMenu popupMenu = new PopupMenu(this, view);
-        popupMenu.inflate(R.menu.popup_menu_dashboard);
-        popupMenu.show();
-
-        //add listener ke popup menu
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
-        {
-            @Override
-            public boolean onMenuItemClick(MenuItem item)
-            {
-                HandleInput_OpenMenu(item);
-                return true;
-            }
-        });
-    }
-
-    //open menu
-    private void HandleInput_OpenMenu(MenuItem item)
-    {
-        //cek id menu
-        switch (item.getItemId())
-        {
-            case R.id.popup_menu_dashboard_staffDashboard :
-                //ToDo : Open staff selector
-                Intent intent = new Intent(this, StaffDashboardSelectorActivity.class);
-                startActivity(intent);
-                break;
-            default:break;
-        }
-    }
 }

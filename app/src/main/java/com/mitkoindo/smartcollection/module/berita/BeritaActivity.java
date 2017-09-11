@@ -141,19 +141,22 @@ public class BeritaActivity extends AppCompatActivity
         view_ViewPager.setAdapter(dashboardTabAdapter);
         view_TabLayout.setupWithViewPager(view_ViewPager);
 
-        //hide broadcast news option jika user ada di level petugas
-        /*String userGroupID = ResourceLoader.LoadGroupID(this);
-        final String userGroup_Staff1 = getString(R.string.UserGroup_Staff1);
-        final String userGroup_Staff2 = getString(R.string.UserGroup_Staff2);
-        final String userGroup_Staff3 = getString(R.string.UserGroup_Staff3);
-        if (userGroupID.equals(userGroup_Staff1) || userGroupID.equals(userGroup_Staff2) || userGroupID.equals(userGroup_Staff3))
-            view_CreateBroadcast.setVisibility(View.GONE);
+        //hide broadcast news option jika user bukan BC
+        String userGroupID = ResourceLoader.LoadGroupID(this);
+
+        final String userGroup_BranchCoordinator = getString(R.string.UserGroup_BranchCoordinator);
+        final String userGroup_BranchManager = getString(R.string.UserGroup_BranchManager);
+
+        if (userGroupID.equals(userGroup_BranchCoordinator) || userGroupID.equals(userGroup_BranchManager))
+            view_CreateBroadcast.setVisibility(View.VISIBLE);
         else
-            view_CreateBroadcast.setVisibility(View.VISIBLE);*/
+            view_CreateBroadcast.setVisibility(View.GONE);
 
         //test open broadcast menu
-        view_CreateBroadcast.setVisibility(View.VISIBLE);
+        /*view_CreateBroadcast.setVisibility(View.VISIBLE);*/
     }
+
+
 
     //----------------------------------------------------------------------------------------------
     //  Handle input
