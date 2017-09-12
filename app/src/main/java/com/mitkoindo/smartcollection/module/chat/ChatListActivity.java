@@ -10,7 +10,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -40,6 +43,13 @@ public class ChatListActivity extends AppCompatActivity
 
     //alert
     private TextView view_AlertText;
+
+    //search form
+    private EditText form_Search;
+
+    //search button & clear button
+    private ImageView button_Search;
+    private ImageView button_Clear;
 
     //----------------------------------------------------------------------------------------------
     //  Data
@@ -74,7 +84,11 @@ public class ChatListActivity extends AppCompatActivity
         SetupTransaction();
 
         //create get staff request
-        CreateGetStaffRequest();
+        /*CreateGetStaffRequest();*/
+        AttachStaffAdapterToList();
+
+        //add listener
+        AddListenerToViews();
     }
 
     //get views
@@ -83,6 +97,9 @@ public class ChatListActivity extends AppCompatActivity
         view_Recycler = findViewById(R.id.ChatList_StaffList);
         view_ProgressBar = findViewById(R.id.ChatList_ProgressBar);
         view_AlertText = findViewById(R.id.ChatList_AlertText);
+        form_Search = findViewById(R.id.ChatList_SearchForm);
+        button_Search = findViewById(R.id.ChatList_SearchButton);
+        button_Clear = findViewById(R.id.ChatList_ClearButton);
     }
 
     //setup transaksi
@@ -97,6 +114,56 @@ public class ChatListActivity extends AppCompatActivity
 
         //load user id
         userID = ResourceLoader.LoadUserID(this);
+    }
+
+    //add listener to views
+    private void AddListenerToViews()
+    {
+        //add search listener
+        form_Search.setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent)
+            {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (i == KeyEvent.KEYCODE_ENTER))
+                {
+                    CreateSearchRequest();
+                    return true;
+                }
+
+                return false;
+            }
+        });
+    }
+
+    //attach adapter to list
+    private void AttachStaffAdapterToList()
+    {
+        //set properties ke adapter
+        staffListChatAdapter = new StaffListChatAdapter(this);
+        staffListChatAdapter.SetTransaction(baseURL, url_DataSP, authToken, userID);
+        staffListChatAdapter.SetViews(view_Recycler, view_ProgressBar, view_AlertText);
+        staffListChatAdapter.CreateGetStaffRequest();
+
+        //attach adapter to recyclerview
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        view_Recycler.setLayoutManager(layoutManager);
+        view_Recycler.setItemAnimator(new DefaultItemAnimator());
+        Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider_vertical_10dp);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        dividerItemDecoration.setDrawable(dividerDrawable);
+        view_Recycler.addItemDecoration(dividerItemDecoration);
+        view_Recycler.setAdapter(staffListChatAdapter);
+
+        //add listener to adapter
+        staffListChatAdapter.setClickListener(new ItemClickListener()
+        {
+            @Override
+            public void onItemClick(View view, int position)
+            {
+                OpenChatWindow(position);
+            }
+        });
     }
 
     //----------------------------------------------------------------------------------------------
@@ -121,147 +188,50 @@ public class ChatListActivity extends AppCompatActivity
         //open chat window untuk staff ini
         Intent intent = new Intent(this, ChatWindowActivity.class);
         intent.putExtra("PartnerID", selectedStaff.USERID);
+        intent.putExtra("PartnerName", selectedStaff.FULL_NAME);
         startActivity(intent);
     }
 
-    //----------------------------------------------------------------------------------------------
-    //  Create request buat get data staff
-    //----------------------------------------------------------------------------------------------
-    private void CreateGetStaffRequest()
+    //create search request
+    private void CreateSearchRequest()
     {
-        //show progress bar, hide list & alert
-        view_ProgressBar.setVisibility(View.VISIBLE);
-        view_Recycler.setVisibility(View.GONE);
-        view_AlertText.setVisibility(View.GONE);
+        //get query
+        String searchQuery = form_Search.getText().toString();
 
-        //send request
-        new SendGetStaffRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+        //show clear button, hide search button
+        button_Clear.setVisibility(View.VISIBLE);
+        button_Search.setVisibility(View.GONE);
+
+        //execute request
+        staffListChatAdapter.CreateSearchRequest(searchQuery);
     }
 
-    //create request object
-    private JSONObject CreateGetStaffRequestObject()
+    //handle input dari search button
+    public void HandleInput_ChatList_Search(View view)
     {
-        JSONObject requestObject = new JSONObject();
-
-        try
-        {
-            //create SpParameter object
-            JSONObject spParameterObject = new JSONObject();
-            spParameterObject.put("userID", userID);
-            spParameterObject.put("keyword", null);
-            spParameterObject.put("top", 9999);
-            /*spParameterObject.put("userID", "BTN0013887");*/
-
-            //populate request object
-            requestObject.put("DatabaseID", "db1");
-            requestObject.put("SpName", "MKI_SP_STAFF_LIST");
-            requestObject.put("SpParameter", spParameterObject);
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-
-        return requestObject;
+        CreateSearchRequest();
     }
 
-    private class SendGetStaffRequest extends AsyncTask<String, Void, String>
+    //handle input dari clear button
+    public void HandleInput_ChatList_Clear(View view)
     {
-        @Override
-        protected String doInBackground(String... strings)
+        //cek query
+        String searchQuery = form_Search.getText().toString();
+
+        //jika query kosong, reset search form
+        if (searchQuery.isEmpty())
         {
-            //set url
-            String usedUrl = baseURL + url_DataSP;
+            //show search button, hide clear button
+            button_Search.setVisibility(View.VISIBLE);
+            button_Clear.setVisibility(View.GONE);
 
-            //create request object
-            JSONObject requestObject = CreateGetStaffRequestObject();
-
-            //send request
-            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
-            networkConnection.SetRequestObject(requestObject);
-            return networkConnection.SendPostRequest(usedUrl);
+            //create request
+            staffListChatAdapter.CreateSearchRequest("");
         }
-
-        @Override
-        protected void onPostExecute(String s)
+        else
         {
-            super.onPostExecute(s);
-            HandleGetStaffRequest(s);
+            //clear query
+            form_Search.setText("");
         }
-    }
-
-    //handle result transaksi
-    private void HandleGetStaffRequest(String resultString)
-    {
-        //hide progress bar
-        view_ProgressBar.setVisibility(View.GONE);
-
-        //pastikan result tidak kosong
-        if (resultString == null || resultString.isEmpty())
-        {
-            //show alert
-            view_AlertText.setText(R.string.Text_SomethingWrong);
-            return;
-        }
-
-        try
-        {
-            //create staff arraylist
-            ArrayList<Staff> staffs = new ArrayList<>();
-
-            //konversi ke jsonArray
-            JSONArray dataArray = new JSONArray(resultString);
-
-            //loop seluruh data di array
-            for (int i = 0; i < dataArray.length(); i++)
-            {
-                //create new staff data dan parse data dari JSON Object
-                Staff newStaff = new Staff();
-                newStaff.Parse(dataArray.getJSONObject(i));
-
-                //add data ke list
-                staffs.add(newStaff);
-            }
-
-            //create adapter
-            staffListChatAdapter = new StaffListChatAdapter(this, staffs);
-            AttachStaffAdapterToList();
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-
-        //show list
-        view_Recycler.setVisibility(View.VISIBLE);
-    }
-
-    //attach adapter to list
-    private void AttachStaffAdapterToList()
-    {
-        //attach adapter to recyclerview
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        view_Recycler.setLayoutManager(layoutManager);
-        view_Recycler.setItemAnimator(new DefaultItemAnimator());
-        Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider_vertical_10dp);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        dividerItemDecoration.setDrawable(dividerDrawable);
-        view_Recycler.addItemDecoration(dividerItemDecoration);
-        view_Recycler.setAdapter(staffListChatAdapter);
-
-        //add listener to adapter
-        staffListChatAdapter.setClickListener(new ItemClickListener()
-        {
-            @Override
-            public void onItemClick(View view, int position)
-            {
-                OpenChatWindow(position);
-            }
-        });
-
-        //show list
-        view_Recycler.setVisibility(View.VISIBLE);
-        view_AlertText.setVisibility(View.GONE);
-        view_ProgressBar.setVisibility(View.GONE);
     }
 }

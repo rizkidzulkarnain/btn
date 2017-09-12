@@ -27,7 +27,7 @@
     <string-array name="HomeMenu_Supervisor">
         <item>Dashboard</item>
         <item>Berita</item>
-        <item>Account Assignment</item>
+        <item>Assignment</item>
         <item>PTP Reminder</item>
         <item>Chat</item>
         <item>Laporan</item>
@@ -38,7 +38,7 @@
     <string-array name="HomeMenu_BC">
         <item>Dashboard</item>
         <item>Berita</item>
-        <item>Account Assignment</item>
+        <item>Assignment</item>
         <item>PTP Reminder</item>
         <item>Chat</item>
         <item>Laporan</item>

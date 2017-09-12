@@ -44,7 +44,7 @@ public class ResourceLoader
             case "Pusat Notifikasi" :
                 icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.menuicon_pusatnotifikasi);
                 break;
-            case "Account Assignment" :
+            case "Assignment" :
                 icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.menuicon_accountasignment);
                 break;
             case "Check-In" :

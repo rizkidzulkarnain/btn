@@ -342,7 +342,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
             case "Tambah Kontak" :
                 intent = ListDebiturActivity.instantiate(this, ListDebiturActivity.EXTRA_TYPE_TAMBAH_KONTAK_VALUE);
                 break;
-            case "Account Assignment" :
+            case "Assignment" :
                 intent = new Intent(this, AccountAssignmentActivity.class);
                 break;
             case "PTP Reminder" :

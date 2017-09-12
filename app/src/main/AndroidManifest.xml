@@ -91,6 +91,9 @@
             android:name=".module.debitur.detaildebitur.DetailDebiturActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".module.debitur.detaildebitur.ViewTeleponActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".module.formvisit.FormVisitActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

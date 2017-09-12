@@ -115,7 +115,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         {
             //jika tidak, maka gunakan adapter received message karena message ini dikirim oleh partner
             holder.holder_SentMessage.setVisibility(View.GONE);
-            holder.holder_ReceivedMessage.setVisibility(View.GONE);
+            holder.holder_ReceivedMessage.setVisibility(View.VISIBLE);
 
             //set text
             holder.receivedMessage.setText(currentChatItem.Message);

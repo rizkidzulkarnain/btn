@@ -70,6 +70,7 @@
 
                     <ImageView
                         android:id="@+id/ChatList_SearchButton"
+                        android:onClick="HandleInput_ChatList_Search"
                         android:src="@drawable/ic_play_arrow_white_36dp"
                         android:tint="@color/Tint_Chat_SearchControl"
                         android:layout_centerVertical="true"
@@ -79,6 +80,7 @@
                     <!--Clear button-->
                     <ImageView
                         android:id="@+id/ChatList_ClearButton"
+                        android:onClick="HandleInput_ChatList_Clear"
                         android:visibility="gone"
                         android:src="@drawable/ic_close_white_36dp"
                         android:tint="@color/Tint_Chat_SearchControl"
@@ -92,6 +94,7 @@
                     android:id="@+id/ChatList_SearchForm"
                     android:inputType="text"
                     android:imeOptions="actionSearch"
+                    android:maxLines="1"
                     android:hint="@string/Chat_Hint_CariPetugas"
                     android:textColor="@color/Tint_Chat_SearchControl"
                     android:textColorHint="@color/Tint_Chat_SearchControl"
@@ -132,6 +135,7 @@
                     android:id="@+id/ChatList_AlertText"
                     android:visibility="gone"
                     android:layout_centerInParent="true"
+                    android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </RelativeLayout>

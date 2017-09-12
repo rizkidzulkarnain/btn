@@ -82,8 +82,8 @@ public class ChatWindowActivity extends AppCompatActivity
         setContentView(R.layout.activity_chat_window);
 
         //setup
-        GetBundles();
         GetViews();
+        GetBundles();
         SetupTransaction();
         AttachChatAdapter();
     }
@@ -143,6 +143,10 @@ public class ChatWindowActivity extends AppCompatActivity
 
         //get user id
         userID_ChatPartner = bundle.getString("PartnerID");
+
+        //get partner name
+        String partnerName = bundle.getString("PartnerName");
+        view_StaffName.setText(partnerName);
     }
 
     //----------------------------------------------------------------------------------------------
