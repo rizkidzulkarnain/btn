@@ -149,7 +149,7 @@ public class ChatListActivity extends AppCompatActivity
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         view_Recycler.setLayoutManager(layoutManager);
         view_Recycler.setItemAnimator(new DefaultItemAnimator());
-        Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider_vertical_10dp);
+        Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider_vertical_line1dp);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         dividerItemDecoration.setDrawable(dividerDrawable);
         view_Recycler.addItemDecoration(dividerItemDecoration);

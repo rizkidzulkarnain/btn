@@ -1,5 +1,6 @@
 package com.mitkoindo.smartcollection.module.dashboard;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,7 +19,9 @@ import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.adapter.StaffAdapter;
+import com.mitkoindo.smartcollection.helper.ItemClickListener;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
+import com.mitkoindo.smartcollection.objectdata.Staff;
 
 public class StaffDashboardSelectorActivity extends AppCompatActivity
 {
@@ -182,6 +185,22 @@ public class StaffDashboardSelectorActivity extends AppCompatActivity
         }
     }
 
+    //open staff dashboard
+    private void OpenStaffDashboard(int index)
+    {
+        //get current staff
+        Staff currentStaff = staffAdapter.GetStaffAt(index);
+
+        //pastikan staff nggak null
+        if (currentStaff == null)
+            return;
+
+        //open intent
+        Intent intent = new Intent(this, StaffDashboardActivity.class);
+        intent.putExtra("StaffID", currentStaff.USERID);
+        startActivity(intent);
+    }
+
     //----------------------------------------------------------------------------------------------
     //  Attach adapter
     //----------------------------------------------------------------------------------------------
@@ -193,6 +212,16 @@ public class StaffDashboardSelectorActivity extends AppCompatActivity
         //set property
         staffAdapter.SetTransactionData(baseURL, url_DataSP, authToken, userID);
         staffAdapter.SetViews(view_ProgressBar, view_PageLoadIndicator, view_Recycler, view_Alert);
+
+        //add listener
+        staffAdapter.setClickListener(new ItemClickListener()
+        {
+            @Override
+            public void onItemClick(View view, int position)
+            {
+                OpenStaffDashboard(position);
+            }
+        });
 
         //load data
         staffAdapter.LoadInitialData();

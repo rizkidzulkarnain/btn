@@ -34,44 +34,155 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
 
-    <ScrollView
-        android:layout_below="@id/DashboardPTPFragment_SpinnerHolder"
-        android:layout_marginTop="10dp"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/DashboardPTPFragment_Refresher"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/DashboardPTPFragment_ChartLayout"
-            android:padding="10dp"
-            android:clipToPadding="false"
-            android:orientation="vertical"
+        <ScrollView
+            android:layout_below="@id/DashboardPTPFragment_SpinnerHolder"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/DashboardPTPFragment_MonthlyData"
+                android:id="@+id/DashboardPTPFragment_ChartLayout"
+                android:padding="10dp"
+                android:clipToPadding="false"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!--Label data nominal-->
+                <LinearLayout
+                    android:id="@+id/DashboardPTPFragment_MonthlyData"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!--Label data nominal-->
+                    <TextView
+                        android:text="Monthly"
+                        android:textSize="18sp"
+                        android:textColor="@color/White"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <!--Chart nominal-->
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/DashboardPTPFragment_Chart_Nominal"
+                        android:background="@drawable/background_card_whitetransparent"
+                        android:padding="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"/>
+
+                    <!--Target nominal-->
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="@string/Dashboard_Target"
+                            android:textColor="@color/White"
+                            android:textStyle="bold"
+                            android:gravity="end"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/DashboardPTPFragment_Nominal_Target"
+                            android:textColor="@color/White"
+                            android:gravity="start"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <!--Realisasi debitur-->
+                    <LinearLayout
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="Janji Bayar"
+                            android:textColor="@color/White"
+                            android:textStyle="bold"
+                            android:gravity="end"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/DashboardPTPFragment_Nominal_Realisasi"
+                            android:textColor="@color/White"
+                            android:gravity="start"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <!--Outstanding debitur-->
+                    <LinearLayout
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="@string/Dashboard_Outstanding"
+                            android:textColor="@color/White"
+                            android:textStyle="bold"
+                            android:gravity="end"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/DashboardPTPFragment_Nominal_Outstanding"
+                            android:textColor="@color/White"
+                            android:gravity="start"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--Label data debitur-->
                 <TextView
-                    android:text="Monthly"
+                    android:text="@string/Dashboard_Debitur"
                     android:textSize="18sp"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <!--Chart nominal-->
+                <!--Chart debitur-->
                 <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/DashboardPTPFragment_Chart_Nominal"
+                    android:id="@+id/DashboardPTPFragment_Chart_Debitur"
                     android:background="@drawable/background_card_whitetransparent"
                     android:padding="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"/>
 
-                <!--Target nominal-->
+                <!--Target debitur-->
                 <LinearLayout
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
@@ -90,7 +201,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/DashboardPTPFragment_Nominal_Target"
+                        android:id="@+id/DashboardPTPFragment_Debitur_Target"
                         android:textColor="@color/White"
                         android:gravity="start"
                         android:layout_marginLeft="5dp"
@@ -119,7 +230,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/DashboardPTPFragment_Nominal_Realisasi"
+                        android:id="@+id/DashboardPTPFragment_Debitur_Realisasi"
                         android:textColor="@color/White"
                         android:gravity="start"
                         android:layout_marginLeft="5dp"
@@ -148,7 +259,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/DashboardPTPFragment_Nominal_Outstanding"
+                        android:id="@+id/DashboardPTPFragment_Debitur_Outstanding"
                         android:textColor="@color/White"
                         android:gravity="start"
                         android:layout_marginLeft="5dp"
@@ -158,113 +269,8 @@
                         android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
-
-            <!--Label data debitur-->
-            <TextView
-                android:text="@string/Dashboard_Debitur"
-                android:textSize="18sp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/White"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <!--Chart debitur-->
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/DashboardPTPFragment_Chart_Debitur"
-                android:background="@drawable/background_card_whitetransparent"
-                android:padding="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"/>
-
-            <!--Target debitur-->
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:text="@string/Dashboard_Target"
-                    android:textColor="@color/White"
-                    android:textStyle="bold"
-                    android:gravity="end"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/DashboardPTPFragment_Debitur_Target"
-                    android:textColor="@color/White"
-                    android:gravity="start"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <!--Realisasi debitur-->
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:text="Janji Bayar"
-                    android:textColor="@color/White"
-                    android:textStyle="bold"
-                    android:gravity="end"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/DashboardPTPFragment_Debitur_Realisasi"
-                    android:textColor="@color/White"
-                    android:gravity="start"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <!--Outstanding debitur-->
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:text="@string/Dashboard_Outstanding"
-                    android:textColor="@color/White"
-                    android:textStyle="bold"
-                    android:gravity="end"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/DashboardPTPFragment_Debitur_Outstanding"
-                    android:textColor="@color/White"
-                    android:gravity="start"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <!--Progress bar-->
     <RelativeLayout

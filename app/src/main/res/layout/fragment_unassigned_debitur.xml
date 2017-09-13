@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.mitkoindo.smartcollection.module.assignment.UnassignedDebiturFragment">
 
@@ -106,6 +107,17 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/UnassignedDebiturFragment_SelectAll"
+                    android:text="@string/Text_SelectAll"
+                    android:textColor="@color/White"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    app:buttonTint="@color/White"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <!--Swipe refresh layout-->
                 <android.support.v4.widget.SwipeRefreshLayout

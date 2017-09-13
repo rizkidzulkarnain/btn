@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_bluegradient"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mitkoindo.smartcollection.module.laporan.ArchiveActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--page title, etc -->
+        <TextView
+            android:id="@+id/ArchiveActivity_Staffname"
+            android:textColor="@color/White"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@drawable/background_rounded_rectangle_pagetitle"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!--Divider-->
+        <View
+            android:background="@color/Background_PageTitle"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <include
+            android:id="@+id/ArchiveActivity_ArchiveFragment"
+            layout="@layout/fragment_archive"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <!--Back button-->
+    <RelativeLayout
+        android:onClick="HandleInput_ArchiveActivity_Back"
+        android:background="@drawable/background_circle_blacktransparent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="66dp"
+        android:layout_height="66dp">
+
+        <ImageView
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_chevron_left_white_36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>

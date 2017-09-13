@@ -4,6 +4,7 @@ package com.mitkoindo.smartcollection.module.dashboard;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +76,9 @@ public class DashboardPTPFragment extends Fragment
     //data perbulan
     private View holder_MonthlyData;
 
+    //refresher
+    private SwipeRefreshLayout view_Refresher;
+
     //----------------------------------------------------------------------------------------------
     //  Transaksi
     //----------------------------------------------------------------------------------------------
@@ -135,6 +139,17 @@ public class DashboardPTPFragment extends Fragment
         view_Nominal_Outstanding = thisView.findViewById(R.id.DashboardPTPFragment_Nominal_Outstanding);
 
         holder_MonthlyData = thisView.findViewById(R.id.DashboardPTPFragment_MonthlyData);
+
+        view_Refresher = thisView.findViewById(R.id.DashboardPTPFragment_Refresher);
+        view_Refresher.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                view_Refresher.setRefreshing(false);
+                CreateGetDashboardPTPRequest();
+            }
+        });
     }
 
     //setup views

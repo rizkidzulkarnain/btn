@@ -49,6 +49,7 @@ import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturA
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.module.laporan.LaporanActivity;
 import com.mitkoindo.smartcollection.module.ptp_reminder.PTPReminderActivity;
+import com.mitkoindo.smartcollection.module.pusatnotifikasi.PusatNotifikasiActivity;
 import com.mitkoindo.smartcollection.network.ApiUtils;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.CheckInBody;
@@ -356,6 +357,9 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
                 break;
             case "Laporan" :
                 intent = new Intent(this, LaporanActivity.class);
+                break;
+            case "Pusat Notifikasi" :
+                intent = new Intent(this, PusatNotifikasiActivity.class);
                 break;
 
             default:break;

@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
+import com.mitkoindo.smartcollection.helper.ItemClickListener;
 import com.mitkoindo.smartcollection.module.dashboard.StaffDashboardActivity;
 import com.mitkoindo.smartcollection.objectdata.Staff;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
@@ -77,6 +78,12 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
     private TextView view_Alert;
 
     //----------------------------------------------------------------------------------------------
+    //  Input
+    //----------------------------------------------------------------------------------------------
+    //click listener
+    private ItemClickListener itemClickListener;
+
+    //----------------------------------------------------------------------------------------------
     //  Setup
     //----------------------------------------------------------------------------------------------
     //constructor
@@ -113,7 +120,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
         holder.staffGroup.setText(currentStaff.GROUP);
 
         //add listener
-        final int currentPos = position;
+        /*final int currentPos = position;
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -121,7 +128,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
             {
                 OpenStaffDashboard(currentPos);
             }
-        });
+        });*/
 
         //un-bind data
         onBind = false;
@@ -131,6 +138,15 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
     public int getItemCount()
     {
         return staffs.size();
+    }
+
+    //get staff
+    public Staff GetStaffAt(int index)
+    {
+        if (index < 0 || index >= getItemCount())
+            return null;
+
+        return staffs.get(index);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -146,6 +162,12 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
         Intent intent = new Intent(context, StaffDashboardActivity.class);
         intent.putExtra("StaffID", currentStaff.USERID);
         context.startActivity(intent);
+    }
+
+    // allows clicks events to be caught
+    public void setClickListener(ItemClickListener itemClickListener)
+    {
+        this.itemClickListener = itemClickListener;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -312,7 +334,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
     //----------------------------------------------------------------------------------------------
     //  View holder
     //----------------------------------------------------------------------------------------------
-    class StaffViewHolder extends RecyclerView.ViewHolder
+    class StaffViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         TextView staffName;
         TextView staffGroup;
@@ -324,6 +346,16 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
             //get views
             staffName = itemView.findViewById(R.id.StaffAdapter_Staffname);
             staffGroup = itemView.findViewById(R.id.StaffAdapter_Group);
+
+            //add input listener
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view)
+        {
+            if (itemClickListener != null)
+                itemClickListener.onItemClick(view, getAdapterPosition());
         }
     }
 }

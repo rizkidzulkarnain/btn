@@ -23,6 +23,7 @@ public class LaporanActivity extends AppCompatActivity
     private AgentTrackingFragment fragment_AgentTracking;
     private DebiturMonitorFragment fragment_MonitorDebitur;
     private StaffProductivityFragment fragment_StaffProductivity;
+    private SupervisorArchiveFragment fragment_SupervisorArchive;
 
     //tab layout
     private TabLayout view_Tabs;
@@ -55,7 +56,10 @@ public class LaporanActivity extends AppCompatActivity
         //setup
         SetupTransaction();
         GetViews();
-        SetupTabs();
+
+        SetTabDependingOnGroup();
+        /*SetupTabs();*/
+        /*SetupSupervisorTab();*/
     }
 
     //setup transaksi
@@ -75,6 +79,35 @@ public class LaporanActivity extends AppCompatActivity
     //get views
     private void GetViews()
     {
+        //get tab
+        view_Tabs = findViewById(R.id.Laporan_Tab);
+
+        //get pager
+        view_ViewPager = findViewById(R.id.Laporan_ViewPager);
+    }
+
+    //set tab tergantung user group
+    private void SetTabDependingOnGroup()
+    {
+        //cek group ID user ini
+        String userGroupID = ResourceLoader.LoadGroupID(this);
+
+        //get user group
+        final String userGroup_Staff1 = getString(R.string.UserGroup_Staff1);
+        final String userGroup_Staff2 = getString(R.string.UserGroup_Staff2);
+        final String userGroup_Staff3 = getString(R.string.UserGroup_Staff3);
+        
+        //cek tipe user
+        if (userGroupID.equals(userGroup_Staff1) || userGroupID.equals(userGroup_Staff2) || userGroupID.equals(userGroup_Staff3))
+            SetupTabs();
+        else
+            SetupSupervisorTab();
+
+    }
+
+    //setup tabs
+    private void SetupTabs()
+    {
         //create fragments
         fragment_Archive = new ArchiveFragment();
         fragment_AgentTracking = new AgentTrackingFragment();
@@ -84,16 +117,6 @@ public class LaporanActivity extends AppCompatActivity
         //set property transaksi ke fragment
         fragment_Archive.SetTransactionData(baseURL, url_DataSP, authToken, userID);
 
-        //get tab
-        view_Tabs = findViewById(R.id.Laporan_Tab);
-
-        //get pager
-        view_ViewPager = findViewById(R.id.Laporan_ViewPager);
-    }
-
-    //setup tabs
-    private void SetupTabs()
-    {
         //create fragment titles
         ArrayList<String> fragmentTitles = new ArrayList<>();
         fragmentTitles.add(getString(R.string.Laporan_Tab_Arsip));
@@ -104,6 +127,41 @@ public class LaporanActivity extends AppCompatActivity
         //create fragment list
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(fragment_Archive);
+        fragments.add(fragment_AgentTracking);
+        fragments.add(fragment_MonitorDebitur);
+        fragments.add(fragment_StaffProductivity);
+
+        //set fragment ke views
+        //create tab adapter
+        CommonTabAdapter dashboardTabAdapter = new CommonTabAdapter(getSupportFragmentManager(), fragments, fragmentTitles);
+
+        //set adapter to tab
+        view_ViewPager.setAdapter(dashboardTabAdapter);
+        view_Tabs.setupWithViewPager(view_ViewPager);
+    }
+
+    //setup tab buat supervisor
+    private void SetupSupervisorTab()
+    {
+        //create fragments
+        fragment_SupervisorArchive = new SupervisorArchiveFragment();
+        fragment_AgentTracking = new AgentTrackingFragment();
+        fragment_MonitorDebitur = new DebiturMonitorFragment();
+        fragment_StaffProductivity = new StaffProductivityFragment();
+
+        //set property transaksi ke fragment
+        fragment_SupervisorArchive.SetTransactionData(baseURL, url_DataSP, authToken, userID);
+
+        //create fragment titles
+        ArrayList<String> fragmentTitles = new ArrayList<>();
+        fragmentTitles.add(getString(R.string.Laporan_Tab_Arsip));
+        fragmentTitles.add(getString(R.string.Laporan_Tab_AgentTracking));
+        fragmentTitles.add(getString(R.string.Laporan_Tab_Monitoring));
+        fragmentTitles.add(getString(R.string.Laporan_Tab_StaffProductivity));
+
+        //create fragment list
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(fragment_SupervisorArchive);
         fragments.add(fragment_AgentTracking);
         fragments.add(fragment_MonitorDebitur);
         fragments.add(fragment_StaffProductivity);

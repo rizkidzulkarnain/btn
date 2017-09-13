@@ -4,6 +4,7 @@ package com.mitkoindo.smartcollection.module.dashboard;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,9 @@ public class DashboardKunjunganFragment extends Fragment
     private TextView view_Nominal_Realisasi;
     private TextView view_Nominal_Outstanding;
 
+    //refresher
+    private SwipeRefreshLayout view_Refresher;
+
     //----------------------------------------------------------------------------------------------
     //  Transaksi
     //----------------------------------------------------------------------------------------------
@@ -130,6 +134,18 @@ public class DashboardKunjunganFragment extends Fragment
         view_Nominal_Target = thisView.findViewById(R.id.DashboardKunjunganFragment_Nominal_Target);
         view_Nominal_Realisasi = thisView.findViewById(R.id.DashboardKunjunganFragment_Nominal_Realisasi);
         view_Nominal_Outstanding = thisView.findViewById(R.id.DashboardKunjunganFragment_Nominal_Outstanding);
+
+        //get refresher + add listener
+        view_Refresher = thisView.findViewById(R.id.DashboardKunjunganFragment_Refresher);
+        view_Refresher.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                view_Refresher.setRefreshing(false);
+                CreateGetDashboardKunjunganRequest();
+            }
+        });
     }
 
     //setup views

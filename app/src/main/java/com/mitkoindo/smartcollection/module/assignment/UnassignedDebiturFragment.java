@@ -2,6 +2,7 @@ package com.mitkoindo.smartcollection.module.assignment;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -105,6 +108,9 @@ public class UnassignedDebiturFragment extends Fragment
     //popup buat additional infor
     private AlertDialog popup_AdditionalInfo;
     private EditText view_Popup_AdditionalInfoForm;
+
+    //checkbox buat select all debitur
+    private AppCompatCheckBox checkbox_SelectAll;
 
     //----------------------------------------------------------------------------------------------
     //  Utilities
@@ -193,6 +199,9 @@ public class UnassignedDebiturFragment extends Fragment
                 value_SortParameterName);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         view_SortOptions.setAdapter(adapter);
+
+        //get checkbox
+        checkbox_SelectAll = thisView.findViewById(R.id.UnassignedDebiturFragment_SelectAll);
     }
 
     //Setup listener
@@ -286,6 +295,17 @@ public class UnassignedDebiturFragment extends Fragment
             public void onNothingSelected(AdapterView<?> adapterView)
             {
 
+            }
+        });
+
+        //add listener pada checkbox select all
+        checkbox_SelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+            {
+                //select all item yang visible di adapter
+                accountAssignmentAdapter.ToggleSelectAllItem(b);
             }
         });
     }
@@ -736,10 +756,13 @@ public class UnassignedDebiturFragment extends Fragment
             spParameterObject.put("MOVER_USER", formAccountAssignment.MOVER_USER);
             spParameterObject.put("DATE_MOVE_TO", formAccountAssignment.DATE_MOVE_TO);
             spParameterObject.put("NOTE", formAccountAssignment.NOTE);
+            /*spParameterObject.put("USERID", "btn0100011");
+            spParameterObject.put("status", "'PENDING'");*/
 
             //populate request object
             requestObject.put("DatabaseID", "db1");
             requestObject.put("SpName", formAccountAssignment.SPName);
+            /*requestObject.put("SpName", "MKI_SP_DEBITUR_LIST");*/
             requestObject.put("SpParameter", spParameterObject);
         }
         catch (JSONException e)
@@ -806,9 +829,10 @@ public class UnassignedDebiturFragment extends Fragment
                     popup_Assignment.dismiss();
 
                 //show alert bahwa transaksi berhasil
-                String title = getString(R.string.Text_Success);
+                ShowAlert_AssignmentSuccess();
+                /*String title = getString(R.string.Text_Success);
                 String message = getString(R.string.AccountAssignment_Alert_AssignmentSukses);
-                genericAlert.DisplayAlert(message, title);
+                genericAlert.DisplayAlert(message, title);*/
             }
             else
             {
@@ -827,5 +851,32 @@ public class UnassignedDebiturFragment extends Fragment
             String message = getString(R.string.Text_SomethingWrong);
             genericAlert.DisplayAlert(message, title);
         }
+    }
+
+    //show alert bahwa assignment berhasil
+    private void ShowAlert_AssignmentSuccess()
+    {
+        //create builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setCancelable(false);
+
+        //set title & message
+        builder.setTitle(R.string.Text_Success);
+        builder.setMessage(R.string.AccountAssignment_Alert_AssignmentSukses);
+
+        //set listener
+        builder.setPositiveButton(R.string.Text_OK, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                //refresh data
+                accountAssignmentAdapter.CreateGetListDebiturRequest();
+            }
+        });
+
+        //show alert
+        AlertDialog successAlert = builder.create();
+        successAlert.show();
     }
 }

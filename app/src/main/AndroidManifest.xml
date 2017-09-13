@@ -80,8 +80,15 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.dashboard.StaffDashboardSelectorActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".module.dashboard.StaffDashboardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".module.dashboard.StaffDashboardActivity"
+        <activity
+            android:name=".module.pusatnotifikasi.PusatNotifikasiActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".module.laporan.ArchiveActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".module.misc.ChangeBaseURLActivity" />
         <activity

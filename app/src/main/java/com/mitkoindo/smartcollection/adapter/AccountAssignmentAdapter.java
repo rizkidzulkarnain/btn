@@ -285,9 +285,6 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
         return selectedDebiturAccount;
     }
 
-    //----------------------------------------------------------------------------------------------
-    //  Manipulasi views
-    //----------------------------------------------------------------------------------------------
     //update displaynya assign button
     private void UpdateView_AssignButton()
     {
@@ -297,6 +294,27 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
         else
             //show assign button jika jumlah debitur yang diselect lebih dari nol
             button_Assign.setVisibility(View.VISIBLE);
+    }
+
+    //select all / unselect all item
+    public void ToggleSelectAllItem(boolean checked)
+    {
+        //reset count debitur
+        for (int i = 0; i < debiturItems.size(); i++)
+        {
+            debiturItems.get(i).Checked = checked;
+        }
+
+        //update counter
+        if (checked)
+            count_SelectedDebitur = debiturItems.size();
+        else
+            count_SelectedDebitur = 0;
+
+        if (!onBind)
+            notifyDataSetChanged();
+
+        UpdateView_AssignButton();
     }
 
     //----------------------------------------------------------------------------------------------
@@ -393,10 +411,13 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
             spParameterObject.put("sortDirection", "DESC");
             spParameterObject.put("page", currentPage);
             spParameterObject.put("limit", 10);
+            /*spParameterObject.put("userID", "btn0100011");
+            spParameterObject.put("status", "'PENDING'");*/
 
             //populate request object
             requestObject.put("DatabaseID", "db1");
             requestObject.put("SpName", "MKI_SP_ACCOUNT_ASSIGNMENT_LIST");
+            /*requestObject.put("SpName", "MKI_SP_DEBITUR_LIST");*/
             requestObject.put("SpParameter", spParameterObject);
         }
         catch (JSONException e)

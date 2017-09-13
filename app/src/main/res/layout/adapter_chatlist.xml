@@ -15,10 +15,25 @@
         android:layout_width="50dp"
         android:layout_height="50dp" />
 
-    <!--Nama staff-->
-    <TextView
-        android:id="@+id/ChatListAdapter_Staffname"
-        android:textColor="@color/Tint_ChatList_Element"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <!--Nama staff-->
+        <TextView
+            android:id="@+id/ChatListAdapter_Staffname"
+            android:textColor="@color/Tint_ChatList_Element"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--level staff-->
+        <TextView
+            android:id="@+id/ChatListAdapter_StaffLevel"
+            android:textColor="@color/Tint_ChatList_Element"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </LinearLayout>

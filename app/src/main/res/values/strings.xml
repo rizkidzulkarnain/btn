@@ -304,7 +304,7 @@
     <!--Laporan-->
     <string name="Laporan_Title">Laporan</string>
     <string name="Laporan_Tab_Arsip">Arsip</string>
-    <string name="Laporan_Tab_Monitoring">Monitoring Debitur</string>
+    <string name="Laporan_Tab_Monitoring">Distribusi Debitur</string>
     <string name="Laporan_Tab_AgentTracking">Agent Tracking</string>
     <string name="Laporan_Tab_StaffProductivity">Staff Productivity</string>
     <string name="Laporan_Arsip_Hint_CariDebitur">Cari Debitur</string>
@@ -324,6 +324,9 @@
     <string name="HistoriTindakan_Adapter_TanggalTindakan">Tanggal Tindakan</string>
     <string name="HistoriTindakan_Adapter_Pelaku">Pelaku</string>
     <string name="HistoriTindakan_Adapter_AlasanTindakan">Alasan Tindakan</string>
+
+    <!--Page pusat notifikasi-->
+    <string name="PusatNotifikasi_Title">Pusat Notifikasi</string>
 
     <!--Inbox adapter-->
     <string name="InboxAdapter_NoRekening">No. Rekening</string>

@@ -297,6 +297,12 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
         if (resultString.equals("Not Found"))
         {
             flag_AllowLoadNewPage = false;
+
+            if (currentPage == 1)
+            {
+                view_Alert.setText(R.string.Text_NoData);
+                view_Alert.setVisibility(View.VISIBLE);
+            }
             return;
         }
 

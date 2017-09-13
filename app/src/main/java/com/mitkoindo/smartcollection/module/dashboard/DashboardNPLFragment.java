@@ -4,6 +4,7 @@ package com.mitkoindo.smartcollection.module.dashboard;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,9 @@ public class DashboardNPLFragment extends Fragment
     //alert
     private TextView view_Alert;
 
+    //refresher
+    private SwipeRefreshLayout view_Refresher;
+
     //----------------------------------------------------------------------------------------------
     //  Transaksi
     //----------------------------------------------------------------------------------------------
@@ -98,6 +102,20 @@ public class DashboardNPLFragment extends Fragment
         holder_Chart = thisView.findViewById(R.id.DashboardNPLFragment_DataView);
         holder_Progress = thisView.findViewById(R.id.DashboardNPLFragment_ProgressLayout);
         view_Alert = thisView.findViewById(R.id.DashboardNPLFragment_AlertMessage);
+
+        //get refresher
+        view_Refresher = thisView.findViewById(R.id.DashboardNPLFragment_Refresher);
+
+        //add refresh request ke refresher
+        view_Refresher.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                view_Refresher.setRefreshing(false);
+                CreateGetNPLRequest();
+            }
+        });
     }
 
     //setup transaction properties

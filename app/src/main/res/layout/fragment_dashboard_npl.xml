@@ -6,244 +6,249 @@
     android:background="@drawable/background_bluegradient"
     tools:context="com.mitkoindo.smartcollection.module.dashboard.DashboardNPLFragment">
 
-    <ScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/DashboardNPLFragment_Refresher"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/DashboardNPLFragment_DataView"
-            android:padding="10dp"
-            android:clipToPadding="false"
-            android:orientation="vertical"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <!--Label data NPL Nasional-->
-            <TextView
-                android:text="@string/Dashboard_NPL_Nasional"
-                android:textSize="18sp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/White"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <!--Divider-->
-            <View
-                android:layout_marginTop="5dp"
-                android:background="@color/White"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-
-            <!--NPL-->
             <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
+                android:id="@+id/DashboardNPLFragment_DataView"
+                android:padding="10dp"
+                android:clipToPadding="false"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!--Label-->
+                <!--Label data NPL Nasional-->
                 <TextView
-                    android:text="@string/Dashboard_NPL"
+                    android:text="@string/Dashboard_NPL_Nasional"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/White"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <!--Value-->
+                <!--Divider-->
+                <View
+                    android:layout_marginTop="5dp"
+                    android:background="@color/White"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+                <!--NPL-->
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginStart="25dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!--Label-->
+                    <TextView
+                        android:text="@string/Dashboard_NPL"
+                        android:textColor="@color/White"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+                    <!--Value-->
+                    <TextView
+                        android:id="@+id/DashboardNPLFragment_NasionalNPL"
+                        android:textColor="@color/White"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <!--Saldo pokok NPL-->
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginStart="25dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!--Label-->
+                    <TextView
+                        android:text="@string/Dashboard_SaldoPokokNPL"
+                        android:textColor="@color/White"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+                    <!--Value-->
+                    <TextView
+                        android:id="@+id/DashboardNPLFragment_NasionalSaldoPokok"
+                        android:textColor="@color/White"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <!--Label data NPL Kanwil-->
                 <TextView
-                    android:id="@+id/DashboardNPLFragment_NasionalNPL"
+                    android:text="@string/Dashboard_NPL_Kanwil"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/White"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!--Divider-->
+                <View
+                    android:layout_marginTop="5dp"
+                    android:background="@color/White"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+                <!--NPL-->
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginStart="25dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!--Label-->
+                    <TextView
+                        android:text="@string/Dashboard_NPL"
+                        android:textColor="@color/White"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+                    <!--Value-->
+                    <TextView
+                        android:id="@+id/DashboardNPLFragment_KanwilNPL"
+                        android:textColor="@color/White"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <!--Saldo pokok NPL-->
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginStart="25dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!--Label-->
+                    <TextView
+                        android:text="@string/Dashboard_SaldoPokokNPL"
+                        android:textColor="@color/White"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+                    <!--Value-->
+                    <TextView
+                        android:id="@+id/DashboardNPLFragment_KanwilSaldoPokok"
+                        android:textColor="@color/White"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <!--Label data NPL KC-->
+                <TextView
+                    android:text="@string/Dashboard_NPL_KC"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!--Divider-->
+                <View
+                    android:layout_marginTop="5dp"
+                    android:background="@color/White"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+                <!--NPL-->
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginStart="25dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!--Label-->
+                    <TextView
+                        android:text="@string/Dashboard_NPL"
+                        android:textColor="@color/White"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+                    <!--Value-->
+                    <TextView
+                        android:id="@+id/DashboardNPLFragment_kcNPL"
+                        android:textColor="@color/White"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <!--Saldo pokok NPL-->
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginStart="25dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!--Label-->
+                    <TextView
+                        android:text="@string/Dashboard_SaldoPokokNPL"
+                        android:textColor="@color/White"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+                    <!--Value-->
+                    <TextView
+                        android:id="@+id/DashboardNPLFragment_kcSaldoPokok"
+                        android:textColor="@color/White"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <!--Note-->
+                <TextView
+                    android:text="@string/Dashboard_NPL_Note_SaldoPokok"
+                    android:textColor="@color/White"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-
-            <!--Saldo pokok NPL-->
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <!--Label-->
-                <TextView
-                    android:text="@string/Dashboard_SaldoPokokNPL"
-                    android:textColor="@color/White"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-
-                <!--Value-->
-                <TextView
-                    android:id="@+id/DashboardNPLFragment_NasionalSaldoPokok"
-                    android:textColor="@color/White"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <!--Label data NPL Kanwil-->
-            <TextView
-                android:text="@string/Dashboard_NPL_Kanwil"
-                android:textSize="18sp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/White"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <!--Divider-->
-            <View
-                android:layout_marginTop="5dp"
-                android:background="@color/White"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-
-            <!--NPL-->
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <!--Label-->
-                <TextView
-                    android:text="@string/Dashboard_NPL"
-                    android:textColor="@color/White"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-
-                <!--Value-->
-                <TextView
-                    android:id="@+id/DashboardNPLFragment_KanwilNPL"
-                    android:textColor="@color/White"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <!--Saldo pokok NPL-->
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <!--Label-->
-                <TextView
-                    android:text="@string/Dashboard_SaldoPokokNPL"
-                    android:textColor="@color/White"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-
-                <!--Value-->
-                <TextView
-                    android:id="@+id/DashboardNPLFragment_KanwilSaldoPokok"
-                    android:textColor="@color/White"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <!--Label data NPL KC-->
-            <TextView
-                android:text="@string/Dashboard_NPL_KC"
-                android:textSize="18sp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/White"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <!--Divider-->
-            <View
-                android:layout_marginTop="5dp"
-                android:background="@color/White"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-
-            <!--NPL-->
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <!--Label-->
-                <TextView
-                    android:text="@string/Dashboard_NPL"
-                    android:textColor="@color/White"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-
-                <!--Value-->
-                <TextView
-                    android:id="@+id/DashboardNPLFragment_kcNPL"
-                    android:textColor="@color/White"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <!--Saldo pokok NPL-->
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <!--Label-->
-                <TextView
-                    android:text="@string/Dashboard_SaldoPokokNPL"
-                    android:textColor="@color/White"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-
-                <!--Value-->
-                <TextView
-                    android:id="@+id/DashboardNPLFragment_kcSaldoPokok"
-                    android:textColor="@color/White"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <!--Note-->
-            <TextView
-                android:text="@string/Dashboard_NPL_Note_SaldoPokok"
-                android:textColor="@color/White"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <!--Progress bar-->
     <RelativeLayout

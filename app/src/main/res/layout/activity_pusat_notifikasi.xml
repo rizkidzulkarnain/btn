@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_bluegradient"
+    tools:context="com.mitkoindo.smartcollection.module.pusatnotifikasi.PusatNotifikasiActivity">
+
+    <!--Content-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--Broadcast icon-->
+            <ImageView
+                android:src="@drawable/menuicon_pusatnotifikasi"
+                android:tint="@color/White"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <!--Title-->
+            <TextView
+                android:text="@string/PusatNotifikasi_Title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/White"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!--Divider-->
+        <View
+            android:background="@color/Background_PageTitle"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--List content-->
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/PusatNotifikasi_Refresher"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+
+                    <!--List-->
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/PusatNotifikasi_Recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <!--Page load indicator-->
+                    <ProgressBar
+                        android:id="@+id/PusatNotifikasi_PageLoadIndicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </android.support.v4.widget.SwipeRefreshLayout>
+            </LinearLayout>
+
+            <!--Page progress bar-->
+            <ProgressBar
+                android:id="@+id/PusatNotifikasi_ProgressBar"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--Alert text-->
+            <TextView
+                android:id="@+id/PusatNotifikasi_Alert"
+                android:textColor="@color/White"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!--Back button-->
+    <RelativeLayout
+        android:onClick="HandleInput_PusatNotifikasi_Back"
+        android:background="@drawable/background_circle_blacktransparent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="66dp"
+        android:layout_height="66dp">
+
+        <ImageView
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_chevron_left_white_36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>

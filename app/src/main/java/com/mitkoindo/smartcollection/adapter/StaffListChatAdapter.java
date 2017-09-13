@@ -114,6 +114,9 @@ public class StaffListChatAdapter extends RecyclerView.Adapter<StaffListChatAdap
         //attach nama staff
         holder.staffName.setText(currentStaff.FULL_NAME);
 
+        //attach level staff
+        holder.staffLevel.setText(currentStaff.LEVEL);
+
         //release bind
         onBind = false;
     }
@@ -323,12 +326,14 @@ public class StaffListChatAdapter extends RecyclerView.Adapter<StaffListChatAdap
     {
         //staff name
         TextView staffName;
+        TextView staffLevel;
 
         public StaffListChatViewHolder(View itemView)
         {
             super(itemView);
 
             staffName = itemView.findViewById(R.id.ChatListAdapter_Staffname);
+            staffLevel = itemView.findViewById(R.id.ChatListAdapter_StaffLevel);
 
             //add input listener
             itemView.setOnClickListener(this);
