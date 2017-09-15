@@ -6,4 +6,5 @@ public class HomeMenu
 {
     public String Name;
     public Bitmap Icon;
+    public int BadgeCounter = 0;
 }

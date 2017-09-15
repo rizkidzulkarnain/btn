@@ -127,6 +127,9 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
     //auth token
     private String authToken;
 
+    //user id
+    private String userID;
+
     private GoogleApiClient mGoogleApiClient;
     private FusedLocationProviderClient mFusedLocationClient;
     private AddressResultReceiver mResultReceiver;
@@ -153,10 +156,10 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
         genericAlert = new GenericAlert(this);
 
         //setup
+        SetupTransaction();
         GetViews();
         SetupViews();
         getDropdown();
-        SetupTransaction();
         initBackgroundService();
         initGoogleService();
         initLocation();
@@ -205,6 +208,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
 
         //create menu
         homeMenuAdapter = new HomeMenuAdapter(this, homeMenus);
+        homeMenuAdapter.SetTransaction(baseUrl, getString(R.string.URL_Data_StoreProcedure), authToken, userID);
 
         //set click listener
         homeMenuAdapter.setClickListener(new ItemClickListener()
@@ -236,6 +240,9 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
         String key_UserGroup = getString(R.string.SharedPreferenceKey_UserGroup);
         String value_UserGroup = sharedPreferences.getString(key_UserGroup, "");
         view_UserGroup.setText(value_UserGroup);
+
+        //request badge
+        homeMenuAdapter.CreateGetBadgeData();
     }
 
     //setup transaksi
@@ -247,6 +254,9 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
 
         //load auth token
         authToken = ResourceLoader.LoadAuthToken(this);
+
+        //get user id
+        userID = ResourceLoader.LoadUserID(this);
     }
 
     //setup menu berdasarkan role

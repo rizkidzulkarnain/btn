@@ -1,7 +1,12 @@
 package com.mitkoindo.smartcollection.module.chat;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +22,7 @@ import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.adapter.ChatAdapter;
+import com.mitkoindo.smartcollection.backgroundservice.ChatUpdaterService;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.objectdata.ChatItem;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
@@ -73,6 +79,15 @@ public class ChatWindowActivity extends AppCompatActivity
     private String userID_ChatPartner;
 
     //----------------------------------------------------------------------------------------------
+    //  Service
+    //----------------------------------------------------------------------------------------------
+    //instance of service
+    private ChatUpdaterService chatUpdaterService;
+
+    //flag bound service
+    private boolean serviceBound = false;
+
+    //----------------------------------------------------------------------------------------------
     //  Constructor
     //----------------------------------------------------------------------------------------------
     @Override
@@ -86,6 +101,15 @@ public class ChatWindowActivity extends AppCompatActivity
         GetBundles();
         SetupTransaction();
         AttachChatAdapter();
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+
+        Intent service = new Intent(this, ChatUpdaterService.class);
+        bindService(service, chatUpdaterConnection, Context.BIND_AUTO_CREATE);
     }
 
     //get views
@@ -188,4 +212,24 @@ public class ChatWindowActivity extends AppCompatActivity
         //create request buat get chat data
         chatAdapter.CreateGetChatRequest();
     }
+
+    //----------------------------------------------------------------------------------------------
+    //  Service connection
+    //----------------------------------------------------------------------------------------------
+    private ServiceConnection chatUpdaterConnection = new ServiceConnection()
+    {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder)
+        {
+            ChatUpdaterService.ChatUpdaterBinder binder = (ChatUpdaterService.ChatUpdaterBinder)iBinder;
+            chatUpdaterService = binder.GetService();
+            serviceBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName)
+        {
+            serviceBound = false;
+        }
+    };
 }
