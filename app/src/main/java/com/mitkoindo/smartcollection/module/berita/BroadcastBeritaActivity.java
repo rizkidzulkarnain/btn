@@ -77,6 +77,9 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     //popup buat milih petugas yang akan dikirimi berita
     private AlertDialog sendPopup;
 
+    //dialog buat milih file type
+    private AlertDialog popup_FileTypeSelector;
+
     //----------------------------------------------------------------------------------------------
     //  Data
     //----------------------------------------------------------------------------------------------
@@ -257,10 +260,72 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     //open filepicker
     public void HandleInput_BroadcastBerita_SelectFile(View view)
     {
+        //create popup untuk pilih jenis file
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        //inflate layout
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View thisView = layoutInflater.inflate(R.layout.popup_broadcastberita_selectfiletype, null, false);
+        builder.setView(thisView);
+
+        //add listener pada view
+        View button_AttachDoc = thisView.findViewById(R.id.BeritaBroadcast_SelectFilePopup_AttachDocument);
+        View button_AttachImg = thisView.findViewById(R.id.BeritaBroadcast_SelectFilePopup_AttachPictures);
+        button_AttachDoc.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                CreatePickPDFIntent();
+            }
+        });
+        button_AttachImg.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                CreatePickImgFile();
+            }
+        });
+
+        //show alert
+        popup_FileTypeSelector = builder.create();
+        popup_FileTypeSelector.show();
+    }
+
+    //create intent buat pick pdf file
+    private void CreatePickPDFIntent()
+    {
+        //batasi filetype ke pdf
+        String[] filetypes = {".pdf"};
+
         //create filepicker
         FilePickerBuilder.getInstance().setMaxCount(1)
+                .enableDocSupport(false)
+                .enableImagePicker(false)
+                .enableVideoPicker(false)
+                .enableCameraSupport(false)
+                .addFileSupport("PDF", filetypes)
                 .setActivityTheme(R.style.AppTheme)
                 .pickFile(this);
+
+        //dismiss
+        popup_FileTypeSelector.dismiss();
+    }
+
+    //create intent buat pick img file
+    private void CreatePickImgFile()
+    {
+        //create filepicker
+        FilePickerBuilder.getInstance().setMaxCount(1)
+                .enableImagePicker(true)
+                .enableVideoPicker(false)
+                .enableCameraSupport(false)
+                .setActivityTheme(R.style.AppTheme)
+                .pickPhoto(this);
+
+        //dismiss
+        popup_FileTypeSelector.dismiss();
     }
 
     //Listener pada send broadcast popup
@@ -393,6 +458,20 @@ public class BroadcastBeritaActivity extends AppCompatActivity
                 {
                     data_Filepaths = new ArrayList<>();
                     data_Filepaths.addAll(data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_DOCS));
+
+                    //set filepath
+                    if (data_Filepaths.size() > 0)
+                    {
+                        view_Filepath.setText(data_Filepaths.get(0));
+                        formBroadcastBerita.Filepath = data_Filepaths.get(0);
+                    }
+                }
+                break;
+            case FilePickerConst.REQUEST_CODE_PHOTO:
+                if(resultCode== Activity.RESULT_OK && data!=null)
+                {
+                    data_Filepaths = new ArrayList<>();
+                    data_Filepaths.addAll(data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA));
 
                     //set filepath
                     if (data_Filepaths.size() > 0)
@@ -578,19 +657,19 @@ public class BroadcastBeritaActivity extends AppCompatActivity
             //  Normal procedure
             //--------------------------------------------------------------------------------------
             //send file menggunakan ion
-            /*Ion.with(BroadcastBeritaActivity.this)
+            Ion.with(BroadcastBeritaActivity.this)
                     .load(usedURL)
                     .setHeader("Content-Type", "multipart/form-data")
                     .setMultipartFile("file", file)
-                    .asJsonObject()
-                    .setCallback(new FutureCallback<JsonObject>()
+                    .asString()
+                    .setCallback(new FutureCallback<String>()
                     {
                         @Override
-                        public void onCompleted(Exception e, JsonObject result)
+                        public void onCompleted(Exception e, String result)
                         {
                             HandleUploadFileResult(e, result);
                         }
-                    });*/
+                    });
             //--------------------------------------------------------------------------------------
 
             //--------------------------------------------------------------------------------------
@@ -645,7 +724,7 @@ public class BroadcastBeritaActivity extends AppCompatActivity
              //ignore certificate
             /*HttpsTrustManager.allowAllSSL();*/
 
-            Ion.with(BroadcastBeritaActivity.this)
+            /*Ion.with(BroadcastBeritaActivity.this)
                     .load(usedURL)
                     .setHeader("ContentType", "multipart/form-data")
                     .setHeader("Authorization", "Bearer" + authToken)
@@ -657,7 +736,7 @@ public class BroadcastBeritaActivity extends AppCompatActivity
                         {
                             HandleUploadFileResult(e, result);
                         }
-                    });
+                    });*/
             //--------------------------------------------------------------------------------------
 
             return null;

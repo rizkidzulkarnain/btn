@@ -92,6 +92,9 @@
     <string name="Berita_Broadcast_Alert_EndDateBeforeStartDate">Expired date tidak boleh mendahului start date</string>
     <string name="Berita_Broadcast_Alert_BroadcastSuccess">Berita berhasil dikirim</string>
     <string name="Berita_Search_CariJudul">Cari judul berita</string>
+    <string name="Berita_Broadcast_AddFile_SelectType">Pilih jenis file</string>
+    <string name="Berita_Broadcast_AddFile_AddImage">Tambah file gambar</string>
+    <string name="Berita_Broadcast_AddFile_AddPDF">Tambah file .pdf</string>
 
     <!--List debitur page-->
     <string name="ListDebitur_PageTitle">List Debitur</string>

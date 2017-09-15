@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--Popuo title-->
+    <TextView
+        android:text="@string/Berita_Broadcast_AddFile_SelectType"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--Divider-->
+    <View
+        android:background="@color/Grey15"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--Button buat attach document-->
+    <LinearLayout
+        android:id="@+id/BeritaBroadcast_SelectFilePopup_AttachDocument"
+        android:background="@drawable/background_rounded_rectangle_pagetitle"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@drawable/ic_picture_as_pdf_white_36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="@string/Berita_Broadcast_AddFile_AddPDF"
+            android:textColor="@color/White"
+            android:textSize="16sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!--Button buat attach image-->
+    <LinearLayout
+        android:id="@+id/BeritaBroadcast_SelectFilePopup_AttachPictures"
+        android:background="@drawable/background_rounded_rectangle_pagetitle"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@drawable/ic_photo_white_36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="@string/Berita_Broadcast_AddFile_AddImage"
+            android:textColor="@color/White"
+            android:textSize="16sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>
