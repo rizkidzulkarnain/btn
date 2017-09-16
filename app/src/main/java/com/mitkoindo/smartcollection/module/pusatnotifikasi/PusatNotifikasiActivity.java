@@ -2,6 +2,7 @@ package com.mitkoindo.smartcollection.module.pusatnotifikasi;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,10 @@ import com.mitkoindo.smartcollection.module.chat.ChatWindowActivity;
 import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturActivity;
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.objectdata.NotificationData;
+import com.mitkoindo.smartcollection.utilities.NetworkConnection;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class PusatNotifikasiActivity extends AppCompatActivity
 {
@@ -57,6 +62,9 @@ public class PusatNotifikasiActivity extends AppCompatActivity
     //user ID
     private String userID;
 
+    //id notifikasi yang dibaca
+    private int readNotificationID;
+
     //----------------------------------------------------------------------------------------------
     //  Data
     //----------------------------------------------------------------------------------------------
@@ -76,6 +84,15 @@ public class PusatNotifikasiActivity extends AppCompatActivity
         GetViews();
         SetupTransaction();
         AttachAdapter();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        //create request
+        notificationAdapter.CreateGetNotificationRequest();
     }
 
     //get views
@@ -124,8 +141,8 @@ public class PusatNotifikasiActivity extends AppCompatActivity
             }
         });
 
-        //create request
-        notificationAdapter.CreateGetNotificationRequest();
+        /*//create request
+        notificationAdapter.CreateGetNotificationRequest();*/
 
         //attach adapter to recyclerview
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -156,6 +173,10 @@ public class PusatNotifikasiActivity extends AppCompatActivity
         //pastikan item tidak null
         if (notificationData == null)
             return;
+
+        //create request buat ubah status notifikasi jadi read
+        readNotificationID = notificationData.ID;
+        CreateChangeNotificationStatusRequest();
 
         //set intent
         Intent intent = null;
@@ -196,5 +217,66 @@ public class PusatNotifikasiActivity extends AppCompatActivity
 
         //start activitynya
         startActivity(intent);
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Create request buat ubah status notifikasi jadi read
+    //----------------------------------------------------------------------------------------------
+    private void CreateChangeNotificationStatusRequest()
+    {
+        new SendChangeNotificationStatusRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+    }
+
+    //create request object
+    private JSONObject CreateChangeNotificationRequestObject()
+    {
+        //inisialisasi request object
+        JSONObject requestObject = new JSONObject();
+
+        try
+        {
+            //create sp parameter object
+            JSONObject spParameterObject = new JSONObject();
+            spParameterObject.put("userID", userID);
+            spParameterObject.put("notificationID", readNotificationID);
+
+            //populate request object
+            requestObject.put("DatabaseID", "db1");
+            requestObject.put("SpName", "MKI_SP_NOTIFICATION_READ");
+            requestObject.put("SpParameter", spParameterObject);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+
+        //return request object
+        return requestObject;
+    }
+
+    //send request
+    private class SendChangeNotificationStatusRequest extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected String doInBackground(String... strings)
+        {
+            //create url
+            String usedURL = baseURL + url_DataSP;
+
+            //create request object
+            JSONObject requestObject = CreateChangeNotificationRequestObject();
+
+            //send request
+            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
+            networkConnection.SetRequestObject(requestObject);
+            return networkConnection.SendPostRequest(usedURL);
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+        }
     }
 }

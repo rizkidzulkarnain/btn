@@ -32,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import android.os.Handler;
 
 public class ChatWindowActivity extends AppCompatActivity
 {
@@ -79,13 +80,13 @@ public class ChatWindowActivity extends AppCompatActivity
     private String userID_ChatPartner;
 
     //----------------------------------------------------------------------------------------------
-    //  Service
+    //  Update chat window
     //----------------------------------------------------------------------------------------------
-    //instance of service
-    private ChatUpdaterService chatUpdaterService;
+    private android.os.Handler chatUpdateHandler;
+    private Runnable chatUpdateRunnable;
 
-    //flag bound service
-    private boolean serviceBound = false;
+    //delay before updating chat
+    private final int delay_chat_update = 5;
 
     //----------------------------------------------------------------------------------------------
     //  Constructor
@@ -108,8 +109,34 @@ public class ChatWindowActivity extends AppCompatActivity
     {
         super.onStart();
 
-        Intent service = new Intent(this, ChatUpdaterService.class);
-        bindService(service, chatUpdaterConnection, Context.BIND_AUTO_CREATE);
+        //create handler & runnable to update chat
+        chatUpdateHandler = new Handler();
+        chatUpdateRunnable = new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                chatAdapter.CreateUpdateChatRequest();
+                chatUpdateHandler.postDelayed(chatUpdateRunnable, delay_chat_update * 1000);
+            }
+        };
+
+        chatUpdateHandler.postDelayed(chatUpdateRunnable, delay_chat_update * 1000);
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        //remove runnable from handler
+        chatUpdateHandler.removeCallbacks(chatUpdateRunnable);
+
+        super.onDestroy();
     }
 
     //get views
@@ -212,24 +239,4 @@ public class ChatWindowActivity extends AppCompatActivity
         //create request buat get chat data
         chatAdapter.CreateGetChatRequest();
     }
-
-    //----------------------------------------------------------------------------------------------
-    //  Service connection
-    //----------------------------------------------------------------------------------------------
-    private ServiceConnection chatUpdaterConnection = new ServiceConnection()
-    {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder)
-        {
-            ChatUpdaterService.ChatUpdaterBinder binder = (ChatUpdaterService.ChatUpdaterBinder)iBinder;
-            chatUpdaterService = binder.GetService();
-            serviceBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName)
-        {
-            serviceBound = false;
-        }
-    };
 }

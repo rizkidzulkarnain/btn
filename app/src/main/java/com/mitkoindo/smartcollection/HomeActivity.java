@@ -108,6 +108,10 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
     //generic alert
     private GenericAlert genericAlert;
 
+    //handler & runnable untuk update badge
+    private Handler badgeUpdaterHandler;
+    private Runnable badgeUpdaterRunnable;
+
     //----------------------------------------------------------------------------------------------
     //  Data
     //----------------------------------------------------------------------------------------------
@@ -129,6 +133,9 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
 
     //user id
     private String userID;
+
+    //delay for updating badge
+    private final int delay_update_badge = 5;
 
     private GoogleApiClient mGoogleApiClient;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -168,8 +175,31 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     @Override
+    protected void onStart()
+    {
+        super.onStart();
+
+        //create handler & runnable to update badge
+        badgeUpdaterHandler = new Handler();
+        badgeUpdaterRunnable = new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                homeMenuAdapter.CreateGetBadgeData();
+                badgeUpdaterHandler.postDelayed(badgeUpdaterRunnable, delay_update_badge * 1000);
+            }
+        };
+
+        //start handler
+        badgeUpdaterHandler.postDelayed(badgeUpdaterRunnable, delay_update_badge * 1000);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        badgeUpdaterHandler.removeCallbacks(badgeUpdaterRunnable);
 
         composites.clear();
     }

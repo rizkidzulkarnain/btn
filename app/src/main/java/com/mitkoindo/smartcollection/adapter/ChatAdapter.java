@@ -55,6 +55,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     //user ID yang jadi lawan bicara
     private String userID_ChatPartner;
 
+    //flag transaksi, apakah transaksi ini untuk update chat, atau load initial data
+    private boolean flag_UpdateChat;
+
     //----------------------------------------------------------------------------------------------
     //  View
     //----------------------------------------------------------------------------------------------
@@ -160,6 +163,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         //update list
         if (!onBind)
             notifyDataSetChanged();
+
+        //scroll to bottom
+        ScrollChatToBottom();
+    }
+
+    //scroll to bottom
+    private void ScrollChatToBottom()
+    {
+        view_ChatList.smoothScrollToPosition(getItemCount() - 1);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -172,6 +184,20 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         view_ChatList.setVisibility(View.GONE);
         view_AlertText.setVisibility(View.GONE);
 
+        //set flag transaksi ke load initial data
+        flag_UpdateChat = false;
+
+        //send request
+        new SendGetChatRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+    }
+
+    //create request buat update chat
+    public void CreateUpdateChatRequest()
+    {
+        //set flag transaksi ke update chat
+        flag_UpdateChat = true;
+
+        //send request
         new SendGetChatRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
     }
 
@@ -267,7 +293,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
                 newChatItems.add(newChatItem);
             }
 
-            SetChatItem(newChatItems);
+            if (!flag_UpdateChat)
+                SetChatItem(newChatItems);
+            else
+                UpdateChatItem(newChatItems);
         }
         catch (JSONException e)
         {
@@ -295,6 +324,41 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         view_ChatList.setVisibility(View.VISIBLE);
         view_ProgressBar.setVisibility(View.GONE);
         view_AlertText.setVisibility(View.GONE);
+
+        //scroll to bottom
+        ScrollChatToBottom();
+    }
+
+    //Update chat item
+    private void UpdateChatItem(ArrayList<ChatItem> newChatItems)
+    {
+        //bandingkan element terakhir chatlist dengan new chat item
+        ChatItem currentLastElement = chatItems.get(chatItems.size() - 1);
+        ChatItem newLastElement = newChatItems.get(newChatItems.size() - 1);
+
+        if (currentLastElement.ID == newLastElement.ID)
+            //maka chatnya up-to date, nggak perlu melakukan apa2
+            return;
+
+        //kalo beda, add new chat ke current chat list
+        boolean allowAddData = false;
+        for (int i = 0; i < newChatItems.size(); i++)
+        {
+            if (allowAddData)
+                chatItems.add(newChatItems.get(i));
+
+            if (!allowAddData && currentLastElement.ID == newChatItems.get(i).ID)
+            {
+                allowAddData = true;
+            }
+        }
+
+        //update view
+        if (!onBind)
+            notifyDataSetChanged();
+
+        //scroll to bottom
+        ScrollChatToBottom();
     }
 
     //----------------------------------------------------------------------------------------------
