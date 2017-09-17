@@ -1,6 +1,8 @@
 package com.mitkoindo.smartcollection;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -69,9 +71,11 @@ import com.mitkoindo.smartcollection.objectdata.HomeMenu;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
 import com.mitkoindo.smartcollection.utilities.HttpsTrustManager;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
+import com.mitkoindo.smartcollection.utilities.NotificationChecker;
 import com.mitkoindo.smartcollection.utils.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.ObservableSource;
@@ -166,6 +170,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
         SetupTransaction();
         GetViews();
         SetupViews();
+        StartNotificationChecker();
         getDropdown();
         initBackgroundService();
         initGoogleService();
@@ -317,6 +322,20 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
             menuItems = getResources().getStringArray(R.array.HomeMenu_BC);
 
         return menuItems;
+    }
+
+    //start notification checker
+    private void StartNotificationChecker()
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.MINUTE, 1);
+
+        AlarmManager alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, NotificationChecker.class);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                300 * 1000, alarmIntent);
     }
 
     //----------------------------------------------------------------------------------------------

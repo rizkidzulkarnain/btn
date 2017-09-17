@@ -134,7 +134,8 @@ public class ChatWindowActivity extends AppCompatActivity
     protected void onDestroy()
     {
         //remove runnable from handler
-        chatUpdateHandler.removeCallbacks(chatUpdateRunnable);
+        if (chatUpdateHandler != null && chatUpdateRunnable != null)
+            chatUpdateHandler.removeCallbacks(chatUpdateRunnable);
 
         super.onDestroy();
     }

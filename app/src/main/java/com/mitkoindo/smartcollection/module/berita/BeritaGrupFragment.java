@@ -280,11 +280,14 @@ public class BeritaGrupFragment extends Fragment
                 filterArray.put(searchObject);
             }
 
+            //add to dbParam
+            dbParam.put("Filter", filterArray);
+
             //create request object
             requestObject.put("DatabaseID", "db1");
             requestObject.put("ViewName", "MKI_VW_NEWS_GROUP");
             requestObject.put("DBParam", dbParam);
-            requestObject.put("Filter", filterArray);
+            /*requestObject.put("Filter", filterArray);*/
         }
         catch (JSONException e)
         {
@@ -298,6 +301,32 @@ public class BeritaGrupFragment extends Fragment
     //handle get global news
     private void HandleGetGroupNewsResult(String resultString)
     {
+        if (resultString == null || resultString.isEmpty())
+        {
+            //show message bahwa something wrong
+            String somethingWrongMessage = getString(R.string.Text_SomethingWrong);
+            view_Message.setText(somethingWrongMessage);
+
+            //hide other views
+            view_Message.setVisibility(View.VISIBLE);
+            view_ProgressBar.setVisibility(View.GONE);
+            view_ListBerita.setVisibility(View.GONE);
+            return;
+        }
+
+        if (resultString.equals("Not Found"))
+        {
+            //show message bahwa something wrong
+            String somethingWrongMessage = getString(R.string.Text_NoData);
+            view_Message.setText(somethingWrongMessage);
+
+            //hide other views
+            view_Message.setVisibility(View.VISIBLE);
+            view_ProgressBar.setVisibility(View.GONE);
+            view_ListBerita.setVisibility(View.GONE);
+            return;
+        }
+
         try
         {
             //parse data

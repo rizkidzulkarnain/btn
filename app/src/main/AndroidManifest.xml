@@ -131,6 +131,7 @@
         </service>
 
         <service android:name=".backgroundservice.ChatUpdaterService"/>
+        <receiver android:name=".utilities.NotificationChecker"/>
     </application>
 
 </manifest>

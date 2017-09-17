@@ -58,6 +58,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     //flag transaksi, apakah transaksi ini untuk update chat, atau load initial data
     private boolean flag_UpdateChat;
 
+    //flag allow load page
+    private boolean flag_AllowLoadPage;
+
     //----------------------------------------------------------------------------------------------
     //  View
     //----------------------------------------------------------------------------------------------
@@ -80,6 +83,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     public ChatAdapter(Activity context)
     {
         this.context = context;
+        flag_AllowLoadPage = true;
     }
 
     @Override
@@ -171,7 +175,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     //scroll to bottom
     private void ScrollChatToBottom()
     {
-        view_ChatList.smoothScrollToPosition(getItemCount() - 1);
+        view_ChatList.smoothScrollToPosition(getItemCount());
+        /*view_ChatList.scrollToPosition(getItemCount());*/
     }
 
     //----------------------------------------------------------------------------------------------
@@ -212,6 +217,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             //create sp parameter object
             JSONObject spParameterObject = new JSONObject();
             spParameterObject.put("userID", userID_ChatPartner);
+            spParameterObject.put("limit", 9999);
 
             //populate request object
             requestObject.put("DatabaseID", "db1");
@@ -326,6 +332,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         view_AlertText.setVisibility(View.GONE);
 
         //scroll to bottom
+        ScrollChatToBottom();
+        ScrollChatToBottom();
         ScrollChatToBottom();
     }
 

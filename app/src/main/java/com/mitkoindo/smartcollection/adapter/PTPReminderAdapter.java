@@ -1,6 +1,7 @@
 package com.mitkoindo.smartcollection.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
+import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturActivity;
+import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.objectdata.DebiturItemWithPTP;
 
 import java.util.ArrayList;
@@ -63,12 +66,37 @@ public class PTPReminderAdapter extends RecyclerView.Adapter<PTPReminderAdapter.
         holder.DPD.setText(currentItem.getDpd());
         holder.LastPayment.setText(currentItem.getLastPayment());
         holder.PTP.setText(currentItem.PTPHint);
+
+        //add listener
+        final int currentPos = position;
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                OpenDetailPage(currentPos);
+            }
+        });
     }
 
     @Override
     public int getItemCount()
     {
         return debiturItems.size();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Open detail page
+    //----------------------------------------------------------------------------------------------
+    private void OpenDetailPage(int position)
+    {
+        //get currentData
+        DebiturItemWithPTP currentItem = debiturItems.get(position);
+
+        //open detail page
+        Intent intent = DetailDebiturActivity.instantiate(context, currentItem.getNoRekening(),
+                "", ListDebiturActivity.EXTRA_TYPE_PENUGASAN_VALUE);
+        context.startActivity(intent);
     }
 
     //----------------------------------------------------------------------------------------------
