@@ -3,6 +3,7 @@ package com.mitkoindo.smartcollection.module.berita;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -26,11 +27,14 @@ import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.adapter.StaffBroadcastAdapter;
 import com.mitkoindo.smartcollection.fragments.DatePickerFragment;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
+import com.mitkoindo.smartcollection.network.ApiUtils;
+import com.mitkoindo.smartcollection.network.response.MultipartResponse;
 import com.mitkoindo.smartcollection.objectdata.FormBroadcastBerita;
 import com.mitkoindo.smartcollection.objectdata.Staff;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
 import com.mitkoindo.smartcollection.utilities.HttpsTrustManager;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
+import com.mitkoindo.smartcollection.utils.FileUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,6 +57,20 @@ import javax.security.cert.X509Certificate;
 
 import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
+import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.internal.observers.DisposableLambdaObserver;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class BroadcastBeritaActivity extends AppCompatActivity
 {
@@ -638,7 +656,9 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     //create request
     private void CreateSendFileRequest()
     {
-        new ExecuteSendFileRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+        genericAlert.ShowLoadingAlert();
+        AlternativeSendFile();
+        /*new ExecuteSendFileRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");*/
     }
 
     //send request buat kirim file
@@ -787,6 +807,8 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     //----------------------------------------------------------------------------------------------
     private void CreateSendBroadcastRequest()
     {
+        genericAlert.ShowLoadingAlert();
+
         new SendBroadcastRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
     }
 
@@ -943,5 +965,70 @@ public class BroadcastBeritaActivity extends AppCompatActivity
             alertMessage = getString(R.string.Text_SomethingWrong);
             genericAlert.DisplayAlert(alertMessage, alertTitle);
         }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Pake method Eric
+    //----------------------------------------------------------------------------------------------
+    private CompositeDisposable composites = new CompositeDisposable();
+
+    private void AlternativeSendFile()
+    {
+        File fileAttachment = new File(formBroadcastBerita.Filepath);
+        Uri uriAttachment = Uri.fromFile(fileAttachment);
+        RequestBody requestFileAttachment = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriAttachment)), fileAttachment);
+        MultipartBody.Part bodyAttachment = MultipartBody.Part.createFormData("file", fileAttachment.getName(), requestFileAttachment);
+        Disposable disposable = ApiUtils.getMultipartServices(authToken).uploadFile(bodyAttachment)
+                .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
+                    @Override
+                    public ObservableSource<MultipartResponse> apply(@NonNull MultipartResponse multipartResponse) throws Exception
+                    {
+                        /*spParameter.setPhotoDebitur(multipartResponse.getRelativePath());*/
+                        return ApiUtils.getMultipartServices(authToken).uploadFile(bodyAttachment);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+
+                    }
+                })
+                .doOnTerminate(new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+                    }
+                }).subscribeWith(new DisposableObserver<MultipartResponse>()
+                {
+
+                    @Override
+                    public void onNext(@NonNull MultipartResponse multipartResponse)
+                    {
+                        //simpan relativepath
+                        formBroadcastBerita.UploadedFilepath = multipartResponse.getRelativePath();
+                        CreateSendBroadcastRequest();
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e)
+                    {
+                        //text buat alert kalo gagal upload file
+                        String title = getString(R.string.Text_MohonMaaf);
+                        String message = getString(R.string.Text_UploadFailed);
+
+                        //show alert bahwa upload gagal
+                        genericAlert.DisplayAlert(message, title);
+                    }
+
+                    @Override
+                    public void onComplete()
+                    {
+                        int x = 0;
+                        int z = x + 1;
+                    }
+                });
+        composites.add(disposable);
     }
 }
