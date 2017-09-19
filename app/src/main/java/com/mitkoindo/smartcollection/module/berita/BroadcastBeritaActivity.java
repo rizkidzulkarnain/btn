@@ -1,10 +1,15 @@
 package com.mitkoindo.smartcollection.module.berita;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -138,6 +143,9 @@ public class BroadcastBeritaActivity extends AppCompatActivity
 
     //user id
     private String userID;
+
+    //request code buat minta permission storage
+    private final int REQUEST_PERMISSION_STORAGE = 736;
 
     //----------------------------------------------------------------------------------------------
     //  Setup
@@ -277,6 +285,81 @@ public class BroadcastBeritaActivity extends AppCompatActivity
 
     //open filepicker
     public void HandleInput_BroadcastBerita_SelectFile(View view)
+    {
+        //cek permission telebih dahulu
+        if (Build.VERSION.SDK_INT >= 23)
+        {
+            if (IsPermissionAllowed_Storage())
+            {
+                CreateFileTypeSelectorPopup();
+            }
+            else
+            {
+                //request permission
+                RequestPermission_Storage();
+            }
+
+            return;
+        }
+
+        CreateFileTypeSelectorPopup();
+    }
+
+    //cek permission buat akses storage
+    private boolean IsPermissionAllowed_Storage()
+    {
+        int result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+    //request permission untuk access storage
+    private void RequestPermission_Storage()
+    {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE))
+        {
+            //show alert bahwa permission storage dibutuhkan untuk upload file
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+
+            //set message & title
+            builder.setTitle(R.string.PermissionRequest_Alert);
+            builder.setMessage(R.string.PermissionRequest_Storage_Denied);
+
+            //set listener
+            builder.setPositiveButton(R.string.PermissionRequest_Give, new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i)
+                {
+                    //open settings menu
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", getPackageName(), null);
+                    intent.setData(uri);
+                    startActivity(intent);
+                }
+            });
+            builder.setNegativeButton(R.string.PermissionRequest_Cancel, new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i)
+                {
+
+                }
+            });
+
+            //show alert
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+        else
+        {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_STORAGE);
+        }
+    }
+
+    //create popup untuk pilih filetype
+    private void CreateFileTypeSelectorPopup()
     {
         //create popup untuk pilih jenis file
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -968,7 +1051,28 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     }
 
     //----------------------------------------------------------------------------------------------
-    //  Pake method Eric
+    //  Cek hasil permission
+    //----------------------------------------------------------------------------------------------
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @android.support.annotation.NonNull String[] permissions, @android.support.annotation.NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode)
+        {
+            case REQUEST_PERMISSION_STORAGE :
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    //allow access ke file picker
+                    CreateFileTypeSelectorPopup();
+                }
+                break;
+            default:break;
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Pake method Eric untuk upload file
     //----------------------------------------------------------------------------------------------
     private CompositeDisposable composites = new CompositeDisposable();
 

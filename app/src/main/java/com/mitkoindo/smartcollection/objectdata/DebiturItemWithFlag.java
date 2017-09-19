@@ -14,6 +14,8 @@ public class DebiturItemWithFlag extends DebiturItem
 
     public String TanggalKunjungan;
 
+    public String IDVisit;
+
     public DebiturItemWithFlag()
     {
         Checked = false;
@@ -41,6 +43,11 @@ public class DebiturItemWithFlag extends DebiturItem
             if (dataObject.has("TanggalKunjungan"))
             {
                 TanggalKunjungan = dataObject.getString("TanggalKunjungan");
+            }
+
+            if (dataObject.has("IDVisit"))
+            {
+                IDVisit = dataObject.getString("IDVisit");
             }
         }
         catch (JSONException e)

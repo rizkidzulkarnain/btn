@@ -135,7 +135,7 @@ public class UnassignedDebiturFragment extends Fragment
     private String[] value_SortParameter = new String[]
             {
                 "LD.TOT_KEWAJIBAN", //total kewajiban
-                "LH.User_Assign_Date", //assign date
+                /*"LH.User_Assign_Date", //assign date*/
                 "LD.Last_Payment_Date" //last payment date
             };
 
@@ -143,9 +143,12 @@ public class UnassignedDebiturFragment extends Fragment
     private String[] value_SortParameterName = new String[]
             {
                 "Pokok Kredit",
-                "Tanggal Penugasan",
+                /*"Tanggal Penugasan",*/
                 "Last Payment Date"
             };
+
+    //flag setup
+    private boolean firstSetup;
 
     //----------------------------------------------------------------------------------------------
     //  Data
@@ -167,6 +170,7 @@ public class UnassignedDebiturFragment extends Fragment
     {
         // Inflate the layout for this fragment
         View thisView = inflater.inflate(R.layout.fragment_unassigned_debitur, container, false);
+        firstSetup = true;
         GetViews(thisView);
         SetupListener();
         SetupRecyclerView();
@@ -287,8 +291,13 @@ public class UnassignedDebiturFragment extends Fragment
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
-                accountAssignmentAdapter.SetSortParameter(value_SortParameter[i]);
-                accountAssignmentAdapter.CreateGetListDebiturRequest();
+                if (!firstSetup)
+                {
+                    accountAssignmentAdapter.SetSortParameter(value_SortParameter[i]);
+                    accountAssignmentAdapter.CreateGetListDebiturRequest();
+                }
+
+                firstSetup = false;
             }
 
             @Override
@@ -317,6 +326,28 @@ public class UnassignedDebiturFragment extends Fragment
         this.url_DataSP = url_DataSP;
         this.authToken = authToken;
         this.userID = userID;
+    }
+
+    //setup views
+    private void SetupRecyclerView()
+    {
+        //create load data request
+        accountAssignmentAdapter = new AccountAssignmentAdapter(getActivity());
+        accountAssignmentAdapter.SetTransactionData(baseURL, url_DataSP, authToken, userID);
+        accountAssignmentAdapter.SetViews(view_ProgressBar, view_Recycler, view_Alert, view_PageLoadIndicator);
+        accountAssignmentAdapter.SetAssignButton(view_AssignButton);
+        accountAssignmentAdapter.SetSortParameter(value_SortParameter[0]);
+        accountAssignmentAdapter.CreateGetListDebiturRequest();
+
+        //attach adapter to recyclerview
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        view_Recycler.setLayoutManager(layoutManager);
+        view_Recycler.setItemAnimator(new DefaultItemAnimator());
+        Drawable dividerDrawable = ContextCompat.getDrawable(getActivity(), R.drawable.divider_vertical_10dp);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+        dividerItemDecoration.setDrawable(dividerDrawable);
+        view_Recycler.addItemDecoration(dividerItemDecoration);
+        view_Recycler.setAdapter(accountAssignmentAdapter);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -350,28 +381,6 @@ public class UnassignedDebiturFragment extends Fragment
             //dan refresh data
             accountAssignmentAdapter.CreateSearchRequest(view_SearchForm.getText().toString());
         }
-    }
-
-    //setup views
-    private void SetupRecyclerView()
-    {
-        //create load data request
-        accountAssignmentAdapter = new AccountAssignmentAdapter(getActivity());
-        accountAssignmentAdapter.SetTransactionData(baseURL, url_DataSP, authToken, userID);
-        accountAssignmentAdapter.SetViews(view_ProgressBar, view_Recycler, view_Alert, view_PageLoadIndicator);
-        accountAssignmentAdapter.SetAssignButton(view_AssignButton);
-        accountAssignmentAdapter.SetSortParameter(value_SortParameter[0]);
-        accountAssignmentAdapter.CreateGetListDebiturRequest();
-
-        //attach adapter to recyclerview
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        view_Recycler.setLayoutManager(layoutManager);
-        view_Recycler.setItemAnimator(new DefaultItemAnimator());
-        Drawable dividerDrawable = ContextCompat.getDrawable(getActivity(), R.drawable.divider_vertical_10dp);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
-        dividerItemDecoration.setDrawable(dividerDrawable);
-        view_Recycler.addItemDecoration(dividerItemDecoration);
-        view_Recycler.setAdapter(accountAssignmentAdapter);
     }
 
     //----------------------------------------------------------------------------------------------

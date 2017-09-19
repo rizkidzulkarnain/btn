@@ -335,6 +335,7 @@
     <string name="Chat_Title">Chat</string>
     <string name="Chat_Hint_CariPetugas">Cari Petugas</string>
     <string name="ChatWindow_Alert_NoChat">Tidak ada pesan</string>
+    <string name="Chat_You">You</string>
 
     <!--Laporan-->
     <string name="Laporan_Title">Laporan</string>
@@ -422,6 +423,12 @@
     <!--Font path-->
     <string name="font_default_reg">fonts/Roboto-Regular.ttf</string>
     <string name="font_default_bold">fonts/Roboto-Bold.ttf</string>
+
+    <!--Permission-->
+    <string name="PermissionRequest_Alert">Mohon perhatian</string>
+    <string name="PermissionRequest_Storage_Denied">Untuk dapat mengunggah file, Aplikasi Smart Collection membutuhkan izin untuk mengakses storage</string>
+    <string name="PermissionRequest_Give">Beri Izin</string>
+    <string name="PermissionRequest_Cancel">Batal</string>
 
     <!--Transaksi-->
     <string name="BaseURL">https://span.btn.co.id/wsMobile/</string>

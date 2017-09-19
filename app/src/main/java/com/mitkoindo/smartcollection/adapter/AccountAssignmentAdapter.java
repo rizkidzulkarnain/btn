@@ -445,7 +445,7 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
         }
 
         //pastikan response nggak 404
-        if (result.equals("Not Found"))
+        if (result.equals("Not Found") && currentPage == 1)
         {
             view_Alert.setText(R.string.Text_NoData);
             view_Alert.setVisibility(View.VISIBLE);

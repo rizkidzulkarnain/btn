@@ -1,6 +1,7 @@
 package com.mitkoindo.smartcollection.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturActivity;
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
+import com.mitkoindo.smartcollection.module.laporan.LaporanActivity;
+import com.mitkoindo.smartcollection.module.laporan.LaporanVisitActivity;
 import com.mitkoindo.smartcollection.objectdata.DebiturItemWithFlag;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
@@ -167,8 +170,13 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
         DebiturItemWithFlag currentDebitur = debiturItems.get(position);
 
         //open detail page
-        context.startActivity(DetailDebiturActivity.instantiate(context, currentDebitur.getNoRekening(),
-                currentDebitur.getCustomerReference(), ListDebiturActivity.EXTRA_TYPE_ACCOUNT_ASSIGNMENT_VALUE));
+        /*context.startActivity(DetailDebiturActivity.instantiate(context, currentDebitur.getNoRekening(),
+                currentDebitur.getCustomerReference(), ListDebiturActivity.EXTRA_TYPE_ACCOUNT_ASSIGNMENT_VALUE));*/
+
+        //open laporan form visit page
+        Intent intent = new Intent(context, LaporanVisitActivity.class);
+        intent.putExtra("VisitID", currentDebitur.IDVisit);
+        context.startActivity(intent);
     }
 
     //----------------------------------------------------------------------------------------------

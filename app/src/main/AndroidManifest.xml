@@ -22,8 +22,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -88,7 +87,10 @@
         <activity
             android:name=".module.pusatnotifikasi.PusatNotifikasiActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".module.laporan.ArchiveActivity"
+        <activity
+            android:name=".module.laporan.ArchiveActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".module.laporan.LaporanVisitActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".module.misc.ChangeBaseURLActivity" />
         <activity
@@ -131,8 +133,6 @@
             android:name=".module.laporan.agenttracking.AgentTrackingActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-
-
         <service
             android:name=".FetchAddressIntentService"
             android:exported="false" />
@@ -150,9 +150,9 @@
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
-        <service android:name=".backgroundservice.ChatUpdaterService"/>
-        <receiver android:name=".utilities.NotificationChecker"/>
+        <service android:name=".backgroundservice.ChatUpdaterService" />
 
+        <receiver android:name=".utilities.NotificationChecker" />
     </application>
 
 </manifest>

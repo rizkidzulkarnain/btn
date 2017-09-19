@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background_bluegradient"
+    tools:context="com.mitkoindo.smartcollection.module.laporan.LaporanVisitActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_general"
+        style="@style/AppToolbar.Line">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <include layout="@layout/include_toolbar_back_button"/>
+
+            <include layout="@layout/include_toolbar_title" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_medium_large"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <!--Tujuan Kunjungan-->
+            <TextView
+                android:id="@+id/text_view_tujuan_kunjungan"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/FormVisit_TujuanKunjungan"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <!--Tujuan Kunjungan value-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_tujuan_kunjungan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                tools:layout_editor_absoluteX="16dp">
+
+                <TextView
+                    android:id="@+id/LaporanVisit_TujuanKunjungan"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingRight="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Alamat yang dikunjungi-->
+            <TextView
+                android:id="@+id/text_view_alamat_yang_dikunjungi"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                android:text="@string/FormVisit_AlamatYangDiKunjungi"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <!--Alamat yang dikunjungi value-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_alamat_yang_dikunjungi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                tools:layout_editor_absoluteX="16dp">
+
+                <TextView
+                    android:id="@+id/LaporanVisit_Alamat"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingRight="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Orang yang ditemui-->
+            <TextView
+                android:id="@+id/text_view_orang_yang_ditemui"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                android:text="@string/FormVisit_OrangYangDiKunjungi"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <!--Orang yang ditemui edit text-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_orang_yang_ditemui"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                tools:layout_editor_absoluteX="16dp">
+
+                <TextView
+                    android:id="@+id/LaporanVisit_YangDitemui"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingRight="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Hubungan dengan debitur-->
+            <TextView
+                android:id="@+id/text_view_hubungan_dengan_debitur"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                android:text="@string/FormVisit_HubunganDenganDebitur"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <!--Hubungan dengan debitur-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_hubungan_dengan_debitur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                tools:layout_editor_absoluteX="16dp">
+
+                <TextView
+                    android:id="@+id/LaporanVisit_Hubungan"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingRight="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Hasil Kunjungan-->
+            <TextView
+                android:id="@+id/text_view_hasil_kunjungan"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                android:text="@string/FormVisit_HasilKunjungan"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <!--Hasil Kunjungan-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_hasil_kunjungan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                tools:layout_editor_absoluteX="16dp">
+
+                <TextView
+                    android:id="@+id/LaporanVisit_HasilKunjungan"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingRight="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Tanggal Janji Debitur-->
+            <LinearLayout
+                android:id="@+id/LaporanVisit_Holder_TanggalJanji"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteY="154dp"
+                tools:layout_editor_absoluteX="8dp">
+
+                <TextView
+                    android:id="@+id/text_view_tanggal_janji_debitur"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_medium_large"
+                    android:text="@string/FormVisit_TanggalJanjiDebitur"/>
+
+                <!--Tanggal Janji Debitur value-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view_tanggal_janji_debitur"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium">
+
+                    <TextView
+                        android:id="@+id/LaporanVisit_TanggalJanji"
+                        style="@style/FontRegular.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingStart="@dimen/padding_medium"
+                        android:paddingLeft="@dimen/padding_medium"
+                        android:paddingEnd="@dimen/padding_medium"/>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+
+            <!--Jumlah yang akan disetor-->
+            <LinearLayout
+                android:id="@+id/LaporanVisit_Holder_JumlahSetor"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteY="154dp"
+                tools:layout_editor_absoluteX="8dp">
+
+                <TextView
+                    android:id="@+id/text_view_jumlah_yang_akan_disetor"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_medium_large"
+                    android:text="@string/FormVisit_JumlahYangAkanDisetor"
+                    tools:layout_editor_absoluteX="16dp" />
+
+                <!--Jumlah yang akan disetor edit text-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view_jumlah_yang_akan_disetor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium"
+                    tools:layout_editor_absoluteX="16dp">
+
+                    <TextView
+                        android:id="@+id/LaporanVisit_JumlahSetor"
+                        style="@style/FontRegular.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingStart="@dimen/padding_medium"
+                        android:paddingLeft="@dimen/padding_medium"
+                        android:paddingEnd="@dimen/padding_medium"
+                        android:paddingRight="@dimen/padding_medium"/>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+
+            <!--Status Agunan-->
+            <TextView
+                android:id="@+id/text_view_status_agunan"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_jumlah_yang_akan_disetor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormVisit_StatusAgunan"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <!--Status Agunan-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_status_agunan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_status_agunan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteX="16dp">
+
+                <TextView
+                    android:id="@+id/LaporanVisit_StatusAgunan"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingRight="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Kondisi Agunan-->
+            <TextView
+                android:id="@+id/text_view_kondisi_agunan"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_status_agunan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormVisit_KondisiAgunan"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <!--Kondisi Agunan-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_kondisi_agunan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_kondisi_agunan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteX="16dp">
+
+                <TextView
+                    android:id="@+id/LaporanVisit_KondisiAgunan"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingRight="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Alasan Menunggak-->
+            <TextView
+                android:id="@+id/text_view_alasan_menunggak"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_kondisi_agunan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormVisit_AlasanMenunggak"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <!--Alasan Menunggak-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_alasan_menunggak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_alasan_menunggak"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteX="16dp">
+
+                <TextView
+                    android:id="@+id/LaporanVisit_AlasanMenunggak"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingRight="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Tindak Lanjut-->
+            <TextView
+                android:id="@+id/text_view_tindak_lanjut"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_alasan_menunggak"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormVisit_TindakLanjut"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <!--Tindak Lanjut-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_tindak_lanjut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_tindak_lanjut"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteX="16dp">
+
+                <TextView
+                    android:id="@+id/LaporanVisit_TindakLanjut"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingRight="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Tanggal Tindak Lanjut-->
+            <TextView
+                android:id="@+id/text_view_tanggal_tindak_lanjut"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_tindak_lanjut"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormVisit_TanggalTindakLanjut"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <!--Tanggal Tindak Lanjut DatePicker -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_tanggal_tindak_lanjut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_tanggal_tindak_lanjut"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteX="16dp">
+
+                <TextView
+                    android:id="@+id/LaporanVisit_TanggalTindakLanjut"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Catatan-->
+            <TextView
+                android:id="@+id/text_view_catatan"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_tanggal_tindak_lanjut"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormVisit_Catatan"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <!--Catatan Edit Text-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_catatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_catatan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteX="16dp">
+
+                <TextView
+                    android:id="@+id/LaporanVisit_Catatan"
+                    style="@style/FontRegular.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"
+                    android:paddingRight="@dimen/padding_medium"
+                    android:minLines="3"
+                    android:gravity="top|left"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Gallery-->
+            <TextView
+                android:id="@+id/text_view_gallery"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_catatan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormVisit_Gallery"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <!--Foto Debitur TextView-->
+            <TextView
+                android:id="@+id/text_view_foto_debitur"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium"
+                android:gravity="center_horizontal"
+                android:text="@string/FormVisit_FotoDebitur"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <!--Foto Debitur Image-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_foto_debitur"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="@dimen/padding_medium"
+                android:layout_gravity="center_horizontal"
+                tools:layout_editor_absoluteX="132dp">
+
+                <ImageView
+                    android:id="@+id/LaporanVisit_Foto_Debitur"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/ic_account_grey600_48dp"
+                    android:scaleType="fitXY"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Foto Agunan TextView-->
+            <TextView
+                android:id="@+id/text_view_foto_agunan"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                android:gravity="center_horizontal"
+                android:text="@string/FormVisit_FotoAgunan"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/padding_medium"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--Foto Agunan CardView 1-->
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/card_view_foto_agunan_1"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp">
+
+                        <ImageView
+                            android:id="@+id/LaporanVisit_Foto_Agunan1"
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@drawable/ic_home_variant_grey600_48dp"
+                            android:scaleType="fitXY"/>
+                    </android.support.v7.widget.CardView>
+                </RelativeLayout>
+
+                <!--Foto Agunan CardView 2-->
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/card_view_foto_agunan_2"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp">
+
+                        <ImageView
+                            android:id="@+id/LaporanVisit_Foto_Agunan2"
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@drawable/ic_home_variant_grey600_48dp"
+                            android:scaleType="fitXY"/>
+                    </android.support.v7.widget.CardView>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!--Signature TextView-->
+            <TextView
+                android:id="@+id/text_view_signature"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                android:gravity="center_horizontal"
+                android:text="@string/FormVisit_Signature"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <!--Signature-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_signature"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_signature"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteX="16dp">
+
+                <ImageView
+                    android:id="@+id/LaporanVisit_Foto_Signature"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:penMinWidth="@dimen/padding_smaller"
+                    app:penMaxWidth="@dimen/padding_small"
+                    app:penColor="@color/Grey"
+                    app:clearOnDoubleClick="true"/>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

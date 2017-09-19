@@ -117,6 +117,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
 
             //set text
             holder.sentMessage.setText(currentChatItem.Message);
+            holder.time_SentMessage.setText(currentChatItem.SendDate);
         }
         else
         {
@@ -126,6 +127,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
 
             //set text
             holder.receivedMessage.setText(currentChatItem.Message);
+            holder.time_ReceivedMessage.setText(currentChatItem.SendDate);
         }
 
         //set flag onbind ke false
@@ -382,6 +384,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     //----------------------------------------------------------------------------------------------
     public void CreateSendMessageRequest()
     {
+        //pastikan text chat tidak kosong
+        if (view_ChatForm.getText().toString().isEmpty())
+            return;
+
         new ExecuteSendMessage().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
     }
 
@@ -468,6 +474,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     {
         TextView receivedMessage;
         TextView sentMessage;
+        TextView time_ReceivedMessage;
+        TextView time_SentMessage;
 
         View holder_ReceivedMessage;
         View holder_SentMessage;
@@ -478,6 +486,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
 
             receivedMessage = itemView.findViewById(R.id.ChatAdapter_ReceivedMessage);
             sentMessage = itemView.findViewById(R.id.ChatAdapter_SentMessage);
+            time_ReceivedMessage = itemView.findViewById(R.id.ChatAdapter_ReceivedMessageTime);
+            time_SentMessage = itemView.findViewById(R.id.ChatAdapter_SentMessageTime);
 
             holder_ReceivedMessage = itemView.findViewById(R.id.ChatAdapter_Holder_ReceivedMessage);
             holder_SentMessage = itemView.findViewById(R.id.ChatAdapter_Holder_SentMessage);

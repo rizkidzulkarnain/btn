@@ -75,6 +75,9 @@ import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 import com.mitkoindo.smartcollection.utilities.NotificationChecker;
 import com.mitkoindo.smartcollection.utils.ToastUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -132,6 +135,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
     //url
     private String baseUrl;
     private String url_Logout;
+    private String url_DataSP;
 
     //auth token
     private String authToken;
@@ -287,6 +291,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
         //load url
         baseUrl = ResourceLoader.LoadBaseURL(this);
         url_Logout = getString(R.string.URL_Logout);
+        url_DataSP = getString(R.string.URL_Data_StoreProcedure);
 
         //load auth token
         authToken = ResourceLoader.LoadAuthToken(this);
@@ -396,9 +401,11 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
                 break;
             case "Berita" :
                 intent = new Intent(this, BeritaActivity.class);
+                CreateReadNotificationRequest("PageNewsGroup");
                 break;
             case "Penugasan" :
                 intent = ListDebiturActivity.instantiate(this, ListDebiturActivity.EXTRA_TYPE_PENUGASAN_VALUE);
+                CreateReadNotificationRequest("PageAssignment");
                 break;
             case "Tambah Kontak" :
                 intent = ListDebiturActivity.instantiate(this, ListDebiturActivity.EXTRA_TYPE_TAMBAH_KONTAK_VALUE);
@@ -408,9 +415,11 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
                 break;
             case "PTP Reminder" :
                 intent = new Intent(this, PTPReminderActivity.class);
+                CreateReadNotificationRequest("PagePtp");
                 break;
             case "Chat" :
                 intent = new Intent(this, ChatListActivity.class);
+                CreateReadNotificationRequest("PageChat");
                 break;
             case "Check-In":
                 requestAccessLocationPermission();
@@ -513,6 +522,63 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
         finish();
     }
 
+    //----------------------------------------------------------------------------------------------
+    //  Create request buat set semua notifikasi dengan jenis tertentu jadi "read"
+    //----------------------------------------------------------------------------------------------
+    private void CreateReadNotificationRequest(String pageType)
+    {
+        //create request object
+        JSONObject requestObject = new JSONObject();
+
+        try
+        {
+            //create spParameterObject
+            JSONObject spParameterObject = new JSONObject();
+            spParameterObject.put("userID", userID);
+            spParameterObject.put("pageType", pageType);
+
+            //setup request object
+            requestObject.put("DatabaseID", "db1");
+            requestObject.put("SpName", "MKI_SP_NOTIFICATION_READ_BY_TYPE");
+            requestObject.put("SpParameter", spParameterObject);
+
+            //send request
+            new SendReadNotificationRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, requestObject);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    //send request
+    private class SendReadNotificationRequest extends AsyncTask<JSONObject, Void, String>
+    {
+        @Override
+        protected String doInBackground(JSONObject... jsonObjects)
+        {
+            //set url
+            String usedURL = baseUrl + url_DataSP;
+
+            //set requestObject
+            JSONObject requestObject = jsonObjects[0];
+
+            //send request
+            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
+            networkConnection.SetRequestObject(requestObject);
+            return networkConnection.SendPostRequest(usedURL);
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Get dropdown data for form visit
+    //----------------------------------------------------------------------------------------------
     private void getDropdown() {
         String key_AuthToken = getString(R.string.SharedPreferenceKey_AccessToken);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
