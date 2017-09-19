@@ -9,6 +9,7 @@ import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.network.ApiUtils;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.ListDebiturBody;
+import com.mitkoindo.smartcollection.network.body.StaffProductivityDebiturBody;
 import com.mitkoindo.smartcollection.network.response.OfflineBundleResponse;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
 import com.mitkoindo.smartcollection.objectdata.databasemodel.DebiturItemDb;
@@ -36,6 +37,8 @@ public class ListDebiturViewModel extends BaseObservable implements ILifecycleVi
     public ObservableField<List<DebiturItem>> obsDebiturResponseLoadMore = new ObservableField<>();
     public ObservableField<OfflineBundleResponse> obsOfflineBundleResponse = new ObservableField<>();
     public ObservableBoolean obsIsEmpty = new ObservableBoolean(false);
+    public ObservableField<String> obsSearch = new ObservableField<>("");
+    public ObservableField<String> obsSort = new ObservableField<>();
 
     private String mAccessToken;
     private CompositeDisposable composites = new CompositeDisposable();
@@ -52,11 +55,18 @@ public class ListDebiturViewModel extends BaseObservable implements ILifecycleVi
 
         ListDebiturBody.SpParameter spParameter = new ListDebiturBody.SpParameter();
         spParameter.setUserId(userId);
-        /*spParameter.setOrderBy(RestConstants.LIST_DEBITUR_ORDER_BY_VALUE);*/
+        if (obsSort.get().equals("Fullname")) {
+            spParameter.setOrderBy(RestConstants.LIST_DEBITUR_ORDER_BY_FULL_NAME);
+        } else if (obsSort.get().equals("Total Kewajiban")) {
+            spParameter.setOrderBy(RestConstants.LIST_DEBITUR_ORDER_BY_TOTAL_KEWAJIBAN);
+        } else {
+            spParameter.setOrderBy(RestConstants.LIST_DEBITUR_ORDER_BY_ASSIGN_DATE);
+        }
         spParameter.setPage(page);
         spParameter.setLimit(15);
         spParameter.setOrderDirection(RestConstants.ORDER_DIRECTION_ASC_VALUE);
         spParameter.setStatus(status);
+        spParameter.setKeyword(obsSearch.get());
 
         listDebiturBody.setSpParameter(spParameter);
 
@@ -85,6 +95,111 @@ public class ListDebiturViewModel extends BaseObservable implements ILifecycleVi
                         } else {
                             obsDebiturResponseLoadMore.set(listDebitur);
                         }
+                        Timber.i("getListDebitur success");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        error.set(e);
+                        Timber.e("getListDebitur " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        composites.add(disposable);
+    }
+
+    public void getListDebiturReportDistribusi(String userId, int page) {
+        ListDebiturBody listDebiturBody = new ListDebiturBody();
+        listDebiturBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
+        listDebiturBody.setSpName(RestConstants.LIST_DEBITUR_SP_NAME);
+
+        ListDebiturBody.SpParameter spParameter = new ListDebiturBody.SpParameter();
+        spParameter.setUserId(userId);
+        spParameter.setPage(page);
+        spParameter.setLimit(15);
+        spParameter.setOrderDirection(RestConstants.ORDER_DIRECTION_ASC_VALUE);
+        spParameter.setKeyword(obsSearch.get());
+
+        listDebiturBody.setSpParameter(spParameter);
+
+        Disposable disposable = ApiUtils.getRestServices(mAccessToken).getListDebitur(listDebiturBody)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        if (page == 1) {
+                            obsIsLoading.set(true);
+                        }
+                    }
+                })
+                .doOnTerminate(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        obsIsLoading.set(false);
+                    }
+                })
+                .subscribeWith(new DisposableObserver<List<DebiturItem>>() {
+                    @Override
+                    public void onNext(List<DebiturItem> listDebitur) {
+                        if (page == 1) {
+                            obsDebiturResponse.set(listDebitur);
+                        } else {
+                            obsDebiturResponseLoadMore.set(listDebitur);
+                        }
+                        Timber.i("getListDebitur success");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        error.set(e);
+                        Timber.e("getListDebitur " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        composites.add(disposable);
+    }
+    public void getListDebiturStaffProductivity(String userId, String date, String timeRange) {
+        StaffProductivityDebiturBody staffProductivityDebiturBody = new StaffProductivityDebiturBody();
+        staffProductivityDebiturBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
+        staffProductivityDebiturBody.setSpName(RestConstants.STAFF_PRODUCTIVITY_DEBITUR_SP_NAME);
+
+        StaffProductivityDebiturBody.SpParameter spParameter = new StaffProductivityDebiturBody.SpParameter();
+        spParameter.setUserId(userId);
+        spParameter.setActionDate(date);
+        spParameter.setTimeRange(timeRange);
+
+        staffProductivityDebiturBody.setSpParameter(spParameter);
+
+        Disposable disposable = ApiUtils.getRestServices(mAccessToken).getListDebiturStaffProductivity(staffProductivityDebiturBody)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        obsIsLoading.set(true);
+                    }
+                })
+                .doOnTerminate(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        obsIsLoading.set(false);
+                    }
+                })
+                .subscribeWith(new DisposableObserver<List<DebiturItem>>() {
+                    @Override
+                    public void onNext(List<DebiturItem> listDebitur) {
+                        obsDebiturResponse.set(listDebitur);
                         Timber.i("getListDebitur success");
                     }
 

@@ -35,7 +35,6 @@ import com.mitkoindo.smartcollection.dialog.DialogSimpleSpinnerAdapter;
 import com.mitkoindo.smartcollection.event.EventDialogSimpleSpinnerSelected;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.network.RestConstants;
-import com.mitkoindo.smartcollection.network.body.FormVisitBody;
 import com.mitkoindo.smartcollection.objectdata.DropDownAction;
 import com.mitkoindo.smartcollection.objectdata.DropDownAddress;
 import com.mitkoindo.smartcollection.objectdata.DropDownAddressDb;
@@ -44,6 +43,7 @@ import com.mitkoindo.smartcollection.objectdata.DropDownReason;
 import com.mitkoindo.smartcollection.objectdata.DropDownRelationship;
 import com.mitkoindo.smartcollection.objectdata.DropDownResult;
 import com.mitkoindo.smartcollection.objectdata.DropDownStatusAgunan;
+import com.mitkoindo.smartcollection.objectdata.databasemodel.SpParameterFormVisitDb;
 import com.mitkoindo.smartcollection.utils.ToastUtils;
 import com.mitkoindo.smartcollection.utils.Utils;
 
@@ -146,8 +146,7 @@ public class FormVisitActivity extends BaseActivity {
         mFormVisitViewModel.error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-//                displayMessage(R.string.GagalMendapatkanData);
-
+//                Failed to get address data from API, using data Address from bundle
                 List<DropDownAddress> dropDownAddressList = new ArrayList<DropDownAddress>();
                 List<DropDownAddressDb> dropDownAddressDbList = RealmHelper.getAddress(mNoRekening);
                 for (DropDownAddressDb dropDownAddressDb : dropDownAddressDbList) {
@@ -181,10 +180,10 @@ public class FormVisitActivity extends BaseActivity {
             public void onPropertyChanged(Observable sender, int propertyId) {
                 try {
                     Double jumlahYangAkanDisetor = Double.parseDouble(mFormVisitViewModel.jumlahYangAkanDisetor.get());
-                    mFormVisitViewModel.spParameter.setPtpAmount(jumlahYangAkanDisetor);
+                    mFormVisitViewModel.spParameterFormVisitDb.setPtpAmount(jumlahYangAkanDisetor);
                 } catch(NumberFormatException nfe) {
                     System.out.println("Could not parse " + nfe);
-                    mFormVisitViewModel.spParameter.setPtpAmount(0);
+                    mFormVisitViewModel.spParameterFormVisitDb.setPtpAmount(0);
                 }
             }
         });
@@ -202,7 +201,7 @@ public class FormVisitActivity extends BaseActivity {
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (!mFormVisitViewModel.isFotoAgunan2Show.get()) {
                     mBinding.imageViewFotoAgunan2.setImageResource(R.drawable.ic_home_variant_grey600_48dp);
-//                    mFormVisitViewModel.spParameter.setPhotoAgunan2Path("");
+                    mFormVisitViewModel.spParameterFormVisitDb.setPhotoAgunan2Path("");
                 }
             }
         });
@@ -490,13 +489,13 @@ public class FormVisitActivity extends BaseActivity {
                     }
                     if (requestCode == ACTION_TAKE_PICTURE_DEBITUR) {
                         mBinding.imageViewFotoDebitur.setImageBitmap(resizeBmp);
-//                        mFormVisitViewModel.spParameter.setPhotoDebiturPath(file.getAbsolutePath());
+                        mFormVisitViewModel.spParameterFormVisitDb.setPhotoDebiturPath(file.getAbsolutePath());
                     } else if (requestCode == ACTION_TAKE_PICTURE_AGUNAN_1) {
                         mBinding.imageViewFotoAgunan1.setImageBitmap(resizeBmp);
-//                        mFormVisitViewModel.spParameter.setPhotoAgunan1Path(file.getAbsolutePath());
+                        mFormVisitViewModel.spParameterFormVisitDb.setPhotoAgunan1Path(file.getAbsolutePath());
                     } else {
                         mBinding.imageViewFotoAgunan2.setImageBitmap(resizeBmp);
-//                        mFormVisitViewModel.spParameter.setPhotoAgunan2Path(file.getAbsolutePath());
+                        mFormVisitViewModel.spParameterFormVisitDb.setPhotoAgunan2Path(file.getAbsolutePath());
                     }
                     break;
                 }
@@ -542,7 +541,7 @@ public class FormVisitActivity extends BaseActivity {
                 case R.id.card_view_tujuan_kunjungan: {
                     for (DropDownPurpose dropDownPurpose : mListDropDownPurpose) {
                         if (!TextUtils.isEmpty(dropDownPurpose.getPDesc()) && dropDownPurpose.getPDesc().equals(event.getName())) {
-                            mFormVisitViewModel.spParameter.setTujuan(dropDownPurpose.getPId());
+                            mFormVisitViewModel.spParameterFormVisitDb.setTujuan(dropDownPurpose.getPId());
                             mFormVisitViewModel.tujuanKunjungan.set(dropDownPurpose.getPDesc());
                             break;
                         }
@@ -552,7 +551,7 @@ public class FormVisitActivity extends BaseActivity {
                 case R.id.card_view_alamat_yang_dikunjungi: {
                     for (DropDownAddress dropDownAddress : mListDropDownAddress) {
                         if (!TextUtils.isEmpty(dropDownAddress.getAlamat()) && dropDownAddress.getAlamat().equals(event.getName())) {
-                            mFormVisitViewModel.spParameter.setCuAddr(dropDownAddress.getCaAddrType());
+                            mFormVisitViewModel.spParameterFormVisitDb.setCuAddr(dropDownAddress.getCaAddrType());
                             mFormVisitViewModel.alamatYangDikunjungi.set(dropDownAddress.getAlamat());
                             break;
                         }
@@ -562,7 +561,7 @@ public class FormVisitActivity extends BaseActivity {
                 case R.id.card_view_hubungan_dengan_debitur: {
                     for (DropDownRelationship dropDownRelationship : mListDropDownRelationship) {
                         if (!TextUtils.isEmpty(dropDownRelationship.getRelDesc()) && dropDownRelationship.getRelDesc().equals(event.getName())) {
-                            mFormVisitViewModel.spParameter.setPersonVisitRel(dropDownRelationship.getRelId());
+                            mFormVisitViewModel.spParameterFormVisitDb.setPersonVisitRel(dropDownRelationship.getRelId());
                             mFormVisitViewModel.hubunganDenganDebitur.set(dropDownRelationship.getRelDesc());
                             break;
                         }
@@ -572,7 +571,7 @@ public class FormVisitActivity extends BaseActivity {
                 case R.id.card_view_hasil_kunjungan: {
                     for (DropDownResult dropDownResult : mListDropDownResult) {
                         if (!TextUtils.isEmpty(dropDownResult.getResultDesc()) && dropDownResult.getResultDesc().equals(event.getName())) {
-                            mFormVisitViewModel.spParameter.setResult(dropDownResult.getResultId());
+                            mFormVisitViewModel.spParameterFormVisitDb.setResult(dropDownResult.getResultId());
                             mFormVisitViewModel.hasilKunjungan.set(dropDownResult.getResultDesc());
                             break;
                         }
@@ -582,8 +581,8 @@ public class FormVisitActivity extends BaseActivity {
                 case R.id.card_view_alasan_menunggak: {
                     for (DropDownReason dropDownReason : mListDropDownReason) {
                         if (!TextUtils.isEmpty(dropDownReason.getReasonDesc()) && dropDownReason.getReasonDesc().equals(event.getName())) {
-                            mFormVisitViewModel.spParameter.setReasonNonPayment(dropDownReason.getReasonId());
-                            mFormVisitViewModel.spParameter.setReasonNonPaymentDesc(dropDownReason.getReasonDesc());
+                            mFormVisitViewModel.spParameterFormVisitDb.setReasonNonPayment(dropDownReason.getReasonId());
+                            mFormVisitViewModel.spParameterFormVisitDb.setReasonNonPaymentDesc(dropDownReason.getReasonDesc());
                             mFormVisitViewModel.alasanMenunggak.set(dropDownReason.getReasonDesc());
                             break;
                         }
@@ -593,7 +592,7 @@ public class FormVisitActivity extends BaseActivity {
                 case R.id.card_view_tindak_lanjut: {
                     for (DropDownAction dropDownAction : mListDropDownAction) {
                         if (!TextUtils.isEmpty(dropDownAction.getActionDesc()) && dropDownAction.getActionDesc().equals(event.getName())) {
-                            mFormVisitViewModel.spParameter.setNextAction(dropDownAction.getActionId());
+                            mFormVisitViewModel.spParameterFormVisitDb.setNextAction(dropDownAction.getActionId());
                             mFormVisitViewModel.tindakLanjut.set(dropDownAction.getActionDesc());
                             break;
                         }
@@ -603,7 +602,7 @@ public class FormVisitActivity extends BaseActivity {
                 case R.id.card_view_status_agunan: {
                     for (DropDownStatusAgunan dropDownStatusAgunan : mListDropDownStatusAgunan) {
                         if (!TextUtils.isEmpty(dropDownStatusAgunan.getColstaDesc()) && dropDownStatusAgunan.getColstaDesc().equals(event.getName())) {
-                            mFormVisitViewModel.spParameter.setCollStatDesc(dropDownStatusAgunan.getColstaCode());
+                            mFormVisitViewModel.spParameterFormVisitDb.setCollStatDesc(dropDownStatusAgunan.getColstaCode());
                             mFormVisitViewModel.statusAgunan.set(dropDownStatusAgunan.getColstaDesc());
                             break;
                         }
@@ -611,7 +610,7 @@ public class FormVisitActivity extends BaseActivity {
                     break;
                 }
                 case R.id.card_view_kondisi_agunan: {
-                    mFormVisitViewModel.spParameter.setCollCondDesc(event.getName());
+                    mFormVisitViewModel.spParameterFormVisitDb.setCollCondDesc(event.getName());
                     mFormVisitViewModel.kondisiAgunan.set(event.getName());
                     break;
                 }
@@ -733,16 +732,16 @@ public class FormVisitActivity extends BaseActivity {
     public void onSubmitClicked(View view) {
         if (isValid()) {
             startActivity(FormVisitKonfirmasiActivity.instantiate(FormVisitActivity.this,
-                    mFormVisitViewModel.spParameter,
+                    mFormVisitViewModel.spParameterFormVisitDb,
                     mNoRekening,
                     mFormVisitViewModel.alamatYangDikunjungi.get()));
         }
     }
 
     private boolean isValid() {
-        mFormVisitViewModel.spParameter.setAccNo(mNoRekening);
-        mFormVisitViewModel.spParameter.setUserId(getUserId());
-        FormVisitBody.SpParameter spParameter = mFormVisitViewModel.spParameter;
+        mFormVisitViewModel.spParameterFormVisitDb.setAccNo(mNoRekening);
+        mFormVisitViewModel.spParameterFormVisitDb.setUserId(getUserId());
+        SpParameterFormVisitDb spParameter = mFormVisitViewModel.spParameterFormVisitDb;
         if (TextUtils.isEmpty(spParameter.getTujuan())) {
             displayMessage(getString(R.string.FormVisit_TujuanKunjunganInitial));
             return false;
@@ -782,14 +781,13 @@ public class FormVisitActivity extends BaseActivity {
         } else if (TextUtils.isEmpty(spParameter.getNotes())) {
             displayMessage(getString(R.string.FormVisit_CatatanHint));
             return false;
+        } else if (TextUtils.isEmpty(spParameter.getPhotoDebiturPath())) {
+            displayMessage(getString(R.string.FormVisit_FotoDebiturHint));
+            return false;
+        } else if (TextUtils.isEmpty(spParameter.getPhotoAgunan1Path())) {
+            displayMessage(getString(R.string.FormVisit_FotoAgunanHint));
+            return false;
         }
-//        else if (TextUtils.isEmpty(spParameter.getPhotoDebiturPath())) {
-//            displayMessage(getString(R.string.FormVisit_FotoDebiturHint));
-//            return false;
-//        } else if (TextUtils.isEmpty(spParameter.getPhotoAgunan1Path())) {
-//            displayMessage(getString(R.string.FormVisit_FotoAgunanHint));
-//            return false;
-//        }
 
         return true;
     }

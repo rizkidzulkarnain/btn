@@ -1,7 +1,6 @@
 package com.mitkoindo.smartcollection.module.debitur.listdebitur;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,24 +24,24 @@ import com.mikepenz.fastadapter_extensions.scroll.EndlessRecyclerOnScrollListene
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.base.BaseFragment;
 import com.mitkoindo.smartcollection.databinding.FragmentListDebiturBinding;
-import com.mitkoindo.smartcollection.dialog.DialogFactory;
 import com.mitkoindo.smartcollection.dialog.DialogSimpleSpinnerAdapter;
 import com.mitkoindo.smartcollection.event.EventDialogSimpleSpinnerSelected;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturActivity;
-import com.mitkoindo.smartcollection.module.debitur.tambahalamat.TambahAlamatActivity;
-import com.mitkoindo.smartcollection.module.debitur.tambahtelepon.TambahTeleponActivity;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
 import com.mitkoindo.smartcollection.objectdata.databasemodel.DebiturItemDb;
 import com.mitkoindo.smartcollection.utils.SimpleListItemDecoration;
 import com.mitkoindo.smartcollection.utils.ToastUtils;
+import com.mitkoindo.smartcollection.utils.Utils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.OnClick;
 
 
 /**
@@ -65,6 +63,8 @@ public class ListDebiturFragment extends BaseFragment {
     private List<String> mListTambah = new ArrayList<>();
     private DebiturItem selectedDebitur;
     private int mPage = 1;
+    private EndlessRecyclerOnScrollListener mScrollListener;
+    private List<String> mListSortBy = new ArrayList<String>();
 
 
     public static ListDebiturFragment getInstance() {
@@ -111,6 +111,7 @@ public class ListDebiturFragment extends BaseFragment {
         mListDebiturViewModel = new ListDebiturViewModel(getAccessToken());
         addViewModel(mListDebiturViewModel);
         mBinding = DataBindingUtil.bind(view);
+        mBinding.setListDebiturVideModel(mListDebiturViewModel);
 
         mListDebiturViewModel.obsIsLoading.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
@@ -148,6 +149,7 @@ public class ListDebiturFragment extends BaseFragment {
             public void onPropertyChanged(Observable sender, int propertyId) {
                 mFastAdapter.clear();
                 mFastAdapter.add(mListDebiturViewModel.obsDebiturResponse.get());
+                mBinding.recyclerViewDebitur.getLayoutManager().scrollToPosition(0);
                 if (mListDebiturViewModel.obsDebiturResponse.get().size() > 0) {
                     mListDebiturViewModel.obsIsEmpty.set(false);
                 } else {
@@ -164,7 +166,9 @@ public class ListDebiturFragment extends BaseFragment {
 
         setupArrayTambah();
         setupRecyclerView();
+        setupSortBy();
 
+        mListDebiturViewModel.obsSort.set(getString(R.string.ListDebitur_AssignDate));
         mPage = 1;
         mListDebiturViewModel.getListDebitur(getUserId(), mStatus, mPage);
     }
@@ -175,7 +179,6 @@ public class ListDebiturFragment extends BaseFragment {
         mListTambah.add(getString(R.string.ListDebitur_TambahAlamat));
     }
 
-    private static final int PILIH_TAMBAH = 1;
     private void setupRecyclerView() {
         mFastAdapter = new FastItemAdapter();
         mFooterAdapter = new FooterAdapter<>();
@@ -190,17 +193,13 @@ public class ListDebiturFragment extends BaseFragment {
         mFastAdapter.withOnClickListener(new FastAdapter.OnClickListener<DebiturItem>() {
             @Override
             public boolean onClick(View v, IAdapter<DebiturItem> adapter, DebiturItem item, int position) {
-//                if (mType.equals(ListDebiturActivity.EXTRA_TYPE_PENUGASAN_VALUE)) {
-                    startActivity(DetailDebiturActivity.instantiate(getActivity(), item.getNoRekening(), item.getCustomerReference(), mType));
-//                } else if (mType.equals(ListDebiturActivity.EXTRA_TYPE_TAMBAH_KONTAK_VALUE)) {
-//                    selectedDebitur = item;
-//                    showInstallmentDialogSimpleSpinner(mListTambah, getString(R.string.ListDebitur_PilihTambah), PILIH_TAMBAH);
-//                }
+                startActivity(DetailDebiturActivity.instantiate(getActivity(), item.getNoRekening(), item.getCustomerReference(), mType));
 
                 return true;
             }
         });
-        mBinding.recyclerViewDebitur.addOnScrollListener(new EndlessRecyclerOnScrollListener(mFooterAdapter) {
+
+        mScrollListener = new EndlessRecyclerOnScrollListener(mFooterAdapter) {
             @Override
             public void onLoadMore(final int currentPage) {
                 mFooterAdapter.clear();
@@ -209,19 +208,27 @@ public class ListDebiturFragment extends BaseFragment {
                 mPage = currentPage;
                 mListDebiturViewModel.getListDebitur(getUserId(), mStatus, mPage);
             }
-        });
+        };
+        mBinding.recyclerViewDebitur.addOnScrollListener(mScrollListener);
 
         mBinding.swipeRefreshLayoutDebitur.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mBinding.swipeRefreshLayoutDebitur.setRefreshing(true);
                 mPage = 1;
-                mListDebiturViewModel.getListDebitur(getUserId(), mStatus, mPage);
+                mScrollListener.resetPageCount(1);
             }
         });
     }
 
-    private void showInstallmentDialogSimpleSpinner(List<String> nameList, String dialogTitle, int viewId) {
+    private void setupSortBy() {
+        mListSortBy.clear();
+        mListSortBy.add(getString(R.string.ListDebitur_AssignDate));
+        mListSortBy.add(getString(R.string.ListDebitur_Fullname));
+        mListSortBy.add(getString(R.string.ListDebitur_TotalKewajiban));
+    }
+
+    private void showDialogSimpleSpinner(List<String> nameList, String dialogTitle, int viewId) {
         if (mSpinnerDialog == null) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
             dialogBuilder
@@ -249,17 +256,29 @@ public class ListDebiturFragment extends BaseFragment {
     public void onDialogSimpleSpinnerSelected(EventDialogSimpleSpinnerSelected event) {
         if (mSpinnerDialog != null && mSpinnerDialog.isShowing()) {
             mSpinnerDialog.dismiss();
+        }
 
-            switch (event.getViewId()) {
-                case PILIH_TAMBAH: {
-                    if (event.getName().equals(getString(R.string.ListDebitur_TambahTelepon))) {
-                        startActivity(TambahTeleponActivity.instantiate(getActivity(), selectedDebitur.getNoRekening(), selectedDebitur.getCustomerReference()));
-                    } else if (event.getName().equals(getString(R.string.ListDebitur_TambahAlamat))) {
-                        startActivity(TambahAlamatActivity.instantiate(getActivity(), selectedDebitur.getNoRekening(), selectedDebitur.getCustomerReference()));
-                    }
-                    break;
+        switch (event.getViewId()) {
+            case R.id.card_view_sort_by: {
+                if (getUserVisibleHint()) {
+                    mListDebiturViewModel.obsSort.set(event.getName());
+                    mPage = 1;
+                    mScrollListener.resetPageCount(1);
                 }
+                break;
             }
         }
+    }
+
+    @OnClick(R.id.card_view_sort_by)
+    public void onSortByClicked(View view) {
+        showDialogSimpleSpinner(mListSortBy, getString(R.string.ListDebitur_SortBy), R.id.card_view_sort_by);
+    }
+
+    @OnClick(R.id.image_view_search)
+    public void onSearchClicked(View view) {
+        mPage = 1;
+        mScrollListener.resetPageCount(1);
+        Utils.hideKeyboard(view);
     }
 }

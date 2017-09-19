@@ -3,17 +3,22 @@ package com.mitkoindo.smartcollection.module.laporan;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.adapter.CommonTabAdapter;
+import com.mitkoindo.smartcollection.base.BaseActivity;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
+import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
+import com.mitkoindo.smartcollection.module.laporan.agenttracking.ListAgentTrackingFragment;
+import com.mitkoindo.smartcollection.module.laporan.reportdistribusi.ReportDistribusiDebiturFragment;
+import com.mitkoindo.smartcollection.module.laporan.reportdistribusi.ReportDistribusiStaffFragment;
+import com.mitkoindo.smartcollection.module.laporan.staffproductivity.StaffProductivityPortraitFragment;
 
 import java.util.ArrayList;
 
-public class LaporanActivity extends AppCompatActivity
+public class LaporanActivity extends BaseActivity
 {
     //----------------------------------------------------------------------------------------------
     //  View
@@ -21,7 +26,10 @@ public class LaporanActivity extends AppCompatActivity
     //fragments
     private ArchiveFragment fragment_Archive;
     private AgentTrackingFragment fragment_AgentTracking;
-    private DebiturMonitorFragment fragment_MonitorDebitur;
+    private ListAgentTrackingFragment fragment_ListAgentTracking;
+    private ReportDistribusiStaffFragment fragment_ReportDistribusiStaff;
+    private ReportDistribusiDebiturFragment fragment_ReportDistribusiDebitur;
+    private StaffProductivityPortraitFragment fragment_StaffProductivityPortrait;
     private StaffProductivityFragment fragment_StaffProductivity;
     private SupervisorArchiveFragment fragment_SupervisorArchive;
 
@@ -51,7 +59,7 @@ public class LaporanActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_laporan);
+//        setContentView(R.layout.activity_laporan);
 
         //setup
         SetupTransaction();
@@ -60,6 +68,16 @@ public class LaporanActivity extends AppCompatActivity
         SetTabDependingOnGroup();
         /*SetupTabs();*/
         /*SetupSupervisorTab();*/
+    }
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_laporan;
+    }
+
+    @Override
+    protected void setupDataBinding(View contentView) {
+
     }
 
     //setup transaksi
@@ -110,9 +128,9 @@ public class LaporanActivity extends AppCompatActivity
     {
         //create fragments
         fragment_Archive = new ArchiveFragment();
-        fragment_AgentTracking = new AgentTrackingFragment();
-        fragment_MonitorDebitur = new DebiturMonitorFragment();
-        fragment_StaffProductivity = new StaffProductivityFragment();
+        fragment_ListAgentTracking = (ListAgentTrackingFragment) ListAgentTrackingFragment.getInstance(ResourceLoader.LoadUserID(this));
+        fragment_ReportDistribusiDebitur = (ReportDistribusiDebiturFragment) ReportDistribusiDebiturFragment.getInstance(ListDebiturActivity.EXTRA_TYPE_ACCOUNT_ASSIGNMENT_VALUE, ResourceLoader.LoadUserID(this));
+        fragment_StaffProductivityPortrait = StaffProductivityPortraitFragment.getInstance(getUserId());
 
         //set property transaksi ke fragment
         fragment_Archive.SetTransactionData(baseURL, url_DataSP, authToken, userID);
@@ -127,15 +145,16 @@ public class LaporanActivity extends AppCompatActivity
         //create fragment list
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(fragment_Archive);
-        fragments.add(fragment_AgentTracking);
-        fragments.add(fragment_MonitorDebitur);
-        fragments.add(fragment_StaffProductivity);
+        fragments.add(fragment_ListAgentTracking);
+        fragments.add(fragment_ReportDistribusiDebitur);
+        fragments.add(fragment_StaffProductivityPortrait);
 
         //set fragment ke views
         //create tab adapter
         CommonTabAdapter dashboardTabAdapter = new CommonTabAdapter(getSupportFragmentManager(), fragments, fragmentTitles);
 
         //set adapter to tab
+        view_ViewPager.setOffscreenPageLimit(4);
         view_ViewPager.setAdapter(dashboardTabAdapter);
         view_Tabs.setupWithViewPager(view_ViewPager);
     }
@@ -145,8 +164,8 @@ public class LaporanActivity extends AppCompatActivity
     {
         //create fragments
         fragment_SupervisorArchive = new SupervisorArchiveFragment();
-        fragment_AgentTracking = new AgentTrackingFragment();
-        fragment_MonitorDebitur = new DebiturMonitorFragment();
+        fragment_ListAgentTracking = (ListAgentTrackingFragment) ListAgentTrackingFragment.getInstance(ResourceLoader.LoadUserID(this));
+        fragment_ReportDistribusiStaff = ReportDistribusiStaffFragment.getInstance();
         fragment_StaffProductivity = new StaffProductivityFragment();
 
         //set property transaksi ke fragment
@@ -162,8 +181,8 @@ public class LaporanActivity extends AppCompatActivity
         //create fragment list
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(fragment_SupervisorArchive);
-        fragments.add(fragment_AgentTracking);
-        fragments.add(fragment_MonitorDebitur);
+        fragments.add(fragment_ListAgentTracking);
+        fragments.add(fragment_ReportDistribusiStaff);
         fragments.add(fragment_StaffProductivity);
 
         //set fragment ke views
@@ -171,6 +190,7 @@ public class LaporanActivity extends AppCompatActivity
         CommonTabAdapter dashboardTabAdapter = new CommonTabAdapter(getSupportFragmentManager(), fragments, fragmentTitles);
 
         //set adapter to tab
+        view_ViewPager.setOffscreenPageLimit(4);
         view_ViewPager.setAdapter(dashboardTabAdapter);
         view_Tabs.setupWithViewPager(view_ViewPager);
     }

@@ -253,7 +253,7 @@ public class StaffListChatAdapter extends RecyclerView.Adapter<StaffListChatAdap
         view_ProgressBar.setVisibility(View.GONE);
 
         //pastikan result tidak kosong
-        if (resultString == null || resultString.isEmpty())
+        if (resultString == null || resultString.isEmpty()  || resultString.equals("Bad Request"))
         {
             //show alert
             view_AlertText.setText(R.string.Text_SomethingWrong);

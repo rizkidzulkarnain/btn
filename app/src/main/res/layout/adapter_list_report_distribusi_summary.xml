@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="reportDistribusiSummary"
+            type="com.mitkoindo.smartcollection.objectdata.ReportDistribusiSummary" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_medium_large"
+        android:layout_marginEnd="@dimen/padding_medium_large">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_medium">
+
+            <!--Jumlah sudah kunjungan-->
+            <TextView
+                android:id="@+id/text_view_jumlah_sudah_kunjungan"
+                style="@style/FontRegular.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/padding_medium"
+                android:paddingRight="@dimen/padding_medium"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/jumlah_sudah_kunjungan"/>
+
+            <!--Jumlah sudah kunjungan value-->
+            <TextView
+                android:id="@+id/text_view_jumlah_sudah_kunjungan_value"
+                style="@style/FontRegular.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/text_view_jumlah_sudah_kunjungan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@+id/text_view_jumlah_sudah_kunjungan"
+                android:text="@{reportDistribusiSummary.totalSudahKunjungan}"
+                tools:text="25"/>
+
+            <!--Jumlah Belum Kunjungan-->
+            <TextView
+                android:id="@+id/text_view_jumlah_belum_kunjungan"
+                style="@style/FontRegular.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                android:paddingEnd="@dimen/padding_medium"
+                android:paddingRight="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_jumlah_sudah_kunjungan"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/jumlah_belum_kunjungan"/>
+
+            <!--Jumlah Belum Kunjungan value-->
+            <TextView
+                android:id="@+id/text_view_jumlah_belum_kunjungan_value"
+                style="@style/FontRegular.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_jumlah_sudah_kunjungan"
+                app:layout_constraintStart_toEndOf="@+id/text_view_jumlah_belum_kunjungan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@+id/text_view_jumlah_belum_kunjungan"
+                android:text="@{reportDistribusiSummary.totalBelumKunjungan}"
+                tools:text="212"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+</layout>

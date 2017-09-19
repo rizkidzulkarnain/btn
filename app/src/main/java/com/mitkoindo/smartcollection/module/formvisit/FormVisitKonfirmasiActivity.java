@@ -39,15 +39,15 @@ import com.mitkoindo.smartcollection.base.BaseActivity;
 import com.mitkoindo.smartcollection.databinding.ActivityFormVisitKonfirmasiBinding;
 import com.mitkoindo.smartcollection.dialog.DialogFactory;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
-import com.mitkoindo.smartcollection.module.formcall.FormCallActivity;
-import com.mitkoindo.smartcollection.network.body.FormVisitBody;
 import com.mitkoindo.smartcollection.objectdata.DropDownAction;
 import com.mitkoindo.smartcollection.objectdata.DropDownPurpose;
 import com.mitkoindo.smartcollection.objectdata.DropDownReason;
 import com.mitkoindo.smartcollection.objectdata.DropDownRelationship;
 import com.mitkoindo.smartcollection.objectdata.DropDownResult;
 import com.mitkoindo.smartcollection.objectdata.DropDownStatusAgunan;
+import com.mitkoindo.smartcollection.objectdata.databasemodel.SpParameterFormVisitDb;
 import com.mitkoindo.smartcollection.utils.Constant;
+import com.mitkoindo.smartcollection.utils.FileUtils;
 import com.mitkoindo.smartcollection.utils.ToastUtils;
 import com.mitkoindo.smartcollection.utils.Utils;
 
@@ -79,14 +79,14 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
     private FusedLocationProviderClient mFusedLocationClient;
     private FormVisitKonfirmasiActivity.AddressResultReceiver mResultReceiver;
 
-    private FormVisitBody.SpParameter mSpParameter;
+    private SpParameterFormVisitDb mSpParameterFormVisitDb;
     private String mNoRekening;
     private String mAddress;
     private String mAddressOutput;
     private boolean mAddressRequested;
 
 
-    public static Intent instantiate(Context context, FormVisitBody.SpParameter spParameter, String noRekening, String alamatYangDikunjungi) {
+    public static Intent instantiate(Context context, SpParameterFormVisitDb spParameter, String noRekening, String alamatYangDikunjungi) {
         Intent intent = new Intent(context, FormVisitKonfirmasiActivity.class);
         intent.putExtra(EXTRA_DATA_FORM_VISIT, Parcels.wrap(spParameter));
         intent.putExtra(EXTRA_NO_REKENING, noRekening);
@@ -109,6 +109,7 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
     @Override
     protected void setupDataBinding(View contentView) {
         getExtra();
+        initGoogleService();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mResultReceiver = new FormVisitKonfirmasiActivity.AddressResultReceiver(new Handler());
         mAddressOutput = "";
@@ -117,7 +118,7 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
         mFormVisitKonfirmasiViewModel = new FormVisitKonfirmasiViewModel();
         mBinding = DataBindingUtil.bind(contentView);
         mBinding.setFormVisitKonfirmasiViewModel(mFormVisitKonfirmasiViewModel);
-        mFormVisitKonfirmasiViewModel.spParameter = mSpParameter;
+        mFormVisitKonfirmasiViewModel.spParameterFormVisitDb = mSpParameterFormVisitDb;
 
         mFormVisitKonfirmasiViewModel.obsIsLoading.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
@@ -148,6 +149,20 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (mFormVisitKonfirmasiViewModel.obsIsSaveSuccess.get()) {
+//                    Delete file photo
+                    if (!TextUtils.isEmpty(mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.getPhotoDebiturPath())) {
+                        FileUtils.deleteFile(mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.getPhotoDebiturPath());
+                    }
+                    if (!TextUtils.isEmpty(mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.getPhotoAgunan1Path())) {
+                        FileUtils.deleteFile(mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.getPhotoAgunan1Path());
+                    }
+                    if (!TextUtils.isEmpty(mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.getPhotoAgunan2Path())) {
+                        FileUtils.deleteFile(mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.getPhotoAgunan2Path());
+                    }
+                    if (!TextUtils.isEmpty(mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.getPhotoSignaturePath())) {
+                        FileUtils.deleteFile(mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.getPhotoSignaturePath());
+                    }
+
                     displayMessage(R.string.FormVisit_SaveFormSuccess);
                     startActivity(HomeActivity.instantiateClearTask(FormVisitKonfirmasiActivity.this));
                 }
@@ -161,7 +176,7 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
         if (getIntent().getExtras() != null) {
             mNoRekening = getIntent().getExtras().getString(EXTRA_NO_REKENING);
             Parcelable parcelable = getIntent().getParcelableExtra(EXTRA_DATA_FORM_VISIT);
-            mSpParameter = Parcels.unwrap(parcelable);
+            mSpParameterFormVisitDb = Parcels.unwrap(parcelable);
 
             mAddress = getIntent().getExtras().getString(EXTRA_ADDRESS);
         }
@@ -171,7 +186,7 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
 //        Set Tujuan
         List<DropDownPurpose> listDropDownPurpose = RealmHelper.getListDropDownPurpose();
         for (DropDownPurpose dropDownPurpose : listDropDownPurpose) {
-            if (dropDownPurpose.getPId() != null && dropDownPurpose.getPId().equals(mSpParameter.getTujuan())) {
+            if (dropDownPurpose.getPId() != null && dropDownPurpose.getPId().equals(mSpParameterFormVisitDb.getTujuan())) {
                 if (dropDownPurpose.getPDesc() != null) {
                     mFormVisitKonfirmasiViewModel.tujuanKunjungan.set(dropDownPurpose.getPDesc());
                     break;
@@ -183,12 +198,12 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
         mFormVisitKonfirmasiViewModel.alamatYangDikunjungi.set(mAddress);
 
 //        Set nama orang yang dikunjungi
-        mFormVisitKonfirmasiViewModel.namaOrangYangDikunjungi.set(mSpParameter.getPersonVisit());
+        mFormVisitKonfirmasiViewModel.namaOrangYangDikunjungi.set(mSpParameterFormVisitDb.getPersonVisit());
 
 //        Set Hubungan
         List<DropDownRelationship> listDropDownRelationship = RealmHelper.getListDropDownRelationship();
         for (DropDownRelationship dropDownRelationship : listDropDownRelationship) {
-            if (dropDownRelationship.getRelId() != null && dropDownRelationship.getRelId().equals(mSpParameter.getPersonVisitRel())) {
+            if (dropDownRelationship.getRelId() != null && dropDownRelationship.getRelId().equals(mSpParameterFormVisitDb.getPersonVisitRel())) {
                 if (dropDownRelationship.getRelDesc() != null) {
                     mFormVisitKonfirmasiViewModel.hubunganDenganDebitur.set(dropDownRelationship.getRelDesc());
                     break;
@@ -199,7 +214,7 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
 //        Set Hasil Kunjungan
         List<DropDownResult> listDropDownResult = RealmHelper.getListDropDownResult();
         for (DropDownResult dropDownResult : listDropDownResult) {
-            if (dropDownResult.getResultId() != null && dropDownResult.getResultId().equals(mSpParameter.getResult())) {
+            if (dropDownResult.getResultId() != null && dropDownResult.getResultId().equals(mSpParameterFormVisitDb.getResult())) {
                 if (dropDownResult.getResultDesc() != null) {
                     mFormVisitKonfirmasiViewModel.hasilKunjungan.set(dropDownResult.getResultDesc());
                     break;
@@ -208,9 +223,9 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
         }
 
 //        Set tanggal janji debitur
-        if (mSpParameter.getResultDate() != null) {
+        if (mSpParameterFormVisitDb.getResultDate() != null) {
             mFormVisitKonfirmasiViewModel.tanggalJanjiDebitur.set(Utils.changeDateFormat(
-                    mSpParameter.getResultDate(),
+                    mSpParameterFormVisitDb.getResultDate(),
                     Constant.DATE_FORMAT_SEND_DATE,
                     Constant.DATE_FORMAT_DISPLAY_DATE));
 
@@ -220,17 +235,17 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
         }
 
 //        Set jumlah yang akan disetor
-        if (mSpParameter.getPtpAmount() == 0) {
+        if (mSpParameterFormVisitDb.getPtpAmount() == 0) {
             mFormVisitKonfirmasiViewModel.obsIsShowJumlahYangAkanDisetor.set(false);
         } else {
-            mFormVisitKonfirmasiViewModel.jumlahYangAkanDisetor.set(Utils.convertDoubleToString(mSpParameter.getPtpAmount(), ".0"));
+            mFormVisitKonfirmasiViewModel.jumlahYangAkanDisetor.set(Utils.convertDoubleToString(mSpParameterFormVisitDb.getPtpAmount(), ".0"));
             mFormVisitKonfirmasiViewModel.obsIsShowJumlahYangAkanDisetor.set(true);
         }
 
 //        Set Status Agunan
         List<DropDownStatusAgunan> listDropDownStatusAgunan = RealmHelper.getListDropDownStatusAgunan();
         for (DropDownStatusAgunan dropDownStatusAgunan : listDropDownStatusAgunan) {
-            if (dropDownStatusAgunan.getColstaCode() != null && dropDownStatusAgunan.getColstaCode().equals(mSpParameter.getCollStatDesc())) {
+            if (dropDownStatusAgunan.getColstaCode() != null && dropDownStatusAgunan.getColstaCode().equals(mSpParameterFormVisitDb.getCollStatDesc())) {
                 if (dropDownStatusAgunan.getColstaDesc() != null) {
                     mFormVisitKonfirmasiViewModel.statusAgunan.set(dropDownStatusAgunan.getColstaDesc());
                     break;
@@ -239,12 +254,12 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
         }
 
 //        Set Kondisi Agunan
-        mFormVisitKonfirmasiViewModel.kondisiAgunan.set(mSpParameter.getCollCondDesc());
+        mFormVisitKonfirmasiViewModel.kondisiAgunan.set(mSpParameterFormVisitDb.getCollCondDesc());
 
 //        Set Alasan Menunggak
         List<DropDownReason> listDropDownReason = RealmHelper.getListDropDownReason();
         for (DropDownReason dropDownReason : listDropDownReason) {
-            if (dropDownReason.getReasonId() != null && dropDownReason.getReasonId().equals(mSpParameter.getReasonNonPayment())) {
+            if (dropDownReason.getReasonId() != null && dropDownReason.getReasonId().equals(mSpParameterFormVisitDb.getReasonNonPayment())) {
                 if (dropDownReason.getReasonDesc() != null) {
                     mFormVisitKonfirmasiViewModel.alasanMenunggak.set(dropDownReason.getReasonDesc());
                     break;
@@ -255,7 +270,7 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
 //        Set Tindak Lanjut
         List<DropDownAction> listDropDownAction = RealmHelper.getListDropDownAction();
         for (DropDownAction dropDownAction : listDropDownAction) {
-            if (dropDownAction.getActionId() != null && dropDownAction.getActionId().equals(mSpParameter.getNextAction())) {
+            if (dropDownAction.getActionId() != null && dropDownAction.getActionId().equals(mSpParameterFormVisitDb.getNextAction())) {
                 if (dropDownAction.getActionDesc() != null) {
                     mFormVisitKonfirmasiViewModel.tindakLanjut.set(dropDownAction.getActionDesc());
                     break;
@@ -265,70 +280,70 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
 
 //        Set Tanggal Tindak Lanjut
         mFormVisitKonfirmasiViewModel.tanggalTindakLanjut.set(Utils.changeDateFormat(
-                mSpParameter.getNextActionDate(),
+                mSpParameterFormVisitDb.getNextActionDate(),
                 Constant.DATE_FORMAT_SEND_DATE,
                 Constant.DATE_FORMAT_DISPLAY_DATE));
 
 //        Set catatan
-        mFormVisitKonfirmasiViewModel.catatan.set(mSpParameter.getNotes());
+        mFormVisitKonfirmasiViewModel.catatan.set(mSpParameterFormVisitDb.getNotes());
 
 //        Set Foto Debitur
-//        int widthHeight = Utils.convertDensityPixel(90, getResources());
-//        if (!TextUtils.isEmpty(mSpParameter.getPhotoDebiturPath())) {
-//            Bitmap resizeBmp = Utils.decodeSampledBitmapFromFile(mSpParameter.getPhotoDebiturPath(), widthHeight, widthHeight);
-//            int rotate = Utils.getOrientationFromExif(mSpParameter.getPhotoDebiturPath());
-//            if (rotate > 0) {
-//                int w = resizeBmp.getWidth();
-//                int h = resizeBmp.getHeight();
-//
-//                Matrix mtx = new Matrix();
-//                mtx.preRotate(rotate);
-//                resizeBmp = Bitmap.createBitmap(resizeBmp, 0, 0, w, h, mtx, false);
-//                resizeBmp = resizeBmp.copy(Bitmap.Config.ARGB_8888, true);
-//            }
-//            mBinding.cardViewFotoDebitur.setVisibility(View.VISIBLE);
-//            mBinding.imageViewFotoDebitur.setImageBitmap(resizeBmp);
-//        } else {
-//            mBinding.cardViewFotoDebitur.setVisibility(View.GONE);
-//        }
+        int widthHeight = Utils.convertDensityPixel(90, getResources());
+        if (!TextUtils.isEmpty(mSpParameterFormVisitDb.getPhotoDebiturPath())) {
+            Bitmap resizeBmp = Utils.decodeSampledBitmapFromFile(mSpParameterFormVisitDb.getPhotoDebiturPath(), widthHeight, widthHeight);
+            int rotate = Utils.getOrientationFromExif(mSpParameterFormVisitDb.getPhotoDebiturPath());
+            if (rotate > 0) {
+                int w = resizeBmp.getWidth();
+                int h = resizeBmp.getHeight();
+
+                Matrix mtx = new Matrix();
+                mtx.preRotate(rotate);
+                resizeBmp = Bitmap.createBitmap(resizeBmp, 0, 0, w, h, mtx, false);
+                resizeBmp = resizeBmp.copy(Bitmap.Config.ARGB_8888, true);
+            }
+            mBinding.cardViewFotoDebitur.setVisibility(View.VISIBLE);
+            mBinding.imageViewFotoDebitur.setImageBitmap(resizeBmp);
+        } else {
+            mBinding.cardViewFotoDebitur.setVisibility(View.GONE);
+        }
 
 //        Set Foto Agunan 1
-//        if (!TextUtils.isEmpty(mSpParameter.getPhotoAgunan1Path())) {
-//            Bitmap resizeBmpAgunan1 = Utils.decodeSampledBitmapFromFile(mSpParameter.getPhotoAgunan1Path(), widthHeight, widthHeight);
-//            int rotate1 = Utils.getOrientationFromExif(mSpParameter.getPhotoAgunan1Path());
-//            if (rotate1 > 0) {
-//                int w = resizeBmpAgunan1.getWidth();
-//                int h = resizeBmpAgunan1.getHeight();
-//
-//                Matrix mtx = new Matrix();
-//                mtx.preRotate(rotate1);
-//                resizeBmpAgunan1 = Bitmap.createBitmap(resizeBmpAgunan1, 0, 0, w, h, mtx, false);
-//                resizeBmpAgunan1 = resizeBmpAgunan1.copy(Bitmap.Config.ARGB_8888, true);
-//            }
-//            mBinding.cardViewFotoAgunan1.setVisibility(View.VISIBLE);
-//            mBinding.imageViewFotoAgunan1.setImageBitmap(resizeBmpAgunan1);
-//        } else {
-//            mBinding.cardViewFotoAgunan1.setVisibility(View.GONE);
-//        }
+        if (!TextUtils.isEmpty(mSpParameterFormVisitDb.getPhotoAgunan1Path())) {
+            Bitmap resizeBmpAgunan1 = Utils.decodeSampledBitmapFromFile(mSpParameterFormVisitDb.getPhotoAgunan1Path(), widthHeight, widthHeight);
+            int rotate1 = Utils.getOrientationFromExif(mSpParameterFormVisitDb.getPhotoAgunan1Path());
+            if (rotate1 > 0) {
+                int w = resizeBmpAgunan1.getWidth();
+                int h = resizeBmpAgunan1.getHeight();
+
+                Matrix mtx = new Matrix();
+                mtx.preRotate(rotate1);
+                resizeBmpAgunan1 = Bitmap.createBitmap(resizeBmpAgunan1, 0, 0, w, h, mtx, false);
+                resizeBmpAgunan1 = resizeBmpAgunan1.copy(Bitmap.Config.ARGB_8888, true);
+            }
+            mBinding.cardViewFotoAgunan1.setVisibility(View.VISIBLE);
+            mBinding.imageViewFotoAgunan1.setImageBitmap(resizeBmpAgunan1);
+        } else {
+            mBinding.cardViewFotoAgunan1.setVisibility(View.GONE);
+        }
 
 //        Set Foto Agunan 2
-//        if (!TextUtils.isEmpty(mSpParameter.getPhotoAgunan2Path())) {
-//            Bitmap resizeBmpAgunan2 = Utils.decodeSampledBitmapFromFile(mSpParameter.getPhotoAgunan2Path(), widthHeight, widthHeight);
-//            int rotate2 = Utils.getOrientationFromExif(mSpParameter.getPhotoAgunan2Path());
-//            if (rotate2 > 0) {
-//                int w = resizeBmpAgunan2.getWidth();
-//                int h = resizeBmpAgunan2.getHeight();
-//
-//                Matrix mtx = new Matrix();
-//                mtx.preRotate(rotate2);
-//                resizeBmpAgunan2 = Bitmap.createBitmap(resizeBmpAgunan2, 0, 0, w, h, mtx, false);
-//                resizeBmpAgunan2 = resizeBmpAgunan2.copy(Bitmap.Config.ARGB_8888, true);
-//            }
-//            mBinding.imageViewFotoAgunan2.setImageBitmap(resizeBmpAgunan2);
-//            mFormVisitKonfirmasiViewModel.isFotoAgunan2Show.set(true);
-//        } else {
-//            mFormVisitKonfirmasiViewModel.isFotoAgunan2Show.set(false);
-//        }
+        if (!TextUtils.isEmpty(mSpParameterFormVisitDb.getPhotoAgunan2Path())) {
+            Bitmap resizeBmpAgunan2 = Utils.decodeSampledBitmapFromFile(mSpParameterFormVisitDb.getPhotoAgunan2Path(), widthHeight, widthHeight);
+            int rotate2 = Utils.getOrientationFromExif(mSpParameterFormVisitDb.getPhotoAgunan2Path());
+            if (rotate2 > 0) {
+                int w = resizeBmpAgunan2.getWidth();
+                int h = resizeBmpAgunan2.getHeight();
+
+                Matrix mtx = new Matrix();
+                mtx.preRotate(rotate2);
+                resizeBmpAgunan2 = Bitmap.createBitmap(resizeBmpAgunan2, 0, 0, w, h, mtx, false);
+                resizeBmpAgunan2 = resizeBmpAgunan2.copy(Bitmap.Config.ARGB_8888, true);
+            }
+            mBinding.imageViewFotoAgunan2.setImageBitmap(resizeBmpAgunan2);
+            mFormVisitKonfirmasiViewModel.isFotoAgunan2Show.set(true);
+        } else {
+            mFormVisitKonfirmasiViewModel.isFotoAgunan2Show.set(false);
+        }
     }
 
     final private int REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_SIGNATURE = 124;
@@ -404,10 +419,10 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
 
             File file = new File(dir, "signature_" + mNoRekening +".jpg");
             saveBitmapToJPG(signature, file);
-//            mFormVisitKonfirmasiViewModel.spParameter.setSignaturePath(file.getAbsolutePath());
+            mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.setSignaturePath(file.getAbsolutePath());
             result = true;
 
-            mFormVisitKonfirmasiViewModel.saveFormVisit(getAccessToken());
+            requestAccessLocationPermission();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -426,10 +441,8 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
 
     @OnClick(R.id.button_submit)
     public void onSubmitClicked(View view) {
-//        getPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_SIGNATURE,
-//                getString(R.string.FormVisit_external_storage_permission_description));
-
-        requestAccessLocationPermission();
+        getPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_SIGNATURE,
+                getString(R.string.FormVisit_external_storage_permission_description));
     }
 
     // Create a GoogleApiClient instance
@@ -466,12 +479,12 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
                         public void onSuccess(Location location) {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
-                                mFormVisitKonfirmasiViewModel.spParameter.setGeoLatitude(location.getLatitude());
-                                mFormVisitKonfirmasiViewModel.spParameter.setGeoLongitude(location.getLongitude());
+                                mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.setGeoLatitude(location.getLatitude());
+                                mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.setGeoLongitude(location.getLongitude());
 
-                                if (mFormVisitKonfirmasiViewModel.spParameter.getResultDate() == null) {
-                                    mFormVisitKonfirmasiViewModel.spParameter.setResultDate("");
-                                    mFormVisitKonfirmasiViewModel.spParameter.setPtpAmount(0);
+                                if (mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.getResultDate() == null) {
+                                    mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.setResultDate("");
+                                    mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.setPtpAmount(0);
                                 }
 
 //                                Get Address string
@@ -516,8 +529,9 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
 
             // Display the address string or an error message sent from the intent service.
             mAddressOutput = resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY);
-            mFormVisitKonfirmasiViewModel.spParameter.setGeoAddress(mAddressOutput);
+            mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.setGeoAddress(mAddressOutput);
 
+            /*mFormVisitKonfirmasiViewModel.saveFormVisit(getAccessToken());*/
             mFormVisitKonfirmasiViewModel.saveFormVisitNoFile(getAccessToken());
 
             // Reset. Enable the Fetch Address button and stop showing the progress bar.

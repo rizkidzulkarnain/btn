@@ -2,6 +2,8 @@ package com.mitkoindo.smartcollection.objectdata.databasemodel;
 
 import com.mitkoindo.smartcollection.network.body.FormVisitBody;
 
+import org.parceler.Parcel;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -9,6 +11,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by ericwijaya on 9/8/17.
  */
 
+@Parcel(Parcel.Serialization.BEAN)
 public class SpParameterFormVisitDb extends RealmObject {
 
     private String userId;                  // Mandatory userId = userId
@@ -53,11 +56,11 @@ public class SpParameterFormVisitDb extends RealmObject {
     private String photoDebiturPath;
     private String photoAgunan1Path;
     private String photoAgunan2Path;
-    private String signaturePath;
+    private String photoSignaturePath;
     private String photoDebitur;
     private String photoAgunan1;
     private String photoAgunan2;
-    private String signature;
+    private String photoSignature;
 
 
     public SpParameterFormVisitDb() {
@@ -83,6 +86,10 @@ public class SpParameterFormVisitDb extends RealmObject {
         geoLatitude = spParameter.getGeoLatitude();
         geoLongitude = spParameter.getGeoLongitude();
         geoAddress = spParameter.getGeoAddress();
+        photoDebitur = spParameter.getPhotoDebitur();
+        photoAgunan1 = spParameter.getPhotoAgunan1();
+        photoAgunan2 = spParameter.getPhotoAgunan2();
+        photoSignature = spParameter.getPhotoSignature();
     }
 
     public FormVisitBody.SpParameter toSpParameterFormVisit() {
@@ -106,6 +113,10 @@ public class SpParameterFormVisitDb extends RealmObject {
         spParameter.setGeoLatitude(geoLatitude);
         spParameter.setGeoLongitude(geoLongitude);
         spParameter.setGeoAddress(geoAddress);
+        spParameter.setPhotoDebitur(photoDebitur);
+        spParameter.setPhotoAgunan1(photoAgunan1);
+        spParameter.setPhotoAgunan2(photoAgunan2);
+        spParameter.setPhotoSignature(photoSignature);
 
         return spParameter;
     }
@@ -286,12 +297,12 @@ public class SpParameterFormVisitDb extends RealmObject {
         this.photoAgunan2Path = photoAgunan2Path;
     }
 
-    public String getSignaturePath() {
-        return signaturePath;
+    public String getPhotoSignaturePath() {
+        return photoSignaturePath;
     }
 
-    public void setSignaturePath(String signaturePath) {
-        this.signaturePath = signaturePath;
+    public void setSignaturePath(String photoSignaturePath) {
+        this.photoSignaturePath = photoSignaturePath;
     }
 
     public String getPhotoDebitur() {
@@ -318,11 +329,11 @@ public class SpParameterFormVisitDb extends RealmObject {
         this.photoAgunan2 = photoAgunan2;
     }
 
-    public String getSignature() {
-        return signature;
+    public String getPhotoSignature() {
+        return photoSignature;
     }
 
-    public void setSignature(String signature) {
-        this.signature = signature;
+    public void setPhotoSignature(String photoSignature) {
+        this.photoSignature = photoSignature;
     }
 }

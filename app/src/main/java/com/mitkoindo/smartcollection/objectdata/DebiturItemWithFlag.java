@@ -12,6 +12,8 @@ public class DebiturItemWithFlag extends DebiturItem
 {
     public boolean Checked;
 
+    public String TanggalKunjungan;
+
     public DebiturItemWithFlag()
     {
         Checked = false;
@@ -35,6 +37,11 @@ public class DebiturItemWithFlag extends DebiturItem
             setLastPayment(dataObject.getString("LastPaymentDate"));
             setUseAssignDate(dataObject.getString("UserAssignDate"));
             setCustomerReference(dataObject.getString("CustomerReference"));
+
+            if (dataObject.has("TanggalKunjungan"))
+            {
+                TanggalKunjungan = dataObject.getString("TanggalKunjungan");
+            }
         }
         catch (JSONException e)
         {

@@ -181,7 +181,7 @@
                         android:textColorHint="@color/Grey"
                         android:hint="@string/FormVisit_OrangYangDiKunjungiHint"
                         android:background="@color/Transparent"
-                        android:text="@={formVisitViewModel.spParameter.personVisit}"/>
+                        android:text="@={formVisitViewModel.spParameterFormVisitDb.personVisit}"/>
                 </android.support.v7.widget.CardView>
 
                 <!--Hubungan dengan debitur-->
@@ -623,7 +623,7 @@
                         android:textColorHint="@color/Grey"
                         android:hint="@string/FormVisit_CatatanHint"
                         android:background="@color/Transparent"
-                        android:text="@={formVisitViewModel.spParameter.notes}"/>
+                        android:text="@={formVisitViewModel.spParameterFormVisitDb.notes}"/>
                 </android.support.v7.widget.CardView>
 
                 <!--Gallery-->

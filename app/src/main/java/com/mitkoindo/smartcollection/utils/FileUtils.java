@@ -6,6 +6,9 @@ import android.webkit.MimeTypeMap;
 
 import com.mitkoindo.smartcollection.MyApplication;
 
+import java.io.File;
+
+
 /**
  * Created by ericwijaya on 8/25/17.
  */
@@ -24,6 +27,18 @@ public class FileUtils {
                     fileExtension.toLowerCase());
         }
         return mimeType;
+    }
+
+    public static boolean deleteFile(String filePath) {
+        File fdelete = new File(filePath);
+        if (fdelete.exists()) {
+            if (fdelete.delete()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 
 }

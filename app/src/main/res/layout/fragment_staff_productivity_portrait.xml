@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="staffProductivityViewModel"
+            type="com.mitkoindo.smartcollection.module.laporan.staffproductivity.StaffProductivityViewModel" />
+
+        <import type="android.view.View"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/background_bluegradient">
+
+        <ScrollView
+            android:id="@+id/scroll_view_staff_productivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/padding_medium_large">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/colorAccent"
+                    android:layout_marginBottom="@dimen/padding_medium_large">
+                    <!--Pilih Tanggal CardView-->
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/card_view_tanggal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_medium"
+                        android:layout_marginBottom="@dimen/padding_medium"
+                        android:layout_marginLeft="@dimen/padding_medium_large"
+                        android:layout_marginStart="@dimen/padding_medium_large"
+                        android:layout_marginRight="@dimen/padding_medium_large"
+                        android:layout_marginEnd="@dimen/padding_medium_large">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/text_view_tanggal"
+                                style="@style/FontRegular.Medium"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingTop="@dimen/padding_10"
+                                android:paddingBottom="@dimen/padding_10"
+                                android:paddingStart="@dimen/padding_medium"
+                                android:paddingLeft="@dimen/padding_medium"
+                                android:paddingEnd="@dimen/padding_medium"
+                                android:text="@{staffProductivityViewModel.obsTanggalLayout}"/>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/padding_medium"
+                                android:layout_marginRight="@dimen/padding_medium"
+                                android:scaleType="centerInside"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/ic_menu_down_grey600_24dp" />
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+                <!--Result CardView-->
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_medium_large"
+                    android:layout_marginStart="@dimen/padding_medium_large"
+                    android:layout_marginRight="@dimen/padding_medium_large"
+                    android:layout_marginEnd="@dimen/padding_medium_large"
+                    android:padding="@dimen/padding_medium">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <!--Header Background-->
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@+id/barrier_header"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@color/colorAccent"/>
+
+                        <!--Waktu Header-->
+                        <TextView
+                            android:id="@+id/text_view_waktu_header"
+                            style="@style/FontBold.Medium.White"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/text_view_jumlah_kunjungan_header"
+                            android:background="@color/colorAccent"
+                            android:text="@string/StaffProductivity_Waktu"
+                            tools:text="Waktu"/>
+
+                        <!--Jumlah Kunjungan Header-->
+                        <TextView
+                            android:id="@+id/text_view_jumlah_kunjungan_header"
+                            style="@style/FontBold.Medium.White"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_view_waktu_header"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/text_view_waktu_header"
+                            android:background="@color/colorAccent"
+                            android:text="@string/StaffProductivity_JumlahKunjungan"
+                            tools:text="Jumlah Kunjungan"/>
+
+                        <!--Header Barrier-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_waktu_header,text_view_jumlah_kunjungan_header"/>
+
+
+                        <!-- < 10 Background-->
+                        <View
+                            android:id="@+id/background_1"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_header"
+                            app:layout_constraintBottom_toBottomOf="@+id/barrier_1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@color/bg_gray"/>
+
+                        <!-- < 10-->
+                        <TextView
+                            android:id="@+id/text_view_1"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_header"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/text_view_1_value"
+                            android:text="@string/StaffProductivity_Less_10"
+                            tools:text="l 10"/>
+
+                        <!-- < 10 value-->
+                        <TextView
+                            android:id="@+id/text_view_1_value"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_header"
+                            app:layout_constraintStart_toEndOf="@+id/text_view_1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/text_view_1"
+                            android:text="@{staffProductivityViewModel.obsStaffProductivity.timeRange1}"
+                            tools:text="10"/>
+
+                        <!--Barrier 1-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_1,text_view_1_value"/>
+
+
+                        <!-- 10-12 Background-->
+                        <View
+                            android:id="@+id/background_2"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_1"
+                            app:layout_constraintBottom_toBottomOf="@+id/barrier_2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@color/light_grey"/>
+
+                        <!-- 10-12-->
+                        <TextView
+                            android:id="@+id/text_view_2"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/text_view_2_value"
+                            android:text="@string/StaffProductivity_10_12"
+                            tools:text="10-12"/>
+
+                        <!-- 10-12 value-->
+                        <TextView
+                            android:id="@+id/text_view_2_value"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_1"
+                            app:layout_constraintStart_toEndOf="@+id/text_view_2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/text_view_2"
+                            android:text="@{staffProductivityViewModel.obsStaffProductivity.timeRange2}"
+                            tools:text="1"/>
+
+                        <!--Barrier 2-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_2,text_view_2_value"/>
+
+
+                        <!-- 12-14 Background-->
+                        <View
+                            android:id="@+id/background_3"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_2"
+                            app:layout_constraintBottom_toBottomOf="@+id/barrier_3"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@color/bg_gray"/>
+
+                        <!-- 12-14-->
+                        <TextView
+                            android:id="@+id/text_view_3"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/text_view_3_value"
+                            android:text="@string/StaffProductivity_12_14"
+                            tools:text="12-14"/>
+
+                        <!-- 12-14 value-->
+                        <TextView
+                            android:id="@+id/text_view_3_value"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_2"
+                            app:layout_constraintStart_toEndOf="@+id/text_view_3"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/text_view_3"
+                            android:text="@{staffProductivityViewModel.obsStaffProductivity.timeRange3}"
+                            tools:text="6"/>
+
+                        <!--Barrier 3-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_3,text_view_3_value"/>
+
+
+                        <!-- 14-16 Background-->
+                        <View
+                            android:id="@+id/background_4"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_3"
+                            app:layout_constraintBottom_toBottomOf="@+id/barrier_4"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@color/light_grey"/>
+
+                        <!-- 14-16-->
+                        <TextView
+                            android:id="@+id/text_view_4"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_3"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/text_view_4_value"
+                            android:text="@string/StaffProductivity_14_16"
+                            tools:text="14-16"/>
+
+                        <!-- 14-16 value-->
+                        <TextView
+                            android:id="@+id/text_view_4_value"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_3"
+                            app:layout_constraintStart_toEndOf="@+id/text_view_4"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/text_view_4"
+                            android:text="@{staffProductivityViewModel.obsStaffProductivity.timeRange4}"
+                            tools:text="8"/>
+
+                        <!--Barrier 4-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_4,text_view_4_value"/>
+
+
+                        <!-- 16-18 Background-->
+                        <View
+                            android:id="@+id/background_5"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_4"
+                            app:layout_constraintBottom_toBottomOf="@+id/barrier_5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@color/bg_gray"/>
+
+                        <!-- 16-18-->
+                        <TextView
+                            android:id="@+id/text_view_5"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_4"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/text_view_5_value"
+                            android:text="@string/StaffProductivity_16_18"
+                            tools:text="16-18"/>
+
+                        <!-- 16-18 value-->
+                        <TextView
+                            android:id="@+id/text_view_5_value"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_4"
+                            app:layout_constraintStart_toEndOf="@+id/text_view_5"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/text_view_5"
+                            android:text="@{staffProductivityViewModel.obsStaffProductivity.timeRange5}"
+                            tools:text="17"/>
+
+                        <!--Barrier 5-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_5,text_view_5_value"/>
+
+
+                        <!-- 18-20 Background-->
+                        <View
+                            android:id="@+id/background_6"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_5"
+                            app:layout_constraintBottom_toBottomOf="@+id/barrier_6"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@color/light_grey"/>
+
+                        <!-- 18-20-->
+                        <TextView
+                            android:id="@+id/text_view_6"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/text_view_6_value"
+                            android:text="@string/StaffProductivity_18_20"
+                            tools:text="18-20"/>
+
+                        <!-- 18-20 value-->
+                        <TextView
+                            android:id="@+id/text_view_6_value"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_5"
+                            app:layout_constraintStart_toEndOf="@+id/text_view_6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/text_view_6"
+                            android:text="@{staffProductivityViewModel.obsStaffProductivity.timeRange6}"
+                            tools:text="7"/>
+
+                        <!--Barrier 6-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_6,text_view_6_value"/>
+
+
+                        <!-- > 20 Background-->
+                        <View
+                            android:id="@+id/background_7"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_6"
+                            app:layout_constraintBottom_toBottomOf="@+id/barrier_7"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@color/bg_gray"/>
+
+                        <!-- > 20-->
+                        <TextView
+                            android:id="@+id/text_view_7"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_6"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/text_view_7_value"
+                            android:text="@string/StaffProductivity_More_20"
+                            tools:text="Mo 20"/>
+
+                        <!-- > 20 value-->
+                        <TextView
+                            android:id="@+id/text_view_7_value"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_6"
+                            app:layout_constraintStart_toEndOf="@+id/text_view_7"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/text_view_7"
+                            android:text="@{staffProductivityViewModel.obsStaffProductivity.timeRange7}"
+                            tools:text="99"/>
+
+                        <!--Barrier 7-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_7,text_view_7_value"/>
+
+
+                        <!-- Total Background-->
+                        <View
+                            android:id="@+id/total_background"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_7"
+                            app:layout_constraintBottom_toBottomOf="@+id/barrier_8"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@color/light_grey"/>
+
+                        <!-- Total-->
+                        <TextView
+                            android:id="@+id/text_view_total"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_7"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/text_view_total_value"
+                            android:text="@string/StaffProductivity_Total"
+                            tools:text="Total"/>
+
+                        <!-- Total value-->
+                        <TextView
+                            android:id="@+id/text_view_total_value"
+                            style="@style/FontRegular.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_12"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@+id/barrier_7"
+                            app:layout_constraintStart_toEndOf="@+id/text_view_total"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBaseline_toBaselineOf="@+id/text_view_total"
+                            android:text="@{staffProductivityViewModel.obsStaffProductivity.total}"
+                            tools:text="129"/>
+
+                        <!--Barrier 8-->
+                        <android.support.constraint.Barrier
+                            android:id="@+id/barrier_8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="text_view_total,text_view_total_value"/>
+
+
+                    </android.support.constraint.ConstraintLayout>
+
+                </android.support.v7.widget.CardView>
+
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+    </LinearLayout>
+</layout>

@@ -65,6 +65,8 @@ public class ListDebiturBody {
 
         private String status;
 
+        private String keyword;
+
 
         public String getUserId() {
             return userId;
@@ -114,16 +116,12 @@ public class ListDebiturBody {
             this.status = status;
         }
 
-        @Override
-        public String toString() {
-            return "SpParameter{" +
-                    "userId='" + userId + '\'' +
-                    ", orderBy='" + orderBy + '\'' +
-                    ", page=" + page +
-                    ", limit=" + limit +
-                    ", orderDirection='" + orderDirection + '\'' +
-                    ", status='" + status + '\'' +
-                    '}';
+        public String getKeyword() {
+            return keyword;
+        }
+
+        public void setKeyword(String keyword) {
+            this.keyword = keyword;
         }
     }
 }

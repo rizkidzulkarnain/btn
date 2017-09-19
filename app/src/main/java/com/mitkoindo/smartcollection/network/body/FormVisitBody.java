@@ -127,14 +127,10 @@ public class FormVisitBody {
         @Expose
         private String geoAddress;
 
-//        private String photoDebiturPath;
-//        private String photoAgunan1Path;
-//        private String photoAgunan2Path;
-//        private String signaturePath;
-//        private String photoDebitur;
-//        private String photoAgunan1;
-//        private String photoAgunan2;
-//        private String signature;
+        private String photoDebitur;
+        private String photoAgunan1;
+        private String photoAgunan2;
+        private String photoSignature;
 
         public String getUserId() {
             return userId;
@@ -288,68 +284,36 @@ public class FormVisitBody {
             this.geoAddress = geoAddress;
         }
 
-//        public String getPhotoDebiturPath() {
-//            return photoDebiturPath;
-//        }
-//
-//        public void setPhotoDebiturPath(String photoDebiturPath) {
-//            this.photoDebiturPath = photoDebiturPath;
-//        }
-//
-//        public String getPhotoAgunan1Path() {
-//            return photoAgunan1Path;
-//        }
-//
-//        public void setPhotoAgunan1Path(String photoAgunan1Path) {
-//            this.photoAgunan1Path = photoAgunan1Path;
-//        }
-//
-//        public String getPhotoAgunan2Path() {
-//            return photoAgunan2Path;
-//        }
-//
-//        public void setPhotoAgunan2Path(String photoAgunan2Path) {
-//            this.photoAgunan2Path = photoAgunan2Path;
-//        }
-//
-//        public String getSignaturePath() {
-//            return signaturePath;
-//        }
-//
-//        public void setSignaturePath(String signaturePath) {
-//            this.signaturePath = signaturePath;
-//        }
-//
-//        public String getPhotoDebitur() {
-//            return photoDebitur;
-//        }
-//
-//        public void setPhotoDebitur(String photoDebitur) {
-//            this.photoDebitur = photoDebitur;
-//        }
-//
-//        public String getPhotoAgunan1() {
-//            return photoAgunan1;
-//        }
-//
-//        public void setPhotoAgunan1(String photoAgunan1) {
-//            this.photoAgunan1 = photoAgunan1;
-//        }
-//
-//        public String getPhotoAgunan2() {
-//            return photoAgunan2;
-//        }
-//
-//        public void setPhotoAgunan2(String photoAgunan2) {
-//            this.photoAgunan2 = photoAgunan2;
-//        }
-//
-//        public String getSignature() {
-//            return signature;
-//        }
-//
-//        public void setSignature(String signature) {
-//            this.signature = signature;
-//        }
+        public String getPhotoDebitur() {
+            return photoDebitur;
+        }
+
+        public void setPhotoDebitur(String photoDebitur) {
+            this.photoDebitur = photoDebitur;
+        }
+
+        public String getPhotoAgunan1() {
+            return photoAgunan1;
+        }
+
+        public void setPhotoAgunan1(String photoAgunan1) {
+            this.photoAgunan1 = photoAgunan1;
+        }
+
+        public String getPhotoAgunan2() {
+            return photoAgunan2;
+        }
+
+        public void setPhotoAgunan2(String photoAgunan2) {
+            this.photoAgunan2 = photoAgunan2;
+        }
+
+        public String getPhotoSignature() {
+            return photoSignature;
+        }
+
+        public void setPhotoSignature(String photoSignature) {
+            this.photoSignature = photoSignature;
+        }
     }
 }

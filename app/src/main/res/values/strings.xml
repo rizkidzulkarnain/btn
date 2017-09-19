@@ -103,6 +103,12 @@
     <string name="ListDebitur_PilihTambah">Pilih</string>
     <string name="ListDebitur_TambahTelepon">Tambah Telepon</string>
     <string name="ListDebitur_TambahAlamat">Tambah Alamat</string>
+    <string name="ListDebitur_AssignDate">Assign Date</string>
+    <string name="ListDebitur_Fullname">Fullname</string>
+    <string name="ListDebitur_TotalKewajiban">Total Kewajiban</string>
+    <string name="ListDebitur_SearchHint">Cari debitur</string>
+    <string name="ListDebitur_Search">Cari</string>
+    <string name="ListDebitur_SortBy">Sort by</string>
 
     <!--Detail debitur page-->
     <string name="DetailDebitur_PageTitle">Detail Debitur</string>
@@ -253,10 +259,10 @@
     <string name="TambahTelepon_NamaHint">Tuliskan nama pemilik telepon</string>
     <string name="TambahTelepon_HubunganDenganDebitur">Hubungan dengan debitur</string>
     <string name="TambahTelepon_TypeTelepon">Jenis Telepon</string>
+    <string name="TambahTelepon_TeleponTypeInitial">Pilih jenis telepon</string>
     <string name="TambahTelepon_NomorTelepon">Nomor Telepon</string>
     <string name="TambahTelepon_NomorTeleponHint">Isi nomor telepon</string>
     <string name="TambahTelepon_Simpan">Simpan</string>
-    <string name="TambahTelepon_TeleponTypeInitial">Pilih telepon type</string>
     <string name="TambahTelepon_HubunganDenganDebiturInitial">Pilih hubungan dengan debitur</string>
     <string name="TambahTelepon_Success">Sukses menambah nomor telepon</string>
 
@@ -276,6 +282,32 @@
     <string name="TambahAlamatSaja_PropinsiHint">Isi propinsi</string>
     <string name="TambahAlamatSaja_Success">Sukses menambah alamat</string>
     <string name="TambahAlamatSaja_Simpan">Simpan</string>
+
+    <!--Laporan Report Distribusi Staff-->
+    <string name="ReportDistribusiStaff_EmptyStaff">Tidak ada data staff</string>
+
+    <!--Laporan Report Distribusi Debitur-->
+    <string name="ReportDistribusiDebitur_PageTitle">Report Distribusi Debitur</string>
+
+    <!--Laporan Staff Productivity-->
+    <string name="StaffProductivity_PageTitle">Staff Productivity</string>
+    <string name="StaffProductivity_Waktu">Waktu</string>
+    <string name="StaffProductivity_JumlahKunjungan">Jumlah Kunjungan</string>
+    <string name="StaffProductivity_Less_10">&lt; 10</string>
+    <string name="StaffProductivity_10_12">10-12</string>
+    <string name="StaffProductivity_12_14">12-14</string>
+    <string name="StaffProductivity_14_16">14-16</string>
+    <string name="StaffProductivity_16_18">16-18</string>
+    <string name="StaffProductivity_18_20">18-20</string>
+    <string name="StaffProductivity_More_20">&gt; 20</string>
+    <string name="StaffProductivity_Total">Total</string>
+
+    <!--Laporan Staff Productivity Debitur-->
+    <string name="StaffProductivityDebitur_PageTitle">Staff Productivity Debitur</string>
+
+    <!--Agent Tracking-->
+    <string name="AgentTracking_PageTitle">Agent Tracking</string>
+    <string name="AgentTracking_Empty">Tidak ada data tracking</string>
 
     <!--Account assignment-->
     <string name="AccountAssignment_PageTitle">Account Assignment</string>
@@ -307,7 +339,7 @@
     <!--Laporan-->
     <string name="Laporan_Title">Laporan</string>
     <string name="Laporan_Tab_Arsip">Arsip</string>
-    <string name="Laporan_Tab_Monitoring">Distribusi Debitur</string>
+    <string name="Laporan_Tab_Monitoring">Report Distribusi</string>
     <string name="Laporan_Tab_AgentTracking">Agent Tracking</string>
     <string name="Laporan_Tab_StaffProductivity">Staff Productivity</string>
     <string name="Laporan_Arsip_Hint_CariDebitur">Cari Debitur</string>
@@ -343,6 +375,12 @@
     <string name="dpd">DPD</string>
     <string name="last_payment">Last Payment</string>
 
+    <!--List Report Distribusi Staff adapter-->
+    <string name="jumlah_penugasan">Jumlah penugasan</string>
+    <string name="jumlah_outstanding">Jumlah outstanding</string>
+    <string name="jumlah_sudah_kunjungan">Jumlah sudah kunjungan</string>
+    <string name="jumlah_belum_kunjungan">Jumlah belum kunjungan</string>
+
     <!--Button text-->
     <string name="Button_LoginPage_Login">Login</string>
     <string name="Button_LoginPage_ForgotPassword">Forgot Password?</string>
@@ -358,14 +396,15 @@
     <string name="no">Tidak</string>
     <string name="TidakAdaDataPilihan">Tidak ada data pilihan</string>
     <string name="GagalMendapatkanData">Gagal mendapatkan data</string>
-    <string name="GagalMenyimpanFormVisit">Gagal mengirim Form Visit</string>
-    <string name="GagalMenyimpanFormCall">Gagal mengirim Form Call</string>
+    <string name="GagalMenyimpanFormVisit">Gagal mengirim form visit, Data disimpan di offline record dan dikirim setelah ada koneksi</string>
+    <string name="GagalMenyimpanFormCall">Gagal mengirim form call, Data disimpan di offline record dan dikirim setelah ada koneksi</string>
     <string name="GagalMendapatListNomorTelepon">Gagal mendapatkan list nomor telepon</string>
     <string name="GagalMenambahkanAlamatDanTelepon">Gagal menambahkan alamat / telepon</string>
     <string name="GagalCheckIn">Gagal melakukan check in</string>
     <string name="GagalMenambahNomorTelepon">Gagal menambah nomor telepon</string>
     <string name="GagalMenambahAlamat">Gagal menambah alamat</string>
     <string name="GagalMendapatListDebitur">Gagal mendapatkan list debitur, memakai data offline record</string>
+    <string name="GagalDataTanggalIni">Tidak ada data pada tanggal ini</string>
 
     <!--Geocoder-->
     <string name="no_geocoder_available">No geocoder available</string>

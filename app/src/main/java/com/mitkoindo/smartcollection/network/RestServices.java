@@ -1,5 +1,7 @@
 package com.mitkoindo.smartcollection.network;
 
+import com.mitkoindo.smartcollection.module.laporan.StaffProductivityFragment;
+import com.mitkoindo.smartcollection.network.body.AgentTrackingBody;
 import com.mitkoindo.smartcollection.network.body.CheckInBody;
 import com.mitkoindo.smartcollection.network.body.DetailDebiturBody;
 import com.mitkoindo.smartcollection.network.body.FormCallBody;
@@ -8,6 +10,10 @@ import com.mitkoindo.smartcollection.network.body.FormVisitDropDownBody;
 import com.mitkoindo.smartcollection.network.body.ListDebiturBody;
 import com.mitkoindo.smartcollection.network.body.ListPhoneNumberBody;
 import com.mitkoindo.smartcollection.network.body.LoginBody;
+import com.mitkoindo.smartcollection.network.body.ReportDistribusiStaffBody;
+import com.mitkoindo.smartcollection.network.body.ReportDistribusiSummaryBody;
+import com.mitkoindo.smartcollection.network.body.StaffProductivityBody;
+import com.mitkoindo.smartcollection.network.body.StaffProductivityDebiturBody;
 import com.mitkoindo.smartcollection.network.body.TambahAlamatBody;
 import com.mitkoindo.smartcollection.network.body.TambahTeleponBody;
 import com.mitkoindo.smartcollection.network.response.CheckInResponse;
@@ -18,6 +24,7 @@ import com.mitkoindo.smartcollection.network.response.MultipartResponse;
 import com.mitkoindo.smartcollection.network.response.OfflineBundleResponse;
 import com.mitkoindo.smartcollection.network.response.TambahAlamatResponse;
 import com.mitkoindo.smartcollection.network.response.TambahTeleponResponse;
+import com.mitkoindo.smartcollection.objectdata.AgentTracking;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
 import com.mitkoindo.smartcollection.objectdata.DetailDebitur;
 import com.mitkoindo.smartcollection.objectdata.DropDownAction;
@@ -30,6 +37,9 @@ import com.mitkoindo.smartcollection.objectdata.DropDownResult;
 import com.mitkoindo.smartcollection.objectdata.DropDownStatusAgunan;
 import com.mitkoindo.smartcollection.objectdata.DropDownTeleponType;
 import com.mitkoindo.smartcollection.objectdata.PhoneNumber;
+import com.mitkoindo.smartcollection.objectdata.ReportDistribusiStaff;
+import com.mitkoindo.smartcollection.objectdata.ReportDistribusiSummary;
+import com.mitkoindo.smartcollection.objectdata.StaffProductivity;
 
 import java.util.List;
 
@@ -106,6 +116,20 @@ public interface RestServices {
     @GET(RestConstants.BUNDLE)
     Observable<OfflineBundleResponse> getBundle(@Path("dbName") String dbName, @Path("limit") String limit);
 
+    @POST(RestConstants.DATA_SP)
+    Observable<List<ReportDistribusiStaff>> getReportDistribusiStaff(@Body ReportDistribusiStaffBody reportDistribusiStaffBody);
+
+    @POST(RestConstants.DATA_SP)
+    Observable<List<ReportDistribusiSummary>> getReportDistribusiSummary(@Body ReportDistribusiSummaryBody reportDistribusiSummaryBody);
+
+    @POST(RestConstants.DATA_SP)
+    Observable<List<StaffProductivity>> getStaffProductivity(@Body StaffProductivityBody staffProductivityBody);
+
+    @POST(RestConstants.DATA_SP)
+    Observable<List<DebiturItem>> getListDebiturStaffProductivity(@Body StaffProductivityDebiturBody staffProductivityDebiturBody);
+
+    @POST(RestConstants.DATA_SP)
+    Observable<List<AgentTracking>> getListAgentTracking(@Body AgentTrackingBody agentTrackingBody);
 
     @Headers({"Content-Type: multipart/form-data"})
     @Multipart

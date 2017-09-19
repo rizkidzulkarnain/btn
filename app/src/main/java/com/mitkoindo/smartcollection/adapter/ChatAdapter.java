@@ -340,6 +340,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     //Update chat item
     private void UpdateChatItem(ArrayList<ChatItem> newChatItems)
     {
+        //cek apakah chat item sudah ada isi apa belum
+        if (chatItems == null || chatItems.size() <= 0)
+        {
+            //langsung add data baru
+            SetChatItem(newChatItems);
+            return;
+        }
+
         //bandingkan element terakhir chatlist dengan new chat item
         ChatItem currentLastElement = chatItems.get(chatItems.size() - 1);
         ChatItem newLastElement = newChatItems.get(newChatItems.size() - 1);

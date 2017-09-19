@@ -40,6 +40,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.mitkoindo.smartcollection.adapter.HomeMenuAdapter;
 import com.mitkoindo.smartcollection.backgroundservice.MyJobService;
+import com.mitkoindo.smartcollection.backgroundservice.MyJobServiceTracking;
 import com.mitkoindo.smartcollection.helper.ItemClickListener;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
@@ -985,5 +986,30 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
                 .build();
 
         dispatcher.mustSchedule(myJob);
+
+        Job myJobTracking = dispatcher.newJobBuilder()
+                // the JobService that will be called
+                .setService(MyJobServiceTracking.class)
+                // uniquely identifies the job
+                .setTag("MyJobServiceTracking")
+                // recurring
+                .setRecurring(true)
+                // don't persist past a device reboot
+                .setLifetime(Lifetime.FOREVER)
+                // start between 0 and 60 seconds from now
+                .setTrigger(Trigger.executionWindow(800, 900))
+                // don't overwrite an existing job with the same tag
+                .setReplaceCurrent(true)
+                // retry with exponential backoff
+                .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
+                // constraints that need to be satisfied for the job to run
+                .setConstraints(
+                        //Run this job only when the network is available.
+                        Constraint.ON_ANY_NETWORK
+                )
+                .setExtras(extra)
+                .build();
+
+        dispatcher.mustSchedule(myJobTracking);
     }
 }

@@ -52,15 +52,23 @@ public class CheckInBody {
         @SerializedName("userID")
         @Expose
         private String userID;
+
         @SerializedName("latitude")
         @Expose
         private Double latitude;
+
         @SerializedName("longitude")
         @Expose
         private Double longitude;
+
         @SerializedName("address")
         @Expose
         private String address;
+
+        @SerializedName("isCheckin")
+        @Expose
+        private String isCheckin;
+
 
         public String getUserID() {
             return userID;
@@ -92,6 +100,14 @@ public class CheckInBody {
 
         public void setAddress(String address) {
             this.address = address;
+        }
+
+        public String getIsCheckin() {
+            return isCheckin;
+        }
+
+        public void setIsCheckin(String isCheckin) {
+            this.isCheckin = isCheckin;
         }
     }
 }

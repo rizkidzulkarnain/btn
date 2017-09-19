@@ -4,14 +4,12 @@ import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.net.Uri;
-import android.util.Log;
 
 import com.mitkoindo.smartcollection.base.ILifecycleViewModel;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.network.ApiUtils;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.FormVisitBody;
-import com.mitkoindo.smartcollection.network.response.FormCallResponse;
 import com.mitkoindo.smartcollection.network.response.FormVisitResponse;
 import com.mitkoindo.smartcollection.network.response.MultipartResponse;
 import com.mitkoindo.smartcollection.objectdata.databasemodel.SpParameterFormVisitDb;
@@ -34,7 +32,7 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.HttpException;
+import timber.log.Timber;
 
 /**
  * Created by ericwijaya on 8/27/17.
@@ -66,7 +64,7 @@ public class FormVisitKonfirmasiViewModel extends BaseObservable implements ILif
     public ObservableField<String> catatan = new ObservableField<>();
     public ObservableField<Boolean> isFotoAgunan2Show = new ObservableField<>();
 
-    public FormVisitBody.SpParameter spParameter = new FormVisitBody.SpParameter();
+    public SpParameterFormVisitDb spParameterFormVisitDb = new SpParameterFormVisitDb();
 
     public FormVisitKonfirmasiViewModel() {
     }
@@ -77,98 +75,100 @@ public class FormVisitKonfirmasiViewModel extends BaseObservable implements ILif
     }
 
     public void saveFormVisit(String accessToken) {
-//        File fileFotoDebitur = new File(spParameter.getPhotoDebiturPath());
-//        Uri uriFotoDebitur = Uri.fromFile(fileFotoDebitur);
-//        RequestBody requestFileFotoDebitur = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoDebitur)), fileFotoDebitur);
-//        MultipartBody.Part bodyDebitur = MultipartBody.Part.createFormData("file", fileFotoDebitur.getName(), requestFileFotoDebitur);
-//
-//        File fileFotoAgunan1 = new File(spParameter.getPhotoAgunan1Path());
-//        Uri uriFotoAgunan1 = Uri.fromFile(fileFotoAgunan1);
-//        RequestBody requestFileFotoAgunan1 = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoAgunan1)), fileFotoAgunan1);
-//        MultipartBody.Part bodyAgunan1 = MultipartBody.Part.createFormData("file", fileFotoAgunan1.getName(), requestFileFotoAgunan1);
-//
-//        File fileSignature = new File(spParameter.getSignaturePath());
-//        Uri uriSignature = Uri.fromFile(fileSignature);
-//        RequestBody requestFileSignature = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriSignature)), fileSignature);
-//        MultipartBody.Part bodySignature = MultipartBody.Part.createFormData("file", fileSignature.getName(), requestFileSignature);
-//
-//        Disposable disposable = ApiUtils.getMultipartServices(accessToken).uploadFile(bodyDebitur)
-//                .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
-//                    @Override
-//                    public ObservableSource<MultipartResponse> apply(@NonNull MultipartResponse multipartResponse) throws Exception {
-//                        spParameter.setPhotoDebitur(multipartResponse.getRelativePath());
-//
-//                        return ApiUtils.getMultipartServices(accessToken).uploadFile(bodyAgunan1);
-//                    }
-//                })
-//                .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
-//                    @Override
-//                    public ObservableSource<MultipartResponse> apply(@NonNull MultipartResponse multipartResponse) throws Exception {
-//                        spParameter.setPhotoAgunan1(multipartResponse.getRelativePath());
-//
-//                        if (isFotoAgunan2Show.get()) {
-//                            File fileFotoAgunan2 = new File(spParameter.getPhotoAgunan2Path());
-//                            Uri uriFotoAgunan2 = Uri.fromFile(fileFotoAgunan2);
-//                            RequestBody requestFileFotoAgunan2 = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoAgunan2)), fileFotoAgunan2);
-//                            MultipartBody.Part bodyAgunan2 = MultipartBody.Part.createFormData("file", fileFotoAgunan2.getName(), requestFileFotoAgunan2);
-//
-//                            return ApiUtils.getMultipartServices(accessToken).uploadFile(bodyAgunan2);
-//                        } else {
-//                            return Observable.just(multipartResponse);
-//                        }
-//                    }
-//                })
-//                .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
-//                    @Override
-//                    public ObservableSource<MultipartResponse> apply(@NonNull MultipartResponse multipartResponse) throws Exception {
-//                        if (isFotoAgunan2Show.get()) {
-//                            spParameter.setPhotoAgunan2(multipartResponse.getRelativePath());
-//                        }
-//
-//                        return ApiUtils.getMultipartServices(accessToken).uploadFile(bodySignature);
-//                    }
-//                })
-//                .flatMap(new Function<MultipartResponse, ObservableSource<List<FormVisitResponse>>>() {
-//                    @Override
-//                    public ObservableSource<List<FormVisitResponse>> apply(@NonNull MultipartResponse multipartResponse) throws Exception {
-//                        spParameter.setSignature(multipartResponse.getRelativePath());
-//
-//                        return ApiUtils.getRestServices(accessToken).saveFormVisit(createFormVisitBody());
-//                    }
-//                })
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnSubscribe(new Consumer<Disposable>() {
-//                    @Override
-//                    public void accept(Disposable disposable) throws Exception {
-//                        obsIsLoading.set(true);
-//                    }
-//                })
-//                .doOnTerminate(new Action() {
-//                    @Override
-//                    public void run() throws Exception {
-//                        obsIsLoading.set(false);
-//                    }
-//                })
-//                .subscribeWith(new DisposableObserver<List<FormVisitResponse>>() {
-//                    @Override
-//                    public void onNext(List<FormVisitResponse> v) {
-//                        obsIsSaveSuccess.set(true);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        error.set(e);
-//                        Log.e("FormVisitViewModel", e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//
-//        composites.add(disposable);
+        File fileFotoDebitur = new File(spParameterFormVisitDb.getPhotoDebiturPath());
+        Uri uriFotoDebitur = Uri.fromFile(fileFotoDebitur);
+        RequestBody requestFileFotoDebitur = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoDebitur)), fileFotoDebitur);
+        MultipartBody.Part bodyDebitur = MultipartBody.Part.createFormData("file", fileFotoDebitur.getName(), requestFileFotoDebitur);
+
+        File fileFotoAgunan1 = new File(spParameterFormVisitDb.getPhotoAgunan1Path());
+        Uri uriFotoAgunan1 = Uri.fromFile(fileFotoAgunan1);
+        RequestBody requestFileFotoAgunan1 = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoAgunan1)), fileFotoAgunan1);
+        MultipartBody.Part bodyAgunan1 = MultipartBody.Part.createFormData("file", fileFotoAgunan1.getName(), requestFileFotoAgunan1);
+
+        File fileSignature = new File(spParameterFormVisitDb.getPhotoSignaturePath());
+        Uri uriSignature = Uri.fromFile(fileSignature);
+        RequestBody requestFileSignature = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriSignature)), fileSignature);
+        MultipartBody.Part bodySignature = MultipartBody.Part.createFormData("file", fileSignature.getName(), requestFileSignature);
+
+        Disposable disposable = ApiUtils.getMultipartServices(accessToken).uploadFile(bodyDebitur)
+                .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
+                    @Override
+                    public ObservableSource<MultipartResponse> apply(@NonNull MultipartResponse multipartResponse) throws Exception {
+                        spParameterFormVisitDb.setPhotoDebitur(multipartResponse.getRelativePath());
+
+                        return ApiUtils.getMultipartServices(accessToken).uploadFile(bodyAgunan1);
+                    }
+                })
+                .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
+                    @Override
+                    public ObservableSource<MultipartResponse> apply(@NonNull MultipartResponse multipartResponse) throws Exception {
+                        spParameterFormVisitDb.setPhotoAgunan1(multipartResponse.getRelativePath());
+
+                        if (isFotoAgunan2Show.get()) {
+                            File fileFotoAgunan2 = new File(spParameterFormVisitDb.getPhotoAgunan2Path());
+                            Uri uriFotoAgunan2 = Uri.fromFile(fileFotoAgunan2);
+                            RequestBody requestFileFotoAgunan2 = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoAgunan2)), fileFotoAgunan2);
+                            MultipartBody.Part bodyAgunan2 = MultipartBody.Part.createFormData("file", fileFotoAgunan2.getName(), requestFileFotoAgunan2);
+
+                            return ApiUtils.getMultipartServices(accessToken).uploadFile(bodyAgunan2);
+                        } else {
+                            return Observable.just(multipartResponse);
+                        }
+                    }
+                })
+                .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
+                    @Override
+                    public ObservableSource<MultipartResponse> apply(@NonNull MultipartResponse multipartResponse) throws Exception {
+                        if (isFotoAgunan2Show.get()) {
+                            spParameterFormVisitDb.setPhotoAgunan2(multipartResponse.getRelativePath());
+                        }
+
+                        return ApiUtils.getMultipartServices(accessToken).uploadFile(bodySignature);
+                    }
+                })
+                .flatMap(new Function<MultipartResponse, ObservableSource<List<FormVisitResponse>>>() {
+                    @Override
+                    public ObservableSource<List<FormVisitResponse>> apply(@NonNull MultipartResponse multipartResponse) throws Exception {
+                        spParameterFormVisitDb.setPhotoSignature(multipartResponse.getRelativePath());
+
+                        return ApiUtils.getRestServices(accessToken).saveFormVisit(createFormVisitBody());
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        obsIsLoading.set(true);
+                    }
+                })
+                .doOnTerminate(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        obsIsLoading.set(false);
+                    }
+                })
+                .subscribeWith(new DisposableObserver<List<FormVisitResponse>>() {
+                    @Override
+                    public void onNext(List<FormVisitResponse> v) {
+                        obsIsSaveSuccess.set(true);
+                        Timber.i("Save Form Visit Success");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        error.set(e);
+                        RealmHelper.storeFormVisit(spParameterFormVisitDb);
+                        Timber.e("Save Form Visit Error : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        composites.add(disposable);
     }
 
     public void saveFormVisitNoFile(String accessToken) {
@@ -196,9 +196,8 @@ public class FormVisitKonfirmasiViewModel extends BaseObservable implements ILif
                     @Override
                     public void onError(Throwable e) {
                         error.set(e);
-                        SpParameterFormVisitDb spParameterFormVisitDb = new SpParameterFormVisitDb(spParameter);
                         RealmHelper.storeFormVisit(spParameterFormVisitDb);
-                        Log.e("FormCallViewModel", e.getMessage());
+                        Timber.e("Save Form Visit with photo failed" + e.getMessage());
                     }
 
                     @Override
@@ -214,6 +213,7 @@ public class FormVisitKonfirmasiViewModel extends BaseObservable implements ILif
         FormVisitBody formVisitBody = new FormVisitBody();
         formVisitBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
         formVisitBody.setSpName(RestConstants.FORM_VISIT_SP_NAME);
+        FormVisitBody.SpParameter spParameter = spParameterFormVisitDb.toSpParameterFormVisit();
         formVisitBody.setSpParameter(spParameter);
 
         return formVisitBody;

@@ -512,7 +512,11 @@ public class RealmHelper {
                     .where(DetailDebiturDb.class)
                     .equalTo("noRekening", noRekening)
                     .findFirst();
-            return realm.copyFromRealm(result);
+            if (result != null) {
+                return realm.copyFromRealm(result);
+            } else {
+                return null;
+            }
         } finally {
             realm.close();
         }

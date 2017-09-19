@@ -171,7 +171,9 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
 //                    displayMessage(R.string.GagalMendapatkanData);
 
                     DetailDebiturDb detailDebiturDb = RealmHelper.getDetailDebitur(mNoRekening);
-                    mDetailDebiturViewModel.obsDetailDebitur.set(detailDebiturDb.toDetailDebitur());
+                    if (detailDebiturDb != null) {
+                        mDetailDebiturViewModel.obsDetailDebitur.set(detailDebiturDb.toDetailDebitur());
+                    }
                 }
             }
         });

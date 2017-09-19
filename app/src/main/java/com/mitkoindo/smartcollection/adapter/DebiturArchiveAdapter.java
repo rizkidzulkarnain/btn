@@ -95,7 +95,7 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
     public DebiturViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         LayoutInflater layoutInflater = context.getLayoutInflater();
-        View thisView = layoutInflater.inflate(R.layout.adapter_list_debitur, parent, false);
+        View thisView = layoutInflater.inflate(R.layout.adapter_list_debitur_archive, parent, false);
         return new DebiturViewHolder(thisView);
     }
 
@@ -118,6 +118,7 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
         holder.lastPayment.setText(currentDebitur.getLastPayment());
         holder.tagihan.setText(currentDebitur.getTagihan());
         holder.dpd.setText(currentDebitur.getDpd());
+        holder.tanggalKunjungan.setText(currentDebitur.TanggalKunjungan);
 
         //set listener
         final int currentPos = position;
@@ -396,6 +397,7 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
         TextView tagihan;
         TextView dpd;
         TextView lastPayment;
+        TextView tanggalKunjungan;
 
         public DebiturViewHolder(View itemView)
         {
@@ -406,6 +408,7 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
             tagihan = itemView.findViewById(R.id.text_view_tagihan_value);
             dpd = itemView.findViewById(R.id.text_view_dpd_value);
             lastPayment = itemView.findViewById(R.id.text_view_last_payment_value);
+            tanggalKunjungan = itemView.findViewById(R.id.text_view_last_kunjungan_value);
         }
     }
 }

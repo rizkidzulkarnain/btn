@@ -25,6 +25,9 @@ public final class RestConstants {
 
     public static final String LIST_DEBITUR_SP_NAME = "MKI_SP_DEBITUR_LIST";
     public static final String LIST_DEBITUR_ORDER_BY_VALUE = "C.CU_CIF";
+    public static final String LIST_DEBITUR_ORDER_BY_ASSIGN_DATE = "LH.User_Assign_Date";
+    public static final String LIST_DEBITUR_ORDER_BY_FULL_NAME = "C.CU_FULLNAME";
+    public static final String LIST_DEBITUR_ORDER_BY_TOTAL_KEWAJIBAN = "LD.TOT_Kewajiban";
     public static final String LIST_DEBITUR_STATUS_PENDING_VALUE = "PENDING";
     public static final String LIST_DEBITUR_STATUS_LANCAR_VALUE = "LANCAR";
     public static final String LIST_DEBITUR_STATUS_MATURED_VALUE = "MATURED";
@@ -71,6 +74,16 @@ public final class RestConstants {
     public static final String TAMBAH_TELEPON_SP_NAME = "MKI_SP_DEBITUR_TAMBAH_TELFON";
 
     public static final String TAMBAH_ALAMAT_SP_NAME = "MKI_SP_DEBITUR_TAMBAH_ALAMAT";
+
+    public static final String REPORT_DISTRIBUSI_STAFF_SP_NAME = "MKI_SP_REPORT_DISTRIBUSI_DEBITUR_STAFF";
+
+    public static final String REPORT_DISTRIBUSI_SUMMARY_SP_NAME = "MKI_SP_REPORT_DISTRIBUSI_DEBITUR_SUMMARY";
+
+    public static final String STAFF_PRODUCTIVITY_SP_NAME = "MKI_SP_REPORT_STAFF_PRODUCTIVITY";
+
+    public static final String STAFF_PRODUCTIVITY_DEBITUR_SP_NAME = "MKI_SP_REPORT_STAFF_PRODUCTIVITY_DETAIL";
+
+    public static final String AGENT_TRACKING_SP_NAME = "MKI_SP_REPORT_STAFF_TRACKING_LIST";
 
     public static final String ORDER_DIRECTION_ASC_VALUE = "ASC";
 

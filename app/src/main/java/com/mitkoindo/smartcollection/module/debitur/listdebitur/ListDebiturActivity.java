@@ -62,6 +62,7 @@ public class ListDebiturActivity extends BaseActivity {
         } else {
             setupToolbar(getString(R.string.ListDebitur_PageTitleTambahKontak));
         }
+
         setupViewPager();
     }
 

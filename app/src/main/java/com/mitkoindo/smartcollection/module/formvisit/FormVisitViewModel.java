@@ -4,7 +4,6 @@ import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.net.Uri;
-import android.util.Log;
 
 import com.mitkoindo.smartcollection.base.ILifecycleViewModel;
 import com.mitkoindo.smartcollection.network.ApiUtils;
@@ -17,6 +16,7 @@ import com.mitkoindo.smartcollection.network.models.Sort;
 import com.mitkoindo.smartcollection.network.response.FormVisitResponse;
 import com.mitkoindo.smartcollection.network.response.MultipartResponse;
 import com.mitkoindo.smartcollection.objectdata.DropDownAddress;
+import com.mitkoindo.smartcollection.objectdata.databasemodel.SpParameterFormVisitDb;
 import com.mitkoindo.smartcollection.utils.Constant;
 import com.mitkoindo.smartcollection.utils.FileUtils;
 
@@ -75,7 +75,7 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
     public ObservableField<Boolean> isFotoAgunan2Show = new ObservableField<>(false);
     public ObservableField<List<DropDownAddress>> mObsListDropDownAddress = new ObservableField<>();
 
-    public FormVisitBody.SpParameter spParameter = new FormVisitBody.SpParameter();
+    public SpParameterFormVisitDb spParameterFormVisitDb = new SpParameterFormVisitDb();
 
 
     public FormVisitViewModel() {
@@ -89,12 +89,12 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
 
 
     public void setTanggalJanjiDebitur(Date tanggalJanjiDebitur) {
-        spParameter.setResultDate(dateFormatterSend.format(tanggalJanjiDebitur));
+        spParameterFormVisitDb.setResultDate(dateFormatterSend.format(tanggalJanjiDebitur));
         this.tanggalJanjiDebitur.set(dateFormatterDisplay.format(tanggalJanjiDebitur));
     }
 
     public void setTanggalTindakLanjut(Date tanggalTindakLanjut) {
-        spParameter.setNextActionDate(dateFormatterSend.format(tanggalTindakLanjut));
+        spParameterFormVisitDb.setNextActionDate(dateFormatterSend.format(tanggalTindakLanjut));
         this.tanggalTindakLanjut.set(dateFormatterDisplay.format(tanggalTindakLanjut));
     }
 
@@ -155,11 +155,13 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
                     @Override
                     public void onNext(List<FormVisitResponse> v) {
                         obsIsSaveSuccess.set(true);
+                        Timber.i("Sukses save form visit");
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         error.set(e);
+                        Timber.e("Save Form Visit Error : " + e.getMessage());
                     }
 
                     @Override
@@ -200,8 +202,8 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
                     @Override
                     public void onNext(MultipartResponse multipartResponse) {
                         String relativePath = multipartResponse.getRelativePath();
-                        Log.i("FormVisit", "Sukses upload");
-                        Log.i("FormVisit", relativePath);
+                        Timber.i("Sukses upload file");
+                        Timber.i("Path " +  relativePath);
                     }
 
                     @Override
@@ -210,9 +212,8 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
                             ((HttpException) e).code();
 
                         }
-
-                        Log.e("Form Visit Upload Error", e.getMessage());
                         error.set(e);
+                        Timber.e("Upload File Error : " + e.getMessage());
                     }
 
                     @Override
@@ -258,6 +259,7 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
         FormVisitBody formVisitBody = new FormVisitBody();
         formVisitBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
         formVisitBody.setSpName(RestConstants.FORM_VISIT_SP_NAME);
+        FormVisitBody.SpParameter spParameter = spParameterFormVisitDb.toSpParameterFormVisit();
         formVisitBody.setSpParameter(spParameter);
 
         return formVisitBody;

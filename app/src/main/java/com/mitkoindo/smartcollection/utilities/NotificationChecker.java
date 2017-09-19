@@ -323,6 +323,7 @@ public class NotificationChecker extends BroadcastReceiver
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(currentNotification.Message))
+                        .setContentTitle("BTN Smart Collection")
                         .setContentText(currentNotification.Message)
                         .setAutoCancel(true);
 
