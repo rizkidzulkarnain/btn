@@ -15,6 +15,7 @@ import com.mitkoindo.smartcollection.module.laporan.agenttracking.ListStaffDownl
 import com.mitkoindo.smartcollection.module.laporan.reportdistribusi.ReportDistribusiDebiturFragment;
 import com.mitkoindo.smartcollection.module.laporan.reportdistribusi.ReportDistribusiStaffFragment;
 import com.mitkoindo.smartcollection.module.laporan.staffproductivity.StaffProductivityLandscapeFragment;
+import com.mitkoindo.smartcollection.module.laporan.staffproductivity.StaffProductivityPortraitFragment;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class LaporanActivity extends BaseActivity
     private ListStaffDownlineFragment fragment_StaffDownline;
     private ReportDistribusiStaffFragment fragment_ReportDistribusiStaff;
     private ReportDistribusiDebiturFragment fragment_ReportDistribusiDebitur;
+    private StaffProductivityPortraitFragment fragment_StaffProductivityPortrait;
     private StaffProductivityLandscapeFragment fragment_StaffProductivityLandscape;
     private SupervisorArchiveFragment fragment_SupervisorArchive;
 
@@ -126,7 +128,8 @@ public class LaporanActivity extends BaseActivity
     {
         //create fragments
         fragment_Archive = new ArchiveFragment();
-        fragment_ReportDistribusiDebitur = (ReportDistribusiDebiturFragment) ReportDistribusiDebiturFragment.getInstance(ListDebiturActivity.EXTRA_TYPE_ACCOUNT_ASSIGNMENT_VALUE, ResourceLoader.LoadUserID(this));
+        /*fragment_ReportDistribusiDebitur = (ReportDistribusiDebiturFragment) ReportDistribusiDebiturFragment.getInstance(ListDebiturActivity.EXTRA_TYPE_ACCOUNT_ASSIGNMENT_VALUE, ResourceLoader.LoadUserID(this));*/
+        fragment_StaffProductivityPortrait = StaffProductivityPortraitFragment.getInstance(getUserId());
 
         //set property transaksi ke fragment
         fragment_Archive.SetTransactionData(baseURL, url_DataSP, authToken, userID);
@@ -134,12 +137,14 @@ public class LaporanActivity extends BaseActivity
         //create fragment titles
         ArrayList<String> fragmentTitles = new ArrayList<>();
         fragmentTitles.add(getString(R.string.Laporan_Tab_Arsip));
-        fragmentTitles.add(getString(R.string.Laporan_Tab_Monitoring));
+        /*fragmentTitles.add(getString(R.string.Laporan_Tab_Monitoring));*/
+        fragmentTitles.add(getString(R.string.Laporan_Tab_StaffProductivity));
 
         //create fragment list
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(fragment_Archive);
-        fragments.add(fragment_ReportDistribusiDebitur);
+        /*fragments.add(fragment_ReportDistribusiDebitur);*/
+        fragments.add(fragment_StaffProductivityPortrait);
 
         //set fragment ke views
         //create tab adapter

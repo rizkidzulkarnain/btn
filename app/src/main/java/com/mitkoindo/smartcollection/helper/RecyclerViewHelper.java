@@ -19,4 +19,9 @@ public class RecyclerViewHelper
         }
         return false;
     }
+
+    public static boolean isFirstItemDisplaying(RecyclerView recyclerView)
+    {
+        return ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition() == 0;
+    }
 }

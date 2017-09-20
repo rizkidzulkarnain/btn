@@ -1,5 +1,6 @@
 package com.mitkoindo.smartcollection.module.laporan;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
+import com.mitkoindo.smartcollection.module.misc.ImageViewerActivity;
 import com.mitkoindo.smartcollection.objectdata.ImageData;
 import com.mitkoindo.smartcollection.objectdata.LaporanVisit;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
@@ -45,6 +47,7 @@ public class LaporanVisitActivity extends AppCompatActivity
     //holder
     private View holder_TanggalJanji;
     private View holder_JumlahSetor;
+    private View holder_FotoAgunan2;
 
     //generic alert
     private GenericAlert genericAlert;
@@ -111,6 +114,7 @@ public class LaporanVisitActivity extends AppCompatActivity
 
         holder_TanggalJanji = findViewById(R.id.LaporanVisit_Holder_TanggalJanji);
         holder_JumlahSetor = findViewById(R.id.LaporanVisit_Holder_JumlahSetor);
+        holder_FotoAgunan2 = findViewById(R.id.LaporanVisit_Holder_FotoAgunan2);
 
         //create generic alert
         genericAlert = new GenericAlert(this);
@@ -316,14 +320,14 @@ public class LaporanVisitActivity extends AppCompatActivity
 
         }
 
-        if (laporanVisit.PhotoAgunan2 != null && !laporanVisit.PhotoAgunan2.isEmpty())
+        if (laporanVisit.PhotoAgunan2 != null && !laporanVisit.PhotoAgunan2.isEmpty() && !laporanVisit.PhotoAgunan2.equals("null"))
         {
             ImageData imageData = new ImageData();
             imageData.LoadImageToImageView(this, baseURL, laporanVisit.PhotoAgunan2, view_FotoAgunan2);
         }
         else
         {
-
+            holder_FotoAgunan2.setVisibility(View.GONE);
         }
 
         if (laporanVisit.PhotoSignature != null && !laporanVisit.PhotoSignature.isEmpty())
@@ -340,5 +344,44 @@ public class LaporanVisitActivity extends AppCompatActivity
         view_FotoAgunan1;
         view_FotoAgunan2;
         view_Signature;*/
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Handle input
+    //----------------------------------------------------------------------------------------------
+    public void HandleInput_LaporanVisit_OpenFotoDebitur(View view)
+    {
+        //set url
+        if (laporanVisit.PhotoDebitur != null && !laporanVisit.PhotoDebitur.isEmpty() && !laporanVisit.PhotoDebitur.equals("null"))
+        {
+            String usedURL = baseURL + laporanVisit.PhotoDebitur.substring(1);
+            Intent intent = new Intent(this, ImageViewerActivity.class);
+            intent.putExtra("ImageUrl", usedURL);
+            startActivity(intent);
+        }
+    }
+
+    public void HandleInput_LaporanVisit_OpenFotoAgunan1(View view)
+    {
+        //set url
+        if (laporanVisit.PhotoAgunan1 != null && !laporanVisit.PhotoAgunan1.isEmpty() && !laporanVisit.PhotoAgunan1.equals("null"))
+        {
+            String usedURL = baseURL + laporanVisit.PhotoAgunan1.substring(1);
+            Intent intent = new Intent(this, ImageViewerActivity.class);
+            intent.putExtra("ImageUrl", usedURL);
+            startActivity(intent);
+        }
+    }
+
+    public void HandleInput_LaporanVisit_OpenFotoAgunan2(View view)
+    {
+        //set url
+        if (laporanVisit.PhotoAgunan2 != null && !laporanVisit.PhotoAgunan2.isEmpty() && !laporanVisit.PhotoAgunan2.equals("null"))
+        {
+            String usedURL = baseURL + laporanVisit.PhotoAgunan2.substring(1);
+            Intent intent = new Intent(this, ImageViewerActivity.class);
+            intent.putExtra("ImageUrl", usedURL);
+            startActivity(intent);
+        }
     }
 }

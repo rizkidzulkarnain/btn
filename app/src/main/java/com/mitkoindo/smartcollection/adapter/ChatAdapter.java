@@ -59,7 +59,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     private boolean flag_UpdateChat;
 
     //flag allow load page
-    private boolean flag_AllowLoadPage;
+    private boolean flag_LoadingNewPage;
+    private boolean end_LoadNewPage;
+
+    //counter page
+    private int currentPage;
 
     //----------------------------------------------------------------------------------------------
     //  View
@@ -76,6 +80,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     //chat form
     private EditText view_ChatForm;
 
+    //page load indicator
+    private ProgressBar view_PageLoadIndicator;
+
     //----------------------------------------------------------------------------------------------
     //  Setup
     //----------------------------------------------------------------------------------------------
@@ -83,7 +90,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     public ChatAdapter(Activity context)
     {
         this.context = context;
-        flag_AllowLoadPage = true;
+        flag_LoadingNewPage = false;
+        end_LoadNewPage = false;
     }
 
     @Override
@@ -151,12 +159,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     }
 
     //set views
-    public void SetViews(RecyclerView view_ChatList, ProgressBar view_ProgressBar, TextView view_AlertText, EditText view_ChatForm)
+    public void SetViews(RecyclerView view_ChatList, ProgressBar view_ProgressBar, TextView view_AlertText,
+                         EditText view_ChatForm, ProgressBar view_PageLoadIndicator)
     {
         this.view_ChatList = view_ChatList;
         this.view_ProgressBar = view_ProgressBar;
         this.view_AlertText = view_AlertText;
         this.view_ChatForm = view_ChatForm;
+        this.view_PageLoadIndicator = view_PageLoadIndicator;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -194,13 +204,35 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         //set flag transaksi ke load initial data
         flag_UpdateChat = false;
 
+        //set current page ke 1
+        currentPage = 1;
+
         //send request
+        new SendGetChatRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+    }
+
+    //create request buat load new page
+    public void CreateLoadNewPageRequest()
+    {
+        //kalo sedang load page baru, disable loadnya
+        if (flag_LoadingNewPage || end_LoadNewPage)
+            return;
+
+        flag_LoadingNewPage = true;
+
+        //show indicator
+        view_PageLoadIndicator.setVisibility(View.VISIBLE);
+
         new SendGetChatRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
     }
 
     //create request buat update chat
     public void CreateUpdateChatRequest()
     {
+        //kalo sedang load page baru, disable loadnya
+        if (flag_LoadingNewPage)
+            return;
+
         //set flag transaksi ke update chat
         flag_UpdateChat = true;
 
@@ -219,7 +251,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             //create sp parameter object
             JSONObject spParameterObject = new JSONObject();
             spParameterObject.put("userID", userID_ChatPartner);
-            spParameterObject.put("limit", 9999);
+            spParameterObject.put("limit", 10);
+            if (flag_UpdateChat)
+                spParameterObject.put("page", 1);
+            else
+                spParameterObject.put("page", currentPage);
 
             //populate request object
             requestObject.put("DatabaseID", "db1");
@@ -267,6 +303,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         //hide progress bar
         view_ProgressBar.setVisibility(View.GONE);
 
+        //hide indicator
+        view_PageLoadIndicator.setVisibility(View.GONE);
+
         //pastikan response tidak null atau kosong
         if (resultString == null || resultString.isEmpty())
         {
@@ -279,6 +318,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         //cek ada / tidak message
         if (resultString.equals("Not Found"))
         {
+            if (flag_LoadingNewPage)
+            {
+                end_LoadNewPage = true;
+                return;
+            }
+
             //show alert bahwa tidak ada message
             view_AlertText.setText(R.string.ChatWindow_Alert_NoChat);
             view_AlertText.setVisibility(View.VISIBLE);
@@ -301,10 +346,35 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
                 newChatItems.add(newChatItem);
             }
 
-            if (!flag_UpdateChat)
+            if (flag_LoadingNewPage)
+            {
+                //add chat item
+                AddNewPageOfChatItems(newChatItems);
+
+                //add page counter
+                currentPage++;
+
+                //disable flag
+                flag_LoadingNewPage = false;
+            }
+            else if (flag_UpdateChat)
+            {
+                //update chat item
+                UpdateChatItem(newChatItems);
+
+                //disable flag update chat
+                flag_UpdateChat = false;
+            }
+            else
+            {
+                //initial setup
+                SetChatItem(newChatItems);
+            }
+
+            /*if (!flag_UpdateChat)
                 SetChatItem(newChatItems);
             else
-                UpdateChatItem(newChatItems);
+                UpdateChatItem(newChatItems);*/
         }
         catch (JSONException e)
         {
@@ -321,7 +391,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     {
         chatItems = new ArrayList<>();
 
-        for (int i = 0; i < newChatItems.size(); i++)
+        //urutan chat item itu terbalik, message terahir ada di urutan pertama, maka insertionnya juga harus dibalik
+        /*for (int i = 0; i < newChatItems.size(); i++)
+        {
+            chatItems.add(newChatItems.get(i));
+        }*/
+        for (int i = newChatItems.size() - 1; i >= 0; i--)
         {
             chatItems.add(newChatItems.get(i));
         }
@@ -350,9 +425,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             return;
         }
 
-        //bandingkan element terakhir chatlist dengan new chat item
+        //bandingkan element terakhir chatlist dengan elemen pertama new chat item
         ChatItem currentLastElement = chatItems.get(chatItems.size() - 1);
-        ChatItem newLastElement = newChatItems.get(newChatItems.size() - 1);
+        ChatItem newLastElement = newChatItems.get(0);
 
         if (currentLastElement.ID == newLastElement.ID)
             //maka chatnya up-to date, nggak perlu melakukan apa2
@@ -360,7 +435,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
 
         //kalo beda, add new chat ke current chat list
         boolean allowAddData = false;
-        for (int i = 0; i < newChatItems.size(); i++)
+
+        for (int i = newChatItems.size() - 1; i >= 0; i--)
         {
             if (allowAddData)
                 chatItems.add(newChatItems.get(i));
@@ -371,12 +447,42 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             }
         }
 
+        /*for (int i = 0; i < newChatItems.size(); i++)
+        {
+            if (allowAddData)
+                chatItems.add(newChatItems.get(i));
+
+            if (!allowAddData && currentLastElement.ID == newChatItems.get(i).ID)
+            {
+                allowAddData = true;
+            }
+        }*/
+
         //update view
         if (!onBind)
             notifyDataSetChanged();
 
         //scroll to bottom
         ScrollChatToBottom();
+    }
+
+    //add chat item
+    private void AddNewPageOfChatItems(ArrayList<ChatItem> newChatItems)
+    {
+        //test add chat items dari item pertama
+        for (int i = 0; i < newChatItems.size(); i++)
+        {
+            chatItems.add(0, newChatItems.get(i));
+        }
+
+        if (!onBind)
+            notifyDataSetChanged();
+
+        //scroll to item 10
+        view_ChatList.scrollToPosition(11);
+
+        int x = 0;
+        int y = x + 1;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -465,6 +571,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
 
         //clear text di chat form
         view_ChatForm.setText("");
+
+        //hide alert dan show list
+        view_AlertText.setVisibility(View.GONE);
+        view_ChatList.setVisibility(View.VISIBLE);
     }
 
     //----------------------------------------------------------------------------------------------

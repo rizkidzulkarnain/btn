@@ -92,15 +92,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <!--List chat-->
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/ChatWindow_RecyclerView"
-                    app:stackFromEnd="true"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:clipToPadding="false"
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent">
+
+                    <ProgressBar
+                        android:id="@+id/ChatWindow_PageLoadIndicator"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <!--List chat-->
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/ChatWindow_RecyclerView"
+                        app:stackFromEnd="true"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:clipToPadding="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
 
                 <!--Progress bar-->
                 <ProgressBar

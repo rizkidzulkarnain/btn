@@ -289,13 +289,17 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
     //handle result
     private void HandleGetArchiveResult(String resultString)
     {
-        //hide progress bar
+        /*//hide progress bar
         view_PageLoadIndicator.setVisibility(View.GONE);
-        view_ProgressBar.setVisibility(View.GONE);
+        view_ProgressBar.setVisibility(View.GONE);*/
 
         //pastikan response tidak kosong / null
         if (resultString == null || resultString.isEmpty())
         {
+            //hide progress bar
+            view_PageLoadIndicator.setVisibility(View.GONE);
+            view_ProgressBar.setVisibility(View.GONE);
+
             //show error
             view_Alert.setText(R.string.Text_SomethingWrong);
             view_Alert.setVisibility(View.VISIBLE);
@@ -305,6 +309,10 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
         //jika response 404, maka jangan allow load new page lagi
         if (resultString.equals("Not Found"))
         {
+            //hide progress bar
+            view_PageLoadIndicator.setVisibility(View.GONE);
+            view_ProgressBar.setVisibility(View.GONE);
+
             flag_AllowLoadNewPage = false;
 
             if (currentPage == 1)
@@ -375,6 +383,7 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
             notifyDataSetChanged();
 
         //hide progress bar, show recyclerview
+        view_PageLoadIndicator.setVisibility(View.GONE);
         view_ProgressBar.setVisibility(View.GONE);
         view_Recycler.setVisibility(View.VISIBLE);
     }
@@ -393,6 +402,7 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
 
         //hide page load indicator
         view_PageLoadIndicator.setVisibility(View.GONE);
+        view_ProgressBar.setVisibility(View.GONE);
     }
 
     //----------------------------------------------------------------------------------------------

@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.adapter.ChatAdapter;
 import com.mitkoindo.smartcollection.backgroundservice.ChatUpdaterService;
+import com.mitkoindo.smartcollection.helper.RecyclerViewHelper;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.objectdata.ChatItem;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
@@ -62,6 +63,9 @@ public class ChatWindowActivity extends AppCompatActivity
 
     //alert text
     private TextView view_AlertText;
+
+    //chat load indicator
+    private ProgressBar view_PageLoadIndicator;
 
     //----------------------------------------------------------------------------------------------
     //  Transaksi
@@ -148,6 +152,7 @@ public class ChatWindowActivity extends AppCompatActivity
         view_ChatList = findViewById(R.id.ChatWindow_RecyclerView);
         view_ProgressBar = findViewById(R.id.ChatWindow_ProgressBar);
         view_AlertText = findViewById(R.id.ChatWindow_AlertText);
+        view_PageLoadIndicator = findViewById(R.id.ChatWindow_PageLoadIndicator);
         holder_ChatControl = findViewById(R.id.ChatWindow_ChatControl);
 
         //add listener pada chat form
@@ -165,6 +170,24 @@ public class ChatWindowActivity extends AppCompatActivity
                 }
 
                 return false;
+            }
+        });
+
+        //add listener pada recyclerview
+        view_ChatList.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+            {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                //pastikan adapter tidak null
+                if (chatAdapter == null)
+                    return;
+
+                //load new page
+                if (RecyclerViewHelper.isFirstItemDisplaying(view_ChatList))
+                    chatAdapter.CreateLoadNewPageRequest();
             }
         });
     }
@@ -225,7 +248,7 @@ public class ChatWindowActivity extends AppCompatActivity
         //set property ke adapter
         chatAdapter = new ChatAdapter(this);
         chatAdapter.SetTransaction(baseURL, url_DataSP, authToken, userID, userID_ChatPartner);
-        chatAdapter.SetViews(view_ChatList, view_ProgressBar, view_AlertText, view_ChatForm);
+        chatAdapter.SetViews(view_ChatList, view_ProgressBar, view_AlertText, view_ChatForm, view_PageLoadIndicator);
 
         //setup recyclerview
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

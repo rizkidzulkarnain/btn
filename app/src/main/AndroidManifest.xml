@@ -20,19 +20,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_api_key"/>
+            android:value="@string/google_api_key" />
 
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -100,7 +97,10 @@
         <activity
             android:name=".module.laporan.ArchiveActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".module.laporan.LaporanVisitActivity"
+        <activity
+            android:name=".module.laporan.LaporanVisitActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".module.misc.ImageViewerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".module.misc.ChangeBaseURLActivity" />
         <activity
@@ -114,34 +114,34 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.formvisit.FormVisitActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.formvisit.FormVisitKonfirmasiActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.formcall.FormCallActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.debitur.tambahalamatdebitur.TambahAlamatDebiturActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.debitur.tambahtelepon.TambahTeleponActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.debitur.tambahalamat.TambahAlamatActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.laporan.reportdistribusi.ReportDistribusiDebiturActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.laporan.staffproductivity.StaffProductivityPortraitActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.laporan.staffproductivity.StaffProductivityDebiturActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -151,7 +151,6 @@
         <activity
             android:name=".module.debitur.detaildebitur.GalleryActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
 
         <service
             android:name=".FetchAddressIntentService"
@@ -173,7 +172,6 @@
         <service android:name=".backgroundservice.ChatUpdaterService" />
 
         <receiver android:name=".utilities.NotificationChecker" />
-
     </application>
 
 </manifest>

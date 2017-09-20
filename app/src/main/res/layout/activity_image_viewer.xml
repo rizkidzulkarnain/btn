@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mitkoindo.smartcollection.module.misc.ImageViewerActivity">
+
+    <WebView
+        android:id="@+id/ImageViewer_Webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <!--Back button-->
+    <RelativeLayout
+        android:onClick="HandleInput_ImageViewer_Back"
+        android:background="@drawable/background_circle_blacktransparent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="66dp"
+        android:layout_height="66dp">
+
+        <ImageView
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_chevron_left_white_36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>
