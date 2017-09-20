@@ -531,8 +531,7 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
             mAddressOutput = resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY);
             mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.setGeoAddress(mAddressOutput);
 
-            /*mFormVisitKonfirmasiViewModel.saveFormVisit(getAccessToken());*/
-            mFormVisitKonfirmasiViewModel.saveFormVisitNoFile(getAccessToken());
+            mFormVisitKonfirmasiViewModel.saveFormVisit(getAccessToken());
 
             // Reset. Enable the Fetch Address button and stop showing the progress bar.
             mAddressRequested = false;

@@ -6,6 +6,7 @@ package com.mitkoindo.smartcollection.network;
 
 public final class RestConstants {
     public static final String BASE_URL = "https://span.btn.co.id/";
+    public static final String BASE_URL_IMAGE = BASE_URL + "wsMobile";
 
     public static final String ENDPOINT_LOGIN = "wsMobile/api/Account/login";
     public static final String UPDATE_PASSWORD = "wsMobile/api/Account/updatePassword";
@@ -84,6 +85,12 @@ public final class RestConstants {
     public static final String STAFF_PRODUCTIVITY_DEBITUR_SP_NAME = "MKI_SP_REPORT_STAFF_PRODUCTIVITY_DETAIL";
 
     public static final String AGENT_TRACKING_SP_NAME = "MKI_SP_REPORT_STAFF_TRACKING_LIST";
+
+    public static final String STAFF_DOWNLINE_SP_NAME = "MKI_SP_GET_Downline";
+
+    public static final String STAFF_SP_NAME = "MKI_SP_STAFF_LIST";
+
+    public static final String GALLERY_SP_NAME = "MKI_SP_DEBITUR_GALLERY";
 
     public static final String ORDER_DIRECTION_ASC_VALUE = "ASC";
 

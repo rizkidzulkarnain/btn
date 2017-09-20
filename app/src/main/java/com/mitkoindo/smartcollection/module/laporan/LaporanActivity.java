@@ -11,10 +11,10 @@ import com.mitkoindo.smartcollection.adapter.CommonTabAdapter;
 import com.mitkoindo.smartcollection.base.BaseActivity;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
-import com.mitkoindo.smartcollection.module.laporan.agenttracking.ListAgentTrackingFragment;
+import com.mitkoindo.smartcollection.module.laporan.agenttracking.ListStaffDownlineFragment;
 import com.mitkoindo.smartcollection.module.laporan.reportdistribusi.ReportDistribusiDebiturFragment;
 import com.mitkoindo.smartcollection.module.laporan.reportdistribusi.ReportDistribusiStaffFragment;
-import com.mitkoindo.smartcollection.module.laporan.staffproductivity.StaffProductivityPortraitFragment;
+import com.mitkoindo.smartcollection.module.laporan.staffproductivity.StaffProductivityLandscapeFragment;
 
 import java.util.ArrayList;
 
@@ -25,12 +25,10 @@ public class LaporanActivity extends BaseActivity
     //----------------------------------------------------------------------------------------------
     //fragments
     private ArchiveFragment fragment_Archive;
-    private AgentTrackingFragment fragment_AgentTracking;
-    private ListAgentTrackingFragment fragment_ListAgentTracking;
+    private ListStaffDownlineFragment fragment_StaffDownline;
     private ReportDistribusiStaffFragment fragment_ReportDistribusiStaff;
     private ReportDistribusiDebiturFragment fragment_ReportDistribusiDebitur;
-    private StaffProductivityPortraitFragment fragment_StaffProductivityPortrait;
-    private StaffProductivityFragment fragment_StaffProductivity;
+    private StaffProductivityLandscapeFragment fragment_StaffProductivityLandscape;
     private SupervisorArchiveFragment fragment_SupervisorArchive;
 
     //tab layout
@@ -128,9 +126,7 @@ public class LaporanActivity extends BaseActivity
     {
         //create fragments
         fragment_Archive = new ArchiveFragment();
-        /*fragment_ListAgentTracking = (ListAgentTrackingFragment) ListAgentTrackingFragment.getInstance(ResourceLoader.LoadUserID(this));
-        fragment_ReportDistribusiDebitur = (ReportDistribusiDebiturFragment) ReportDistribusiDebiturFragment.getInstance(ListDebiturActivity.EXTRA_TYPE_ACCOUNT_ASSIGNMENT_VALUE, ResourceLoader.LoadUserID(this));*/
-        fragment_StaffProductivityPortrait = StaffProductivityPortraitFragment.getInstance(getUserId());
+        fragment_ReportDistribusiDebitur = (ReportDistribusiDebiturFragment) ReportDistribusiDebiturFragment.getInstance(ListDebiturActivity.EXTRA_TYPE_ACCOUNT_ASSIGNMENT_VALUE, ResourceLoader.LoadUserID(this));
 
         //set property transaksi ke fragment
         fragment_Archive.SetTransactionData(baseURL, url_DataSP, authToken, userID);
@@ -138,23 +134,19 @@ public class LaporanActivity extends BaseActivity
         //create fragment titles
         ArrayList<String> fragmentTitles = new ArrayList<>();
         fragmentTitles.add(getString(R.string.Laporan_Tab_Arsip));
-        /*fragmentTitles.add(getString(R.string.Laporan_Tab_AgentTracking));
-        fragmentTitles.add(getString(R.string.Laporan_Tab_Monitoring));*/
-        fragmentTitles.add(getString(R.string.Laporan_Tab_StaffProductivity));
+        fragmentTitles.add(getString(R.string.Laporan_Tab_Monitoring));
 
         //create fragment list
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(fragment_Archive);
-        /*fragments.add(fragment_ListAgentTracking);
-        fragments.add(fragment_ReportDistribusiDebitur);*/
-        fragments.add(fragment_StaffProductivityPortrait);
+        fragments.add(fragment_ReportDistribusiDebitur);
 
         //set fragment ke views
         //create tab adapter
         CommonTabAdapter dashboardTabAdapter = new CommonTabAdapter(getSupportFragmentManager(), fragments, fragmentTitles);
 
         //set adapter to tab
-        view_ViewPager.setOffscreenPageLimit(4);
+        view_ViewPager.setOffscreenPageLimit(2);
         view_ViewPager.setAdapter(dashboardTabAdapter);
         view_Tabs.setupWithViewPager(view_ViewPager);
     }
@@ -164,9 +156,9 @@ public class LaporanActivity extends BaseActivity
     {
         //create fragments
         fragment_SupervisorArchive = new SupervisorArchiveFragment();
-        fragment_ListAgentTracking = (ListAgentTrackingFragment) ListAgentTrackingFragment.getInstance(ResourceLoader.LoadUserID(this));
+        fragment_StaffDownline = ListStaffDownlineFragment.getInstance(ResourceLoader.LoadUserID(this));
         fragment_ReportDistribusiStaff = ReportDistribusiStaffFragment.getInstance();
-        fragment_StaffProductivity = new StaffProductivityFragment();
+        fragment_StaffProductivityLandscape = (StaffProductivityLandscapeFragment) StaffProductivityLandscapeFragment.getInstance(ResourceLoader.LoadUserID(this));
 
         //set property transaksi ke fragment
         fragment_SupervisorArchive.SetTransactionData(baseURL, url_DataSP, authToken, userID);
@@ -181,9 +173,9 @@ public class LaporanActivity extends BaseActivity
         //create fragment list
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(fragment_SupervisorArchive);
-        fragments.add(fragment_ListAgentTracking);
+        fragments.add(fragment_StaffDownline);
         fragments.add(fragment_ReportDistribusiStaff);
-        fragments.add(fragment_StaffProductivity);
+        fragments.add(fragment_StaffProductivityLandscape);
 
         //set fragment ke views
         //create tab adapter

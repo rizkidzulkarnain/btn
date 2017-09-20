@@ -1038,11 +1038,11 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
                 // don't persist past a device reboot
                 .setLifetime(Lifetime.FOREVER)
                 // start between 0 and 60 seconds from now
-                .setTrigger(Trigger.executionWindow(3200, 3600))
+                .setTrigger(Trigger.executionWindow(1700, 1800))
                 // don't overwrite an existing job with the same tag
                 .setReplaceCurrent(true)
                 // retry with exponential backoff
-                .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
+                .setRetryStrategy(RetryStrategy.DEFAULT_LINEAR)
                 // constraints that need to be satisfied for the job to run
                 .setConstraints(
                         //Run this job only when the network is available.
@@ -1063,11 +1063,11 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
                 // don't persist past a device reboot
                 .setLifetime(Lifetime.FOREVER)
                 // start between 0 and 60 seconds from now
-                .setTrigger(Trigger.executionWindow(800, 900))
+                .setTrigger(Trigger.executionWindow(1700, 1800))
                 // don't overwrite an existing job with the same tag
                 .setReplaceCurrent(true)
                 // retry with exponential backoff
-                .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
+                .setRetryStrategy(RetryStrategy.DEFAULT_LINEAR)
                 // constraints that need to be satisfied for the job to run
                 .setConstraints(
                         //Run this job only when the network is available.

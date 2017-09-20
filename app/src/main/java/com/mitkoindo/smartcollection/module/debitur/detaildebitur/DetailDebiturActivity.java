@@ -271,7 +271,7 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
                         break;
                     }
                     case R.id.popup_menu_gallery: {
-                        openGallery();
+                        startActivity(GalleryActivity.instantiate(DetailDebiturActivity.this, mNoRekening));
                         break;
                     }
                 }
@@ -280,10 +280,6 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
         });
 
         mPopUpMenu.show();
-    }
-
-    private void openGallery() {
-
     }
 
     private static final int LIST_PHONE = 123;
@@ -307,7 +303,7 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
             TextView title = (TextView) mListPhoneNumberDialog.findViewById(R.id.tv_dialog_simple_spinner_title);
             title.setText(dialogTitle);
         } else {
-            ToastUtils.toastShort(this, getString(R.string.TidakAdaDataPilihan));
+            ToastUtils.toastShort(this, getString(R.string.TidakAdaDataNoTelepon));
         }
     }
 
@@ -332,7 +328,7 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
             TextView title = (TextView) mListAddressDialog.findViewById(R.id.tv_dialog_simple_spinner_title);
             title.setText(dialogTitle);
         } else {
-            ToastUtils.toastShort(this, getString(R.string.TidakAdaDataPilihan));
+            ToastUtils.toastShort(this, getString(R.string.TidakAdaDataAlamat));
         }
     }
 

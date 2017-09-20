@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.OnClick;
+import retrofit2.HttpException;
 
 
 /**
@@ -128,20 +129,26 @@ public class ListDebiturFragment extends BaseFragment {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
 
-                if (mStatus.equals(RestConstants.LIST_DEBITUR_STATUS_PENDING_VALUE) && mPage == 1) {
+                if (mListDebiturViewModel.error.get() instanceof HttpException) {
+                    if (((HttpException) mListDebiturViewModel.error.get()).code() != 404) {
+                        if (mStatus.equals(RestConstants.LIST_DEBITUR_STATUS_PENDING_VALUE) && mPage == 1) {
+                            displayMessage(R.string.GagalMendapatListDebitur);
 
-                    displayMessage(R.string.GagalMendapatListDebitur);
+                            List<DebiturItem> debiturItemList = new ArrayList<DebiturItem>();
+                            List<DebiturItemDb> debiturItemDbList = RealmHelper.getListDebiturItem();
+                            for (DebiturItemDb debiturItemDb : debiturItemDbList) {
+                                debiturItemList.add(debiturItemDb.toDebiturItem());
+                            }
 
-                    List<DebiturItem> debiturItemList = new ArrayList<DebiturItem>();
-                    List<DebiturItemDb> debiturItemDbList = RealmHelper.getListDebiturItem();
-                    for (DebiturItemDb debiturItemDb : debiturItemDbList) {
-                        debiturItemList.add(debiturItemDb.toDebiturItem());
+                            mListDebiturViewModel.obsDebiturResponse.set(debiturItemList);
+                        }
+                    } else { // 404
+                        if (mPage == 1) {
+                            mListDebiturViewModel.obsIsEmpty.set(true);
+                        }
                     }
-
-                    mListDebiturViewModel.obsDebiturResponse.set(debiturItemList);
-                } else {
-//                    displayMessage(R.string.GagalMendapatkanData);
                 }
+                mBinding.swipeRefreshLayoutDebitur.setRefreshing(false);
             }
         });
         mListDebiturViewModel.obsDebiturResponse.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {

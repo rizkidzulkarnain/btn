@@ -76,6 +76,8 @@ public class AgentTracking extends AbstractItem<AgentTracking, AgentTracking.Vie
 
     private String timeFormatted;
 
+    private int iconDrawable;
+
 
     public String getNo() {
         return no;
@@ -195,6 +197,46 @@ public class AgentTracking extends AbstractItem<AgentTracking, AgentTracking.Vie
 
     public void setTimeFormatted(String timeFormatted) {
         this.timeFormatted = timeFormatted;
+    }
+
+    public static final int TYPE_VISIT = 1;
+    public static final int TYPE_CALL = 2;
+    public static final int TYPE_CHECK_IN = 3;
+    public static final int TYPE_TRACKING = 4;
+    public int getTrackingType() {
+        if (iDVisit != null) {
+            return TYPE_VISIT;
+        } else if (iDCall != null) {
+            return TYPE_CALL;
+        } else if (isCheckin) {
+            return TYPE_CHECK_IN;
+        } else {
+            return TYPE_TRACKING;
+        }
+    }
+    public int getIconDrawable() {
+        int trackingType = getTrackingType();
+        switch (trackingType) {
+            case AgentTracking.TYPE_VISIT: {
+                return R.drawable.ic_home_map;
+            }
+            case AgentTracking.TYPE_CALL: {
+                return R.drawable.ic_phone;
+            }
+            case AgentTracking.TYPE_CHECK_IN: {
+                return R.drawable.ic_map_marker;
+            }
+            case AgentTracking.TYPE_TRACKING: {
+                return R.drawable.ic_dot;
+            }
+            default: {
+                return R.drawable.ic_dot;
+            }
+        }
+    }
+
+    public void setIconDrawable(int iconDrawable) {
+        this.iconDrawable = iconDrawable;
     }
 
     @Override

@@ -2,7 +2,8 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -38,11 +39,11 @@
             <TextView
                 android:id="@+id/text_view_address"
                 style="@style/FontRegular.Medium"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
-                android:paddingEnd="@dimen/padding_medium_large"
-                android:paddingRight="@dimen/padding_medium_large"
+                android:paddingEnd="@dimen/padding_small"
+                android:paddingRight="@dimen/padding_small"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_time"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/image_view_check_in"
@@ -54,11 +55,11 @@
                 android:id="@+id/image_view_check_in"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_map_marker_grey600_24dp"
+                android:scaleType="centerInside"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="@{agentTracking.isCheckin ? View.VISIBLE : View.GONE}"/>
+                bind:imageResourceId="@{agentTracking.iconDrawable}"/>
 
         </android.support.constraint.ConstraintLayout>
 

@@ -475,18 +475,19 @@ public class FormVisitActivity extends BaseActivity {
                         mtx.preRotate(rotate);
                         resizeBmp = Bitmap.createBitmap(resizeBmp, 0, 0, w, h, mtx, false);
                         resizeBmp = resizeBmp.copy(Bitmap.Config.ARGB_8888, true);
-
-                        FileOutputStream out;
-                        try {
-                            out = new FileOutputStream(file);
-                            resizeBmp.compress(Bitmap.CompressFormat.JPEG, 80, out);
-                            out.flush();
-                            out.close();
-                        }
-                        catch (IOException e) {
-                            e.printStackTrace();
-                        }
                     }
+
+                    FileOutputStream out;
+                    try {
+                        out = new FileOutputStream(file);
+                        resizeBmp.compress(Bitmap.CompressFormat.JPEG, 80, out);
+                        out.flush();
+                        out.close();
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     if (requestCode == ACTION_TAKE_PICTURE_DEBITUR) {
                         mBinding.imageViewFotoDebitur.setImageBitmap(resizeBmp);
                         mFormVisitViewModel.spParameterFormVisitDb.setPhotoDebiturPath(file.getAbsolutePath());

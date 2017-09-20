@@ -132,6 +132,8 @@
                         android:textColorHint="@color/Grey"
                         android:hint="@string/FormCall_BerbicaraDenganHint"
                         android:background="@color/Transparent"
+                        android:maxLines="1"
+                        android:inputType="text"
                         android:text="@={formCallViewModel.spParameterFormCall.spokeTo}"/>
                 </android.support.v7.widget.CardView>
 

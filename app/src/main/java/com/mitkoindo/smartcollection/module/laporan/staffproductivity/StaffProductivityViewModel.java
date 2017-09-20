@@ -35,6 +35,8 @@ public class StaffProductivityViewModel extends BaseObservable implements ILifec
     public ObservableField<StaffProductivity> obsStaffProductivity = new ObservableField<>();
     public ObservableField<String> obsTanggal = new ObservableField<>();
     public ObservableField<String> obsTanggalLayout = new ObservableField<>();
+    public ObservableBoolean obsIsEmpty = new ObservableBoolean(false);
+
     public int errorType = 0;
 
     private String mAccessToken;

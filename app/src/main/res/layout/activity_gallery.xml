@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="galleryViewModel"
+            type="com.mitkoindo.smartcollection.module.debitur.detaildebitur.GalleryViewModel" />
+        <variable
+            name="restConstants"
+            type="com.mitkoindo.smartcollection.network.RestConstants" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/background_bluegradient">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_general"
+            style="@style/AppToolbar.Line">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <include layout="@layout/include_toolbar_back_button"/>
+
+                <include layout="@layout/include_toolbar_title"/>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_medium_large"
+                android:focusable="true"
+                android:visibility="@{galleryViewModel.obsIsEmpty ? View.GONE : View.VISIBLE}">
+
+                <!--Photo Debitur text-->
+                <TextView
+                    android:id="@+id/text_view_photo_debitur"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/Gallery_FotoDebitur"
+                    tools:text="Foto Debitur"/>
+
+                <!--Photo Debitur-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view_photo_debitur"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_photo_debitur"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <ImageView
+                        android:id="@+id/image_view_photo_debitur"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"
+                        bind:imageUrl="@{restConstants.BASE_URL_IMAGE + galleryViewModel.obsGalleryItem.photoDebitur}"
+                        tools:src="@drawable/ic_map_marker"/>
+
+                </android.support.v7.widget.CardView>
+
+                <!--Photo Agunan 1 text-->
+                <TextView
+                    android:id="@+id/text_view_photo_agunan_1"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium_large"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view_photo_debitur"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/Gallery_FotoAgunan1"
+                    tools:text="Foto Agunan 1"/>
+
+                <!--Photo Agunan 1-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view_photo_agunan_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_photo_agunan_1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <ImageView
+                        android:id="@+id/image_view_photo_agunan_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"
+                        bind:imageUrl="@{restConstants.BASE_URL_IMAGE + galleryViewModel.obsGalleryItem.photoAgunan1}"
+                        tools:src="@drawable/ic_send_grey600_24dp"/>
+
+                </android.support.v7.widget.CardView>
+
+                <!--Photo Agunan 2 text-->
+                <TextView
+                    android:id="@+id/text_view_photo_agunan_2"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium_large"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view_photo_agunan_1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/Gallery_FotoAgunan2"
+                    tools:text="Foto Agunan 2"
+                    android:visibility="@{galleryViewModel.obsIsAgunan2Show ? View.VISIBLE : View.GONE}"/>
+
+                <!--Photo Agunan 2-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view_photo_agunan_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_photo_agunan_2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="@{galleryViewModel.obsIsAgunan2Show ? View.VISIBLE : View.GONE}">
+
+                    <ImageView
+                        android:id="@+id/image_view_photo_agunan_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"
+                        bind:imageUrl="@{restConstants.BASE_URL_IMAGE + galleryViewModel.obsGalleryItem.photoAgunan2}"
+                        tools:src="@drawable/ic_magnify_grey600_24dp"/>
+
+                </android.support.v7.widget.CardView>
+
+                <!--Photo Signature text-->
+                <TextView
+                    android:id="@+id/text_view_photo_signature"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium_large"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view_photo_agunan_2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/Gallery_Signature"
+                    tools:text="Foto Signature"/>
+
+                <!--Photo Signature-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view_photo_signature"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_photo_signature"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <ImageView
+                        android:id="@+id/image_view_photo_signature"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"
+                        bind:imageUrl="@{restConstants.BASE_URL_IMAGE + galleryViewModel.obsGalleryItem.photoSignature}"
+                        tools:src="@drawable/ic_close_grey600_24dp"/>
+
+                </android.support.v7.widget.CardView>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+</layout>

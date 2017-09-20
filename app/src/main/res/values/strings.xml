@@ -4,6 +4,9 @@
     <!--App version-->
     <string name="App_Version">Version 0.1</string>
 
+    <!--Google Map API Key-->
+    <string name="google_api_key">AIzaSyC6Slk0FHObzHwJCPL40iP9KQAlLVXMCgU</string>
+
     <!--Misc text-->
     <string name="Text_OK">OK</string>
     <string name="Text_PleaseWait">Please Wait</string>
@@ -294,13 +297,15 @@
     <string name="StaffProductivity_Waktu">Waktu</string>
     <string name="StaffProductivity_JumlahKunjungan">Jumlah Kunjungan</string>
     <string name="StaffProductivity_Less_10">&lt; 10</string>
-    <string name="StaffProductivity_10_12">10-12</string>
-    <string name="StaffProductivity_12_14">12-14</string>
-    <string name="StaffProductivity_14_16">14-16</string>
-    <string name="StaffProductivity_16_18">16-18</string>
-    <string name="StaffProductivity_18_20">18-20</string>
+    <string name="StaffProductivity_10_12">10 - 12</string>
+    <string name="StaffProductivity_12_14">12 - 14</string>
+    <string name="StaffProductivity_14_16">14 - 16</string>
+    <string name="StaffProductivity_16_18">16 - 18</string>
+    <string name="StaffProductivity_18_20">18 - 20</string>
     <string name="StaffProductivity_More_20">&gt; 20</string>
     <string name="StaffProductivity_Total">Total</string>
+    <string name="StaffProductivity_Empty">Tidak ada data staff</string>
+    <string name="StaffProductivity_Nama">Nama</string>
 
     <!--Laporan Staff Productivity Debitur-->
     <string name="StaffProductivityDebitur_PageTitle">Staff Productivity Debitur</string>
@@ -308,6 +313,14 @@
     <!--Agent Tracking-->
     <string name="AgentTracking_PageTitle">Agent Tracking</string>
     <string name="AgentTracking_Empty">Tidak ada data tracking</string>
+    <string name="AgentTracking_SearchHint">Cari staff</string>
+
+    <!--Gallery-->
+    <string name="Gallery_PageTitle">Gallery</string>
+    <string name="Gallery_FotoDebitur">Foto Debitur</string>
+    <string name="Gallery_FotoAgunan1">Foto Agunan 1</string>
+    <string name="Gallery_FotoAgunan2">Foto Agunan 2</string>
+    <string name="Gallery_Signature">Foto Signature</string>
 
     <!--Account assignment-->
     <string name="AccountAssignment_PageTitle">Account Assignment</string>
@@ -406,6 +419,9 @@
     <string name="GagalMenambahAlamat">Gagal menambah alamat</string>
     <string name="GagalMendapatListDebitur">Gagal mendapatkan list debitur, memakai data offline record</string>
     <string name="GagalDataTanggalIni">Tidak ada data pada tanggal ini</string>
+    <string name="TidakAdaDataNoTelepon">Tidak ada data nomor telepon</string>
+    <string name="TidakAdaDataAlamat">Tidak ada data alamat</string>
+    <string name="TidakAdaDataFoto">Tidak ada data foto</string>
 
     <!--Geocoder-->
     <string name="no_geocoder_available">No geocoder available</string>

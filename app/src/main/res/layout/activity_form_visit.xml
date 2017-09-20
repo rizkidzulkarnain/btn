@@ -181,6 +181,8 @@
                         android:textColorHint="@color/Grey"
                         android:hint="@string/FormVisit_OrangYangDiKunjungiHint"
                         android:background="@color/Transparent"
+                        android:maxLines="1"
+                        android:inputType="text"
                         android:text="@={formVisitViewModel.spParameterFormVisitDb.personVisit}"/>
                 </android.support.v7.widget.CardView>
 

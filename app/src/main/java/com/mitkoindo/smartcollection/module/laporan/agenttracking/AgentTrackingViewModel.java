@@ -36,6 +36,7 @@ public class AgentTrackingViewModel extends BaseObservable implements ILifecycle
     public ObservableBoolean obsIsEmpty = new ObservableBoolean(false);
     public ObservableField<String> obsTanggal = new ObservableField<>();
     public ObservableField<String> obsTanggalLayout = new ObservableField<>();
+    public ObservableBoolean obsIsMap = new ObservableBoolean(true);
 
     private String mAccessToken;
     private CompositeDisposable composites = new CompositeDisposable();
@@ -79,6 +80,9 @@ public class AgentTrackingViewModel extends BaseObservable implements ILifecycle
                             AgentTracking item = agentTracking;
                             String dateFormatted = Utils.changeDateFormat(item.getCreatedDate(), Constant.DATE_FORMAT_AGENT_TRACKING_FROM_TIME, Constant.DATE_FORMAT_TIME);
                             item.setTimeFormatted(dateFormatted);
+                            int iconDrawable = item.getIconDrawable();
+                            item.setIconDrawable(iconDrawable);
+
                             temp.add(agentTracking);
                         }
 

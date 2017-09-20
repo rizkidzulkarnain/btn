@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.mitkoindo.smartcollection.R;
 
+import static com.bumptech.glide.request.RequestOptions.centerCropTransform;
 import static com.bumptech.glide.request.RequestOptions.fitCenterTransform;
 
 /**
@@ -30,9 +31,9 @@ public class Bindings {
     public static void loadImage(ImageView imageView, String imageUrl) {
         Glide.with(imageView.getContext())
                 .load(imageUrl)
-                .apply(fitCenterTransform()
-                        .placeholder(R.drawable.ic_archive_black_36dp)
-                        .fitCenter())
+                .apply(centerCropTransform()
+                        .placeholder(R.drawable.ic_photo_white_36dp)
+                        .centerCrop())
                 .into(imageView);
     }
 

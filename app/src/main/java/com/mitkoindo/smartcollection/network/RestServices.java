@@ -1,17 +1,19 @@
 package com.mitkoindo.smartcollection.network;
 
-import com.mitkoindo.smartcollection.module.laporan.StaffProductivityFragment;
 import com.mitkoindo.smartcollection.network.body.AgentTrackingBody;
 import com.mitkoindo.smartcollection.network.body.CheckInBody;
 import com.mitkoindo.smartcollection.network.body.DetailDebiturBody;
 import com.mitkoindo.smartcollection.network.body.FormCallBody;
 import com.mitkoindo.smartcollection.network.body.FormVisitBody;
 import com.mitkoindo.smartcollection.network.body.FormVisitDropDownBody;
+import com.mitkoindo.smartcollection.network.body.GalleryBody;
 import com.mitkoindo.smartcollection.network.body.ListDebiturBody;
 import com.mitkoindo.smartcollection.network.body.ListPhoneNumberBody;
 import com.mitkoindo.smartcollection.network.body.LoginBody;
 import com.mitkoindo.smartcollection.network.body.ReportDistribusiStaffBody;
 import com.mitkoindo.smartcollection.network.body.ReportDistribusiSummaryBody;
+import com.mitkoindo.smartcollection.network.body.StaffDownlineBody;
+import com.mitkoindo.smartcollection.network.body.StaffItemBody;
 import com.mitkoindo.smartcollection.network.body.StaffProductivityBody;
 import com.mitkoindo.smartcollection.network.body.StaffProductivityDebiturBody;
 import com.mitkoindo.smartcollection.network.body.TambahAlamatBody;
@@ -36,9 +38,12 @@ import com.mitkoindo.smartcollection.objectdata.DropDownRelationship;
 import com.mitkoindo.smartcollection.objectdata.DropDownResult;
 import com.mitkoindo.smartcollection.objectdata.DropDownStatusAgunan;
 import com.mitkoindo.smartcollection.objectdata.DropDownTeleponType;
+import com.mitkoindo.smartcollection.objectdata.GalleryItem;
 import com.mitkoindo.smartcollection.objectdata.PhoneNumber;
 import com.mitkoindo.smartcollection.objectdata.ReportDistribusiStaff;
 import com.mitkoindo.smartcollection.objectdata.ReportDistribusiSummary;
+import com.mitkoindo.smartcollection.objectdata.StaffDownline;
+import com.mitkoindo.smartcollection.objectdata.StaffItem;
 import com.mitkoindo.smartcollection.objectdata.StaffProductivity;
 
 import java.util.List;
@@ -130,6 +135,15 @@ public interface RestServices {
 
     @POST(RestConstants.DATA_SP)
     Observable<List<AgentTracking>> getListAgentTracking(@Body AgentTrackingBody agentTrackingBody);
+
+    @POST(RestConstants.DATA_SP)
+    Observable<List<StaffDownline>> getListStaffDownline(@Body StaffDownlineBody staffDownlineBody);
+
+    @POST(RestConstants.DATA_SP)
+    Observable<List<StaffItem>> getListStaff(@Body StaffItemBody staffItemBody);
+
+    @POST(RestConstants.DATA_SP)
+    Observable<List<GalleryItem>> getGallery(@Body GalleryBody galleryBody);
 
     @Headers({"Content-Type: multipart/form-data"})
     @Multipart

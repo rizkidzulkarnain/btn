@@ -52,7 +52,7 @@
                             android:orientation="horizontal">
                             <TextView
                                 android:id="@+id/text_view_tanggal"
-                                style="@style/FontRegular.Medium"
+                                style="@style/FontBold.Medium"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -105,7 +105,7 @@
                             style="@style/FontBold.Medium.White"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -120,7 +120,7 @@
                             style="@style/FontBold.Medium.White"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_view_waktu_header"
@@ -153,10 +153,10 @@
                         <!-- < 10-->
                         <TextView
                             android:id="@+id/text_view_1"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_header"
                             app:layout_constraintStart_toStartOf="parent"
@@ -167,10 +167,10 @@
                         <!-- < 10 value-->
                         <TextView
                             android:id="@+id/text_view_1_value"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_header"
                             app:layout_constraintStart_toEndOf="@+id/text_view_1"
@@ -202,10 +202,10 @@
                         <!-- 10-12-->
                         <TextView
                             android:id="@+id/text_view_2"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_1"
                             app:layout_constraintStart_toStartOf="parent"
@@ -216,10 +216,10 @@
                         <!-- 10-12 value-->
                         <TextView
                             android:id="@+id/text_view_2_value"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_1"
                             app:layout_constraintStart_toEndOf="@+id/text_view_2"
@@ -251,10 +251,10 @@
                         <!-- 12-14-->
                         <TextView
                             android:id="@+id/text_view_3"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_2"
                             app:layout_constraintStart_toStartOf="parent"
@@ -265,10 +265,10 @@
                         <!-- 12-14 value-->
                         <TextView
                             android:id="@+id/text_view_3_value"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_2"
                             app:layout_constraintStart_toEndOf="@+id/text_view_3"
@@ -300,10 +300,10 @@
                         <!-- 14-16-->
                         <TextView
                             android:id="@+id/text_view_4"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_3"
                             app:layout_constraintStart_toStartOf="parent"
@@ -314,10 +314,10 @@
                         <!-- 14-16 value-->
                         <TextView
                             android:id="@+id/text_view_4_value"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_3"
                             app:layout_constraintStart_toEndOf="@+id/text_view_4"
@@ -349,10 +349,10 @@
                         <!-- 16-18-->
                         <TextView
                             android:id="@+id/text_view_5"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_4"
                             app:layout_constraintStart_toStartOf="parent"
@@ -363,10 +363,10 @@
                         <!-- 16-18 value-->
                         <TextView
                             android:id="@+id/text_view_5_value"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_4"
                             app:layout_constraintStart_toEndOf="@+id/text_view_5"
@@ -398,10 +398,10 @@
                         <!-- 18-20-->
                         <TextView
                             android:id="@+id/text_view_6"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_5"
                             app:layout_constraintStart_toStartOf="parent"
@@ -412,10 +412,10 @@
                         <!-- 18-20 value-->
                         <TextView
                             android:id="@+id/text_view_6_value"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_5"
                             app:layout_constraintStart_toEndOf="@+id/text_view_6"
@@ -447,10 +447,10 @@
                         <!-- > 20-->
                         <TextView
                             android:id="@+id/text_view_7"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_6"
                             app:layout_constraintStart_toStartOf="parent"
@@ -461,10 +461,10 @@
                         <!-- > 20 value-->
                         <TextView
                             android:id="@+id/text_view_7_value"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_6"
                             app:layout_constraintStart_toEndOf="@+id/text_view_7"
@@ -496,10 +496,10 @@
                         <!-- Total-->
                         <TextView
                             android:id="@+id/text_view_total"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_7"
                             app:layout_constraintStart_toStartOf="parent"
@@ -510,10 +510,10 @@
                         <!-- Total value-->
                         <TextView
                             android:id="@+id/text_view_total_value"
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontBold.Medium"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/padding_12"
+                            android:padding="@dimen/padding_medium_large"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/barrier_7"
                             app:layout_constraintStart_toEndOf="@+id/text_view_total"

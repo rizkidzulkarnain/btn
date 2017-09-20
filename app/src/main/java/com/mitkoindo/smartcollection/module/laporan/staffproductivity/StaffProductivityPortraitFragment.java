@@ -14,9 +14,12 @@ import com.mitkoindo.smartcollection.base.BaseFragment;
 import com.mitkoindo.smartcollection.databinding.FragmentStaffProductivityPortraitBinding;
 import com.mitkoindo.smartcollection.objectdata.StaffProductivity;
 import com.mitkoindo.smartcollection.utils.Constant;
+import com.mitkoindo.smartcollection.utils.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+
 import java.util.Locale;
 
 import butterknife.OnClick;
@@ -109,31 +112,52 @@ public class StaffProductivityPortraitFragment extends BaseFragment {
     public void onItemClicked(View view) {
         switch (view.getId()) {
             case R.id.background_1: {
-                startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "1"));
+                int timeRange1 = Utils.stringToInt(mStaffProductivityViewModel.obsStaffProductivity.get().getTimeRange1());
+                if (timeRange1 > 0) {
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "1"));
+                }
                 break;
             }
             case R.id.background_2: {
-                startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "2"));
+                int timeRange2 = Utils.stringToInt(mStaffProductivityViewModel.obsStaffProductivity.get().getTimeRange2());
+                if (timeRange2 > 0) {
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "2"));
+                }
                 break;
             }
             case R.id.background_3: {
-                startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "3"));
+                int timeRange3 = Utils.stringToInt(mStaffProductivityViewModel.obsStaffProductivity.get().getTimeRange3());
+                if (timeRange3 > 0) {
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "3"));
+                }
                 break;
             }
             case R.id.background_4: {
-                startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "4"));
+                int timeRange4 = Utils.stringToInt(mStaffProductivityViewModel.obsStaffProductivity.get().getTimeRange4());
+                if (timeRange4 > 0) {
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "4"));
+                }
                 break;
             }
             case R.id.background_5: {
-                startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "5"));
+                int timeRange5 = Utils.stringToInt(mStaffProductivityViewModel.obsStaffProductivity.get().getTimeRange5());
+                if (timeRange5 > 0) {
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "5"));
+                }
                 break;
             }
             case R.id.background_6: {
-                startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "6"));
+                int timeRange6 = Utils.stringToInt(mStaffProductivityViewModel.obsStaffProductivity.get().getTimeRange6());
+                if (timeRange6 > 0) {
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "6"));
+                }
                 break;
             }
             case R.id.background_7: {
-                startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "7"));
+                int timeRange7 = Utils.stringToInt(mStaffProductivityViewModel.obsStaffProductivity.get().getTimeRange7());
+                if (timeRange7 > 0) {
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "7"));
+                }
                 break;
             }
         }
@@ -157,6 +181,18 @@ public class StaffProductivityPortraitFragment extends BaseFragment {
             String dateFormattedLayout = dateFormatterLayout.format(c.getTime());
             mStaffProductivityViewModel.obsTanggalLayout.set(dateFormattedLayout);
         }, currentYear, currentMonth, currentDay);
+
+//        Get Date first day of the month
+        Calendar calendarMin = Calendar.getInstance();
+        calendarMin.set(Calendar.DAY_OF_MONTH, 1);
+        datePickerDialog.getDatePicker().setMinDate(calendarMin.getTime().getTime());
+
+//        Get Date last day of the month
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.add(Calendar.DATE, -1);
+        datePickerDialog.getDatePicker().setMaxDate(calendar.getTime().getTime());
 
         datePickerDialog.show();
     }

@@ -159,7 +159,7 @@ public class Utils {
     }
 
     @NonNull
-    private static String removeLastChar(String res, String text) {
+    public static String removeLastChar(String res, String text) {
         int length = text.length();
 
         if (res.length() > length) {
@@ -167,5 +167,15 @@ public class Utils {
                     ? res.substring(0, (res.length() - length)) : res;
         }
         return res;
+    }
+
+    public static int stringToInt(String stringNumber) {
+        int number = 0;
+        try {
+            number = Integer.parseInt(stringNumber);
+        } catch (NumberFormatException nfe) {
+            System.out.println("Could not parse " + nfe);
+        }
+        return number;
     }
 }

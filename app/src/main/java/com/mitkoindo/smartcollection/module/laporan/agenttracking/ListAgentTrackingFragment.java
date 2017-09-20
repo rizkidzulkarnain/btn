@@ -13,6 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
@@ -20,7 +27,6 @@ import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.base.BaseFragment;
 import com.mitkoindo.smartcollection.databinding.FragmentListAgentTrackingBinding;
 import com.mitkoindo.smartcollection.objectdata.AgentTracking;
-import com.mitkoindo.smartcollection.objectdata.DebiturItem;
 import com.mitkoindo.smartcollection.utils.Constant;
 import com.mitkoindo.smartcollection.utils.SimpleListItemDecoration;
 
@@ -34,12 +40,14 @@ import butterknife.OnClick;
  * Created by ericwijaya on 9/18/17.
  */
 
-public class ListAgentTrackingFragment extends BaseFragment {
+public class ListAgentTrackingFragment extends BaseFragment implements OnMapReadyCallback {
 
     private static final String EXTRA_USER_ID = "extra_user_id";
 
     private AgentTrackingViewModel mAgentTrackingViewModel;
     private FragmentListAgentTrackingBinding mBinding;
+
+    private GoogleMap mGoogleMap = null;
 
     private FastItemAdapter mFastAdapter;
     private String mUserId;
@@ -54,6 +62,43 @@ public class ListAgentTrackingFragment extends BaseFragment {
         bundle.putString(EXTRA_USER_ID, userId);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mBinding != null && mBinding.mapView != null) {
+            mBinding.mapView.onResume();
+        }
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (mBinding != null && mBinding.mapView != null) {
+            mBinding.mapView.onDestroy();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (mBinding != null && mBinding.mapView != null) {
+            mBinding.mapView.onStart();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (mBinding != null && mBinding.mapView != null) {
+            mBinding.mapView.onStop();
+        }
     }
 
     @Nullable
@@ -89,6 +134,10 @@ public class ListAgentTrackingFragment extends BaseFragment {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
                 displayMessage(R.string.GagalMendapatkanData);
+                mFastAdapter.clear();
+                if (mGoogleMap != null) {
+                    mGoogleMap.clear();
+                }
             }
         });
         mAgentTrackingViewModel.obsAgentTrackingResponse.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
@@ -102,6 +151,8 @@ public class ListAgentTrackingFragment extends BaseFragment {
                 } else {
                     mAgentTrackingViewModel.obsIsEmpty.set(true);
                 }
+
+                dropPin();
             }
         });
         mAgentTrackingViewModel.obsTanggal.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
@@ -112,7 +163,7 @@ public class ListAgentTrackingFragment extends BaseFragment {
         });
 
         setupRecyclerView();
-
+        setupMap();
         setDateNow();
     }
 
@@ -126,13 +177,13 @@ public class ListAgentTrackingFragment extends BaseFragment {
         mBinding.recyclerViewAgentTracking.setAdapter(mFastAdapter);
 
         mFastAdapter.withSelectable(true);
-        /*mFastAdapter.withOnClickListener(new FastAdapter.OnClickListener<DebiturItem>() {
+        mFastAdapter.withOnClickListener(new FastAdapter.OnClickListener<AgentTracking>() {
             @Override
-            public boolean onClick(View v, IAdapter<DebiturItem> adapter, DebiturItem item, int position) {
+            public boolean onClick(View v, IAdapter<AgentTracking> adapter, AgentTracking item, int position) {
 
                 return true;
             }
-        });*/
+        });
 
         mBinding.swipeRefreshLayoutAgentTacking.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -162,6 +213,18 @@ public class ListAgentTrackingFragment extends BaseFragment {
             mAgentTrackingViewModel.obsTanggalLayout.set(dateFormattedLayout);
         }, currentYear, currentMonth, currentDay);
 
+//        Get Date first day of the month
+        Calendar calendarMin = Calendar.getInstance();
+        calendarMin.set(Calendar.DAY_OF_MONTH, 1);
+        datePickerDialog.getDatePicker().setMinDate(calendarMin.getTime().getTime());
+
+//        Get Date last day of the month
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.add(Calendar.DATE, -1);
+        datePickerDialog.getDatePicker().setMaxDate(calendar.getTime().getTime());
+
         datePickerDialog.show();
     }
 
@@ -173,5 +236,73 @@ public class ListAgentTrackingFragment extends BaseFragment {
 
         String dateFormattedLayout = dateFormatterLayout.format(c.getTime());
         mAgentTrackingViewModel.obsTanggalLayout.set(dateFormattedLayout);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
+        mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
+    }
+
+    private void setupMap() {
+        mBinding.mapView.getMapAsync(this);
+        mBinding.mapView.onCreate(getArguments());
+    }
+
+    private void dropPin() {
+        if (mGoogleMap != null && mAgentTrackingViewModel.obsAgentTrackingResponse.get() != null) {
+            mGoogleMap.clear();
+            int i = 0;
+            for (AgentTracking agentTracking : mAgentTrackingViewModel.obsAgentTrackingResponse.get()) {
+                LatLng latLng = new LatLng(agentTracking.getLatitude(), agentTracking.getLongitude());
+                int trackingType = agentTracking.getTrackingType();
+                float drawable;
+                switch (trackingType) {
+                    case AgentTracking.TYPE_VISIT: {
+//                        drawable = R.drawable.ic_home_map;
+                        drawable = BitmapDescriptorFactory.HUE_RED;
+                        break;
+                    }
+                    case AgentTracking.TYPE_CALL: {
+//                        drawable = R.drawable.ic_phone;
+                        drawable = BitmapDescriptorFactory.HUE_GREEN;
+                        break;
+                    }
+                    case AgentTracking.TYPE_CHECK_IN: {
+//                        drawable = R.drawable.ic_map_marker;
+                        drawable = BitmapDescriptorFactory.HUE_BLUE;
+                        break;
+                    }
+                    case AgentTracking.TYPE_TRACKING: {
+//                        drawable = R.drawable.ic_dot;
+                        drawable = BitmapDescriptorFactory.HUE_YELLOW;
+                        break;
+                    }
+                    default: {
+//                        drawable = R.drawable.ic_dot;
+                        drawable = BitmapDescriptorFactory.HUE_YELLOW;
+                    }
+                }
+                mGoogleMap.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .title(agentTracking.getTimeFormatted())
+                        .snippet(agentTracking.getAddress())
+                        .icon(BitmapDescriptorFactory.defaultMarker(drawable)));
+//                      .icon(BitmapDescriptorFactory.fromResource(drawable)));
+
+
+                if (i == 0) {
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 16);
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                    mGoogleMap.animateCamera(cameraUpdate);
+                }
+                i++;
+            }
+        }
+    }
+
+    @OnClick(R.id.image_view_switch_layout)
+    public void onSwitchViewClicked(View view) {
+        mAgentTrackingViewModel.obsIsMap.set(!mAgentTrackingViewModel.obsIsMap.get());
     }
 }

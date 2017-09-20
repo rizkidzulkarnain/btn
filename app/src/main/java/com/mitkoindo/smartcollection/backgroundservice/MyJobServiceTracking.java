@@ -46,7 +46,7 @@ public class MyJobServiceTracking extends JobService implements GoogleApiClient.
     public static final String ACCESS_TOKEN = "access_token";
     public static final String USER_ID = "user_id";
 
-    private CompositeDisposable mComposites;
+    private CompositeDisposable mComposites = new CompositeDisposable();
     private JobParameters mJobParameters;
     private String mAccessToken;
     private String mUserId;
@@ -66,7 +66,6 @@ public class MyJobServiceTracking extends JobService implements GoogleApiClient.
 
         initGoogleService();
         mGoogleApiClient.connect();
-        mComposites = new CompositeDisposable();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mResultReceiver = new AddressResultReceiver(new Handler());
         mAddressOutput = "";
@@ -77,7 +76,6 @@ public class MyJobServiceTracking extends JobService implements GoogleApiClient.
     public void onDestroy() {
         Timber.i("onDestroy");
 
-        mComposites.clear();
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
