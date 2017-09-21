@@ -117,7 +117,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.StaffViewHol
 
         //attach data
         holder.staffName.setText(currentStaff.FULL_NAME);
-        holder.staffGroup.setText(currentStaff.GROUP);
+        holder.staffGroup.setText(currentStaff.GROUP_NAME);
 
         //add listener
         /*final int currentPos = position;

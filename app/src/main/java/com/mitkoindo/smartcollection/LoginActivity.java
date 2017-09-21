@@ -211,6 +211,16 @@ public class LoginActivity extends AppCompatActivity
             String userGroup = resultObject.getString("SG_GRPNAME");
             String userGroupID = resultObject.getString("GROUPID");
 
+            //cek apakah user group ini berhak menggunakan app atau tidak
+            if (!AllowAccessToApp(userGroupID))
+            {
+                //show alert bahwa user group ini tidak memiliki akses ke dalam app ini
+                String alertTitle = getString(R.string.Text_MohonMaaf);
+                String alertMessage = getString(R.string.Login_Alert_UserCannotAccess);
+                genericAlert.DisplayAlert(alertMessage, alertTitle);
+                return;
+            }
+
             //simpan access token di shared preference
             SaveToken(accessToken);
             SaveUserID();
@@ -271,6 +281,32 @@ public class LoginActivity extends AppCompatActivity
         editor.putString(userGroupKey, userGroup);
         editor.putString(userGroupIDKey, userGroupID);
         editor.apply();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Cek apakah group user ini boleh menggunakan aplikasi ini atau tidak
+    //----------------------------------------------------------------------------------------------
+    private boolean AllowAccessToApp(String currentUserGroup)
+    {
+        final String userGroup_Staff1 = getString(R.string.UserGroup_Staff1);
+        final String userGroup_Staff2 = getString(R.string.UserGroup_Staff2);
+        final String userGroup_Staff3 = getString(R.string.UserGroup_Staff3);
+        final String userGroup_Supervisor1 = getString(R.string.UserGroup_Supervisor1);
+        final String userGroup_Supervisor2 = getString(R.string.UserGroup_Supervisor2);
+        final String userGroup_BranchCoordinator = getString(R.string.UserGroup_BranchCoordinator);
+        final String userGroup_BranchManager = getString(R.string.UserGroup_BranchManager);
+        final String userGroup_Admin = getString(R.string.UserGroup_Admin);
+
+        if (currentUserGroup.equals(userGroup_Staff1) || currentUserGroup.equals(userGroup_Staff2) || currentUserGroup.equals(userGroup_Staff3))
+            return true;
+        else if (currentUserGroup.equals(userGroup_Supervisor1) || currentUserGroup.equals(userGroup_Supervisor2))
+            return true;
+        else if (currentUserGroup.equals(userGroup_BranchCoordinator) || currentUserGroup.equals(userGroup_BranchManager))
+            return true;
+        else if (currentUserGroup.toLowerCase().equals(userGroup_Admin))
+            return true;
+        else
+            return false;
     }
 
     //----------------------------------------------------------------------------------------------

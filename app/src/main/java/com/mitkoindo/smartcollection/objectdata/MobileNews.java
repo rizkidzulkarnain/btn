@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 public class MobileNews
 {
-    public int RowNumber;
+    /*public int RowNumber;*/
     public int ID;
     public String AuthorID;
     public String Title;
@@ -28,7 +28,7 @@ public class MobileNews
     {
         try
         {
-            RowNumber = dataObject.getInt("RowNumber");
+            /*RowNumber = dataObject.getInt("RowNumber");*/
             ID = dataObject.getInt("ID");
             AuthorID = dataObject.getString("AuthorID");
             Title = dataObject.getString("Title");

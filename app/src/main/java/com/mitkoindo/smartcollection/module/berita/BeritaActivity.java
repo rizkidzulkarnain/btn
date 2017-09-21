@@ -60,6 +60,7 @@ public class BeritaActivity extends AppCompatActivity
     //base url dan url buat get berita
     private String baseURL;
     private String url_GetBerita;
+    private String url_GetBeritaGroup;
 
     //auth token
     private String authToken;
@@ -105,6 +106,7 @@ public class BeritaActivity extends AppCompatActivity
         //load url
         baseURL = ResourceLoader.LoadBaseURL(this);
         url_GetBerita = getString(R.string.URL_Data_View);
+        url_GetBeritaGroup = getString(R.string.URL_Data_StoreProcedure);
 
         //get auth token
         authToken = ResourceLoader.LoadAuthToken(this);
@@ -127,7 +129,7 @@ public class BeritaActivity extends AppCompatActivity
 
         //set transaction property
         beritaGlobalFragment.SetTransactionData(baseURL, url_GetBerita, authToken);
-        beritaGrupFragment.SetTransactionData(baseURL, url_GetBerita, authToken, userID);
+        beritaGrupFragment.SetTransactionData(baseURL, url_GetBeritaGroup, authToken, userID);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(beritaGlobalFragment);

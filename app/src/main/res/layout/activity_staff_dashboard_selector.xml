@@ -73,7 +73,7 @@
                 android:id="@+id/StaffSelector_SearchForm"
                 android:inputType="text"
                 android:imeOptions="actionSearch"
-                android:hint="@string/AccountAssignment_CariDebitur"
+                android:hint="@string/AgentTracking_SearchHint"
                 android:textColor="@color/White"
                 android:textColorHint="@color/White"
                 android:theme="@style/EditText.Login"

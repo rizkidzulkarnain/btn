@@ -107,7 +107,7 @@ public class BeritaGrupFragment extends Fragment
         // Inflate the layout for this fragment
         View thisView = inflater.inflate(R.layout.fragment_berita_grup, container, false);
         GetViews(thisView);
-        CreateGetNewsRequest();
+        SetupAdapter();
         return thisView;
     }
 
@@ -129,7 +129,8 @@ public class BeritaGrupFragment extends Fragment
             @Override
             public void onRefresh()
             {
-                CreateGetNewsRequest();
+                view_SwipeRefresher.setRefreshing(false);
+                beritaAdapter.CreateGetNewsRequest();
             }
         });
 
@@ -142,12 +143,12 @@ public class BeritaGrupFragment extends Fragment
                 super.onScrolled(recyclerView, dx, dy);
 
                 //pastikan adapter tidak null
-                if (beritaAdapter == null)
+                /*if (beritaAdapter == null)
                     return;
 
                 //load new page
                 if (RecyclerViewHelper.isLastItemDisplaying(view_ListBerita))
-                    beritaAdapter.CreateLoadNewPageRequest();
+                    beritaAdapter.CreateLoadNewPageRequest();*/
             }
         });
 
@@ -160,6 +161,9 @@ public class BeritaGrupFragment extends Fragment
                 if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (i == KeyEvent.KEYCODE_ENTER))
                 {
                     //Handle search
+                    //hide search button, show clear button
+                    view_ClearButton.setVisibility(View.VISIBLE);
+                    view_SearchButton.setVisibility(View.GONE);
                     CreateSearchRequest();
 
                     return true;
@@ -195,192 +199,27 @@ public class BeritaGrupFragment extends Fragment
         this.userID = userID;
     }
 
-    //----------------------------------------------------------------------------------------------
-    //  Start transaction buat load berita
-    //----------------------------------------------------------------------------------------------
-    private void CreateGetNewsRequest()
-    {
-        //show progress bar & hide recycler view
-        view_ProgressBar.setVisibility(View.VISIBLE);
-        view_ListBerita.setVisibility(View.GONE);
-        view_Message.setVisibility(View.GONE);
-        view_SwipeRefresher.setRefreshing(false);
-
-        //send request
-        new SendGetNewsRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
-    }
-
-    //send get news request
-    private class SendGetNewsRequest extends AsyncTask<String, Void, String>
-    {
-        @Override
-        protected String doInBackground(String... strings)
-        {
-            //create used url
-            String usedURL = baseURL + url_GetNews;
-
-            //create request object
-            JSONObject requestObject = CreateGetNewsRequestObject();
-
-            //execute transaction
-            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
-            networkConnection.SetRequestObject(requestObject);
-            return networkConnection.SendPostRequest(usedURL);
-        }
-
-        @Override
-        protected void onPostExecute(String s)
-        {
-             super.onPostExecute(s);
-            HandleGetGroupNewsResult(s);
-        }
-    }
-
-    //create request object
-    private JSONObject CreateGetNewsRequestObject()
-    {
-        //create empty object
-        JSONObject requestObject = new JSONObject();
-
-        //populate request object
-        try
-        {
-            //create sorting object
-            JSONObject sortingObject = new JSONObject();
-            sortingObject.put("Property", "CreatedDate");
-            sortingObject.put("Direction", "DESC");
-
-            //create sorting array
-            JSONArray sortingArray = new JSONArray();
-            sortingArray.put(sortingObject);
-
-            //create dbParam
-            JSONObject dbParam = new JSONObject();
-            dbParam.put("Page", 1);
-            dbParam.put("Limit", 10);
-            dbParam.put("Sort", sortingArray);
-
-            //create filter object
-            JSONObject filterObject = new JSONObject();
-            filterObject.put("Property", "ToUserID");
-            filterObject.put("Operator", "eq");
-            filterObject.put("Value", "'" + userID + "'");
-
-            //create filter array
-            JSONArray filterArray = new JSONArray();
-            filterArray.put(filterObject);
-
-            //create search object jika searchquery tidak kosong
-            if (searchQuery != null && !searchQuery.isEmpty())
-            {
-                JSONObject searchObject = new JSONObject();
-                searchObject.put("Property", "Title");
-                searchObject.put("Operator", "like");
-                searchObject.put("Value", searchQuery);
-                filterArray.put(searchObject);
-            }
-
-            //add to dbParam
-            dbParam.put("Filter", filterArray);
-
-            //create request object
-            requestObject.put("DatabaseID", "db1");
-            requestObject.put("ViewName", "MKI_VW_NEWS_GROUP");
-            requestObject.put("DBParam", dbParam);
-            /*requestObject.put("Filter", filterArray);*/
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-
-        //return object
-        return requestObject;
-    }
-
-    //handle get global news
-    private void HandleGetGroupNewsResult(String resultString)
-    {
-        if (resultString == null || resultString.isEmpty())
-        {
-            //show message bahwa something wrong
-            String somethingWrongMessage = getString(R.string.Text_SomethingWrong);
-            view_Message.setText(somethingWrongMessage);
-
-            //hide other views
-            view_Message.setVisibility(View.VISIBLE);
-            view_ProgressBar.setVisibility(View.GONE);
-            view_ListBerita.setVisibility(View.GONE);
-            return;
-        }
-
-        if (resultString.equals("Not Found"))
-        {
-            //show message bahwa something wrong
-            String somethingWrongMessage = getString(R.string.Text_NoData);
-            view_Message.setText(somethingWrongMessage);
-
-            //hide other views
-            view_Message.setVisibility(View.VISIBLE);
-            view_ProgressBar.setVisibility(View.GONE);
-            view_ListBerita.setVisibility(View.GONE);
-            return;
-        }
-
-        try
-        {
-            //parse data
-            JSONArray dataArray = new JSONArray(resultString);
-
-            //initialize array
-            ArrayList<MobileNews> mobileNews = new ArrayList<>();
-
-            //extract data
-            for (int i = 0; i < dataArray.length(); i++)
-            {
-                //extract data dari json
-                MobileNews newMobileNews = new MobileNews();
-                newMobileNews.ParseData(dataArray.getJSONObject(i));
-                mobileNews.add(newMobileNews);
-            }
-
-            //create mobile news adapter
-            beritaAdapter = new BeritaAdapter(getActivity(), mobileNews);
-            beritaAdapter.SetView_ProgressBar(view_ProgressBar_PageIndicator);
-            beritaAdapter.SetupTransaction(baseURL, url_GetNews, authToken, userID);
-            beritaAdapter.SetSearchQuery(searchQuery);
-
-            //set click listener ke adapter
-            beritaAdapter.setClickListener(new ItemClickListener()
-            {
-                @Override
-                public void onItemClick(View view, int position)
-                {
-                    OpenAttachedFile(position);
-                }
-            });
-
-            //attach adapter ke list view
-            AttachNewsData();
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-
-            //show message bahwa something wrong
-            String somethingWrongMessage = getString(R.string.Text_SomethingWrong);
-            view_Message.setText(somethingWrongMessage);
-
-            //hide other views
-            view_Message.setVisibility(View.VISIBLE);
-            view_ProgressBar.setVisibility(View.GONE);
-            view_ListBerita.setVisibility(View.GONE);
-        }
-    }
-
     //Attach news data
-    private void AttachNewsData()
+    private void SetupAdapter()
     {
+        //create mobile news adapter
+        beritaAdapter = new BeritaAdapter(getActivity());
+        beritaAdapter.SetView_ProgressBar(view_ProgressBar_PageIndicator);
+        beritaAdapter.SetupTransaction(baseURL, url_GetNews, authToken, userID);
+        beritaAdapter.SetViews(view_ListBerita, view_ProgressBar, view_Message);
+        beritaAdapter.CreateGetNewsRequest();
+        /*beritaAdapter.SetSearchQuery(searchQuery);*/
+
+        //set click listener ke adapter
+        beritaAdapter.setClickListener(new ItemClickListener()
+        {
+            @Override
+            public void onItemClick(View view, int position)
+            {
+                OpenAttachedFile(position);
+            }
+        });
+
         //attach adapter to recyclerview
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         view_ListBerita.setLayoutManager(layoutManager);
@@ -390,11 +229,6 @@ public class BeritaGrupFragment extends Fragment
         dividerItemDecoration.setDrawable(dividerDrawable);
         view_ListBerita.addItemDecoration(dividerItemDecoration);
         view_ListBerita.setAdapter(beritaAdapter);
-
-        //show list
-        view_ListBerita.setVisibility(View.VISIBLE);
-        view_Message.setVisibility(View.GONE);
-        view_ProgressBar.setVisibility(View.GONE);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -405,21 +239,8 @@ public class BeritaGrupFragment extends Fragment
         //set search query
         searchQuery = view_SearchForm.getText().toString();
 
-        //jika search query tidak kosong, ubah tombol search jadi tombol clear
-        if (!searchQuery.isEmpty())
-        {
-            view_ClearButton.setVisibility(View.VISIBLE);
-            view_SearchButton.setVisibility(View.GONE);
-        }
-        else
-        {
-            //tapi kalo kosong, tampilkan kembali search button
-            view_ClearButton.setVisibility(View.GONE);
-            view_SearchButton.setVisibility(View.VISIBLE);
-        }
-
-        //send request
-        CreateGetNewsRequest();
+        //send request via adapter
+        beritaAdapter.CreateSearchRequest(searchQuery);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -454,6 +275,10 @@ public class BeritaGrupFragment extends Fragment
     //Handle input pada search button
     private void HandleInput_SearchButton()
     {
+        //hide search button, show clear button
+        view_ClearButton.setVisibility(View.VISIBLE);
+        view_SearchButton.setVisibility(View.GONE);
+
         CreateSearchRequest();
     }
 
@@ -469,7 +294,7 @@ public class BeritaGrupFragment extends Fragment
         {
             //jika kosong, show search button & hide clear button
             view_ClearButton.setVisibility(View.GONE);
-            view_SearchForm.setVisibility(View.VISIBLE);
+            view_SearchButton.setVisibility(View.VISIBLE);
 
             //dan refresh data
             CreateSearchRequest();

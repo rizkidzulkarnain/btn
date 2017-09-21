@@ -563,8 +563,8 @@ public class BroadcastBeritaActivity extends AppCompatActivity
                     //set filepath
                     if (data_Filepaths.size() > 0)
                     {
-                        view_Filepath.setText(data_Filepaths.get(0));
                         formBroadcastBerita.Filepath = data_Filepaths.get(0);
+                        view_Filepath.setText(formBroadcastBerita.Filepath);
                     }
                 }
                 break;
@@ -577,8 +577,15 @@ public class BroadcastBeritaActivity extends AppCompatActivity
                     //set filepath
                     if (data_Filepaths.size() > 0)
                     {
-                        view_Filepath.setText(data_Filepaths.get(0));
                         formBroadcastBerita.Filepath = data_Filepaths.get(0);
+                        /*
+                        int textLength = formBroadcastBerita.Filepath.length();
+                        String displayedString;
+                        if (textLength > 30)
+                            displayedString = "..." + formBroadcastBerita.Filepath.substring(30);
+                        else
+                            displayedString = formBroadcastBerita.Filepath;*/
+                        view_Filepath.setText(formBroadcastBerita.Filepath);
                     }
                 }
                 break;
@@ -682,7 +689,7 @@ public class BroadcastBeritaActivity extends AppCompatActivity
             ArrayList<String> groupList = new ArrayList<>();
             for (int i = 0; i < staffs.size(); i++)
             {
-                String currentGroup = staffs.get(i).GROUP;
+                String currentGroup = staffs.get(i).GROUP_NAME;
 
                 //cek apakah groupnya sudah ada di grouplist atau belum
                 boolean groupExist = false;
@@ -711,13 +718,13 @@ public class BroadcastBeritaActivity extends AppCompatActivity
                 //create new staff data
                 Staff groupHolder = new Staff();
                 groupHolder.FLAG_CHECKED = true;
-                groupHolder.GROUP = groupList.get(i);
+                groupHolder.GROUP_NAME = groupList.get(i);
                 staffAndGroups.add(groupHolder);
 
                 //add all staff yang memiliki group yang sama
                 for (int j = 0; j < staffs.size(); j++)
                 {
-                    if (currentGroup.equals(staffs.get(j).GROUP))
+                    if (currentGroup.equals(staffs.get(j).GROUP_NAME))
                     {
                         staffAndGroups.add(staffs.get(j));
                     }

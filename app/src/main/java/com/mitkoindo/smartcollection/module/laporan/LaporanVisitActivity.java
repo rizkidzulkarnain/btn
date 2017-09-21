@@ -116,6 +116,11 @@ public class LaporanVisitActivity extends AppCompatActivity
         holder_JumlahSetor = findViewById(R.id.LaporanVisit_Holder_JumlahSetor);
         holder_FotoAgunan2 = findViewById(R.id.LaporanVisit_Holder_FotoAgunan2);
 
+        View btnBack = findViewById(R.id.image_btn_toolbar_back);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(view -> onBackPressed());
+        }
+
         //create generic alert
         genericAlert = new GenericAlert(this);
     }

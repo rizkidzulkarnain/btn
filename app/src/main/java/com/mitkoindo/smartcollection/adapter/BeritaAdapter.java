@@ -38,7 +38,7 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
     private Activity context;
 
     //data berita
-    private ArrayList<MobileNews> news;
+    private ArrayList<MobileNews> news = new ArrayList<>();
 
     //flag boleh load data baru atau tidak
     private boolean allowLoadData;
@@ -61,6 +61,14 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
     //indicator buat load page baru
     private ProgressBar view_ProgressBar_PageIndicator;
 
+    //recylerview
+    private RecyclerView view_Recycler;
+    private ProgressBar view_ProgressBar;
+    private TextView view_AlertText;
+
+    //flag buat bind views
+    private boolean onBind;
+
     //----------------------------------------------------------------------------------------------
     //  Transaksi
     //----------------------------------------------------------------------------------------------
@@ -78,10 +86,9 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
     //  Setup
     //----------------------------------------------------------------------------------------------
     //constructor
-    public BeritaAdapter(Activity context, ArrayList<MobileNews> news)
+    public BeritaAdapter(Activity context)
     {
         this.context = context;
-        this.news = news;
 
         //set allow load data jadi true
         allowLoadData = true;
@@ -109,6 +116,9 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
         //pastikan posisi nggak melebihi index
         if (position >= getItemCount())
             return;
+
+        //bind view
+        onBind = true;
 
         //get current item, dan attach ke holder
         MobileNews currentNews = news.get(position);
@@ -146,6 +156,9 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
                 OpenNewsDetail(currentPos);
             }
         });
+
+        //release bind
+        onBind = false;
     }
 
     @Override
@@ -206,6 +219,14 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
     public void SetView_ProgressBar(ProgressBar progressBar)
     {
         this.view_ProgressBar_PageIndicator = progressBar;
+    }
+
+    //set views
+    public void SetViews(RecyclerView view_Recycler, ProgressBar view_ProgressBar, TextView view_AlertText)
+    {
+        this.view_Recycler = view_Recycler;
+        this.view_ProgressBar = view_ProgressBar;
+        this.view_AlertText = view_AlertText;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -270,6 +291,154 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
     }
 
     //----------------------------------------------------------------------------------------------
+    //  Create request buat load data
+    //----------------------------------------------------------------------------------------------
+    //create request buat get data berita
+    public void CreateGetNewsRequest()
+    {
+        //show porgress bar, hide everything else
+        view_ProgressBar.setVisibility(View.VISIBLE);
+        view_AlertText.setVisibility(View.GONE);
+        view_Recycler.setVisibility(View.GONE);
+
+        //send request
+        new SendGetNewsRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+    }
+
+    //create search request
+    public void CreateSearchRequest(String searchQuery)
+    {
+        this.searchQuery = searchQuery;
+        CreateGetNewsRequest();
+    }
+
+    //create request object
+    private JSONObject CreateGetNewsRequestObject()
+    {
+        //create empty object
+        JSONObject requestObject = new JSONObject();
+
+        //populate request object
+        try
+        {
+            //create sp parameter object
+            JSONObject spParameterObject = new JSONObject();
+            spParameterObject.put("userID", userID);
+            spParameterObject.put("keyword", searchQuery);
+
+            //create request object
+            requestObject.put("DatabaseID", "db1");
+            requestObject.put("SpName", "MKI_SP_NEWS_LIST");
+            requestObject.put("SpParameter", spParameterObject);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        //return object
+        return requestObject;
+    }
+
+    private class SendGetNewsRequest extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected String doInBackground(String... strings)
+        {
+            //set url
+            String usedURL = baseURL + url_DataSP;
+
+            //create request object
+            JSONObject requestObject = CreateGetNewsRequestObject();
+
+            //send request
+            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
+            networkConnection.SetRequestObject(requestObject);
+            return networkConnection.SendPostRequest(usedURL);
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+            HandleGetNewsResult(s);
+        }
+    }
+
+    //handle resultnya
+    private void HandleGetNewsResult(String resultString)
+    {
+        //pastikan result tidak null / kosong
+        if (resultString == null || resultString.isEmpty() || resultString.equals("Bad Request"))
+        {
+            //show alert
+            view_AlertText.setText(R.string.Text_SomethingWrong);
+            view_AlertText.setVisibility(View.VISIBLE);
+            view_ProgressBar.setVisibility(View.GONE);
+            return;
+        }
+
+        //pastikan data tidak kosong
+        if (resultString.equals("Not Found"))
+        {
+            //show alert
+            view_AlertText.setText(R.string.Text_NoData);
+            view_AlertText.setVisibility(View.VISIBLE);
+            view_ProgressBar.setVisibility(View.GONE);
+            return;
+        }
+
+        try
+        {
+            //extract data
+            JSONArray dataArray = new JSONArray(resultString);
+
+            //create news data array
+            ArrayList<MobileNews> newNews = new ArrayList<>();
+            for (int i = 0; i < dataArray.length(); i++)
+            {
+                //extract
+                MobileNews newMobileNews = new MobileNews();
+                newMobileNews.ParseData(dataArray.getJSONObject(i));
+                newNews.add(newMobileNews);
+            }
+
+            //attach data to list
+            AttachNewsData(newNews);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+
+            //show alert
+            view_AlertText.setText(R.string.Text_SomethingWrong);
+            view_AlertText.setVisibility(View.VISIBLE);
+            view_ProgressBar.setVisibility(View.GONE);
+        }
+    }
+
+    //attach news data
+    private void AttachNewsData(ArrayList<MobileNews> newNews)
+    {
+        //initialize arraylist
+        news = new ArrayList<>();
+        for (int i = 0; i < newNews.size(); i++)
+        {
+
+            news.add(newNews.get(i));
+        }
+
+        //bind data
+        if (!onBind)
+            notifyDataSetChanged();
+
+        //show recycler view, hide everything else
+        view_Recycler.setVisibility(View.VISIBLE);
+        view_AlertText.setVisibility(View.GONE);
+        view_ProgressBar.setVisibility(View.GONE);
+    }
+
+    //----------------------------------------------------------------------------------------------
     //  Create request buat load next page
     //----------------------------------------------------------------------------------------------
     public void CreateLoadNewPageRequest()
@@ -312,65 +481,6 @@ public class BeritaAdapter extends RecyclerView.Adapter<BeritaAdapter.BeritaView
             super.onPostExecute(s);
             HandleLoadNewPageResult(s);
         }
-    }
-
-    //create request object
-    private JSONObject CreateGetNewsRequestObject()
-    {
-        //create empty object
-        JSONObject requestObject = new JSONObject();
-
-        //populate request object
-        try
-        {
-            //create sorting object
-            JSONObject sortingObject = new JSONObject();
-            sortingObject.put("Property", "CreatedDate");
-            sortingObject.put("Direction", "DESC");
-
-            //create sorting array
-            JSONArray sortingArray = new JSONArray();
-            sortingArray.put(sortingObject);
-
-            //create dbParam
-            JSONObject dbParam = new JSONObject();
-            dbParam.put("Page", currentPage);
-            dbParam.put("Limit", 10);
-            dbParam.put("Sort", sortingArray);
-
-            //create filter object
-            JSONObject filterObject = new JSONObject();
-            filterObject.put("Property", "ToUserID");
-            filterObject.put("Operator", "eq");
-            filterObject.put("Value", "'" + userID + "'");
-
-            //create filter array
-            JSONArray filterArray = new JSONArray();
-            filterArray.put(filterObject);
-
-            //create search object jika searchquery tidak kosong
-            if (searchQuery != null && !searchQuery.isEmpty())
-            {
-                JSONObject searchObject = new JSONObject();
-                searchObject.put("Property", "Title");
-                searchObject.put("Operator", "in");
-                searchObject.put("Value", searchQuery);
-                filterArray.put(searchObject);
-            }
-
-            //create request object
-            requestObject.put("DatabaseID", "db1");
-            requestObject.put("ViewName", "MKI_VW_NEWS_GROUP");
-            requestObject.put("DBParam", dbParam);
-            requestObject.put("Filter", filterArray);
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-
-        //return object
-        return requestObject;
     }
 
     //handle result transaksi

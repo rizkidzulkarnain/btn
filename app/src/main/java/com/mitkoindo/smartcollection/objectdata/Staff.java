@@ -13,6 +13,7 @@ public class Staff
 {
     public String LEVEL;
     public String USERID;
+    public String GROUP_NAME;
     public String FULL_NAME;
     public String UPLINER;
     public String BRANCH_CODE;
@@ -36,6 +37,7 @@ public class Staff
             BRANCH_CODE = dataObject.getString("BRANCH_CODE");
             ACTIVE = dataObject.getBoolean("ACTIVE");
             GROUP = dataObject.getString("GROUP");
+            GROUP_NAME = dataObject.getString("GROUP_NAME");
             AO_CODE = dataObject.getString("AO_CODE");
             SU_LIMIT = dataObject.getInt("SU_LIMIT");
 

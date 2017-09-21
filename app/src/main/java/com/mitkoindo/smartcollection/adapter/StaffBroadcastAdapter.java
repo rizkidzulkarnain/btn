@@ -75,7 +75,7 @@ public class StaffBroadcastAdapter extends RecyclerView.Adapter<StaffBroadcastAd
             holder.checkBox.setVisibility(View.GONE);
 
             //set value
-            holder.groupCheckBox.setText(currentStaff.GROUP);
+            holder.groupCheckBox.setText(currentStaff.GROUP_NAME);
             if (currentStaff.FLAG_CHECKED)
                 holder.groupCheckBox.setChecked(true);
             else
@@ -186,13 +186,13 @@ public class StaffBroadcastAdapter extends RecyclerView.Adapter<StaffBroadcastAd
         if (staffList.get(position).FULL_NAME == null || staffList.get(position).FULL_NAME.isEmpty())
         {
             //get group name
-            String groupName = staffList.get(position).GROUP;
+            String groupName = staffList.get(position).GROUP_NAME;
 
             //change state seluruh item yang ada di dalam group ini
             for (int i = 0; i < staffList.size(); i++)
             {
                 //cek apakah groupnya sama atau bukan
-                if (groupName.equals(staffList.get(i).GROUP))
+                if (groupName.equals(staffList.get(i).GROUP_NAME))
                 {
                     //set flag statenya biar sama
                     staffList.get(i).FLAG_CHECKED = checked;

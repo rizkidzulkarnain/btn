@@ -15,6 +15,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
+import android.widget.Toast;
 
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
@@ -71,6 +72,8 @@ public class NotificationChecker extends BroadcastReceiver
 
         //create request buat get info notifikasi
         CreateGetNotificationInfoRequest();
+
+        /*Toast.makeText(context, "Alarm received", Toast.LENGTH_SHORT).show();*/
     }
 
     //load data transaksi

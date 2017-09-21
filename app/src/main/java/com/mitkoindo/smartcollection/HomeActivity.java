@@ -129,6 +129,9 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
     //adapter menu
     private HomeMenuAdapter homeMenuAdapter;
 
+    //request codenya alarm manager
+    private final int REQUESTCODE_BROADCAST_RECEIVER = 748;
+
     //----------------------------------------------------------------------------------------------
     //  Transaksi
     //----------------------------------------------------------------------------------------------
@@ -336,10 +339,14 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.MINUTE, 1);
+        /*calendar.set(Calendar.SECOND, 10);*/
 
         AlarmManager alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, NotificationChecker.class);
+        /*PendingIntent alarmIntent = PendingIntent.getBroadcast(this, REQUESTCODE_BROADCAST_RECEIVER, intent, PendingIntent.FLAG_UPDATE_CURRENT);*/
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        /*alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                10 * 1000, alarmIntent);*/
         alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 300 * 1000, alarmIntent);
     }

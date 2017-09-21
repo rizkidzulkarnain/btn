@@ -247,7 +247,7 @@ public class ArchiveFragment extends Fragment
         if (query.isEmpty())
         {
             //refresh list
-            debiturArchiveAdapter.LoadInitialDebiturData();
+            debiturArchiveAdapter.SearchDebitur("");
 
             //hide clear button, show search button
             button_Search.setVisibility(View.VISIBLE);

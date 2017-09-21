@@ -10,167 +10,137 @@
 
     <!--logo smart collection-->
     <ImageView
-        android:paddingTop="10dp"
-        android:src="@drawable/logo_smart_collection"
+        android:layout_marginTop="35dp"
+        android:src="@drawable/temp_homelogo"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="50dp" />
+        android:layout_height="75dp" />
 
-    <!--Content-->
+    <!--username-->
+    <TextView
+        android:id="@+id/HomeActivity_UserName"
+        android:textColor="@color/White"
+        android:textSize="18sp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/Line_HomeMenu_New"
+        android:layout_width="200dp"
+        android:layout_height="1dp"/>
+
     <LinearLayout
         android:layout_marginTop="10dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/HomeActivity_UserID"
+                android:textColor="@color/White"
+                android:textSize="12sp"
+                android:gravity="end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/HomeActivity_UserGroup"
+                android:textColor="@color/White"
+                android:textSize="12sp"
+                android:gravity="end"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <!--Settings button-->
+            <ImageView
+                android:onClick="HandleInput_Home_OpenSettings"
+                android:src="@drawable/ic_settings_white_36dp"
+                android:tint="@color/Tint_HomeMenu_Button"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--Content function-->
+    <RelativeLayout
+        android:layout_marginTop="35dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--region profile-->
-        <android.support.v7.widget.GridLayout
-            app:orientation="horizontal"
-            app:columnCount="2"
-            app:rowCount="1"
-            android:layout_weight="2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp">
-
-            <!--Profil user-->
-            <RelativeLayout
-                android:layout_marginRight="5dp"
-                android:layout_marginEnd="5dp"
-                android:padding="5dp"
-                android:background="@drawable/background_menu_profile"
-                app:layout_columnWeight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent">
-
-                <!--profil user-->
-                <LinearLayout
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <!--logo bank btn-->
-                    <ImageView
-                        android:src="@drawable/logo_sm"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <!--username-->
-                    <TextView
-                        android:id="@+id/HomeActivity_UserName"
-                        android:textColor="@color/White"
-                        android:gravity="center_horizontal"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <!--logout button-->
-                <ImageView
-                    android:onClick="HandleInput_Home_Logout"
-                    android:src="@drawable/ic_power_settings_new_black_36dp"
-                    android:tint="@color/Tint_Logout_Button"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <!--Settings button-->
-                <ImageView
-                    android:onClick="HandleInput_Home_OpenSettings"
-                    android:src="@drawable/ic_settings_white_36dp"
-                    android:tint="@color/Tint_HomeMenu_Button"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"
-                android:padding="5dp"
-                android:background="@drawable/background_menu_profiledetail"
-                app:layout_columnWeight="1"
-                android:layout_width="0dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_height="match_parent">
-
-                <!--userID-->
-                <TextView
-                    android:text="@string/Home_UserID"
-                    android:textSize="12sp"
-                    android:textColor="@color/White"
-                    android:gravity="center_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/HomeActivity_UserID"
-                    android:textColor="@color/White"
-                    android:gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <!--group name-->
-                <TextView
-                    android:text="@string/Home_UserGroup"
-                    android:textSize="12sp"
-                    android:textColor="@color/White"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/HomeActivity_UserGroup"
-                    android:textColor="@color/White"
-                    android:gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-           </LinearLayout>
-            <!--<ImageView
-                app:layout_columnWeight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />-->
-        </android.support.v7.widget.GridLayout>
-
-        <!--Region menu-->
-        <LinearLayout
-            android:orientation="vertical"
+        <!--Logout section-->
+        <RelativeLayout
+            android:id="@+id/HomeActivity_LogoutHolder"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:paddingTop="10dp"
-            android:layout_weight="6"
+            android:paddingBottom="10dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/Background_Home_LogoutSection"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="wrap_content">
 
-            <!--menu text-->
-            <TextView
-                android:text="@string/Home_Menu"
-                android:textColor="@color/Font_HomeMenu"
-                android:layout_gravity="center_horizontal"
+            <!--Logout button-->
+            <LinearLayout
+                android:onClick="HandleInput_Home_Logout"
+                android:background="@drawable/background_rounded_rectangle_logoutbutton"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
 
-            <!--Line-->
-            <View
-                android:background="@color/Line_HomeMenu"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:layout_width="100dp"
-                android:layout_height="1dp"/>
+                <!--Logout icon-->
+                <ImageView
+                    android:src="@drawable/ic_power_settings_new_white_24dp"
+                    android:tint="@color/White"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-            <!--menu content-->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/HomeActivity_MenuGrid"
-                android:layout_marginTop="10dp"
-                android:numColumns="3"
-                android:overScrollMode="never"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-    </LinearLayout>
+                <!--LogoutText-->
+                <TextView
+                    android:text="@string/Text_Logout"
+                    android:textColor="@color/White"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!--menu content-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/HomeActivity_MenuGrid"
+            android:layout_above="@id/HomeActivity_LogoutHolder"
+            android:numColumns="3"
+            android:overScrollMode="never"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
 </LinearLayout>

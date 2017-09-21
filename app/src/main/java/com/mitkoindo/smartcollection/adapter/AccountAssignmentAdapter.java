@@ -405,8 +405,8 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
             /*spParameterObject.put("userID", "BTN0013887");*/
             spParameterObject.put("isAssign", 0);
             spParameterObject.put("filterKeyword", searchQuery);
-            spParameterObject.put("filterByField", "NamaNasabah");
-            spParameterObject.put("filterOperator", "LIKE");
+            /*spParameterObject.put("filterByField", "NamaNasabah");
+            spParameterObject.put("filterOperator", "LIKE");*/
             spParameterObject.put("sortByField", sortParameter);
             spParameterObject.put("sortDirection", "DESC");
             spParameterObject.put("page", currentPage);
@@ -518,6 +518,8 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
 
         if (!onBind)
             notifyDataSetChanged();
+
+        view_Alert.setVisibility(View.GONE);
     }
 
     //----------------------------------------------------------------------------------------------

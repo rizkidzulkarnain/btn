@@ -24,6 +24,7 @@
     <string name="Text_MohonMaaf">Mohon Maaf</string>
     <string name="Text_IsianBelumLengkap">Form belum lengkap</string>
     <string name="Text_SortBy">Sort By :</string>
+    <string name="Text_Logout">Log Out</string>
     <string name="Misc_Copyright">\u00A9 Copyright Bank BTN 2017</string>
 
     <!--Login page-->
@@ -32,6 +33,7 @@
     <string name="Login_RememberMe">Remember Me</string>
     <string name="Login_ID">User ID</string>
     <string name="Login_Password">Password</string>
+    <string name="Login_Alert_UserCannotAccess">User ini tidak memiliki hak untuk mengakses aplikasi Smart Collection</string>
 
     <!--Home page-->
     <string name="Home_Menu">Menu</string>
@@ -479,6 +481,7 @@
     <string name="UserGroup_Supervisor2">CCRD19</string>
     <string name="UserGroup_BranchCoordinator">CCRD28</string>
     <string name="UserGroup_BranchManager">CCRD35</string>
+    <string name="UserGroup_Admin">dms01</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
