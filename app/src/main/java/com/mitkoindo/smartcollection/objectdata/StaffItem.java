@@ -46,6 +46,11 @@ public class StaffItem extends AbstractItem<StaffItem, StaffItem.ViewHolder> {
     @Expose
     private String group;
 
+    @SerializedName("GROUP_NAME")
+    @Expose
+    private String groupName;
+
+
     @SerializedName("AO_CODE")
     @Expose
     private String aoCode;
@@ -109,6 +114,14 @@ public class StaffItem extends AbstractItem<StaffItem, StaffItem.ViewHolder> {
 
     public void setGroup(String group) {
         this.group = group;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public String getAoCode() {

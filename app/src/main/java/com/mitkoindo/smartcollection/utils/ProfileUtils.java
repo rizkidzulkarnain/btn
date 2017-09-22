@@ -23,8 +23,16 @@ public class ProfileUtils {
         return ResourceLoader.LoadUserID(context);
     }
 
+    public static String getUserName(Context context) {
+        return ResourceLoader.LoadUserName(context);
+    }
+
     public static String getGroupId(Context context) {
         return ResourceLoader.LoadGroupID(context);
+    }
+
+    public static String getGroupName(Context context) {
+        return ResourceLoader.LoadGroupName(context);
     }
 
     public static int getUserType(Context context) {

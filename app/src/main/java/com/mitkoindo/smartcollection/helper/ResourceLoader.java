@@ -105,4 +105,20 @@ public class ResourceLoader
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getString(userGroupIDKey, "");
     }
+
+    //load user name
+    public static String LoadUserName(Context context)
+    {
+        String key_UserName = context.getString(R.string.SharedPreferenceKey_NamaPetugas);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(key_UserName, "");
+    }
+
+    //load group name
+    public static String LoadGroupName(Context context)
+    {
+        String key_UserGroup = context.getString(R.string.SharedPreferenceKey_UserGroup);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(key_UserGroup, "");
+    }
 }

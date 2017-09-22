@@ -66,7 +66,11 @@ public class ReportDistribusiStaffFragment extends BaseFragment {
         mReportDistribusiViewModel.error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                displayMessage(R.string.GagalMendapatkanData);
+                if (getUserVisibleHint()) {
+//                    displayMessage(R.string.GagalMendapatkanData);
+                }
+                mFastAdapter.clear();
+                mReportDistribusiViewModel.obsIsEmpty.set(true);
             }
         });
         mReportDistribusiViewModel.obsReportDistribusiSummaryResponse.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {

@@ -35,6 +35,7 @@ public class LaporanVisit
     public String PhotoAgunan1;
     public String PhotoAgunan2;
     public String PhotoSignature;
+    public String AlamatKunjunganDesc;
 
     //parse data
     public void ParseData(JSONObject dataObject)
@@ -46,6 +47,7 @@ public class LaporanVisit
             NamaLengkap = dataObject.getString("NamaLengkap");
             TujuanVisit = dataObject.getString("TujuanVisit");
             TujuanVisitDesc = dataObject.getString("TujuanVisitDesc");
+            AlamatKunjunganDesc = dataObject.getString("AlamatKunjunganDesc");
             StatusAgunan = dataObject.getString("StatusAgunan");
             StatusAgunanDesc = dataObject.getString("StatusAgunanDesc");
             KondisiAgunan = dataObject.getString("KondisiAgunan");

@@ -68,13 +68,14 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tujuan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontRegular.Medium.White"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -92,7 +93,7 @@
                             android:layout_marginRight="@dimen/padding_medium"
                             android:scaleType="centerInside"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                            android:src="@drawable/ic_menu_down_white_24dp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -117,10 +118,11 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_berbicara_dengan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <EditText
                         android:id="@+id/edit_text_berbicara_dengan"
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -128,8 +130,8 @@
                         android:paddingStart="@dimen/padding_medium"
                         android:paddingLeft="@dimen/padding_medium"
                         android:paddingEnd="@dimen/padding_medium"
-                        android:textColor="@color/Grey"
-                        android:textColorHint="@color/Grey"
+                        android:textColor="@color/White"
+                        android:textColorHint="@color/White"
                         android:hint="@string/FormCall_BerbicaraDenganHint"
                         android:background="@color/Transparent"
                         android:maxLines="1"
@@ -157,13 +159,14 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_hubungan_dengan_debitur"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontRegular.Medium.White"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -181,7 +184,7 @@
                             android:layout_marginRight="@dimen/padding_medium"
                             android:scaleType="centerInside"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                            android:src="@drawable/ic_menu_down_white_24dp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -206,13 +209,14 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_hasil_panggilan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontRegular.Medium.White"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -230,7 +234,7 @@
                             android:layout_marginRight="@dimen/padding_medium"
                             android:scaleType="centerInside"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                            android:src="@drawable/ic_menu_down_white_24dp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -257,10 +261,11 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tanggal_hasil_panggilan"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:visibility="@{formCallViewModel.obsIsShowTanggalJanjiDebitur ? View.VISIBLE : View.GONE}">
+                    android:visibility="@{formCallViewModel.obsIsShowTanggalJanjiDebitur ? View.VISIBLE : View.GONE}"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <TextView
                         android:id="@+id/text_view_tanggal_hasil_panggilan_date"
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -293,10 +298,11 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_jumlah_yang_akan_disetor"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:visibility="@{formCallViewModel.obsIsShowJumlahYangAkanDisetor ? View.VISIBLE : View.GONE}">
+                    android:visibility="@{formCallViewModel.obsIsShowJumlahYangAkanDisetor ? View.VISIBLE : View.GONE}"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <EditText
                         android:id="@+id/edit_text_jumlah_yang_akan_disetor"
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -304,8 +310,8 @@
                         android:paddingStart="@dimen/padding_medium"
                         android:paddingLeft="@dimen/padding_medium"
                         android:paddingEnd="@dimen/padding_medium"
-                        android:textColor="@color/Grey"
-                        android:textColorHint="@color/Grey"
+                        android:textColor="@color/White"
+                        android:textColorHint="@color/White"
                         android:hint="@string/FormCall_JumlahYangAkanDisetorHint"
                         android:inputType="number"
                         android:background="@color/Transparent"
@@ -332,13 +338,14 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_alasan_tidak_bayar"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontRegular.Medium.White"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -356,7 +363,7 @@
                             android:layout_marginRight="@dimen/padding_medium"
                             android:scaleType="centerInside"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                            android:src="@drawable/ic_menu_down_white_24dp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -381,13 +388,14 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tindak_lanjut"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            style="@style/FontRegular.Medium"
+                            style="@style/FontRegular.Medium.White"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -405,7 +413,7 @@
                             android:layout_marginRight="@dimen/padding_medium"
                             android:scaleType="centerInside"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_menu_down_grey600_24dp" />
+                            android:src="@drawable/ic_menu_down_white_24dp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -430,10 +438,11 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tanggal_tindak_lanjut"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <TextView
                         android:id="@+id/text_view_tanggal_tindak_lanjut_date"
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -464,10 +473,11 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_catatan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <EditText
                         android:id="@+id/edit_text_catatan"
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -478,8 +488,8 @@
                         android:inputType="textMultiLine"
                         android:lines="3"
                         android:gravity="top|left"
-                        android:textColor="@color/Grey"
-                        android:textColorHint="@color/Grey"
+                        android:textColor="@color/White"
+                        android:textColorHint="@color/White"
                         android:hint="@string/FormCall_CatatanHint"
                         android:background="@color/Transparent"
                         android:text="@={formCallViewModel.spParameterFormCall.notes}"/>

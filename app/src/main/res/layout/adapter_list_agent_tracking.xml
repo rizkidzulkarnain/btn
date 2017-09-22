@@ -17,7 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_medium_large"
-        android:layout_marginEnd="@dimen/padding_medium_large">
+        android:layout_marginEnd="@dimen/padding_medium_large"
+        app:cardBackgroundColor="@color/BackgroundDebiturListItem">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -27,7 +28,7 @@
             <!--Time-->
             <TextView
                 android:id="@+id/text_view_time"
-                style="@style/FontRegular.Small"
+                style="@style/FontRegular.Small.White"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +39,7 @@
             <!--Address-->
             <TextView
                 android:id="@+id/text_view_address"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"

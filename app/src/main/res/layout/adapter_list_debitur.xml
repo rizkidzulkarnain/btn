@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_medium_large"
-        android:layout_marginEnd="@dimen/padding_medium_large">
+        android:layout_marginEnd="@dimen/padding_medium_large"
+        app:cardBackgroundColor="@color/BackgroundDebiturListItem">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,7 +32,7 @@
             <!--Nama Debitur-->
             <TextView
                 android:id="@+id/text_view_nama_debitur"
-                style="@style/FontBold.Medium"
+                style="@style/FontBold.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +43,7 @@
 
             <View
                 android:id="@+id/view_separator"
-                android:background="@color/Grey"
+                android:background="@color/colorAccentSecond"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -53,20 +54,19 @@
             <!--Nomor Rekening-->
             <TextView
                 android:id="@+id/text_view_no_rekening"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
                 app:layout_constraintTop_toBottomOf="@+id/view_separator"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
-                android:maxLines="1"
                 android:text="@string/no_rekening"/>
 
             <!--Nomor Rekening value-->
             <TextView
                 android:id="@+id/text_view_no_rekening_value"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/view_separator"
@@ -76,78 +76,99 @@
                 android:text="@{debiturItem.noRekening}"
                 tools:text="9183178230139"/>
 
+            <!--Nomor Rekening Barrier-->
+            <android.support.constraint.Barrier
+                android:id="@+id/barrier_nomor_rekening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="text_view_no_rekening,text_view_no_rekening_value"/>
+
             <!--Tagihan-->
             <TextView
                 android:id="@+id/text_view_tagihan"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_no_rekening_value"
+                app:layout_constraintTop_toBottomOf="@+id/barrier_nomor_rekening"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/guideline"
-                android:maxLines="1"
                 android:text="@string/tagihan" />
 
             <!--Tagihan value-->
             <TextView
                 android:id="@+id/text_view_tagihan_value"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_no_rekening_value"
+                app:layout_constraintTop_toBottomOf="@+id/barrier_nomor_rekening"
                 app:layout_constraintStart_toEndOf="@+id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBaseline_toBaselineOf="@+id/text_view_tagihan"
                 android:text="@{debiturItem.tagihan}"
                 tools:text="1.500.000"/>
 
+            <!--Tagihan Barrier-->
+            <android.support.constraint.Barrier
+                android:id="@+id/barrier_tagihan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="text_view_tagihan,text_view_tagihan_value"/>
+
             <!--DPD-->
             <TextView
                 android:id="@+id/text_view_dpd"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_tagihan_value"
+                app:layout_constraintTop_toBottomOf="@+id/barrier_tagihan"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
-                android:maxLines="1"
                 android:text="@string/dpd"/>
 
             <!--DPD value-->
             <TextView
                 android:id="@+id/text_view_dpd_value"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_tagihan_value"
+                app:layout_constraintTop_toBottomOf="@+id/barrier_tagihan"
                 app:layout_constraintStart_toEndOf="@+id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBaseline_toBaselineOf="@+id/text_view_dpd"
                 android:text="@{debiturItem.dpd}"
                 tools:text="25"/>
 
+            <!--DPD Barrier-->
+            <android.support.constraint.Barrier
+                android:id="@+id/barrier_dpd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="text_view_dpd,text_view_dpd_value"/>
+
             <!--Last Payment-->
             <TextView
                 android:id="@+id/text_view_last_payment"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_dpd_value"
+                app:layout_constraintTop_toBottomOf="@+id/barrier_dpd"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
-                android:maxLines="1"
                 android:text="@string/last_payment"/>
 
             <!--Last Payment value-->
             <TextView
                 android:id="@+id/text_view_last_payment_value"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_dpd_value"
+                app:layout_constraintTop_toBottomOf="@+id/barrier_dpd"
                 app:layout_constraintStart_toEndOf="@+id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBaseline_toBaselineOf="@+id/text_view_last_payment"

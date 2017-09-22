@@ -29,9 +29,9 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/Laporan_Tab"
             android:layout_marginTop="10dp"
-            android:background="@color/Background_PageTitle"
+            android:background="@color/colorPrimary"
             app:tabTextColor="@color/White"
-            app:tabSelectedTextColor="@color/White"
+            app:tabSelectedTextColor="@color/TabFontSelectedColor"
             app:tabIndicatorColor="@color/White"
             app:tabTextAppearance="@style/TabLayoutNotAllCaps"
             app:tabGravity="fill"

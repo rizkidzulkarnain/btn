@@ -92,7 +92,10 @@ public class ReportDistribusiDebiturFragment extends BaseFragment {
         mListDebiturViewModel.error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                displayMessage(R.string.GagalMendapatkanData);
+                if (mPage == 1) {
+                    mListDebiturViewModel.obsIsEmpty.set(true);
+                }
+                mFooterAdapter.clear();
             }
         });
         mListDebiturViewModel.obsDebiturResponse.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {

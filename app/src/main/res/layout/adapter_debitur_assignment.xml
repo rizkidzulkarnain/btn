@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/BackgroundDebiturListItem">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -19,6 +20,7 @@
 
             <CheckBox
                 android:id="@+id/AccountAssignmentAdapter_CheckBox"
+                android:buttonTint="@color/White"
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
@@ -35,7 +37,7 @@
             <!--Nama Debitur-->
             <TextView
                 android:id="@+id/text_view_nama_debitur"
-                style="@style/FontBold.Medium"
+                style="@style/FontBold.Medium.White"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -44,7 +46,7 @@
 
             <View
                 android:id="@+id/view_separator"
-                android:background="@color/Grey"
+                android:background="@color/colorAccentSecond"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -62,7 +64,7 @@
 
                 <TextView
                     android:id="@+id/text_view_no_rekening"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_weight="3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -74,7 +76,7 @@
                 <!--Nomor Rekening value-->
                 <TextView
                     android:id="@+id/text_view_no_rekening_value"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_weight="7"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -94,7 +96,7 @@
 
                 <TextView
                     android:id="@+id/text_view_tagihan"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_weight="3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -107,7 +109,7 @@
                 <!--Tagihan value-->
                 <TextView
                     android:id="@+id/text_view_tagihan_value"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_weight="7"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -127,7 +129,7 @@
 
                 <TextView
                     android:id="@+id/text_view_dpd"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_weight="3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -140,7 +142,7 @@
                 <!--DPD value-->
                 <TextView
                     android:id="@+id/text_view_dpd_value"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_weight="7"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -160,7 +162,7 @@
 
                 <TextView
                     android:id="@+id/text_view_last_payment"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_weight="3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -172,7 +174,7 @@
                 <!--Last Payment value-->
                 <TextView
                     android:id="@+id/text_view_last_payment_value"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_weight="7"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

@@ -10,11 +10,13 @@ import org.json.JSONObject;
 public class DashboardData
 {
     public String Kategori;
-    public int Target;
-    public int Realisasi;
-    public double RealisasiProsentase;
-    public int Outstanding;
-    public double OutstandingProsentase;
+    public String Target;
+    public String Realisasi;
+    public String RealisasiProsentase;
+    public String Outstanding;
+    public String OutstandingProsentase;
+    public double RealisasiProsentaseValue;
+    public double OutstandingProsentaseValue;
 
     //parse data
     public void Parse(JSONObject dataObject)
@@ -22,11 +24,13 @@ public class DashboardData
         try
         {
             Kategori = dataObject.getString("Kategori");
-            Target = dataObject.getInt("Target");
-            Realisasi = dataObject.getInt("Realisasi");
-            RealisasiProsentase = dataObject.getDouble("RealisasiProsentase");
-            Outstanding = dataObject.getInt("Outstanding");
-            OutstandingProsentase = dataObject.getDouble("OutstandingProsentase");
+            Target = dataObject.getString("Target");
+            Realisasi = dataObject.getString("Realisasi");
+            RealisasiProsentase = dataObject.getString("RealisasiProsentase");
+            Outstanding = dataObject.getString("Outstanding");
+            OutstandingProsentase = dataObject.getString("OutstandingProsentase");
+            RealisasiProsentaseValue = dataObject.getDouble("RealisasiProsentaseValue");
+            OutstandingProsentaseValue = dataObject.getDouble("OutstandingProsentaseValue");
         }
         catch (JSONException e)
         {

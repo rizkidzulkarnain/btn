@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_medium_large"
-        android:layout_marginEnd="@dimen/padding_medium_large">
+        android:layout_marginEnd="@dimen/padding_medium_large"
+        app:cardBackgroundColor="@color/BackgroundDebiturListItem">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,7 +32,7 @@
             <!--Nama Staff-->
             <TextView
                 android:id="@+id/text_view_nama_staff"
-                style="@style/FontBold.Medium"
+                style="@style/FontBold.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +43,7 @@
 
             <View
                 android:id="@+id/view_separator"
-                android:background="@color/Grey"
+                android:background="@color/colorAccentSecond"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -53,7 +54,7 @@
             <!--Jumlah Penugasan-->
             <TextView
                 android:id="@+id/text_view_jumlah_penugasan"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -65,7 +66,7 @@
             <!--Jumlah Penugasan value-->
             <TextView
                 android:id="@+id/text_view_jumlah_penugasan_value"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/view_separator"
@@ -86,7 +87,7 @@
             <!--Jumlah Outstanding-->
             <TextView
                 android:id="@+id/text_view_jumlah_outstanding"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -98,7 +99,7 @@
             <!--Jumlah Outstading value-->
             <TextView
                 android:id="@+id/text_view_jumlah_outstanding_value"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/barrier_jumlah_penugasan"
@@ -119,7 +120,7 @@
             <!--Jumlah sudah kunjungan-->
             <TextView
                 android:id="@+id/text_view_jumlah_sudah_kunjungan"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -131,7 +132,7 @@
             <!--Jumlah sudah kunjungan value-->
             <TextView
                 android:id="@+id/text_view_jumlah_sudah_kunjungan_value"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/barrier_jumlah_outstanding"
@@ -152,7 +153,7 @@
             <!--Jumlah Belum Kunjungan-->
             <TextView
                 android:id="@+id/text_view_jumlah_belum_kunjungan"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -164,7 +165,7 @@
             <!--Jumlah Belum Kunjungan value-->
             <TextView
                 android:id="@+id/text_view_jumlah_belum_kunjungan_value"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/barrier_jumlah_sudah_kunjungan"

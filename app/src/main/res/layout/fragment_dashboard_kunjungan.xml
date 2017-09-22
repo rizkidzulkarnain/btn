@@ -15,7 +15,7 @@
 
         <Spinner
             android:id="@+id/DashboardKunjunganFragment_Spinner"
-            android:background="@color/Background_Spinner1"
+            android:background="@color/Background_Spinner"
             android:dropDownSelector="@color/White"
             android:padding="5dp"
             android:layout_centerInParent="true"

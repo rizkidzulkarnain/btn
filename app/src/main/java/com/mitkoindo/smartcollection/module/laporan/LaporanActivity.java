@@ -29,8 +29,8 @@ public class LaporanActivity extends BaseActivity
     private ListStaffDownlineFragment fragment_StaffDownline;
     private ReportDistribusiStaffFragment fragment_ReportDistribusiStaff;
     private ReportDistribusiDebiturFragment fragment_ReportDistribusiDebitur;
-    private StaffProductivityPortraitFragment fragment_StaffProductivityPortrait;
     private StaffProductivityLandscapeFragment fragment_StaffProductivityLandscape;
+    private StaffProductivityPortraitFragment fragment_StaffProductivityPortrait;
     private SupervisorArchiveFragment fragment_SupervisorArchive;
 
     //tab layout
@@ -128,8 +128,7 @@ public class LaporanActivity extends BaseActivity
     {
         //create fragments
         fragment_Archive = new ArchiveFragment();
-        /*fragment_ReportDistribusiDebitur = (ReportDistribusiDebiturFragment) ReportDistribusiDebiturFragment.getInstance(ListDebiturActivity.EXTRA_TYPE_ACCOUNT_ASSIGNMENT_VALUE, ResourceLoader.LoadUserID(this));*/
-        fragment_StaffProductivityPortrait = StaffProductivityPortraitFragment.getInstance(getUserId());
+        fragment_StaffProductivityPortrait = StaffProductivityPortraitFragment.getInstance(ResourceLoader.LoadUserID(this));
 
         //set property transaksi ke fragment
         fragment_Archive.SetTransactionData(baseURL, url_DataSP, authToken, userID);
@@ -137,13 +136,11 @@ public class LaporanActivity extends BaseActivity
         //create fragment titles
         ArrayList<String> fragmentTitles = new ArrayList<>();
         fragmentTitles.add(getString(R.string.Laporan_Tab_Arsip));
-        /*fragmentTitles.add(getString(R.string.Laporan_Tab_Monitoring));*/
         fragmentTitles.add(getString(R.string.Laporan_Tab_StaffProductivity));
 
         //create fragment list
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(fragment_Archive);
-        /*fragments.add(fragment_ReportDistribusiDebitur);*/
         fragments.add(fragment_StaffProductivityPortrait);
 
         //set fragment ke views

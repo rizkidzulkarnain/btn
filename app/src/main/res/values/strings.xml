@@ -173,6 +173,9 @@
     <string name="FormVisit_FotoAgunan">Foto agunan</string>
     <string name="FormVisit_Signature">Tanda tangan</string>
     <string name="FormVisit_Submit">Submit</string>
+    <string name="FormVisit_camera_permission_description">Perlu Permission Camera</string>
+    <string name="FormVisit_setting_camera_permission">Anda sebelumnya menolak Permission Camera, Aktifkan kembali Permission Camera ?</string>
+    <string name="FormVisit_denied_camera_permission">Menolak Permission Camera</string>
     <string name="FormVisit_external_storage_permission_description">Perlu Permission Media Penyimpan</string>
     <string name="FormVisit_setting_external_storage_permission">Anda sebelumnya menolak Permission Media Penyimpan, Aktifkan kembali Permission Media Penyimpan ?</string>
     <string name="FormVisit_denied_external_storage_permission">Menolak Permission Media Penyimpan</string>

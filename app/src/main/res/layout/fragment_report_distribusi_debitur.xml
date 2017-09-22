@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/colorAccent">
+            android:background="@color/colorPrimary">
 
             <TextView
                 style="@style/FontRegular.Small.White"
@@ -67,6 +67,8 @@
                         android:textColorHint="@color/Grey"
                         android:hint="@string/ListDebitur_SearchHint"
                         android:background="@color/Transparent"
+                        android:inputType="text"
+                        android:maxLines="1"
                         android:text="@={listDebiturVideModel.obsSearch}"/>
                     <ImageView
                         android:id="@+id/image_view_search"

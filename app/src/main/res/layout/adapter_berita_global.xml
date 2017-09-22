@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@color/White"
+    android:background="@drawable/background_rounded_rectangle_genericlist"
     android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -12,14 +12,14 @@
         android:id="@+id/AdapterBeritaGlobal_Title"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/Black"
+        android:textColor="@color/White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <!--Divider-->
     <View
         android:layout_marginTop="5dp"
-        android:background="@color/Black"
+        android:background="@color/colorAccentSecond"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
@@ -32,18 +32,20 @@
 
         <TextView
             android:text="@string/Berita_Adapter_SendTime"
+            android:textColor="@color/White"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/AdapterBeritaGlobal_SendTime"
+            android:textColor="@color/White"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <!--Underline-->
         <View
-            android:background="@color/Line_News_SenderUnderline"
+            android:background="@color/colorAccentSecond"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
     </LinearLayout>
@@ -51,6 +53,7 @@
     <!--News content-->
     <TextView
         android:id="@+id/AdapterBeritaGlobal_Content"
+        android:textColor="@color/White"
         android:layout_marginTop="10dp"
         android:maxLines="3"
         android:ellipsize="end"

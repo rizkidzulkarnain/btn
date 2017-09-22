@@ -16,7 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_medium_large"
-        android:layout_marginEnd="@dimen/padding_medium_large">
+        android:layout_marginEnd="@dimen/padding_medium_large"
+        app:cardBackgroundColor="@color/BackgroundDebiturListItem">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -26,7 +27,7 @@
             <!--Nama-->
             <TextView
                 android:id="@+id/text_view_nama_staff"
-                style="@style/FontBold.Medium"
+                style="@style/FontBold.Medium.White"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -37,13 +38,13 @@
             <!--Group Name-->
             <TextView
                 android:id="@+id/text_view_group_name"
-                style="@style/FontRegular.Small"
+                style="@style/FontRegular.Small.White"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_small"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_nama_staff"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="@{staffItem.group}"
+                android:text="@{staffItem.groupName}"
                 tools:text="Skip Tracer"/>
 
         </android.support.constraint.ConstraintLayout>

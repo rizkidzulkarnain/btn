@@ -1,14 +1,17 @@
 package com.mitkoindo.smartcollection.module.laporan.agenttracking;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
@@ -26,6 +30,7 @@ import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.base.BaseFragment;
 import com.mitkoindo.smartcollection.databinding.FragmentListAgentTrackingBinding;
+import com.mitkoindo.smartcollection.module.laporan.LaporanVisitActivity;
 import com.mitkoindo.smartcollection.objectdata.AgentTracking;
 import com.mitkoindo.smartcollection.utils.Constant;
 import com.mitkoindo.smartcollection.utils.SimpleListItemDecoration;
@@ -40,7 +45,8 @@ import butterknife.OnClick;
  * Created by ericwijaya on 9/18/17.
  */
 
-public class ListAgentTrackingFragment extends BaseFragment implements OnMapReadyCallback {
+public class ListAgentTrackingFragment extends BaseFragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
+        GoogleMap.OnMapClickListener {
 
     private static final String EXTRA_USER_ID = "extra_user_id";
 
@@ -48,6 +54,8 @@ public class ListAgentTrackingFragment extends BaseFragment implements OnMapRead
     private FragmentListAgentTrackingBinding mBinding;
 
     private GoogleMap mGoogleMap = null;
+    private Marker mCurrentMarker = null;
+    private ArrayMap<Marker, Integer> mMarkerArrayMap= new ArrayMap<>();
 
     private FastItemAdapter mFastAdapter;
     private String mUserId;
@@ -135,6 +143,7 @@ public class ListAgentTrackingFragment extends BaseFragment implements OnMapRead
             public void onPropertyChanged(Observable sender, int propertyId) {
                 displayMessage(R.string.GagalMendapatkanData);
                 mFastAdapter.clear();
+                mAgentTrackingViewModel.obsIsEmpty.set(true);
                 if (mGoogleMap != null) {
                     mGoogleMap.clear();
                 }
@@ -161,6 +170,14 @@ public class ListAgentTrackingFragment extends BaseFragment implements OnMapRead
                 mAgentTrackingViewModel.getListAgentTracking(mUserId, mAgentTrackingViewModel.obsTanggal.get());
             }
         });
+        mAgentTrackingViewModel.obsIsMap.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (!mAgentTrackingViewModel.obsIsMap.get()) {
+                    mAgentTrackingViewModel.obsIsInfoWindowShow.set(false);
+                }
+            }
+        });
 
         setupRecyclerView();
         setupMap();
@@ -180,7 +197,11 @@ public class ListAgentTrackingFragment extends BaseFragment implements OnMapRead
         mFastAdapter.withOnClickListener(new FastAdapter.OnClickListener<AgentTracking>() {
             @Override
             public boolean onClick(View v, IAdapter<AgentTracking> adapter, AgentTracking item, int position) {
-
+                if (!TextUtils.isEmpty(item.getIDVisit())) {
+                    Intent intent = new Intent(getContext(), LaporanVisitActivity.class);
+                    intent.putExtra("VisitID", item.getIDVisit());
+                    startActivity(intent);
+                }
                 return true;
             }
         });
@@ -241,7 +262,9 @@ public class ListAgentTrackingFragment extends BaseFragment implements OnMapRead
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
-        mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
+        mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
+        mGoogleMap.setOnMarkerClickListener(this);
+        mGoogleMap.setOnMapClickListener(this);
     }
 
     private void setupMap() {
@@ -252,6 +275,9 @@ public class ListAgentTrackingFragment extends BaseFragment implements OnMapRead
     private void dropPin() {
         if (mGoogleMap != null && mAgentTrackingViewModel.obsAgentTrackingResponse.get() != null) {
             mGoogleMap.clear();
+            mAgentTrackingViewModel.obsIsInfoWindowShow.set(false);
+            mCurrentMarker = null;
+
             int i = 0;
             for (AgentTracking agentTracking : mAgentTrackingViewModel.obsAgentTrackingResponse.get()) {
                 LatLng latLng = new LatLng(agentTracking.getLatitude(), agentTracking.getLongitude());
@@ -283,13 +309,15 @@ public class ListAgentTrackingFragment extends BaseFragment implements OnMapRead
                         drawable = BitmapDescriptorFactory.HUE_YELLOW;
                     }
                 }
-                mGoogleMap.addMarker(new MarkerOptions()
+
+                Marker marker = mGoogleMap.addMarker(new MarkerOptions()
                         .position(latLng)
                         .title(agentTracking.getTimeFormatted())
                         .snippet(agentTracking.getAddress())
                         .icon(BitmapDescriptorFactory.defaultMarker(drawable)));
 //                      .icon(BitmapDescriptorFactory.fromResource(drawable)));
 
+                mMarkerArrayMap.put(marker, i);
 
                 if (i == 0) {
                     CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 16);
@@ -304,5 +332,33 @@ public class ListAgentTrackingFragment extends BaseFragment implements OnMapRead
     @OnClick(R.id.image_view_switch_layout)
     public void onSwitchViewClicked(View view) {
         mAgentTrackingViewModel.obsIsMap.set(!mAgentTrackingViewModel.obsIsMap.get());
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        mCurrentMarker = marker;
+        Integer position = mMarkerArrayMap.get(marker);
+        AgentTracking agentTracking = mAgentTrackingViewModel.obsAgentTrackingResponse.get().get(position);
+        mAgentTrackingViewModel.obsInfoWindowTime.set(agentTracking.getTimeFormatted());
+        mAgentTrackingViewModel.obsInfoWindowAddress.set(agentTracking.getAddress());
+        mAgentTrackingViewModel.obsIsInfoWindowShow.set(true);
+        return true;
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        mAgentTrackingViewModel.obsIsInfoWindowShow.set(false);
+    }
+
+    @OnClick(R.id.card_view_info_window)
+    public void onInfoWindowClicked(View view) {
+        Integer position = mMarkerArrayMap.get(mCurrentMarker);
+        AgentTracking agentTracking = mAgentTrackingViewModel.obsAgentTrackingResponse.get().get(position);
+
+        if (!TextUtils.isEmpty(agentTracking.getIDVisit())) {
+            Intent intent = new Intent(getContext(), LaporanVisitActivity.class);
+            intent.putExtra("VisitID", agentTracking.getIDVisit());
+            startActivity(intent);
+        }
     }
 }

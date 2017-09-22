@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_medium_large"
-        android:layout_marginEnd="@dimen/padding_medium_large">
+        android:layout_marginEnd="@dimen/padding_medium_large"
+        app:cardBackgroundColor="@color/BackgroundDebiturListItem">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,7 +25,7 @@
             <!--Jumlah sudah kunjungan-->
             <TextView
                 android:id="@+id/text_view_jumlah_sudah_kunjungan"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/padding_medium"
@@ -36,7 +37,7 @@
             <!--Jumlah sudah kunjungan value-->
             <TextView
                 android:id="@+id/text_view_jumlah_sudah_kunjungan_value"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -49,7 +50,7 @@
             <!--Jumlah Belum Kunjungan-->
             <TextView
                 android:id="@+id/text_view_jumlah_belum_kunjungan"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -62,7 +63,7 @@
             <!--Jumlah Belum Kunjungan value-->
             <TextView
                 android:id="@+id/text_view_jumlah_belum_kunjungan_value"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_jumlah_sudah_kunjungan"

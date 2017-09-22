@@ -15,7 +15,7 @@
 
         <Spinner
             android:id="@+id/DashboardPTPFragment_Spinner"
-            android:background="@color/Background_Spinner1"
+            android:background="@color/Background_Spinner"
             android:dropDownSelector="@color/White"
             android:gravity="center"
             android:padding="5dp"

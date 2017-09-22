@@ -338,19 +338,33 @@ public class FormVisitActivity extends BaseActivity {
         mFormVisitViewModel.isFotoAgunan2Show.set(false);
     }
 
+
+    final private int REQ_CODE_CAMERA_PERMISSION = 55;
+    private void requestCameraPermission() {
+        if (!isCameraPermissionGranted()) {
+            ToastUtils.toastShort(this, getString(R.string.FormVisit_camera_permission_description));
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQ_CODE_CAMERA_PERMISSION);
+        } else {
+            getPicture(mViewId);
+        }
+    }
+
+    private boolean isCameraPermissionGranted() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+    }
+
     final private int REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_FROM_PICTURE = 123;
-    private void getPermission(final String aPermission, final int aRequestCode, String aDescription, int aId) {
+    private void getPermission(final String aPermission, final int aRequestCode, String aDescription) {
         int hasWriteExternalStoragePermission = ContextCompat.checkSelfPermission(this, aPermission);
         if (hasWriteExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(this, aPermission)) {
                 ToastUtils.toastShort(this, aDescription);
             }
-            ActivityCompat.requestPermissions(this,
-                    new String[]{aPermission},
-                    aRequestCode);
+            ActivityCompat.requestPermissions(this, new String[]{aPermission}, aRequestCode);
             return;
         }
-        getPicture(aId);
+
+        requestCameraPermission();
     }
 
     @Override
@@ -358,7 +372,7 @@ public class FormVisitActivity extends BaseActivity {
         switch (requestCode) {
             case REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_FROM_PICTURE: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getPicture(mViewId);
+                    requestCameraPermission();
                 } else {
                     if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[0])) {
                         ToastUtils.toastShort(this, getString(R.string.FormVisit_external_storage_permission_description));
@@ -386,6 +400,36 @@ public class FormVisitActivity extends BaseActivity {
                     }
                 }
                 break;
+            }
+            case REQ_CODE_CAMERA_PERMISSION: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    requestCameraPermission();
+                } else {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[0])) {
+                        ToastUtils.toastShort(this, getString(R.string.FormVisit_camera_permission_description));
+                    } else {
+                        new AlertDialog.Builder(this)
+                                .setMessage(getString(R.string.FormVisit_setting_camera_permission))
+                                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent();
+                                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        Uri uri = Uri.fromParts("package", FormVisitActivity.this.getPackageName(), null);
+                                        intent.setData(uri);
+                                        startActivity(intent);
+                                    }
+                                })
+                                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ToastUtils.toastShort(FormVisitActivity.this, getString(R.string.FormVisit_denied_camera_permission));
+                                    }
+                                })
+                                .create()
+                                .show();
+                    }
+                }
             }
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -712,21 +756,21 @@ public class FormVisitActivity extends BaseActivity {
     public void onAmbilFotoDebiturClicked(View view) {
         mViewId = R.id.button_foto_debitur;
         getPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_FROM_PICTURE,
-                getString(R.string.FormVisit_external_storage_permission_description), R.id.button_foto_debitur);
+                getString(R.string.FormVisit_external_storage_permission_description));
     }
 
     @OnClick(R.id.button_foto_agunan_1)
     public void onAmbilFotoAgunan1Clicked(View view) {
         mViewId = R.id.button_foto_agunan_1;
         getPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_FROM_PICTURE,
-                getString(R.string.FormVisit_external_storage_permission_description), R.id.button_foto_agunan_1);
+                getString(R.string.FormVisit_external_storage_permission_description));
     }
 
     @OnClick(R.id.button_foto_agunan_2)
     public void onAmbilFotoAgunan2Clicked(View view) {
         mViewId = R.id.button_foto_agunan_2;
         getPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_FROM_PICTURE,
-                getString(R.string.FormVisit_external_storage_permission_description), R.id.button_foto_agunan_2);
+                getString(R.string.FormVisit_external_storage_permission_description));
     }
 
     @OnClick(R.id.button_submit)

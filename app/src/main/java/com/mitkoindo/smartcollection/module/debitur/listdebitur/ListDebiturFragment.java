@@ -147,8 +147,23 @@ public class ListDebiturFragment extends BaseFragment {
                             mListDebiturViewModel.obsIsEmpty.set(true);
                         }
                     }
+                } else {
+                    if (mStatus.equals(RestConstants.LIST_DEBITUR_STATUS_PENDING_VALUE) && mPage == 1) {
+                        displayMessage(R.string.GagalMendapatListDebitur);
+
+                        List<DebiturItem> debiturItemList = new ArrayList<DebiturItem>();
+                        List<DebiturItemDb> debiturItemDbList = RealmHelper.getListDebiturItem();
+                        for (DebiturItemDb debiturItemDb : debiturItemDbList) {
+                            debiturItemList.add(debiturItemDb.toDebiturItem());
+                        }
+
+                        mListDebiturViewModel.obsDebiturResponse.set(debiturItemList);
+                    } else if (mPage == 1) {
+                        mListDebiturViewModel.obsIsEmpty.set(true);
+                    }
                 }
                 mBinding.swipeRefreshLayoutDebitur.setRefreshing(false);
+                mFooterAdapter.clear();
             }
         });
         mListDebiturViewModel.obsDebiturResponse.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {

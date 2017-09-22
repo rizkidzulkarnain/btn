@@ -338,8 +338,10 @@ public class DashboardPTPFragment extends Fragment
                     //Add data ke pie entry debitur
                     /*PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentase, "Realisasi");
                     PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentase, "Outstanding");*/
-                    PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentase, "Janji Bayar");
-                    PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentase, "Outstanding");
+                    /*PieEntry pieEntry = new PieEntry((float) Double.parseDouble(currentdashboardData.RealisasiProsentase), "Janji Bayar");
+                    PieEntry pieEntry1 = new PieEntry((float) Double.parseDouble(currentdashboardData.OutstandingProsentase), "Outstanding");*/
+                    PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentaseValue, "Janji Bayar");
+                    PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentaseValue, "Outstanding");
 
                     //add ke list
                     pieEntries_Dabitur.add(pieEntry);
@@ -362,8 +364,10 @@ public class DashboardPTPFragment extends Fragment
                     //add data ke pie entry nominal
                     /*PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentase, "Realisasi");
                     PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentase, "Outstanding");*/
-                    PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentase, "Janji Bayar");
-                    PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentase, "Outstanding");
+                    /*PieEntry pieEntry = new PieEntry((float) Double.parseDouble(currentdashboardData.RealisasiProsentase), "Janji Bayar");
+                    PieEntry pieEntry1 = new PieEntry((float) Double.parseDouble(currentdashboardData.OutstandingProsentase), "Outstanding");*/
+                    PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentaseValue, "Janji Bayar");
+                    PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentaseValue, "Outstanding");
 
                     //add ke list
                     pieEntries_Nominal.add(pieEntry);

@@ -79,8 +79,11 @@ public class ListStaffDownlineFragment extends BaseFragment {
         mStaffDownlineViewModel.error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                displayMessage(R.string.GagalMendapatkanData);
+                if (getUserVisibleHint()) {
+//                    displayMessage(R.string.GagalMendapatkanData);
+                }
                 mFastAdapter.clear();
+                mStaffDownlineViewModel.obsIsEmpty.set(true);
             }
         });
         mStaffDownlineViewModel.obsStaffItemResponse.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {

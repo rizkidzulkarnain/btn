@@ -83,7 +83,7 @@
                             app:layout_constraintBottom_toBottomOf="@+id/text_view_no_rekening"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:background="@color/Background_PageTitle"/>
+                            android:background="@color/BackgroundDebiturListItem"/>
 
                         <!--Nama Debitur-->
                         <TextView

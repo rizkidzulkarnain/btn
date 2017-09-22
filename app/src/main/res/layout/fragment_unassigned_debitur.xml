@@ -58,7 +58,7 @@
 
     <!--Spinner untuk sorting-->
     <LinearLayout
-        android:background="@color/Background_PageTitle"
+        android:background="@color/Background_Spinner"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:layout_width="match_parent"

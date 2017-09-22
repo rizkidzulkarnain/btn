@@ -91,8 +91,15 @@ public class StaffProductivityLandscapeFragment extends BaseFragment {
         mStaffProductivityViewModel.error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                displayMessage(R.string.GagalMendapatkanData);
+                if (getUserVisibleHint()) {
+                    if (mStaffProductivityViewModel.errorType == StaffProductivityViewModel.NOT_FOUND_ERROR_TYPE) {
+                        displayMessage(R.string.GagalDataTanggalIni);
+                    } else {
+                        displayMessage(R.string.GagalMendapatkanData);
+                    }
+                }
                 mFastAdapter.clear();
+                mStaffProductivityViewModel.obsIsEmpty.set(true);
             }
         });
         mStaffProductivityViewModel.obsListStaffProductivity.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
@@ -151,7 +158,7 @@ public class StaffProductivityLandscapeFragment extends BaseFragment {
             public void onClick(View v, int position, FastAdapter<StaffProductivity> fastAdapter, StaffProductivity item) {
                 int timeRange1 = Utils.stringToInt(item.getTimeRange1());
                 if (timeRange1 > 0) {
-                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), item.getUserID(), mStaffProductivityViewModel.obsTanggal.get(), "1"));
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), item.getUserID(), mStaffProductivityViewModel.obsTanggal.get(), "1", item.getFullName()));
                 }
             }
         });
@@ -169,7 +176,7 @@ public class StaffProductivityLandscapeFragment extends BaseFragment {
             public void onClick(View v, int position, FastAdapter<StaffProductivity> fastAdapter, StaffProductivity item) {
                 int timeRange2 = Utils.stringToInt(item.getTimeRange2());
                 if (timeRange2 > 0) {
-                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), item.getUserID(), mStaffProductivityViewModel.obsTanggal.get(), "2"));
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), item.getUserID(), mStaffProductivityViewModel.obsTanggal.get(), "2", item.getFullName()));
                 }
             }
         });
@@ -187,7 +194,7 @@ public class StaffProductivityLandscapeFragment extends BaseFragment {
             public void onClick(View v, int position, FastAdapter<StaffProductivity> fastAdapter, StaffProductivity item) {
                 int timeRange3 = Utils.stringToInt(item.getTimeRange3());
                 if (timeRange3 > 0) {
-                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), item.getUserID(), mStaffProductivityViewModel.obsTanggal.get(), "3"));
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), item.getUserID(), mStaffProductivityViewModel.obsTanggal.get(), "3", item.getFullName()));
                 }
             }
         });
@@ -205,7 +212,7 @@ public class StaffProductivityLandscapeFragment extends BaseFragment {
             public void onClick(View v, int position, FastAdapter<StaffProductivity> fastAdapter, StaffProductivity item) {
                 int timeRange4 = Utils.stringToInt(item.getTimeRange4());
                 if (timeRange4 > 0) {
-                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), item.getUserID(), mStaffProductivityViewModel.obsTanggal.get(), "4"));
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), item.getUserID(), mStaffProductivityViewModel.obsTanggal.get(), "4", item.getFullName()));
                 }
             }
         });
@@ -223,7 +230,7 @@ public class StaffProductivityLandscapeFragment extends BaseFragment {
             public void onClick(View v, int position, FastAdapter<StaffProductivity> fastAdapter, StaffProductivity item) {
                 int timeRange5 = Utils.stringToInt(item.getTimeRange5());
                 if (timeRange5 > 0) {
-                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), item.getUserID(), mStaffProductivityViewModel.obsTanggal.get(), "5"));
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), item.getUserID(), mStaffProductivityViewModel.obsTanggal.get(), "5", item.getFullName()));
                 }
             }
         });
@@ -241,7 +248,7 @@ public class StaffProductivityLandscapeFragment extends BaseFragment {
             public void onClick(View v, int position, FastAdapter<StaffProductivity> fastAdapter, StaffProductivity item) {
                 int timeRange6 = Utils.stringToInt(item.getTimeRange6());
                 if (timeRange6 > 0) {
-                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), item.getUserID(), mStaffProductivityViewModel.obsTanggal.get(), "6"));
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), item.getUserID(), mStaffProductivityViewModel.obsTanggal.get(), "6", item.getFullName()));
                 }
             }
         });
@@ -259,7 +266,7 @@ public class StaffProductivityLandscapeFragment extends BaseFragment {
             public void onClick(View v, int position, FastAdapter<StaffProductivity> fastAdapter, StaffProductivity item) {
                 int timeRange7 = Utils.stringToInt(item.getTimeRange7());
                 if (timeRange7 > 0) {
-                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), item.getUserID(), mStaffProductivityViewModel.obsTanggal.get(), "7"));
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), item.getUserID(), mStaffProductivityViewModel.obsTanggal.get(), "7", item.getFullName()));
                 }
             }
         });

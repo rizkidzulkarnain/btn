@@ -68,9 +68,10 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tujuan_kunjungan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <TextView
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -102,9 +103,10 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_alamat_yang_dikunjungi"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <TextView
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -136,10 +138,11 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_orang_yang_ditemui"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <TextView
                         android:id="@+id/edit_text_orang_yang_ditemui"
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -171,9 +174,10 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_hubungan_dengan_debitur"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <TextView
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -205,9 +209,10 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_hasil_kunjungan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <TextView
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -241,10 +246,11 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tanggal_janji_debitur"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:visibility="@{formVisitKonfirmasiViewModel.obsIsShowTanggalJanjiDebitur ? View.VISIBLE : View.GONE}">
+                    android:visibility="@{formVisitKonfirmasiViewModel.obsIsShowTanggalJanjiDebitur ? View.VISIBLE : View.GONE}"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <TextView
                         android:id="@+id/text_view_tanggal_janji_debitur_date"
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -277,10 +283,11 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_view_jumlah_yang_akan_disetor"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:visibility="@{formVisitKonfirmasiViewModel.obsIsShowJumlahYangAkanDisetor ? View.VISIBLE : View.GONE}">
+                    android:visibility="@{formVisitKonfirmasiViewModel.obsIsShowJumlahYangAkanDisetor ? View.VISIBLE : View.GONE}"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <TextView
                         android:id="@+id/edit_text_jumlah_yang_akan_disetor"
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -312,9 +319,10 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_status_agunan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <TextView
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -346,9 +354,10 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_kondisi_agunan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <TextView
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -380,9 +389,10 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_alasan_menunggak"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <TextView
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -414,9 +424,10 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tindak_lanjut"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <TextView
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -448,10 +459,11 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tanggal_tindak_lanjut"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <TextView
                         android:id="@+id/text_view_tanggal_tindak_lanjut_date"
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -482,10 +494,11 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_catatan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardBackgroundColor="@color/colorAccentSecond">
                     <TextView
                         android:id="@+id/edit_text_catatan"
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"

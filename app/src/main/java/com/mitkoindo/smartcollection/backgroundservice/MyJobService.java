@@ -58,7 +58,7 @@ public class MyJobService extends JobService {
     public static final String ACCESS_TOKEN = "access_token";
     public static final String USER_ID = "user_id";
 
-    private CompositeDisposable mComposites;
+    private CompositeDisposable mComposites = new CompositeDisposable();
     private JobParameters mJobParameters;
     private String mAccessToken;
     private String mUserId;
@@ -68,21 +68,18 @@ public class MyJobService extends JobService {
     public void onCreate() {
         super.onCreate();
 
-        Timber.i("onCreate");
-        mComposites = new CompositeDisposable();
+        Timber.i("___onCreate");
     }
 
     @Override
     public void onDestroy() {
-        Timber.i("onDestroy");
-        mComposites.clear();
-
+        Timber.i("___onDestroy");
         super.onDestroy();
     }
 
     @Override
     public boolean onStartJob(JobParameters job) {
-        Timber.i("onStartJob");
+        Timber.i("___onStartJob");
 
         mJobParameters = job;
         mAccessToken = job.getExtras().getString(ACCESS_TOKEN);
@@ -97,7 +94,7 @@ public class MyJobService extends JobService {
 
     @Override
     public boolean onStopJob(JobParameters job) {
-        Timber.i("onStopJob");
+        Timber.i("___onStopJob");
         return false;
     }
 
@@ -109,7 +106,7 @@ public class MyJobService extends JobService {
                 .subscribeWith(new DisposableObserver<OfflineBundleResponse>() {
                     @Override
                     public void onNext(OfflineBundleResponse offlineBundleResponse) {
-                        Timber.i("getBundle success");
+                        Timber.i("___getBundle success");
 
                         List<DebiturItemDb> debiturItemDbList = new ArrayList<DebiturItemDb>();
                         for (DebiturItem debiturItem : offlineBundleResponse.getDebiturList()) {
@@ -155,7 +152,7 @@ public class MyJobService extends JobService {
 
                     @Override
                     public void onError(Throwable e) {
-                        Timber.e("getBundle Error");
+                        Timber.e("___getBundle Error");
                     }
 
                     @Override
@@ -191,7 +188,7 @@ public class MyJobService extends JobService {
                                     .doOnNext(new Consumer<List<FormCallResponse>>() {
                                         @Override
                                         public void accept(List<FormCallResponse> formCallResponses) throws Exception {
-                                            Timber.i("sendFormCall doOnNext " + formCallResponses.get(0).getMessage());
+                                            Timber.i("___sendFormCall doOnNext " + formCallResponses.get(0).getMessage());
                                             RealmHelper.deleteFormCall(spParameterFormCall.getAccountNo());
                                         }
                                     });
@@ -200,17 +197,17 @@ public class MyJobService extends JobService {
                     .subscribeWith(new DisposableObserver<List<FormCallResponse>>() {
                         @Override
                         public void onNext(@NonNull List<FormCallResponse> formCallResponses) {
-                            Timber.i("sendFormCall onNext " + formCallResponses.get(0).getMessage());
+                            Timber.i("___sendFormCall onNext " + formCallResponses.get(0).getMessage());
                         }
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            Timber.e("sendFormCall Error");
+                            Timber.e("___sendFormCall Error");
                         }
 
                         @Override
                         public void onComplete() {
-                            Timber.i("sendFormCall onComplete");
+                            Timber.i("___sendFormCall onComplete");
 
 //                            NotificationCompat.Builder mBuilder =
 //                                    new NotificationCompat.Builder(MyJobService.this)
@@ -341,17 +338,17 @@ public class MyJobService extends JobService {
                     .subscribeWith(new DisposableObserver<List<FormVisitResponse>>() {
                         @Override
                         public void onNext(List<FormVisitResponse> formVisitResponses) {
-                            Timber.i("sendFormVisit onNext " + formVisitResponses.get(0).getMessage());
+                            Timber.i("___sendFormVisit onNext " + formVisitResponses.get(0).getMessage());
                         }
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            Timber.e("sendFormVisit Error");
+                            Timber.e("___sendFormVisit Error");
                         }
 
                         @Override
                         public void onComplete() {
-                            Timber.i("sendFormVisit onComplete");
+                            Timber.i("___sendFormVisit onComplete");
 
 //                            NotificationCompat.Builder mBuilder =
 //                                    new NotificationCompat.Builder(MyJobService.this)

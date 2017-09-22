@@ -272,7 +272,7 @@ public class LaporanVisitActivity extends AppCompatActivity
     private void AttachDataToViews()
     {
         view_TujuanKunjungan.setText(laporanVisit.TujuanVisitDesc);
-        view_Alamat.setText("");
+        view_Alamat.setText(laporanVisit.AlamatKunjunganDesc);
         view_YangDitemui.setText(laporanVisit.OrangYangDikunjungi);
         view_Hubungan.setText(laporanVisit.HubunganYangDikunjungiDesc);
         view_HasilKunjungan.setText(laporanVisit.HasilVisitDesc);

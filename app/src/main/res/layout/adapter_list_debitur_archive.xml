@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_medium_large"
-        android:layout_marginEnd="@dimen/padding_medium_large">
+        android:layout_marginEnd="@dimen/padding_medium_large"
+        app:cardBackgroundColor="@color/BackgroundDebiturListItem">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,7 +32,7 @@
             <!--Nama Debitur-->
             <TextView
                 android:id="@+id/text_view_nama_debitur"
-                style="@style/FontBold.Medium"
+                style="@style/FontBold.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +43,7 @@
 
             <View
                 android:id="@+id/view_separator"
-                android:background="@color/Grey"
+                android:background="@color/colorAccentSecond"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -53,7 +54,7 @@
             <!--Nomor Rekening-->
             <TextView
                 android:id="@+id/text_view_no_rekening"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -66,7 +67,7 @@
             <!--Nomor Rekening value-->
             <TextView
                 android:id="@+id/text_view_no_rekening_value"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/view_separator"
@@ -79,7 +80,7 @@
             <!--Tagihan-->
             <TextView
                 android:id="@+id/text_view_tagihan"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -92,7 +93,7 @@
             <!--Tagihan value-->
             <TextView
                 android:id="@+id/text_view_tagihan_value"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_no_rekening_value"
@@ -105,7 +106,7 @@
             <!--DPD-->
             <TextView
                 android:id="@+id/text_view_dpd"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -118,7 +119,7 @@
             <!--DPD value-->
             <TextView
                 android:id="@+id/text_view_dpd_value"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_tagihan_value"
@@ -131,7 +132,7 @@
             <!--Last Payment-->
             <TextView
                 android:id="@+id/text_view_last_payment"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -144,7 +145,7 @@
             <!--Last Payment value-->
             <TextView
                 android:id="@+id/text_view_last_payment_value"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_dpd_value"
@@ -157,7 +158,7 @@
             <!--Last Payment-->
             <TextView
                 android:id="@+id/text_view_last_kunjungan"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -169,7 +170,7 @@
             <!--Last Payment value-->
             <TextView
                 android:id="@+id/text_view_last_kunjungan_value"
-                style="@style/FontRegular.Medium"
+                style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_last_payment_value"

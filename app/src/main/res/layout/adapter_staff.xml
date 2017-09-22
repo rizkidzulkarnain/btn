@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@drawable/background_card_white"
+    android:background="@drawable/background_rounded_rectangle_genericlist"
     android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -10,12 +10,14 @@
     <TextView
         android:id="@+id/StaffAdapter_Staffname"
         android:textSize="16sp"
+        android:textColor="@color/White"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/StaffAdapter_Group"
         android:layout_marginTop="10dp"
+        android:textColor="@color/White"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

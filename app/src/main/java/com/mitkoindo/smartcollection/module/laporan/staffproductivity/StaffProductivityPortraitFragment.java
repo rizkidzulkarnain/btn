@@ -14,6 +14,7 @@ import com.mitkoindo.smartcollection.base.BaseFragment;
 import com.mitkoindo.smartcollection.databinding.FragmentStaffProductivityPortraitBinding;
 import com.mitkoindo.smartcollection.objectdata.StaffProductivity;
 import com.mitkoindo.smartcollection.utils.Constant;
+import com.mitkoindo.smartcollection.utils.ProfileUtils;
 import com.mitkoindo.smartcollection.utils.Utils;
 
 import java.text.SimpleDateFormat;
@@ -36,6 +37,7 @@ public class StaffProductivityPortraitFragment extends BaseFragment {
     private FragmentStaffProductivityPortraitBinding mBinding;
 
     private String mUserId;
+    private String mUserName;
     private Locale id = new Locale("in", "ID");
     private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constant.DATE_FORMAT_STAFF_PRODUCTIVITY, id);
     private SimpleDateFormat dateFormatterLayout = new SimpleDateFormat(Constant.DATE_FORMAT_DISPLAY_DATE, id);
@@ -62,6 +64,7 @@ public class StaffProductivityPortraitFragment extends BaseFragment {
 
         Bundle args = getArguments();
         mUserId = args.getString(EXTRA_USER_ID);
+        mUserName = ProfileUtils.getUserName(getContext());
 
         mStaffProductivityViewModel = new StaffProductivityViewModel(getAccessToken());
         addViewModel(mStaffProductivityViewModel);
@@ -83,10 +86,12 @@ public class StaffProductivityPortraitFragment extends BaseFragment {
         mStaffProductivityViewModel.error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                if (mStaffProductivityViewModel.errorType == StaffProductivityViewModel.NOT_FOUND_ERROR_TYPE) {
-                    displayMessage(R.string.GagalDataTanggalIni);
-                } else {
-                    displayMessage(R.string.GagalMendapatkanData);
+                if (getUserVisibleHint()) {
+                    if (mStaffProductivityViewModel.errorType == StaffProductivityViewModel.NOT_FOUND_ERROR_TYPE) {
+                        displayMessage(R.string.GagalDataTanggalIni);
+                    } else {
+                        displayMessage(R.string.GagalMendapatkanData);
+                    }
                 }
 
                 mStaffProductivityViewModel.obsStaffProductivity.set(mEmptyStaffProductivity);
@@ -114,49 +119,49 @@ public class StaffProductivityPortraitFragment extends BaseFragment {
             case R.id.background_1: {
                 int timeRange1 = Utils.stringToInt(mStaffProductivityViewModel.obsStaffProductivity.get().getTimeRange1());
                 if (timeRange1 > 0) {
-                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "1"));
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "1", mUserName));
                 }
                 break;
             }
             case R.id.background_2: {
                 int timeRange2 = Utils.stringToInt(mStaffProductivityViewModel.obsStaffProductivity.get().getTimeRange2());
                 if (timeRange2 > 0) {
-                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "2"));
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "2", mUserName));
                 }
                 break;
             }
             case R.id.background_3: {
                 int timeRange3 = Utils.stringToInt(mStaffProductivityViewModel.obsStaffProductivity.get().getTimeRange3());
                 if (timeRange3 > 0) {
-                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "3"));
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "3", mUserName));
                 }
                 break;
             }
             case R.id.background_4: {
                 int timeRange4 = Utils.stringToInt(mStaffProductivityViewModel.obsStaffProductivity.get().getTimeRange4());
                 if (timeRange4 > 0) {
-                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "4"));
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "4", mUserName));
                 }
                 break;
             }
             case R.id.background_5: {
                 int timeRange5 = Utils.stringToInt(mStaffProductivityViewModel.obsStaffProductivity.get().getTimeRange5());
                 if (timeRange5 > 0) {
-                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "5"));
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "5", mUserName));
                 }
                 break;
             }
             case R.id.background_6: {
                 int timeRange6 = Utils.stringToInt(mStaffProductivityViewModel.obsStaffProductivity.get().getTimeRange6());
                 if (timeRange6 > 0) {
-                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "6"));
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "6", mUserName));
                 }
                 break;
             }
             case R.id.background_7: {
                 int timeRange7 = Utils.stringToInt(mStaffProductivityViewModel.obsStaffProductivity.get().getTimeRange7());
                 if (timeRange7 > 0) {
-                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "7"));
+                    startActivity(StaffProductivityDebiturActivity.instantiate(getContext(), mUserId, mStaffProductivityViewModel.obsTanggal.get(), "7", mUserName));
                 }
                 break;
             }

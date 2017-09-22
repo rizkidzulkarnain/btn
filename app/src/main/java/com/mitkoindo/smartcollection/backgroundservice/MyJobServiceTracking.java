@@ -76,9 +76,9 @@ public class MyJobServiceTracking extends JobService implements GoogleApiClient.
     public void onDestroy() {
         Timber.i("onDestroy");
 
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
+//        if (mGoogleApiClient.isConnected()) {
+//            mGoogleApiClient.disconnect();
+//        }
 
         super.onDestroy();
     }

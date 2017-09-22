@@ -1,6 +1,7 @@
 package com.mitkoindo.smartcollection;
 
 import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
@@ -14,7 +15,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  * Created by ericwijaya on 8/16/17.
  */
 
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
 
     private static Application sInstance;
 

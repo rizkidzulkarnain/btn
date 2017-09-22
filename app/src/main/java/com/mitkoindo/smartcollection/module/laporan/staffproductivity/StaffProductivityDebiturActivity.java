@@ -21,7 +21,9 @@ import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturA
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturViewModel;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
+import com.mitkoindo.smartcollection.utils.Constant;
 import com.mitkoindo.smartcollection.utils.SimpleListItemDecoration;
+import com.mitkoindo.smartcollection.utils.Utils;
 
 
 /**
@@ -33,6 +35,7 @@ public class StaffProductivityDebiturActivity extends BaseActivity {
     private static final String EXTRA_USER_ID = "extra_user_id";
     private static final String EXTRA_ACTION_DATE = "extra_action_date";
     private static final String EXTRA_TIME_RANGE = "extra_time_range";
+    private static final String EXTRA_USER_NAME = "extra_user_name";
 
     private ListDebiturViewModel mListDebiturViewModel;
     private ActivityStaffProductivityDebiturBinding mBinding;
@@ -42,13 +45,17 @@ public class StaffProductivityDebiturActivity extends BaseActivity {
     private String mUserId;
     private String mActionDate;
     private String mTimeRange;
+    private String mUserName;
+    private String mDateFormatted;
+    private String mTimeRangeFormatted;
 
 
-    public static Intent instantiate(Context context, String userId, String actionDate, String timeRange) {
+    public static Intent instantiate(Context context, String userId, String actionDate, String timeRange, String userName) {
         Intent intent = new Intent(context, StaffProductivityDebiturActivity.class);
         intent.putExtra(EXTRA_USER_ID, userId);
         intent.putExtra(EXTRA_ACTION_DATE, actionDate);
         intent.putExtra(EXTRA_TIME_RANGE, timeRange);
+        intent.putExtra(EXTRA_USER_NAME, userName);
         return intent;
     }
 
@@ -87,7 +94,9 @@ public class StaffProductivityDebiturActivity extends BaseActivity {
         mListDebiturViewModel.error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                displayMessage(R.string.GagalMendapatkanData);
+//                displayMessage(R.string.GagalMendapatkanData);
+                mFastAdapter.clear();
+                mListDebiturViewModel.obsIsEmpty.set(true);
             }
         });
         mListDebiturViewModel.obsDebiturResponse.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
@@ -104,6 +113,7 @@ public class StaffProductivityDebiturActivity extends BaseActivity {
             }
         });
 
+        setupHeader();
         setupRecyclerView();
 
         mListDebiturViewModel.getListDebiturStaffProductivity(mUserId, mActionDate, mTimeRange);
@@ -114,6 +124,9 @@ public class StaffProductivityDebiturActivity extends BaseActivity {
             mUserId = getIntent().getExtras().getString(EXTRA_USER_ID);
             mActionDate = getIntent().getExtras().getString(EXTRA_ACTION_DATE);
             mTimeRange = getIntent().getExtras().getString(EXTRA_TIME_RANGE);
+            mUserName = getIntent().getExtras().getString(EXTRA_USER_NAME);
+            mDateFormatted = Utils.changeDateFormat(mActionDate, Constant.DATE_FORMAT_STAFF_PRODUCTIVITY, Constant.DATE_FORMAT_DISPLAY_DATE);
+            mTimeRangeFormatted = getTimeRangeFormatted();
         }
     }
 
@@ -142,5 +155,39 @@ public class StaffProductivityDebiturActivity extends BaseActivity {
                 mListDebiturViewModel.getListDebiturStaffProductivity(mUserId, mActionDate, mTimeRange);
             }
         });
+    }
+
+    private String getTimeRangeFormatted() {
+        switch (mTimeRange) {
+            case "1": {
+                return getString(R.string.StaffProductivity_Less_10);
+            }
+            case "2": {
+                return getString(R.string.StaffProductivity_10_12);
+            }
+            case "3": {
+                return getString(R.string.StaffProductivity_12_14);
+            }
+            case "4": {
+                return getString(R.string.StaffProductivity_14_16);
+            }
+            case "5": {
+                return getString(R.string.StaffProductivity_16_18);
+            }
+            case "6": {
+                return getString(R.string.StaffProductivity_18_20);
+            }
+            case "7": {
+                return getString(R.string.StaffProductivity_More_20);
+            }
+            default:
+                return "";
+        }
+    }
+
+    private void setupHeader() {
+        mBinding.textViewNamaStaff.setText(mUserName);
+        String dateTimeFormatted = mDateFormatted + " (" + mTimeRangeFormatted + ")";
+        mBinding.textViewDateTime.setText(dateTimeFormatted);
     }
 }
