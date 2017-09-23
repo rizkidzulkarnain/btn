@@ -122,6 +122,15 @@ public class LoginActivity extends AppCompatActivity
         text_Username = form_Username.getText().toString();
         text_Password = form_Password.getText().toString();
 
+        //cek apakah value username / password ada yang kosong
+        if (text_Username.isEmpty() || text_Password.isEmpty())
+        {
+            //show alert bahwa username / password belum diisi
+            String alertMessage = getString(R.string.Login_Alert_UsernameOrPasswordEmpty);
+            genericAlert.DisplayAlert(alertMessage, "");
+            return;
+        }
+
         //show loading alert
         genericAlert.ShowLoadingAlert();
 

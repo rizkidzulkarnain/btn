@@ -326,8 +326,10 @@ public class DashboardKunjunganFragment extends Fragment
                     //Add data ke pie entry debitur
                     /*PieEntry pieEntry = new PieEntry((float) Double.parseDouble(currentdashboardData.RealisasiProsentase), "Realisasi");
                     PieEntry pieEntry1 = new PieEntry((float) Double.parseDouble(currentdashboardData.OutstandingProsentase), "Outstanding");*/
-                    PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentaseValue, "Realisasi");
-                    PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentaseValue, "Outstanding");
+                    String realisasiLabel = getString(R.string.Dashboard_Kunjungan_SudahDikunjungi);
+                    String outstandingLabel = getString(R.string.Dashboard_Kunjungan_BelumDikunjungi);
+                    PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentaseValue, realisasiLabel);
+                    PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentaseValue, outstandingLabel);
 
                     //add ke list
                     pieEntries_Dabitur.add(pieEntry);
@@ -350,8 +352,10 @@ public class DashboardKunjunganFragment extends Fragment
                     //add data ke pie entry nominal
                     /*PieEntry pieEntry = new PieEntry((float) Double.parseDouble(currentdashboardData.RealisasiProsentase), "Realisasi");
                     PieEntry pieEntry1 = new PieEntry((float) Double.parseDouble(currentdashboardData.OutstandingProsentase), "Outstanding");*/
-                    PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentaseValue, "Realisasi");
-                    PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentaseValue, "Outstanding");
+                    String realisasiLabel = getString(R.string.Dashboard_Kunjungan_SudahDikunjungi);
+                    String outstandingLabel = getString(R.string.Dashboard_Kunjungan_BelumDikunjungi);
+                    PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentaseValue, realisasiLabel);
+                    PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentaseValue, outstandingLabel);
 
                     //add ke list
                     pieEntries_Nominal.add(pieEntry);

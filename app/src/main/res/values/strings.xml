@@ -34,6 +34,7 @@
     <string name="Login_ID">User ID</string>
     <string name="Login_Password">Password</string>
     <string name="Login_Alert_UserCannotAccess">User ini tidak memiliki hak untuk mengakses aplikasi Smart Collection</string>
+    <string name="Login_Alert_UsernameOrPasswordEmpty">Username atau Password belum diisi</string>
 
     <!--Home page-->
     <string name="Home_Menu">Menu</string>
@@ -61,6 +62,12 @@
     <string name="Dashboard_SaldoPokokNPL">Saldo Pokok NPL</string>
     <string name="Dashboard_NPL_Note_SaldoPokok">*Saldo pokok dalam satuan milyar</string>
     <string name="Dashboard_Menu_StaffDashboard">Dashboard Staff</string>
+    <string name="Dashboard_Kunjungan_Outstanding">Outstanding</string>
+    <string name="Dashboard_Kunjungan_BelumDikunjungi">Belum Dikunjungi</string>
+    <string name="Dashboard_Kunjungan_SudahDikunjungi">Sudah Dikunjungi</string>
+    <string name="Dashboard_Penyelesaian_SudahBayar">Sudah Bayar</string>
+    <string name="Dashboard_Penyelesaian_BelumBayar">Belum Bayar</string>
+    <string name="Dashboard_PTP_JumlahJanjiBayar">Jumlah Janji Bayar</string>
 
     <!--Dashboard. staff selector-->
     <string name="StaffSelector_Title">Pilih Staff</string>

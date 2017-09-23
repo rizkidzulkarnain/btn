@@ -53,6 +53,7 @@
     <color name="Tint_ChatList_Element">#0a81c3</color>
     <color name="Tint_ChatForm_Send">#0ac3ba</color>
     <color name="Tint_Chat_SentMessageTheme">#0ac3ba</color>
+    <color name="Tint_PageIcon">#ffda0c</color>
 
     <color name="Line_UpdatePassword">#0ba1ff</color>
     <color name="Line_HomeMenu">#0ba1ff</color>

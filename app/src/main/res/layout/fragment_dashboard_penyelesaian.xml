@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="@string/Dashboard_Realisasi"
+                        android:text="@string/Dashboard_Penyelesaian_SudahBayar"
                         android:textColor="@color/White"
                         android:textStyle="bold"
                         android:gravity="end"
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="@string/Dashboard_Outstanding"
+                        android:text="@string/Dashboard_Penyelesaian_BelumBayar"
                         android:textColor="@color/White"
                         android:textStyle="bold"
                         android:gravity="end"
@@ -212,7 +212,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="@string/Dashboard_Realisasi"
+                        android:text="@string/Dashboard_Penyelesaian_SudahBayar"
                         android:textColor="@color/White"
                         android:textStyle="bold"
                         android:gravity="end"
@@ -241,7 +241,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="@string/Dashboard_Outstanding"
+                        android:text="@string/Dashboard_Penyelesaian_BelumBayar"
                         android:textColor="@color/White"
                         android:textStyle="bold"
                         android:gravity="end"

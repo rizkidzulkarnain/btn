@@ -55,7 +55,7 @@
 
                 <!--Label data nominal-->
                 <TextView
-                    android:text="@string/Dashboard_Nominal"
+                    android:text="@string/Dashboard_Kunjungan_Outstanding"
                     android:textSize="18sp"
                     android:textColor="@color/White"
                     android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="@string/Dashboard_Realisasi"
+                        android:text="@string/Dashboard_Kunjungan_SudahDikunjungi"
                         android:textColor="@color/White"
                         android:textStyle="bold"
                         android:gravity="end"
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="@string/Dashboard_Outstanding"
+                        android:text="@string/Dashboard_Kunjungan_BelumDikunjungi"
                         android:textColor="@color/White"
                         android:textStyle="bold"
                         android:gravity="end"
@@ -212,7 +212,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="@string/Dashboard_Realisasi"
+                        android:text="@string/Dashboard_Kunjungan_SudahDikunjungi"
                         android:textColor="@color/White"
                         android:textStyle="bold"
                         android:gravity="end"
@@ -241,7 +241,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="@string/Dashboard_Outstanding"
+                        android:text="@string/Dashboard_Kunjungan_BelumDikunjungi"
                         android:textColor="@color/White"
                         android:textStyle="bold"
                         android:gravity="end"
