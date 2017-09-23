@@ -50,6 +50,9 @@ public class ResourceLoader
             case "Check-In" :
                 icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.menuicon_checkin);
                 break;
+            case "Agent Tracking" :
+                icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.menuicon_agenttracking);
+                break;
             default:
                 break;
         }

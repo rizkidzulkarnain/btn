@@ -437,7 +437,8 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
             case "Pusat Notifikasi" :
                 intent = new Intent(this, PusatNotifikasiActivity.class);
                 break;
-
+            case "Agent Tracking" :
+                break;
             default:break;
         }
 
