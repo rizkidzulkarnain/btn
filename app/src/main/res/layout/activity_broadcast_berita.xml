@@ -19,29 +19,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:gravity="center"
-                android:orientation="horizontal"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!--Broadcast icon-->
-                <ImageView
-                    android:src="@drawable/titleicon_broadcast"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <!--Title-->
-                <TextView
-                    android:text="@string/Berita_Broadcast_Title"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/White"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
+                    <!--Broadcast icon-->
+                    <ImageView
+                        android:src="@drawable/titleicon_broadcast"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+
+                    <!--Title-->
+                    <TextView
+                        android:text="@string/Berita_Broadcast_Title"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/White"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <!--Back button-->
+                <ImageView
+                    android:onClick="HandleInput_BroadcastBerita_Back"
+                    android:src="@drawable/ic_keyboard_backspace_white_36dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-            </LinearLayout>
+            </RelativeLayout>
 
             <!--Divider-->
             <View
@@ -244,7 +259,7 @@
     </ScrollView>
 
     <!--Back button-->
-    <RelativeLayout
+    <!--<RelativeLayout
         android:onClick="HandleInput_BroadcastBerita_Back"
         android:background="@drawable/background_circle_blacktransparent"
         android:layout_marginTop="10dp"
@@ -258,5 +273,5 @@
             android:src="@drawable/ic_chevron_left_white_36dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+    </RelativeLayout>-->
 </RelativeLayout>

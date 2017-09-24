@@ -21,7 +21,8 @@
     <string name="Text_SelectAll">Select All</string>
     <string name="Text_SomethingWrong">Terjadi kesalahan, mohon coba kembali</string>
     <string name="Text_UploadFailed">Upload gagal, mohon coba kembali</string>
-    <string name="Text_MohonMaaf">Mohon Maaf</string>
+    <!--<string name="Text_MohonMaaf">Mohon Maaf</string>-->
+    <string name="Text_MohonMaaf"></string>
     <string name="Text_IsianBelumLengkap">Form belum lengkap</string>
     <string name="Text_SortBy">Sort By :</string>
     <string name="Text_Logout">Log Out</string>

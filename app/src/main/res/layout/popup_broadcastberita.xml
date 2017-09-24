@@ -57,10 +57,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!--Send button-->
+        <!--Cancel button-->
         <Button
-            android:id="@+id/BroadcastPopup_KirimBerita"
-            android:text="@string/Berita_Broadcast_Kirim"
+            android:id="@+id/BroadcastPopup_BatalKirim"
+            android:text="@string/Text_Batal"
             android:textColor="@color/White"
             android:textAllCaps="false"
             android:background="@drawable/background_rounded_rectangle_pagetitle"
@@ -71,10 +71,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <!--Cancel button-->
+        <!--Send button-->
         <Button
-            android:id="@+id/BroadcastPopup_BatalKirim"
-            android:text="@string/Text_Batal"
+            android:id="@+id/BroadcastPopup_KirimBerita"
+            android:text="@string/Berita_Broadcast_Kirim"
             android:textColor="@color/White"
             android:textAllCaps="false"
             android:background="@drawable/background_rounded_rectangle_pagetitle"

@@ -67,5 +67,7 @@
 
     <color name="Gradient_Shadow_Start">#66757575</color>
 
+    <color name="ChartColor_Positive">#21d0e5</color>
+    <color name="ChartColor_Negative">#d61e42</color>
 
 </resources>

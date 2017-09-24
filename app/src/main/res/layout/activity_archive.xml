@@ -44,8 +44,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+
     <!--Back button-->
-    <RelativeLayout
+    <ImageView
+        android:onClick="HandleInput_ArchiveActivity_Back"
+        android:src="@drawable/ic_keyboard_backspace_white_36dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!--<RelativeLayout
         android:onClick="HandleInput_ArchiveActivity_Back"
         android:background="@drawable/background_circle_blacktransparent"
         android:layout_marginTop="10dp"
@@ -59,5 +69,5 @@
             android:src="@drawable/ic_chevron_left_white_36dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+    </RelativeLayout>-->
 </RelativeLayout>

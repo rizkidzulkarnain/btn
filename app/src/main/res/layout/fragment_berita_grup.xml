@@ -74,8 +74,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/BeritaGroupFragment_ListBerita"
                     android:visibility="gone"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
+                    android:padding="10dp"
                     android:clipToPadding="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>

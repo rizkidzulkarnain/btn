@@ -37,20 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!--Assign button-->
-        <TextView
-            android:id="@+id/AccountAssignment_Popup_InformasiTambahan_AssignButton"
-            android:text="@string/AccountAssignment_Assign"
-            android:textColor="@color/White"
-            android:background="@drawable/background_rounded_rectangle_pagetitle"
-            android:gravity="center"
-            android:padding="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="6"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-
         <!--Cancel button-->
         <TextView
             android:id="@+id/AccountAssignment_Popup_InformasiTambahan_CancelButton"
@@ -59,9 +45,23 @@
             android:background="@drawable/background_rounded_rectangle_button_cancel"
             android:gravity="center"
             android:padding="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <!--Assign button-->
+        <TextView
+            android:id="@+id/AccountAssignment_Popup_InformasiTambahan_AssignButton"
+            android:text="@string/AccountAssignment_Assign"
+            android:textColor="@color/White"
+            android:background="@drawable/background_rounded_rectangle_pagetitle"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="6"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
     </LinearLayout>

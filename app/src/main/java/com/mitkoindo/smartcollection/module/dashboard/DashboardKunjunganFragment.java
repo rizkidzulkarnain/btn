@@ -337,9 +337,13 @@ public class DashboardKunjunganFragment extends Fragment
 
                     //create chart
                     PieDataSet pieDataSet = new PieDataSet(pieEntries_Dabitur, "Debitur");
-                    pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+                    /*pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);*/
+                    pieDataSet.setColors(new int[] {R.color.ChartColor_Positive, R.color.ChartColor_Negative}, getActivity());
                     PieData pieData = new PieData(pieDataSet);
                     chart_Debitur.setData(pieData);
+                    chart_Debitur.setHoleRadius(0);
+                    chart_Debitur.setTransparentCircleRadius(0);
+                    chart_Debitur.setUsePercentValues(true);
                     chart_Debitur.invalidate();
 
                     //set data debitur
@@ -363,9 +367,13 @@ public class DashboardKunjunganFragment extends Fragment
 
                     //create chart
                     PieDataSet pieDataSet = new PieDataSet(pieEntries_Nominal, "Nominal");
-                    pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+                    /*pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);*/
+                    pieDataSet.setColors(new int[] {R.color.ChartColor_Positive, R.color.ChartColor_Negative}, getActivity());
                     PieData pieData = new PieData(pieDataSet);
                     chart_Nominal.setData(pieData);
+                    chart_Nominal.setHoleRadius(0);
+                    chart_Nominal.setTransparentCircleRadius(0);
+                    chart_Nominal.setUsePercentValues(true);
                     chart_Nominal.invalidate();
 
                     ///set data nominal
