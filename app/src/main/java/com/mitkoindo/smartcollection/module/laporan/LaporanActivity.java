@@ -26,9 +26,7 @@ public class LaporanActivity extends BaseActivity
     //----------------------------------------------------------------------------------------------
     //fragments
     private ArchiveFragment fragment_Archive;
-    private ListStaffDownlineFragment fragment_StaffDownline;
     private ReportDistribusiStaffFragment fragment_ReportDistribusiStaff;
-    private ReportDistribusiDebiturFragment fragment_ReportDistribusiDebitur;
     private StaffProductivityLandscapeFragment fragment_StaffProductivityLandscape;
     private StaffProductivityPortraitFragment fragment_StaffProductivityPortrait;
     private SupervisorArchiveFragment fragment_SupervisorArchive;
@@ -158,7 +156,6 @@ public class LaporanActivity extends BaseActivity
     {
         //create fragments
         fragment_SupervisorArchive = new SupervisorArchiveFragment();
-        fragment_StaffDownline = ListStaffDownlineFragment.getInstance(ResourceLoader.LoadUserID(this));
         fragment_ReportDistribusiStaff = ReportDistribusiStaffFragment.getInstance();
         fragment_StaffProductivityLandscape = (StaffProductivityLandscapeFragment) StaffProductivityLandscapeFragment.getInstance(ResourceLoader.LoadUserID(this));
 
@@ -168,14 +165,12 @@ public class LaporanActivity extends BaseActivity
         //create fragment titles
         ArrayList<String> fragmentTitles = new ArrayList<>();
         fragmentTitles.add(getString(R.string.Laporan_Tab_Arsip));
-        fragmentTitles.add(getString(R.string.Laporan_Tab_AgentTracking));
         fragmentTitles.add(getString(R.string.Laporan_Tab_Monitoring));
         fragmentTitles.add(getString(R.string.Laporan_Tab_StaffProductivity));
 
         //create fragment list
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(fragment_SupervisorArchive);
-        fragments.add(fragment_StaffDownline);
         fragments.add(fragment_ReportDistribusiStaff);
         fragments.add(fragment_StaffProductivityLandscape);
 
@@ -184,7 +179,7 @@ public class LaporanActivity extends BaseActivity
         CommonTabAdapter dashboardTabAdapter = new CommonTabAdapter(getSupportFragmentManager(), fragments, fragmentTitles);
 
         //set adapter to tab
-        view_ViewPager.setOffscreenPageLimit(4);
+        view_ViewPager.setOffscreenPageLimit(3);
         view_ViewPager.setAdapter(dashboardTabAdapter);
         view_Tabs.setupWithViewPager(view_ViewPager);
     }

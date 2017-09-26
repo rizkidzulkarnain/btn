@@ -15,5 +15,10 @@ public class ApiUtils {
     public static MultipartServices getMultipartServices(String accessToken) {
         return MultipartClient.getClient(accessToken).create(MultipartServices.class);
     }
+
+    public static void resetServices() {
+        RetrofitClient.resetRetrofitClient();
+        MultipartClient.resetRetrofitMultipartClient();
+    }
 }
 

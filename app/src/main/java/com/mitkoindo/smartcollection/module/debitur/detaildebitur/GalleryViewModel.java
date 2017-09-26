@@ -33,6 +33,7 @@ public class GalleryViewModel extends BaseObservable implements ILifecycleViewMo
     public ObservableField<List<GalleryItem>> obsListGalleryItem = new ObservableField<>();
     public ObservableField<GalleryItem> obsGalleryItem = new ObservableField<>();
     public ObservableBoolean obsIsAgunan2Show = new ObservableBoolean();
+    public ObservableBoolean obsIsSignatureShow = new ObservableBoolean();
     public ObservableBoolean obsIsEmpty = new ObservableBoolean(false);
 
     private String mAccessToken;
@@ -77,6 +78,11 @@ public class GalleryViewModel extends BaseObservable implements ILifecycleViewMo
                                 obsIsAgunan2Show.set(true);
                             } else {
                                 obsIsAgunan2Show.set(false);
+                            }
+                            if (!TextUtils.isEmpty(listGallery.get(0).getPhotoSignature())) {
+                                obsIsSignatureShow.set(true);
+                            } else {
+                                obsIsSignatureShow.set(false);
                             }
                         }
                         Timber.i("getGallery success");

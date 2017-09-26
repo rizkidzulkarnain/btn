@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--Title-->
+    <TextView
+        android:text="@string/Laporan_Arsip_PilihLaporan"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--Divider-->
+    <View
+        android:background="@color/Black"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--Laporan form visit-->
+    <TextView
+        android:id="@+id/LaporanSelectPopup_FormVisit"
+        android:text="@string/Laporan_Popup_FormVisit"
+        android:background="@drawable/background_rounded_rectangle_stroke_black"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--Laporan form call-->
+    <TextView
+        android:id="@+id/LaporanSelectPopup_FormCall"
+        android:text="@string/Laporan_Popup_FormCall"
+        android:background="@drawable/background_rounded_rectangle_stroke_black"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

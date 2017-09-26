@@ -106,4 +106,8 @@ public class MultipartClient {
 
         return sMultipartRetrofit;
     }
+
+    public static void resetRetrofitMultipartClient() {
+        sMultipartRetrofit = null;
+    }
 }

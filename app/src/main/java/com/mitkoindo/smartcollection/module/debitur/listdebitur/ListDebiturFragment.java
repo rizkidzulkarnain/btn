@@ -1,6 +1,7 @@
 package com.mitkoindo.smartcollection.module.debitur.listdebitur;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.os.Bundle;
@@ -21,13 +22,16 @@ import com.mikepenz.fastadapter.adapters.FooterAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter_extensions.items.ProgressItem;
 import com.mikepenz.fastadapter_extensions.scroll.EndlessRecyclerOnScrollListener;
+import com.mitkoindo.smartcollection.HomeActivity;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.base.BaseFragment;
 import com.mitkoindo.smartcollection.databinding.FragmentListDebiturBinding;
+import com.mitkoindo.smartcollection.dialog.DialogFactory;
 import com.mitkoindo.smartcollection.dialog.DialogSimpleSpinnerAdapter;
 import com.mitkoindo.smartcollection.event.EventDialogSimpleSpinnerSelected;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturActivity;
+import com.mitkoindo.smartcollection.module.formvisit.FormVisitKonfirmasiActivity;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
 import com.mitkoindo.smartcollection.objectdata.databasemodel.DebiturItemDb;
@@ -132,7 +136,17 @@ public class ListDebiturFragment extends BaseFragment {
                 if (mListDebiturViewModel.error.get() instanceof HttpException) {
                     if (((HttpException) mListDebiturViewModel.error.get()).code() != 404) {
                         if (mStatus.equals(RestConstants.LIST_DEBITUR_STATUS_PENDING_VALUE) && mPage == 1) {
-                            displayMessage(R.string.GagalMendapatListDebitur);
+
+                            DialogFactory.createDialog(getActivity(),
+                                    getString(R.string.ListDebitur_PageTitle),
+                                    getString(R.string.GagalMendapatListDebitur),
+                                    getString(R.string.ok),
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            dialogInterface.dismiss();
+                                        }
+                                    }).show();
 
                             List<DebiturItem> debiturItemList = new ArrayList<DebiturItem>();
                             List<DebiturItemDb> debiturItemDbList = RealmHelper.getListDebiturItem();
@@ -149,7 +163,17 @@ public class ListDebiturFragment extends BaseFragment {
                     }
                 } else {
                     if (mStatus.equals(RestConstants.LIST_DEBITUR_STATUS_PENDING_VALUE) && mPage == 1) {
-                        displayMessage(R.string.GagalMendapatListDebitur);
+
+                        DialogFactory.createDialog(getActivity(),
+                                getString(R.string.ListDebitur_PageTitle),
+                                getString(R.string.GagalMendapatListDebitur),
+                                getString(R.string.ok),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                }).show();
 
                         List<DebiturItem> debiturItemList = new ArrayList<DebiturItem>();
                         List<DebiturItemDb> debiturItemDbList = RealmHelper.getListDebiturItem();

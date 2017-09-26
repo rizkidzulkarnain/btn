@@ -40,7 +40,7 @@
             android:layout_marginTop="10dp"
             app:tabTextAppearance="@style/TabLayoutNotAllCaps"
             app:tabGravity="fill"
-            app:tabMode="fixed"
+            app:tabMode="scrollable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

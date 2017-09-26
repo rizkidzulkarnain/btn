@@ -25,6 +25,7 @@ import com.mitkoindo.smartcollection.network.ApiUtils;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.CheckInBody;
 import com.mitkoindo.smartcollection.network.response.CheckInResponse;
+import com.mitkoindo.smartcollection.utils.ProfileUtils;
 
 import java.util.List;
 import java.util.Random;
@@ -90,6 +91,9 @@ public class MyJobServiceTracking extends JobService implements GoogleApiClient.
         mJobParameters = job;
         mAccessToken = job.getExtras().getString(ACCESS_TOKEN);
         mUserId = job.getExtras().getString(USER_ID);
+
+        Timber.i("onStartJob " + mAccessToken);
+        Timber.i("onStartJob " + mUserId);
 
         requestAccessLocationPermission();
 
@@ -224,7 +228,7 @@ public class MyJobServiceTracking extends JobService implements GoogleApiClient.
 //                        NotificationCompat.Builder mBuilder =
 //                                new NotificationCompat.Builder(MyJobServiceTracking.this)
 //                                        .setSmallIcon(R.drawable.ic_play_icon)
-//                                        .setContentTitle("Tracking Location")
+//                                        .setContentTitle("Tracking Location " + mUserId)
 //                                        .setContentText(mAddressOutput);
 //
 //                        Random r = new Random();

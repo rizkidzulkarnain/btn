@@ -16,6 +16,8 @@ public class DebiturItemWithFlag extends DebiturItem
 
     public String IDVisit;
 
+    public String IDCall;
+
     public DebiturItemWithFlag()
     {
         Checked = false;
@@ -48,6 +50,11 @@ public class DebiturItemWithFlag extends DebiturItem
             if (dataObject.has("IDVisit"))
             {
                 IDVisit = dataObject.getString("IDVisit");
+            }
+
+            if (dataObject.has("IDCall"))
+            {
+                IDCall = dataObject.getString("IDCall");
             }
         }
         catch (JSONException e)

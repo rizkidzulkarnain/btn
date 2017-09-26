@@ -717,7 +717,15 @@ public class FormVisitActivity extends BaseActivity {
             mFormVisitViewModel.setTanggalJanjiDebitur(c.getTime());
         }, currentYear, currentMonth, currentDay);
 
-        datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
+        datePickerDialog.getDatePicker().setMinDate(c.getTime().getTime());
+
+//        Get Date last day of the month
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.add(Calendar.DATE, -1);
+        datePickerDialog.getDatePicker().setMaxDate(calendar.getTime().getTime());
+
         datePickerDialog.show();
     }
 
@@ -735,7 +743,7 @@ public class FormVisitActivity extends BaseActivity {
             mFormVisitViewModel.setTanggalTindakLanjut(c.getTime());
         }, currentYear, currentMonth, currentDay);
 
-        datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
+        datePickerDialog.getDatePicker().setMinDate(c.getTime().getTime());
 
 //        Get Date last day of the month
         Calendar calendar = Calendar.getInstance();

@@ -161,7 +161,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/card_view_photo_agunan_2"
                     app:layout_constraintStart_toStartOf="parent"
                     android:text="@string/Gallery_Signature"
-                    tools:text="Foto Signature"/>
+                    tools:text="Foto Signature"
+                    android:visibility="@{galleryViewModel.obsIsSignatureShow ? View.VISIBLE : View.GONE}"/>
 
                 <!--Photo Signature-->
                 <android.support.v7.widget.CardView
@@ -171,7 +172,8 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_photo_signature"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="@{galleryViewModel.obsIsSignatureShow ? View.VISIBLE : View.GONE}">
 
                     <ImageView
                         android:id="@+id/image_view_photo_signature"

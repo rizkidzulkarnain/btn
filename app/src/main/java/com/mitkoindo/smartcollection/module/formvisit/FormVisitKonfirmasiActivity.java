@@ -39,6 +39,7 @@ import com.mitkoindo.smartcollection.base.BaseActivity;
 import com.mitkoindo.smartcollection.databinding.ActivityFormVisitKonfirmasiBinding;
 import com.mitkoindo.smartcollection.dialog.DialogFactory;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
+import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.objectdata.DropDownAction;
 import com.mitkoindo.smartcollection.objectdata.DropDownPurpose;
 import com.mitkoindo.smartcollection.objectdata.DropDownReason;
@@ -344,6 +345,20 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
         } else {
             mFormVisitKonfirmasiViewModel.isFotoAgunan2Show.set(false);
         }
+
+//        Set Signature visibility
+        String relationShipId = mSpParameterFormVisitDb.getPersonVisitRel();
+        String statusAgunanId = mSpParameterFormVisitDb.getCollStatDesc();
+        if ((relationShipId.equals(RestConstants.RELATIONSHIP_ID_YANG_BERSANGKUTAN_VALUE)
+                || relationShipId.equals(RestConstants.RELATIONSHIP_ID_SUAMI_VALUE)
+                || relationShipId.equals(RestConstants.RELATIONSHIP_ID_ISTRI_VALUE))
+
+                && !statusAgunanId.equals(RestConstants.STATUS_AGUNAN_ID_RUMAH_KOSONG_VALUE)) {
+
+            mFormVisitKonfirmasiViewModel.obsIsSignatureShow.set(true);
+        } else {
+            mFormVisitKonfirmasiViewModel.obsIsSignatureShow.set(false);
+        }
     }
 
     final private int REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_SIGNATURE = 124;
@@ -441,8 +456,12 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
 
     @OnClick(R.id.button_submit)
     public void onSubmitClicked(View view) {
-        getPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_SIGNATURE,
-                getString(R.string.FormVisit_external_storage_permission_description));
+        if (mFormVisitKonfirmasiViewModel.obsIsSignatureShow.get()) {
+            getPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_SIGNATURE,
+                    getString(R.string.FormVisit_external_storage_permission_description));
+        } else {
+            requestAccessLocationPermission();
+        }
     }
 
     // Create a GoogleApiClient instance

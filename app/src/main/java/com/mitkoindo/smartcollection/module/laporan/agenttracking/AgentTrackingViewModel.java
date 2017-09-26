@@ -40,6 +40,7 @@ public class AgentTrackingViewModel extends BaseObservable implements ILifecycle
     public ObservableField<String> obsInfoWindowTime = new ObservableField<>();
     public ObservableField<String> obsInfoWindowAddress = new ObservableField<>();
     public ObservableBoolean obsIsInfoWindowShow = new ObservableBoolean(false);
+    public ObservableBoolean obsIsLegendShow = new ObservableBoolean(false);
 
     private String mAccessToken;
     private CompositeDisposable composites = new CompositeDisposable();

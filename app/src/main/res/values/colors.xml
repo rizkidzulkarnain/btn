@@ -21,7 +21,10 @@
     <color name="VeryLightGray">#F0F0F0</color>
     <color name="TabFontSelectedColor">#DEFD7A</color>
     <color name="BackgroundDebiturListItem">#19607D</color>
-
+    <color name="FormVisitRed">#E33B3B</color>
+    <color name="FormCallGreen">#50AE55</color>
+    <color name="CheckInBlue">#2B98F0</color>
+    <color name="TrackYellow">#FFFD38</color>
 
     <!--color by usage-->
     <color name="Background_Login">#0d568d</color>

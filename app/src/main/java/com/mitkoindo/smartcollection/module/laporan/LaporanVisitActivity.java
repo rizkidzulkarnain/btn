@@ -121,6 +121,9 @@ public class LaporanVisitActivity extends AppCompatActivity
             btnBack.setOnClickListener(view -> onBackPressed());
         }
 
+        TextView view_Title = findViewById(R.id.text_view_toolbar_title);
+        view_Title.setText(R.string.Laporan_Title_FormVisit);
+
         //create generic alert
         genericAlert = new GenericAlert(this);
     }

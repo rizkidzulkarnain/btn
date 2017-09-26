@@ -48,6 +48,7 @@ public class FormVisitKonfirmasiViewModel extends BaseObservable implements ILif
     public ObservableBoolean obsIsSaveSuccess = new ObservableBoolean(false);
     public ObservableBoolean obsIsShowTanggalJanjiDebitur = new ObservableBoolean(false);
     public ObservableBoolean obsIsShowJumlahYangAkanDisetor = new ObservableBoolean(false);
+    public ObservableBoolean obsIsSignatureShow = new ObservableBoolean(false);
 
     public ObservableField<String> tujuanKunjungan = new ObservableField<>();
     public ObservableField<String> alamatYangDikunjungi = new ObservableField<>();
@@ -85,11 +86,6 @@ public class FormVisitKonfirmasiViewModel extends BaseObservable implements ILif
         RequestBody requestFileFotoAgunan1 = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoAgunan1)), fileFotoAgunan1);
         MultipartBody.Part bodyAgunan1 = MultipartBody.Part.createFormData("file", fileFotoAgunan1.getName(), requestFileFotoAgunan1);
 
-        File fileSignature = new File(spParameterFormVisitDb.getPhotoSignaturePath());
-        Uri uriSignature = Uri.fromFile(fileSignature);
-        RequestBody requestFileSignature = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriSignature)), fileSignature);
-        MultipartBody.Part bodySignature = MultipartBody.Part.createFormData("file", fileSignature.getName(), requestFileSignature);
-
         Disposable disposable = ApiUtils.getMultipartServices(accessToken).uploadFile(bodyDebitur)
                 .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
                     @Override
@@ -123,13 +119,26 @@ public class FormVisitKonfirmasiViewModel extends BaseObservable implements ILif
                             spParameterFormVisitDb.setPhotoAgunan2(multipartResponse.getRelativePath());
                         }
 
-                        return ApiUtils.getMultipartServices(accessToken).uploadFile(bodySignature);
+                        if (obsIsSignatureShow.get()) {
+                            File fileSignature = new File(spParameterFormVisitDb.getPhotoSignaturePath());
+                            Uri uriSignature = Uri.fromFile(fileSignature);
+                            RequestBody requestFileSignature = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriSignature)), fileSignature);
+                            MultipartBody.Part bodySignature = MultipartBody.Part.createFormData("file", fileSignature.getName(), requestFileSignature);
+
+                            return ApiUtils.getMultipartServices(accessToken).uploadFile(bodySignature);
+                        } else {
+                            return Observable.just(multipartResponse);
+                        }
                     }
                 })
                 .flatMap(new Function<MultipartResponse, ObservableSource<List<FormVisitResponse>>>() {
                     @Override
                     public ObservableSource<List<FormVisitResponse>> apply(@NonNull MultipartResponse multipartResponse) throws Exception {
-                        spParameterFormVisitDb.setPhotoSignature(multipartResponse.getRelativePath());
+                        if (obsIsSignatureShow.get()) {
+                            spParameterFormVisitDb.setPhotoSignature(multipartResponse.getRelativePath());
+                        } else {
+                            spParameterFormVisitDb.setPhotoSignature("");
+                        }
 
                         return ApiUtils.getRestServices(accessToken).saveFormVisit(createFormVisitBody());
                     }

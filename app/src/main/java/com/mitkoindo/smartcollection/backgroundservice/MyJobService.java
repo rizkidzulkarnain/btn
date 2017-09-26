@@ -27,6 +27,7 @@ import com.mitkoindo.smartcollection.objectdata.databasemodel.PhoneNumberDb;
 import com.mitkoindo.smartcollection.objectdata.databasemodel.SpParameterFormCallDb;
 import com.mitkoindo.smartcollection.objectdata.databasemodel.SpParameterFormVisitDb;
 import com.mitkoindo.smartcollection.utils.FileUtils;
+import com.mitkoindo.smartcollection.utils.ProfileUtils;
 
 import java.io.File;
 
@@ -85,6 +86,9 @@ public class MyJobService extends JobService {
         mAccessToken = job.getExtras().getString(ACCESS_TOKEN);
         mUserId = job.getExtras().getString(USER_ID);
 
+        Timber.i("onStartJob " + mAccessToken);
+        Timber.i("onStartJob " + mUserId);
+
         getBundle();
         sendFormCall();
         sendFormVisit();
@@ -139,7 +143,7 @@ public class MyJobService extends JobService {
 //                        NotificationCompat.Builder mBuilder =
 //                                new NotificationCompat.Builder(MyJobService.this)
 //                                        .setSmallIcon(R.drawable.ic_folder_download_white_24dp)
-//                                        .setContentTitle("Get Bundle")
+//                                        .setContentTitle("Get Bundle " + mUserId)
 //                                        .setContentText("");
 //
 //                        Random r = new Random();
@@ -189,6 +193,23 @@ public class MyJobService extends JobService {
                                         @Override
                                         public void accept(List<FormCallResponse> formCallResponses) throws Exception {
                                             Timber.i("___sendFormCall doOnNext " + formCallResponses.get(0).getMessage());
+
+//                                            Show Notification
+//                                            NotificationCompat.Builder mBuilder =
+//                                                    new NotificationCompat.Builder(MyJobService.this)
+//                                                            .setSmallIcon(R.drawable.ic_phone)
+//                                                            .setContentTitle(getString(R.string.BackgroundService_DataOfflineFormCallDikirimkan))
+//                                                            .setContentText("Nomor Rekening : " + spParameterFormCall.getAccountNo());
+//
+//                                            Random r = new Random();
+//                                            int mNotificationId = r.nextInt((1000-10)+1)+10;
+//                                            // Gets an instance of the NotificationManager service
+//                                            NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//                                            // Builds the notification and issues it.
+//                                            mNotifyMgr.notify(mNotificationId, mBuilder.build());
+
+
+//                                            Delete Form Call from Db
                                             RealmHelper.deleteFormCall(spParameterFormCall.getAccountNo());
                                         }
                                     });
@@ -208,19 +229,6 @@ public class MyJobService extends JobService {
                         @Override
                         public void onComplete() {
                             Timber.i("___sendFormCall onComplete");
-
-//                            NotificationCompat.Builder mBuilder =
-//                                    new NotificationCompat.Builder(MyJobService.this)
-//                                            .setSmallIcon(R.drawable.ic_search_white_24dp)
-//                                            .setContentTitle("Send Form Call")
-//                                            .setContentText("");
-//
-//                            Random r = new Random();
-//                            int mNotificationId = r.nextInt((1000-10)+1)+10;
-//                            // Gets an instance of the NotificationManager service
-//                            NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//                            // Builds the notification and issues it.
-//                            mNotifyMgr.notify(mNotificationId, mBuilder.build());
                         }
                     });
 
@@ -258,11 +266,6 @@ public class MyJobService extends JobService {
                             RequestBody requestFileFotoAgunan1 = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoAgunan1)), fileFotoAgunan1);
                             MultipartBody.Part bodyAgunan1 = MultipartBody.Part.createFormData("file", fileFotoAgunan1.getName(), requestFileFotoAgunan1);
 
-                            File fileSignature = new File(spParameterFormVisitDb.getPhotoSignaturePath());
-                            Uri uriSignature = Uri.fromFile(fileSignature);
-                            RequestBody requestFileSignature = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriSignature)), fileSignature);
-                            MultipartBody.Part bodySignature = MultipartBody.Part.createFormData("file", fileSignature.getName(), requestFileSignature);
-
                             return ApiUtils.getMultipartServices(mAccessToken).uploadFile(bodyDebitur)
                                     .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
                                         @Override
@@ -296,13 +299,26 @@ public class MyJobService extends JobService {
                                                 spParameterFormVisitDb.setPhotoAgunan2(multipartResponse.getRelativePath());
                                             }
 
-                                            return ApiUtils.getMultipartServices(mAccessToken).uploadFile(bodySignature);
+                                            if (!TextUtils.isEmpty(spParameterFormVisitDb.getPhotoSignaturePath())) {
+                                                File fileSignature = new File(spParameterFormVisitDb.getPhotoSignaturePath());
+                                                Uri uriSignature = Uri.fromFile(fileSignature);
+                                                RequestBody requestFileSignature = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriSignature)), fileSignature);
+                                                MultipartBody.Part bodySignature = MultipartBody.Part.createFormData("file", fileSignature.getName(), requestFileSignature);
+
+                                                return ApiUtils.getMultipartServices(mAccessToken).uploadFile(bodySignature);
+                                            } else {
+                                                return Observable.just(multipartResponse);
+                                            }
                                         }
                                     })
                                     .flatMap(new Function<MultipartResponse, ObservableSource<List<FormVisitResponse>>>() {
                                         @Override
                                         public ObservableSource<List<FormVisitResponse>> apply(@NonNull MultipartResponse multipartResponse) throws Exception {
-                                            spParameterFormVisitDb.setPhotoSignature(multipartResponse.getRelativePath());
+                                            if (!TextUtils.isEmpty(spParameterFormVisitDb.getPhotoSignaturePath())) {
+                                                spParameterFormVisitDb.setPhotoSignature(multipartResponse.getRelativePath());
+                                            } else {
+                                                spParameterFormVisitDb.setPhotoSignature("");
+                                            }
 
                                             return ApiUtils.getRestServices(mAccessToken).saveFormVisit(createFormVisitBody(spParameterFormVisitDb));
                                         }
@@ -327,6 +343,21 @@ public class MyJobService extends JobService {
                                                 FileUtils.deleteFile(spParameterFormVisitDb.getPhotoSignaturePath());
                                             }
 
+//                                            Show Notification
+//                                            NotificationCompat.Builder mBuilder =
+//                                                    new NotificationCompat.Builder(MyJobService.this)
+//                                                            .setSmallIcon(R.drawable.ic_home_map)
+//                                                            .setContentTitle(getString(R.string.BackgroundService_DataOfflineFormVisitDikirimkan))
+//                                                            .setContentText("Nomor Rekening : " + spParameterFormVisitDb.getAccNo());
+//
+//                                            Random r = new Random();
+//                                            int mNotificationId = r.nextInt((1000-10)+1)+10;
+//                                            // Gets an instance of the NotificationManager service
+//                                            NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//                                            // Builds the notification and issues it.
+//                                            mNotifyMgr.notify(mNotificationId, mBuilder.build());
+
+
 //                                            Delete Form Visit from Db
                                             RealmHelper.deleteFormVisit(spParameterFormVisitDb.getAccNo());
                                         }
@@ -349,19 +380,6 @@ public class MyJobService extends JobService {
                         @Override
                         public void onComplete() {
                             Timber.i("___sendFormVisit onComplete");
-
-//                            NotificationCompat.Builder mBuilder =
-//                                    new NotificationCompat.Builder(MyJobService.this)
-//                                            .setSmallIcon(R.drawable.ic_send_white_24dp)
-//                                            .setContentTitle("Send Form Visit")
-//                                            .setContentText("");
-//
-//                            Random r = new Random();
-//                            int mNotificationId = r.nextInt((1000-10)+1)+10;
-//                            // Gets an instance of the NotificationManager service
-//                            NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//                            // Builds the notification and issues it.
-//                            mNotifyMgr.notify(mNotificationId, mBuilder.build());
                         }
                     });
 

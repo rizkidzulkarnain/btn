@@ -175,6 +175,7 @@ public class ListAgentTrackingFragment extends BaseFragment implements OnMapRead
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (!mAgentTrackingViewModel.obsIsMap.get()) {
                     mAgentTrackingViewModel.obsIsInfoWindowShow.set(false);
+                    mAgentTrackingViewModel.obsIsLegendShow.set(false);
                 }
             }
         });
@@ -348,6 +349,7 @@ public class ListAgentTrackingFragment extends BaseFragment implements OnMapRead
     @Override
     public void onMapClick(LatLng latLng) {
         mAgentTrackingViewModel.obsIsInfoWindowShow.set(false);
+        mAgentTrackingViewModel.obsIsLegendShow.set(false);
     }
 
     @OnClick(R.id.card_view_info_window)
@@ -360,5 +362,10 @@ public class ListAgentTrackingFragment extends BaseFragment implements OnMapRead
             intent.putExtra("VisitID", agentTracking.getIDVisit());
             startActivity(intent);
         }
+    }
+
+    @OnClick(R.id.card_view_legend_button)
+    public void onLegendClicked(View view) {
+        mAgentTrackingViewModel.obsIsLegendShow.set(!mAgentTrackingViewModel.obsIsLegendShow.get());
     }
 }

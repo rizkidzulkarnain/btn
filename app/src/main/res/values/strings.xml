@@ -93,7 +93,7 @@
     <string name="Berita_Broadcast_IsiHint">Masukkan isi berita</string>
     <string name="Berita_Broadcast_Summary">Summary Berita</string>
     <string name="Berita_Broadcast_SummaryHint">Masukkan summary berita</string>
-    <string name="Berita_Broadcast_File">File</string>
+    <string name="Berita_Broadcast_File">File (maks. 5MB)</string>
     <string name="Berita_Broadcast_NoFile">Belum ada file &#8230;</string>
     <string name="Berita_Broadcast_StartDate">Start Date</string>
     <string name="Berita_Broadcast_ExpiredDate">Expired Date</string>
@@ -257,7 +257,7 @@
     <string name="FormCall_TanggalTindakLanjutInitial">Pilih tanggal tindak lanjut</string>
 
     <!--Form Visit Konfirmasi Page-->
-    <string name="FormKonfirmasi_PageTitle">Konfimasi Form Visit</string>
+    <string name="FormKonfirmasi_PageTitle">Konfirmasi Form Visit</string>
 
     <!--Tambah Alamat dan Telepon-->
     <string name="TambahAlamat_PageTitle">Tambahkan Kontak</string>
@@ -327,6 +327,11 @@
     <string name="AgentTracking_PageTitle">Agent Tracking</string>
     <string name="AgentTracking_Empty">Tidak ada data tracking</string>
     <string name="AgentTracking_SearchHint">Cari staff</string>
+    <string name="AgentTracking_ListStaffDownlinePageTitle">List Staff</string>
+    <string name="AgentTracking_FormVisit">Form Visit</string>
+    <string name="AgentTracking_FormCall">Form Call</string>
+    <string name="AgentTracking_CheckIn">Check In</string>
+    <string name="AgentTracking_Tracking">Tracking</string>
 
     <!--Gallery-->
     <string name="Gallery_PageTitle">Gallery</string>
@@ -334,6 +339,10 @@
     <string name="Gallery_FotoAgunan1">Foto Agunan 1</string>
     <string name="Gallery_FotoAgunan2">Foto Agunan 2</string>
     <string name="Gallery_Signature">Foto Signature</string>
+
+    <!--Background Service-->
+    <string name="BackgroundService_DataOfflineFormVisitDikirimkan">Data offline form visit telah dikirimkan</string>
+    <string name="BackgroundService_DataOfflineFormCallDikirimkan">Data offline form call telah dikirimkan</string>
 
     <!--Account assignment-->
     <string name="AccountAssignment_PageTitle">Account Assignment</string>
@@ -370,6 +379,12 @@
     <string name="Laporan_Tab_AgentTracking">Agent Tracking</string>
     <string name="Laporan_Tab_StaffProductivity">Staff Productivity</string>
     <string name="Laporan_Arsip_Hint_CariDebitur">Cari Debitur</string>
+    <string name="Laporan_Arsip_PilihLaporan">Pilih Laporan</string>
+    <string name="Laporan_Popup_FormVisit">Lihat form visit</string>
+    <string name="Laporan_Popup_FormCall">Lihat form call</string>
+    <string name="Laporan_Title_FormVisit">Laporan Form Visit</string>
+    <string name="Laporan_Title_FormCall">Laporan Form Call</string>
+    <string name="Laporan_Alert_IDNotFound">Data visit / call debitur tidak ditemukan</string>
 
     <!--Update password page-->
     <string name="UpdatePassword_PageTitle">Update Password</string>
@@ -384,7 +399,7 @@
     <string name="HistoriTindakan_Title">Histori Tindakan</string>
     <string name="HistoriTindakan_Adapter_DeskripsiTindakan">Deskripsi Tindakan</string>
     <string name="HistoriTindakan_Adapter_TanggalTindakan">Tanggal Tindakan</string>
-    <string name="HistoriTindakan_Adapter_Pelaku">Pelaku</string>
+    <string name="HistoriTindakan_Adapter_Pelaku">Petugas</string>
     <string name="HistoriTindakan_Adapter_AlasanTindakan">Alasan Tindakan</string>
 
     <!--Page pusat notifikasi-->
@@ -401,6 +416,8 @@
     <string name="tagihan">Tagihan</string>
     <string name="dpd">DPD</string>
     <string name="last_payment">Last Payment</string>
+    <string name="note">Note</string>
+    <string name="note_from">Note From</string>
 
     <!--List Report Distribusi Staff adapter-->
     <string name="jumlah_penugasan">Jumlah penugasan</string>

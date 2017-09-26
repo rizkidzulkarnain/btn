@@ -108,4 +108,8 @@ public class RetrofitClient {
 
         return sRetrofit;
     }
+
+    public static void resetRetrofitClient() {
+        sRetrofit = null;
+    }
 }

@@ -28,7 +28,7 @@ public class HistoriTindakan
 
             //parse date
             //Hold dulu, karena nanti disediakan sama API
-            TanggelTindakan_View = dataObject.getString("TanggaTindakan");
+            TanggelTindakan_View = dataObject.getString("TanggalTindakan");
         }
         catch (JSONException e)
         {

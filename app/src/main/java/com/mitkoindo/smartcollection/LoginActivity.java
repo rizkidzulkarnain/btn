@@ -8,27 +8,48 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Switch;
 
+import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.module.misc.ChangeBaseURLActivity;
 import com.mitkoindo.smartcollection.network.ApiUtils;
+import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.LoginBody;
 import com.mitkoindo.smartcollection.network.response.LoginResponse;
+import com.mitkoindo.smartcollection.network.response.OfflineBundleResponse;
+import com.mitkoindo.smartcollection.objectdata.DebiturItem;
+import com.mitkoindo.smartcollection.objectdata.DetailDebitur;
+import com.mitkoindo.smartcollection.objectdata.DropDownAddress;
+import com.mitkoindo.smartcollection.objectdata.DropDownAddressDb;
+import com.mitkoindo.smartcollection.objectdata.PhoneNumber;
+import com.mitkoindo.smartcollection.objectdata.databasemodel.DebiturItemDb;
+import com.mitkoindo.smartcollection.objectdata.databasemodel.DetailDebiturDb;
+import com.mitkoindo.smartcollection.objectdata.databasemodel.PhoneNumberDb;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
 import com.mitkoindo.smartcollection.utilities.HttpsTrustManager;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
+import com.mitkoindo.smartcollection.utils.ProfileUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class LoginActivity extends AppCompatActivity
 {
+    private CompositeDisposable mComposites = new CompositeDisposable();
+
     //----------------------------------------------------------------------------------------------
     //  Views
     //----------------------------------------------------------------------------------------------
@@ -70,6 +91,13 @@ public class LoginActivity extends AppCompatActivity
 
         //ignore certificate
         HttpsTrustManager.allowAllSSL();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mComposites.clear();
+
+        super.onDestroy();
     }
 
     //get views
@@ -235,8 +263,8 @@ public class LoginActivity extends AppCompatActivity
             SaveUserID();
             SaveUserNameAndGroup(userName, userGroup, userGroupID);
 
-            //open home activity
-            OpenHomeActivity();
+            // Get Data Bundle
+            getBundle();
         }
         catch (JSONException e)
         {
@@ -387,5 +415,76 @@ public class LoginActivity extends AppCompatActivity
 
                     }
                 });
+    }
+
+    private void getBundle() {
+
+        Disposable disposable = ApiUtils.getRestServices(ProfileUtils.getAccessToken(this)).getBundle(RestConstants.DATABASE_ID_VALUE, "20")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        genericAlert.ShowLoadingAlert();
+                    }
+                })
+                .doOnTerminate(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        genericAlert.Dismiss();
+                    }
+                })
+                .subscribeWith(new DisposableObserver<OfflineBundleResponse>() {
+                    @Override
+                    public void onNext(OfflineBundleResponse offlineBundleResponse) {
+                        Timber.i("___getBundle success");
+
+                        List<DebiturItemDb> debiturItemDbList = new ArrayList<DebiturItemDb>();
+                        for (DebiturItem debiturItem : offlineBundleResponse.getDebiturList()) {
+                            debiturItemDbList.add(new DebiturItemDb(debiturItem));
+                        }
+                        RealmHelper.deleteListDebiturItem();
+                        RealmHelper.storeListDebiturItem(debiturItemDbList);
+
+                        List<DetailDebiturDb> detailDebiturDbList = new ArrayList<DetailDebiturDb>();
+                        for (DetailDebitur detailDebitur : offlineBundleResponse.getDebiturDetailList()) {
+                            detailDebiturDbList.add(new DetailDebiturDb(detailDebitur));
+                        }
+                        RealmHelper.deleteListDetailDebitur();
+                        RealmHelper.storeListDetailDebitur(detailDebiturDbList);
+
+                        List<PhoneNumberDb> phoneNumberDbList = new ArrayList<PhoneNumberDb>();
+                        for (PhoneNumber phoneNumber : offlineBundleResponse.getDebiturPhoneList()) {
+                            phoneNumberDbList.add(new PhoneNumberDb(phoneNumber));
+                        }
+                        RealmHelper.deleteListPhoneNumber();
+                        RealmHelper.storeListPhoneNumber(phoneNumberDbList);
+
+                        List<DropDownAddressDb> dropDownAddressDbList = new ArrayList<DropDownAddressDb>();
+                        for (DropDownAddress downAddress : offlineBundleResponse.getDebiturAddressList()) {
+                            dropDownAddressDbList.add(new DropDownAddressDb(downAddress));
+                        }
+                        RealmHelper.deleteListDropDownAddress();
+                        RealmHelper.storeListAddress(dropDownAddressDbList);
+
+                        //open home activity
+                        OpenHomeActivity();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Timber.e("___getBundle Error");
+
+                        //open home activity
+                        OpenHomeActivity();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        mComposites.add(disposable);
     }
 }

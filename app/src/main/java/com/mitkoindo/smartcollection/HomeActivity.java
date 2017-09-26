@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -21,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
@@ -51,15 +53,21 @@ import com.mitkoindo.smartcollection.module.dashboard.DashboardActivity;
 import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturActivity;
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.module.laporan.LaporanActivity;
+import com.mitkoindo.smartcollection.module.laporan.agenttracking.ListStaffDownlineActivity;
 import com.mitkoindo.smartcollection.module.ptp_reminder.PTPReminderActivity;
 import com.mitkoindo.smartcollection.module.pusatnotifikasi.PusatNotifikasiActivity;
 import com.mitkoindo.smartcollection.network.ApiUtils;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.CheckInBody;
+import com.mitkoindo.smartcollection.network.body.FormCallBody;
+import com.mitkoindo.smartcollection.network.body.FormVisitBody;
 import com.mitkoindo.smartcollection.network.body.FormVisitDropDownBody;
 import com.mitkoindo.smartcollection.network.models.DbParam;
 import com.mitkoindo.smartcollection.network.models.Sort;
 import com.mitkoindo.smartcollection.network.response.CheckInResponse;
+import com.mitkoindo.smartcollection.network.response.FormCallResponse;
+import com.mitkoindo.smartcollection.network.response.FormVisitResponse;
+import com.mitkoindo.smartcollection.network.response.MultipartResponse;
 import com.mitkoindo.smartcollection.objectdata.DropDownAction;
 import com.mitkoindo.smartcollection.objectdata.DropDownAddressType;
 import com.mitkoindo.smartcollection.objectdata.DropDownPurpose;
@@ -69,19 +77,25 @@ import com.mitkoindo.smartcollection.objectdata.DropDownResult;
 import com.mitkoindo.smartcollection.objectdata.DropDownStatusAgunan;
 import com.mitkoindo.smartcollection.objectdata.DropDownTeleponType;
 import com.mitkoindo.smartcollection.objectdata.HomeMenu;
+import com.mitkoindo.smartcollection.objectdata.databasemodel.SpParameterFormCallDb;
+import com.mitkoindo.smartcollection.objectdata.databasemodel.SpParameterFormVisitDb;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
 import com.mitkoindo.smartcollection.utilities.HttpsTrustManager;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 import com.mitkoindo.smartcollection.utilities.NotificationChecker;
+import com.mitkoindo.smartcollection.utils.FileUtils;
+import com.mitkoindo.smartcollection.utils.ProfileUtils;
 import com.mitkoindo.smartcollection.utils.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -91,6 +105,9 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import timber.log.Timber;
 
 public class HomeActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener
@@ -210,11 +227,11 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     protected void onDestroy() {
+        composites.clear();
+
         super.onDestroy();
 
         badgeUpdaterHandler.removeCallbacks(badgeUpdaterRunnable);
-
-        composites.clear();
     }
 
     //get views
@@ -438,6 +455,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
                 intent = new Intent(this, PusatNotifikasiActivity.class);
                 break;
             case "Agent Tracking" :
+                intent = ListStaffDownlineActivity.instantiate(this, ProfileUtils.getUserId(this));
                 break;
             default:break;
         }
@@ -459,7 +477,8 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
     //handle logout
     private void LogoutUser()
     {
-        CreateLogoutRequest();
+//        CreateLogoutRequest();
+        sendFormCall();
     }
 
     //create request buat logout
@@ -502,6 +521,9 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
         {
             //remove auth token & kembali ke login screen
             RemoveAuthToken();
+
+            // reset retrofit
+            ApiUtils.resetServices();
         }
         else
         {
@@ -1085,5 +1107,204 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
                 .build();
 
         dispatcher.mustSchedule(myJobTracking);
+    }
+
+    private FormCallBody createFormCallBody(FormCallBody.SpParameterFormCall spParameterFormCall) {
+        FormCallBody formCallBody = new FormCallBody();
+        formCallBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
+        formCallBody.setSpName(RestConstants.FORM_CALL_SP_NAME);
+        formCallBody.setSpParameterFormCall(spParameterFormCall);
+
+        return formCallBody;
+    }
+
+    private void sendFormCall() {
+        if (RealmHelper.getListFormCall().size() > 0) {
+            Disposable disposable = Observable.fromIterable(RealmHelper.getListFormCall())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.computation())
+                    .flatMap(new Function<SpParameterFormCallDb, ObservableSource<List<FormCallResponse>>>() {
+                        @Override
+                        public ObservableSource<List<FormCallResponse>> apply(@io.reactivex.annotations.NonNull SpParameterFormCallDb spParameterFormCallDb) throws Exception {
+                            FormCallBody.SpParameterFormCall spParameterFormCall = spParameterFormCallDb.toSpParameterFormCall();
+
+                            return ApiUtils.getRestServices(ProfileUtils.getAccessToken(HomeActivity.this)).saveFormCall(createFormCallBody(spParameterFormCall))
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .doOnNext(new Consumer<List<FormCallResponse>>() {
+                                        @Override
+                                        public void accept(List<FormCallResponse> formCallResponses) throws Exception {
+                                            Timber.i("___sendFormCall doOnNext " + formCallResponses.get(0).getMessage());
+
+//                                            Delete Form Call from Db
+                                            RealmHelper.deleteFormCall(spParameterFormCall.getAccountNo());
+                                        }
+                                    });
+                        }
+                    })
+                    .subscribeWith(new DisposableObserver<List<FormCallResponse>>() {
+                        @Override
+                        public void onNext(@io.reactivex.annotations.NonNull List<FormCallResponse> formCallResponses) {
+                            Timber.i("___sendFormCall onNext " + formCallResponses.get(0).getMessage());
+                        }
+
+                        @Override
+                        public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                            Timber.e("___sendFormCall Error");
+                            sendFormVisit();
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            Timber.i("___sendFormCall onComplete");
+                            sendFormVisit();
+                        }
+                    });
+
+            composites.add(disposable);
+        } else {
+            sendFormVisit();
+        }
+    }
+
+    private FormVisitBody createFormVisitBody(SpParameterFormVisitDb spParameterFormVisitDb) {
+        FormVisitBody formVisitBody = new FormVisitBody();
+        formVisitBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
+        formVisitBody.setSpName(RestConstants.FORM_VISIT_SP_NAME);
+        FormVisitBody.SpParameter spParameter = spParameterFormVisitDb.toSpParameterFormVisit();
+        formVisitBody.setSpParameter(spParameter);
+
+        return formVisitBody;
+    }
+
+    private void sendFormVisit() {
+        if (RealmHelper.getListFormVisit().size() > 0) {
+
+            String accessToken = ProfileUtils.getAccessToken(this);
+
+            Disposable disposable = Observable.fromIterable(RealmHelper.getListFormVisit())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.computation())
+                    .flatMap(new Function<SpParameterFormVisitDb, ObservableSource<List<FormVisitResponse>>>() {
+                        @Override
+                        public ObservableSource<List<FormVisitResponse>> apply(@io.reactivex.annotations.NonNull SpParameterFormVisitDb spParameterFormVisitDb) throws Exception {
+
+                            File fileFotoDebitur = new File(spParameterFormVisitDb.getPhotoDebiturPath());
+                            Uri uriFotoDebitur = Uri.fromFile(fileFotoDebitur);
+                            RequestBody requestFileFotoDebitur = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoDebitur)), fileFotoDebitur);
+                            MultipartBody.Part bodyDebitur = MultipartBody.Part.createFormData("file", fileFotoDebitur.getName(), requestFileFotoDebitur);
+
+                            File fileFotoAgunan1 = new File(spParameterFormVisitDb.getPhotoAgunan1Path());
+                            Uri uriFotoAgunan1 = Uri.fromFile(fileFotoAgunan1);
+                            RequestBody requestFileFotoAgunan1 = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoAgunan1)), fileFotoAgunan1);
+                            MultipartBody.Part bodyAgunan1 = MultipartBody.Part.createFormData("file", fileFotoAgunan1.getName(), requestFileFotoAgunan1);
+
+                            return ApiUtils.getMultipartServices(accessToken).uploadFile(bodyDebitur)
+                                    .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
+                                        @Override
+                                        public ObservableSource<MultipartResponse> apply(@io.reactivex.annotations.NonNull MultipartResponse multipartResponse) throws Exception {
+                                            spParameterFormVisitDb.setPhotoDebitur(multipartResponse.getRelativePath());
+
+                                            return ApiUtils.getMultipartServices(accessToken).uploadFile(bodyAgunan1);
+                                        }
+                                    })
+                                    .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
+                                        @Override
+                                        public ObservableSource<MultipartResponse> apply(@io.reactivex.annotations.NonNull MultipartResponse multipartResponse) throws Exception {
+                                            spParameterFormVisitDb.setPhotoAgunan1(multipartResponse.getRelativePath());
+
+                                            if (!TextUtils.isEmpty(spParameterFormVisitDb.getPhotoAgunan2Path())) {
+                                                File fileFotoAgunan2 = new File(spParameterFormVisitDb.getPhotoAgunan2Path());
+                                                Uri uriFotoAgunan2 = Uri.fromFile(fileFotoAgunan2);
+                                                RequestBody requestFileFotoAgunan2 = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoAgunan2)), fileFotoAgunan2);
+                                                MultipartBody.Part bodyAgunan2 = MultipartBody.Part.createFormData("file", fileFotoAgunan2.getName(), requestFileFotoAgunan2);
+
+                                                return ApiUtils.getMultipartServices(accessToken).uploadFile(bodyAgunan2);
+                                            } else {
+                                                return Observable.just(multipartResponse);
+                                            }
+                                        }
+                                    })
+                                    .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
+                                        @Override
+                                        public ObservableSource<MultipartResponse> apply(@io.reactivex.annotations.NonNull MultipartResponse multipartResponse) throws Exception {
+                                            if (!TextUtils.isEmpty(spParameterFormVisitDb.getPhotoAgunan2Path())) {
+                                                spParameterFormVisitDb.setPhotoAgunan2(multipartResponse.getRelativePath());
+                                            }
+
+                                            if (!TextUtils.isEmpty(spParameterFormVisitDb.getPhotoSignaturePath())) {
+                                                File fileSignature = new File(spParameterFormVisitDb.getPhotoSignaturePath());
+                                                Uri uriSignature = Uri.fromFile(fileSignature);
+                                                RequestBody requestFileSignature = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriSignature)), fileSignature);
+                                                MultipartBody.Part bodySignature = MultipartBody.Part.createFormData("file", fileSignature.getName(), requestFileSignature);
+
+                                                return ApiUtils.getMultipartServices(accessToken).uploadFile(bodySignature);
+                                            } else {
+                                                return Observable.just(multipartResponse);
+                                            }
+                                        }
+                                    })
+                                    .flatMap(new Function<MultipartResponse, ObservableSource<List<FormVisitResponse>>>() {
+                                        @Override
+                                        public ObservableSource<List<FormVisitResponse>> apply(@io.reactivex.annotations.NonNull MultipartResponse multipartResponse) throws Exception {
+                                            if (!TextUtils.isEmpty(spParameterFormVisitDb.getPhotoSignaturePath())) {
+                                                spParameterFormVisitDb.setPhotoSignature(multipartResponse.getRelativePath());
+                                            } else {
+                                                spParameterFormVisitDb.setPhotoSignature("");
+                                            }
+
+                                            return ApiUtils.getRestServices(accessToken).saveFormVisit(createFormVisitBody(spParameterFormVisitDb));
+                                        }
+                                    })
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .doOnNext(new Consumer<List<FormVisitResponse>>() {
+                                        @Override
+                                        public void accept(List<FormVisitResponse> formVisitResponses) throws Exception {
+                                            Timber.i("sendFormVisit doOnNext " + formVisitResponses.get(0).getMessage());
+
+//                                            Delete file photo
+                                            if (!TextUtils.isEmpty(spParameterFormVisitDb.getPhotoDebiturPath())) {
+                                                FileUtils.deleteFile(spParameterFormVisitDb.getPhotoDebiturPath());
+                                            }
+                                            if (!TextUtils.isEmpty(spParameterFormVisitDb.getPhotoAgunan1Path())) {
+                                                FileUtils.deleteFile(spParameterFormVisitDb.getPhotoAgunan1Path());
+                                            }
+                                            if (!TextUtils.isEmpty(spParameterFormVisitDb.getPhotoAgunan2Path())) {
+                                                FileUtils.deleteFile(spParameterFormVisitDb.getPhotoAgunan2Path());
+                                            }
+                                            if (!TextUtils.isEmpty(spParameterFormVisitDb.getPhotoSignaturePath())) {
+                                                FileUtils.deleteFile(spParameterFormVisitDb.getPhotoSignaturePath());
+                                            }
+
+//                                            Delete Form Visit from Db
+                                            RealmHelper.deleteFormVisit(spParameterFormVisitDb.getAccNo());
+                                        }
+                                    });
+                        }
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableObserver<List<FormVisitResponse>>() {
+                        @Override
+                        public void onNext(List<FormVisitResponse> formVisitResponses) {
+                            Timber.i("___sendFormVisit onNext " + formVisitResponses.get(0).getMessage());
+                        }
+
+                        @Override
+                        public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                            Timber.e("___sendFormVisit Error");
+                            CreateLogoutRequest();
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            Timber.i("___sendFormVisit onComplete");
+                            CreateLogoutRequest();
+                        }
+                    });
+
+            composites.add(disposable);
+        } else {
+            CreateLogoutRequest();
+        }
     }
 }

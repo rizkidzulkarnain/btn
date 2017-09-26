@@ -58,6 +58,20 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
     @Expose
     private String resultDate;
 
+    @SerializedName("LatestIDVisit")
+    @Expose
+    private String latestIdVisit;
+
+    @SerializedName("Note")
+    @Expose
+    private String note;
+
+    @SerializedName("NoteFrom")
+    @Expose
+    private String noteFrom;
+
+    private boolean isPenugasan = false;
+
 
     public DebiturItem() {
     }
@@ -141,6 +155,39 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
     public void setResultDate(String resultDate) {
         this.resultDate = resultDate;
     }
+
+    public String getLatestIdVisit() {
+        return latestIdVisit;
+    }
+
+    public void setLatestIdVisit(String latestIdVisit) {
+        this.latestIdVisit = latestIdVisit;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getNoteFrom() {
+        return noteFrom;
+    }
+
+    public void setNoteFrom(String noteFrom) {
+        this.noteFrom = noteFrom;
+    }
+
+    public boolean isPenugasan() {
+        return isPenugasan;
+    }
+
+    public void setPenugasan(boolean penugasan) {
+        isPenugasan = penugasan;
+    }
+
 
     @Override
     public int getType() {

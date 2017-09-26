@@ -3,6 +3,7 @@ package com.mitkoindo.smartcollection.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,10 @@ import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturActivity;
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.module.laporan.LaporanActivity;
+import com.mitkoindo.smartcollection.module.laporan.LaporanCallActivity;
 import com.mitkoindo.smartcollection.module.laporan.LaporanVisitActivity;
 import com.mitkoindo.smartcollection.objectdata.DebiturItemWithFlag;
+import com.mitkoindo.smartcollection.utilities.GenericAlert;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
 import org.json.JSONArray;
@@ -79,6 +82,9 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
     //alert text
     private TextView view_Alert;
 
+    //generic alert
+    private GenericAlert genericAlert;
+
     //----------------------------------------------------------------------------------------------
     //  Setup
     //----------------------------------------------------------------------------------------------
@@ -86,6 +92,9 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
     public DebiturArchiveAdapter(Activity context)
     {
         this.context = context;
+
+        //create alert
+        genericAlert = new GenericAlert(context);
 
         //set default page
         currentPage = 1;
@@ -174,9 +183,78 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
                 currentDebitur.getCustomerReference(), ListDebiturActivity.EXTRA_TYPE_ACCOUNT_ASSIGNMENT_VALUE));*/
 
         //open laporan form visit page
-        Intent intent = new Intent(context, LaporanVisitActivity.class);
-        intent.putExtra("VisitID", currentDebitur.IDVisit);
-        context.startActivity(intent);
+        //cek apakah both id visit dan id call tidak kosong
+        if ((currentDebitur.IDVisit != null && !currentDebitur.IDVisit.isEmpty() && !currentDebitur.IDVisit.equals("null")) &&
+                (currentDebitur.IDCall != null && !currentDebitur.IDCall.isEmpty() && !currentDebitur.IDCall.equals("null")))
+        {
+            //jika keduanya tidak kosong, tampilkan popup untuk memilih form mana yang mau dibuka
+            ShowSelectLaporanPopup(currentDebitur.IDVisit, currentDebitur.IDCall);
+        }
+        //jika salah satu ada yang kosong, cek apakah id visitnya null atau tidak
+        else if (currentDebitur.IDVisit != null && !currentDebitur.IDVisit.isEmpty() && !currentDebitur.IDVisit.equals("null"))
+        {
+            Intent intent = new Intent(context, LaporanVisitActivity.class);
+            intent.putExtra("VisitID", currentDebitur.IDVisit);
+            context.startActivity(intent);
+        }
+        //jika id visit kosong, cek apakah id callnya null atau tidak
+        else if (currentDebitur.IDCall != null && !currentDebitur.IDCall.isEmpty() && !currentDebitur.IDCall.equals("null"))
+        {
+            Intent intent = new Intent(context, LaporanCallActivity.class);
+            intent.putExtra("CallID", currentDebitur.IDCall);
+            context.startActivity(intent);
+        }
+        else
+        {
+            //show alert bahwa data debitur tidak ditemukan
+            String alertMessage = context.getString(R.string.Laporan_Alert_IDNotFound);
+            genericAlert.DisplayAlert(alertMessage, "");
+        }
+    }
+
+    //Open popup untuk memilih laporan yang dibuka
+    private void ShowSelectLaporanPopup(final String idVisit, final String idCall)
+    {
+        //create alert dialog builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        //inflate layout
+        LayoutInflater layoutInflater = context.getLayoutInflater();
+        View thisView = layoutInflater.inflate(R.layout.popup_select_laporan, null, false);
+
+        //get views
+        View button_LaporanVisit = thisView.findViewById(R.id.LaporanSelectPopup_FormVisit);
+        View button_LaporanCall = thisView.findViewById(R.id.LaporanSelectPopup_FormCall);
+
+        //set listener pada view
+        button_LaporanVisit.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(context, LaporanVisitActivity.class);
+                intent.putExtra("VisitID", idVisit);
+                context.startActivity(intent);
+            }
+        });
+
+        button_LaporanCall.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(context, LaporanCallActivity.class);
+                intent.putExtra("CallID", idCall);
+                context.startActivity(intent);
+            }
+        });
+
+        //set view ke builder
+        builder.setView(thisView);
+
+        //show alert
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     //----------------------------------------------------------------------------------------------

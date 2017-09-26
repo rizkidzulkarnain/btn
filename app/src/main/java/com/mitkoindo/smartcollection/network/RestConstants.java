@@ -98,4 +98,9 @@ public final class RestConstants {
     public static final String RESULT_ID_AKAN_DATANG_KE_BTN_TANGGAL_VALUE = "R0013";
     public static final String RESULT_ID_MINTA_DIHUBUNGI_TANGGAL_VALUE = "R0016";
 
+    public static final String RELATIONSHIP_ID_YANG_BERSANGKUTAN_VALUE = "00000";
+    public static final String RELATIONSHIP_ID_SUAMI_VALUE = "02";
+    public static final String RELATIONSHIP_ID_ISTRI_VALUE = "03";
+
+    public static final String STATUS_AGUNAN_ID_RUMAH_KOSONG_VALUE = "01";
 }

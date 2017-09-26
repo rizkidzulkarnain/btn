@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background_bluegradient"
+    tools:context="com.mitkoindo.smartcollection.module.laporan.LaporanCallActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_general"
+        style="@style/AppToolbar.Line">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <include layout="@layout/include_toolbar_back_button"/>
+
+            <include layout="@layout/include_toolbar_title" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_medium_large"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <!--Tujuan-->
+            <TextView
+                android:id="@+id/text_view_tujuan"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormCall_TujuanCall"/>
+
+            <!--Tujuan Value-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_tujuan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_tujuan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:cardBackgroundColor="@color/colorAccentSecond">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/LaporanCall_Tujuan"
+                        style="@style/FontRegular.Medium.White"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingStart="@dimen/padding_medium"
+                        android:paddingLeft="@dimen/padding_medium"
+                        android:paddingRight="@dimen/padding_medium"
+                        android:paddingEnd="@dimen/padding_medium"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <!--Berbicara dengan-->
+            <TextView
+                android:id="@+id/text_view_berbicara_dengan"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_tujuan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormCall_BerbicaraDengan"/>
+
+            <!--Berbicara dengan edit text-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_berbicara_dengan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_berbicara_dengan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:cardBackgroundColor="@color/colorAccentSecond">
+
+                <TextView
+                    android:id="@+id/LaporanCall_BerbicaraDengan"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"
+                    android:textColor="@color/White"
+                    android:textColorHint="@color/White"
+                    android:background="@color/Transparent"
+                    android:maxLines="1"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Hubungan dengan debitur-->
+            <TextView
+                android:id="@+id/text_view_hubungan_dengan_debitur"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_berbicara_dengan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormCall_HubunganDenganDebitur"/>
+
+            <!--Hubungan dengan debitur value-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_hubungan_dengan_debitur"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_hubungan_dengan_debitur"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:cardBackgroundColor="@color/colorAccentSecond">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/LaporanCall_Hubungan"
+                        style="@style/FontRegular.Medium.White"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingStart="@dimen/padding_medium"
+                        android:paddingLeft="@dimen/padding_medium"
+                        android:paddingRight="@dimen/padding_medium"
+                        android:paddingEnd="@dimen/padding_medium"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <!--Hasil Panggilan-->
+            <TextView
+                android:id="@+id/text_view_hasil_panggilan"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_hubungan_dengan_debitur"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormCall_HasilPanggilan"/>
+
+            <!--Hasil Panggilan value-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_hasil_panggilan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_hasil_panggilan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:cardBackgroundColor="@color/colorAccentSecond">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/LaporanCall_Hasil"
+                        style="@style/FontRegular.Medium.White"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingStart="@dimen/padding_medium"
+                        android:paddingLeft="@dimen/padding_medium"
+                        android:paddingRight="@dimen/padding_medium"
+                        android:paddingEnd="@dimen/padding_medium"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <!--Tanggal Hasil Panggilan-->
+            <TextView
+                android:id="@+id/text_view_tanggal_hasil_panggilan"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_hasil_panggilan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormCall_TanggalHasilPanggilan"/>
+
+            <!--Tanggal hasil panggilan DatePicker-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_tanggal_hasil_panggilan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_tanggal_hasil_panggilan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:cardBackgroundColor="@color/colorAccentSecond">
+
+                <TextView
+                    android:id="@+id/LaporanCall_TanggalHasil"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Jumlah yang akan disetor-->
+            <TextView
+                android:id="@+id/text_view_jumlah_yang_akan_disetor"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_tanggal_hasil_panggilan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormCall_JumlahYangAkanDisetor"/>
+
+            <!--Jumlah yang akan disetor edit text-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_jumlah_yang_akan_disetor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_jumlah_yang_akan_disetor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:cardBackgroundColor="@color/colorAccentSecond">
+
+                <TextView
+                    android:id="@+id/LaporanCall_JumlahSetoran"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"
+                    android:textColor="@color/White"
+                    android:textColorHint="@color/White"
+                    android:background="@color/Transparent"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Alasan Tidak Bayar-->
+            <TextView
+                android:id="@+id/text_view_alasan_tidak_bayar"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_jumlah_yang_akan_disetor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormCall_AlasanTidakBayar"/>
+
+            <!--Alasan Tidak Bayar value-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_alasan_tidak_bayar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_alasan_tidak_bayar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:cardBackgroundColor="@color/colorAccentSecond">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/LaporanCall_AlasanTidakBayar"
+                        style="@style/FontRegular.Medium.White"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingStart="@dimen/padding_medium"
+                        android:paddingLeft="@dimen/padding_medium"
+                        android:paddingRight="@dimen/padding_medium"
+                        android:paddingEnd="@dimen/padding_medium"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <!--Tindak Lanjut-->
+            <TextView
+                android:id="@+id/text_view_tindak_lanjut"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_alasan_tidak_bayar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormCall_TindakLanjut"/>
+
+            <!--Tindak Lanjut value-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_tindak_lanjut"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_tindak_lanjut"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:cardBackgroundColor="@color/colorAccentSecond">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/LaporanCall_TindakLanjut"
+                        style="@style/FontRegular.Medium.White"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingStart="@dimen/padding_medium"
+                        android:paddingLeft="@dimen/padding_medium"
+                        android:paddingRight="@dimen/padding_medium"
+                        android:paddingEnd="@dimen/padding_medium"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <!--Tanggal Tindak Lanjut-->
+            <TextView
+                android:id="@+id/text_view_tanggal_tindak_lanjut"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_tindak_lanjut"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormCall_TanggalTindakLanjut"/>
+
+            <!--Tanggal Tindak Lanjut DatePicker -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_tanggal_tindak_lanjut"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_tanggal_tindak_lanjut"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:cardBackgroundColor="@color/colorAccentSecond">
+
+                <TextView
+                    android:id="@+id/LaporanCall_TanggalTindakLanjut"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"/>
+            </android.support.v7.widget.CardView>
+
+            <!--Catatan-->
+            <TextView
+                android:id="@+id/text_view_catatan"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_medium_large"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_tanggal_tindak_lanjut"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/FormCall_Catatan"/>
+
+            <!--Catatan Edit Text-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_catatan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_catatan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:cardBackgroundColor="@color/colorAccentSecond">
+
+                <TextView
+                    android:id="@+id/LaporanCall_Catatan"
+                    style="@style/FontRegular.Medium.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/padding_medium"
+                    android:paddingLeft="@dimen/padding_medium"
+                    android:paddingEnd="@dimen/padding_medium"
+                    android:lines="3"
+                    android:textColor="@color/White"
+                    android:textColorHint="@color/White"
+                    android:background="@color/Transparent"/>
+            </android.support.v7.widget.CardView>
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>

@@ -14,6 +14,7 @@ import com.mitkoindo.smartcollection.network.response.OfflineBundleResponse;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
 import com.mitkoindo.smartcollection.objectdata.databasemodel.DebiturItemDb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -90,10 +91,16 @@ public class ListDebiturViewModel extends BaseObservable implements ILifecycleVi
                 .subscribeWith(new DisposableObserver<List<DebiturItem>>() {
                     @Override
                     public void onNext(List<DebiturItem> listDebitur) {
+                        ArrayList<DebiturItem> temp = new ArrayList<DebiturItem>();
+                        for (DebiturItem debiturItem : listDebitur) {
+                            DebiturItem item = debiturItem;
+                            item.setPenugasan(true);
+                            temp.add(item);
+                        }
                         if (page == 1) {
-                            obsDebiturResponse.set(listDebitur);
+                            obsDebiturResponse.set(temp);
                         } else {
-                            obsDebiturResponseLoadMore.set(listDebitur);
+                            obsDebiturResponseLoadMore.set(temp);
                         }
                         Timber.i("getListDebitur success");
                     }
