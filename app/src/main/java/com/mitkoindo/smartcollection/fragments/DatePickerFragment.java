@@ -41,8 +41,37 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         //set minimum date as today
         datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
 
+        //cek maximum date
+        if (maxDate > -1)
+            datePickerDialog.getDatePicker().setMaxDate(maxDate);
+
         //return created dialog
         return datePickerDialog;
+    }
+
+    //max date
+    private long maxDate = -1;
+
+    //set maxdate
+    public void SetMaxDate(int days)
+    {
+        Calendar currentCalendar = Calendar.getInstance();
+        Calendar calendarClone = (Calendar)currentCalendar.clone();
+        calendarClone.add(Calendar.DATE, days);
+
+        //cek apakah setelah ditambah hari, bulan di kalender masih sama dengan bulan sekarang
+        if (calendarClone.get(Calendar.MONTH) == currentCalendar.get(Calendar.MONTH))
+        {
+            //jika masih sama, set max date sebagai tanggal baru
+            maxDate = calendarClone.getTimeInMillis();
+        }
+        else
+        {
+            //jika beda, set maxdate sebagai hari terakhir di bulan berjalan
+            calendarClone.set(Calendar.DATE, currentCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+            calendarClone.set(Calendar.MONTH, currentCalendar.get(Calendar.MONTH));
+            maxDate = calendarClone.getTimeInMillis();
+        }
     }
 
     //----------------------------------------------------------------------------------------------

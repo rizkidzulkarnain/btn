@@ -193,6 +193,7 @@ public class UnassignedDebiturFragment extends Fragment
 
         //set date picker
         datePickerFragment = new DatePickerFragment();
+        datePickerFragment.SetMaxDate(14);
         datePickerFragment.SetCallerFragment(this);
 
         //create generic alert

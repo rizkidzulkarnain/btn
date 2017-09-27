@@ -266,9 +266,19 @@ public class BeritaGrupFragment extends Fragment
 
         String intentURL = baseURL + attachmentURL;
 
+        String documentSupportURL = getString(R.string.DocumentSupportURL);
+
+        //cek apakah urlnya end in pdf
+        if (intentURL.endsWith(".pdf"))
+        {
+            //jika iya, add document support url di depannya
+            intentURL = documentSupportURL + intentURL;
+        }
+
         //open intent
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(intentURL));
+        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(intentURL));
+        /*Intent i = new Intent(Intent.ACTION_VIEW);*/
+        /*i.setData(Uri.parse(intentURL));*/
         startActivity(i);
     }
 

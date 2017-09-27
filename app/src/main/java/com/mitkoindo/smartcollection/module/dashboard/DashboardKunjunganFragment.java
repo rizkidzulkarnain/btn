@@ -4,6 +4,7 @@ package com.mitkoindo.smartcollection.module.dashboard;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -337,15 +341,24 @@ public class DashboardKunjunganFragment extends Fragment
 
                     //create chart
                     PieDataSet pieDataSet = new PieDataSet(pieEntries_Dabitur, "Debitur");
-                    /*pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);*/
+                    pieDataSet.setDrawValues(false);
                     pieDataSet.setColors(new int[] {R.color.ChartColor_Positive, R.color.ChartColor_Negative}, getActivity());
                     PieData pieData = new PieData(pieDataSet);
                     chart_Debitur.setData(pieData);
                     chart_Debitur.setHoleRadius(0);
                     chart_Debitur.setTransparentCircleRadius(0);
                     chart_Debitur.setUsePercentValues(true);
-                    chart_Debitur.invalidate();
+                    chart_Debitur.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Transparent));
+                    chart_Debitur.setDrawEntryLabels(false);
 
+                    Description description = new Description();
+                    description.setTextColor(ContextCompat.getColor(getActivity(), R.color.White));
+                    chart_Debitur.setDescription(description);
+
+                    Legend chartLegend = chart_Debitur.getLegend();
+                    chartLegend.setTextColor(ContextCompat.getColor(getActivity(), R.color.White));
+
+                    chart_Debitur.invalidate();
                     //set data debitur
                     view_Debitur_Target.setText("" + currentdashboardData.Target);
                     view_Debitur_Realisasi.setText("" + currentdashboardData.Realisasi);
@@ -367,13 +380,23 @@ public class DashboardKunjunganFragment extends Fragment
 
                     //create chart
                     PieDataSet pieDataSet = new PieDataSet(pieEntries_Nominal, "Nominal");
-                    /*pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);*/
+                    pieDataSet.setDrawValues(false);
                     pieDataSet.setColors(new int[] {R.color.ChartColor_Positive, R.color.ChartColor_Negative}, getActivity());
                     PieData pieData = new PieData(pieDataSet);
                     chart_Nominal.setData(pieData);
                     chart_Nominal.setHoleRadius(0);
                     chart_Nominal.setTransparentCircleRadius(0);
                     chart_Nominal.setUsePercentValues(true);
+                    chart_Nominal.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Transparent));
+                    chart_Nominal.setDrawEntryLabels(false);
+
+                    Description description = new Description();
+                    description.setTextColor(ContextCompat.getColor(getActivity(), R.color.White));
+                    chart_Nominal.setDescription(description);
+
+                    Legend chartLegend = chart_Nominal.getLegend();
+                    chartLegend.setTextColor(ContextCompat.getColor(getActivity(), R.color.White));
+
                     chart_Nominal.invalidate();
 
                     ///set data nominal

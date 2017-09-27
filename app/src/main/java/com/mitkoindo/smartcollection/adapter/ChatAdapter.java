@@ -156,6 +156,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         this.authToken = authToken;
         this.userID = userID;
         this.userID_ChatPartner = userID_ChatPartner;
+        int x = 0;
+        int y = x + 1;
     }
 
     //set views
@@ -230,14 +232,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     public void CreateUpdateChatRequest()
     {
         //kalo sedang load page baru, disable loadnya
-        if (flag_LoadingNewPage)
+        /*if (flag_LoadingNewPage)
             return;
 
         //set flag transaksi ke update chat
         flag_UpdateChat = true;
 
         //send request
-        new SendGetChatRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+        new SendGetChatRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");*/
     }
 
     //create request buat get chat list
@@ -412,6 +414,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         ScrollChatToBottom();
         ScrollChatToBottom();
         ScrollChatToBottom();
+
+        currentPage++;
     }
 
     //Update chat item

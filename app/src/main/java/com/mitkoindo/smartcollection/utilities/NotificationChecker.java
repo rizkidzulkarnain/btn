@@ -313,6 +313,8 @@ public class NotificationChecker extends BroadcastReceiver
     {
         //get intent
         Intent intent = DetermineIntent(currentNotification);
+        if (intent == null)
+            return;
 
         int notificationID = currentNotification.ID;
 
@@ -347,6 +349,12 @@ public class NotificationChecker extends BroadcastReceiver
         Intent intent = null;
 
         //switch result tergantung item type
+        if (notificationData == null)
+            return null;
+
+        if (notificationData.PageType == null)
+            return null;
+
         switch (notificationData.PageType)
         {
             case "PagePtp" :

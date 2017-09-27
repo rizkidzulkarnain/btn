@@ -484,6 +484,7 @@
     <string name="URL_Data_StoreProcedure">api/Data/sp</string>
     <string name="URL_Data_View">api/Data/view</string>
     <string name="URL_UploadFile">api/File/upload</string>
+    <string name="DocumentSupportURL">http://docs.google.com/gview?embedded=true&amp;url=</string>
 
     <!--Shared preference key-->
     <string name="SharedPreferenceName">SharedPreference_SmartCollection</string>
