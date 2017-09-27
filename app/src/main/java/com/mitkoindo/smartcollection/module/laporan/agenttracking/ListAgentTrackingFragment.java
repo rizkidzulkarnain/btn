@@ -30,6 +30,7 @@ import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.base.BaseFragment;
 import com.mitkoindo.smartcollection.databinding.FragmentListAgentTrackingBinding;
+import com.mitkoindo.smartcollection.module.laporan.LaporanCallActivity;
 import com.mitkoindo.smartcollection.module.laporan.LaporanVisitActivity;
 import com.mitkoindo.smartcollection.objectdata.AgentTracking;
 import com.mitkoindo.smartcollection.utils.Constant;
@@ -202,6 +203,10 @@ public class ListAgentTrackingFragment extends BaseFragment implements OnMapRead
                     Intent intent = new Intent(getContext(), LaporanVisitActivity.class);
                     intent.putExtra("VisitID", item.getIDVisit());
                     startActivity(intent);
+                } else if (!TextUtils.isEmpty(item.getIDCall())) {
+                    Intent intent = new Intent(getContext(), LaporanCallActivity.class);
+                    intent.putExtra("CallID", item.getIDCall());
+                    startActivity(intent);
                 }
                 return true;
             }
@@ -360,6 +365,10 @@ public class ListAgentTrackingFragment extends BaseFragment implements OnMapRead
         if (!TextUtils.isEmpty(agentTracking.getIDVisit())) {
             Intent intent = new Intent(getContext(), LaporanVisitActivity.class);
             intent.putExtra("VisitID", agentTracking.getIDVisit());
+            startActivity(intent);
+        } else if (!TextUtils.isEmpty(agentTracking.getIDCall())) {
+            Intent intent = new Intent(getContext(), LaporanCallActivity.class);
+            intent.putExtra("CallID", agentTracking.getIDCall());
             startActivity(intent);
         }
     }

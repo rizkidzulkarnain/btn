@@ -70,6 +70,14 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
     @Expose
     private String noteFrom;
 
+    @SerializedName("IDVisit")
+    @Expose
+    private String idVisit;
+
+    @SerializedName("IDCall")
+    @Expose
+    private String idCall;
+
     private boolean isPenugasan = false;
 
 
@@ -178,6 +186,22 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
 
     public void setNoteFrom(String noteFrom) {
         this.noteFrom = noteFrom;
+    }
+
+    public String getIdVisit() {
+        return idVisit;
+    }
+
+    public void setIdVisit(String idVisit) {
+        this.idVisit = idVisit;
+    }
+
+    public String getIdCall() {
+        return idCall;
+    }
+
+    public void setIdCall(String idCall) {
+        this.idCall = idCall;
     }
 
     public boolean isPenugasan() {

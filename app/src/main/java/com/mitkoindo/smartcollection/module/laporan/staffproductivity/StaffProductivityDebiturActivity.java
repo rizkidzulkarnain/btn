@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.mikepenz.fastadapter.FastAdapter;
@@ -20,6 +21,8 @@ import com.mitkoindo.smartcollection.databinding.ActivityStaffProductivityDebitu
 import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturActivity;
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturViewModel;
+import com.mitkoindo.smartcollection.module.laporan.LaporanCallActivity;
+import com.mitkoindo.smartcollection.module.laporan.LaporanVisitActivity;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
 import com.mitkoindo.smartcollection.utils.Constant;
 import com.mitkoindo.smartcollection.utils.SimpleListItemDecoration;
@@ -143,8 +146,15 @@ public class StaffProductivityDebiturActivity extends BaseActivity {
         mFastAdapter.withOnClickListener(new FastAdapter.OnClickListener<DebiturItem>() {
             @Override
             public boolean onClick(View v, IAdapter<DebiturItem> adapter, DebiturItem item, int position) {
-                startActivity(DetailDebiturActivity.instantiate(StaffProductivityDebiturActivity.this, item.getNoRekening(), item.getCustomerReference(), ListDebiturActivity.EXTRA_TYPE_ACCOUNT_ASSIGNMENT_VALUE));
-
+                if (!TextUtils.isEmpty(item.getIdVisit())) {
+                    Intent intent = new Intent(StaffProductivityDebiturActivity.this, LaporanVisitActivity.class);
+                    intent.putExtra("VisitID", item.getIdVisit());
+                    startActivity(intent);
+                } else if (!TextUtils.isEmpty(item.getIdCall())) {
+                    Intent intent = new Intent(StaffProductivityDebiturActivity.this, LaporanCallActivity.class);
+                    intent.putExtra("CallID", item.getIdCall());
+                    startActivity(intent);
+                }
                 return true;
             }
         });
