@@ -3,6 +3,7 @@ package com.mitkoindo.smartcollection.module.laporan.agenttracking;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.text.TextUtils;
 
 import com.mitkoindo.smartcollection.base.ILifecycleViewModel;
 import com.mitkoindo.smartcollection.network.ApiUtils;
@@ -82,7 +83,10 @@ public class AgentTrackingViewModel extends BaseObservable implements ILifecycle
                         List<AgentTracking> temp = new ArrayList<AgentTracking>();
                         for (AgentTracking agentTracking : listAgentTracking) {
                             AgentTracking item = agentTracking;
-                            String dateFormatted = Utils.changeDateFormat(item.getCreatedDate(), Constant.DATE_FORMAT_AGENT_TRACKING_FROM_TIME, Constant.DATE_FORMAT_TIME);
+                            String dateFormatted = Utils.changeDateFormat(item.getCreatedDate(), Constant.DATE_FORMAT_AGENT_TRACKING, Constant.DATE_FORMAT_TIME);
+                            if (TextUtils.isEmpty(dateFormatted)) {
+                                dateFormatted = item.getCreatedDate();
+                            }
                             item.setTimeFormatted(dateFormatted);
                             int iconDrawable = item.getIconDrawable();
                             item.setIconDrawable(iconDrawable);

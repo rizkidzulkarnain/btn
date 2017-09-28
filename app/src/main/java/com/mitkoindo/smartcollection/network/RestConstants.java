@@ -5,22 +5,24 @@ package com.mitkoindo.smartcollection.network;
  */
 
 public final class RestConstants {
-    public static final String BASE_URL = "https://span.btn.co.id/";
-    public static final String BASE_URL_IMAGE = BASE_URL + "wsMobile";
+//    public static final String BASE_URL = "https://span.btn.co.id/";
+    public static final String BASE_URL = "https://mobile-coll.btn.co.id/";
+//    public static final String BASE_URL_IMAGE = BASE_URL + "wsMobile";
+    public static final String BASE_URL_END = "SmartColl";
+    public static final String BASE_URL_IMAGE = BASE_URL + BASE_URL_END;
 
-    public static final String ENDPOINT_LOGIN = "wsMobile/api/Account/login";
-    public static final String UPDATE_PASSWORD = "wsMobile/api/Account/updatePassword";
-    public static final String HISTORY_TINDAKAN = "wsMobile/api/Data/sp";
-    public static final String ENDPOINT_LIST_DEBITUR = "wsMobile/api/Data/sp";
-    public static final String ENDPOINT_DETAIL_DEBITUR = "wsMobile/api/Data/sp";
-    public static final String ENDPOINT_VISIT_DROPDOWN = "wsMobile/api/Data/view";
-
-    public static final String FORM_VISIT = "wsMobile/api/Data/sp";
-    public static final String FORM_CALL = "wsMobile/api/Data/sp";
-    public static final String ENDPOINT_LIST_PHONE_NUMBER = "wsMobile/api/Data/sp";
-    public static final String ENDPOINT_UPLOAD_FILE = "wsMobile/api/File/upload";
-    public static final String DATA_SP = "wsMobile/api/Data/sp";
-    public static final String BUNDLE = "wsMobile/api/Data/bundle/{dbName}/{limit}";
+    public static final String ENDPOINT_LOGIN = BASE_URL_END + "/api/Account/login";
+    public static final String UPDATE_PASSWORD = BASE_URL_END + "/api/Account/updatePassword";
+    public static final String HISTORY_TINDAKAN = BASE_URL_END + "/api/Data/sp";
+    public static final String ENDPOINT_LIST_DEBITUR = BASE_URL_END + "/api/Data/sp";
+    public static final String ENDPOINT_DETAIL_DEBITUR = BASE_URL_END + "/api/Data/sp";
+    public static final String ENDPOINT_VISIT_DROPDOWN = BASE_URL_END + "/api/Data/view";
+    public static final String FORM_VISIT = BASE_URL_END + "/api/Data/sp";
+    public static final String FORM_CALL = BASE_URL_END + "/api/Data/sp";
+    public static final String ENDPOINT_LIST_PHONE_NUMBER = BASE_URL_END + "/api/Data/sp";
+    public static final String ENDPOINT_UPLOAD_FILE = BASE_URL_END + "/api/File/upload";
+    public static final String DATA_SP = BASE_URL_END + "/api/Data/sp";
+    public static final String BUNDLE = BASE_URL_END + "/api/Data/bundle/{dbName}/{limit}";
 
     public static final String DATABASE_ID_VALUE = "db1";
 
@@ -103,4 +105,7 @@ public final class RestConstants {
     public static final String RELATIONSHIP_ID_ISTRI_VALUE = "03";
 
     public static final String STATUS_AGUNAN_ID_RUMAH_KOSONG_VALUE = "01";
+
+    public static final String STAFF_PRODUCTIVITY_CALL_VALUE = "CALL";
+    public static final String STAFF_PRODUCTIVITY_VISIT_VALUE = "VISIT";
 }

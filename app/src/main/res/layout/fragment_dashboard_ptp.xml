@@ -67,14 +67,39 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
-                    <!--Chart nominal-->
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/DashboardPTPFragment_Chart_Nominal"
-                        android:background="@drawable/background_card_whitetransparent"
-                        android:padding="10dp"
-                        android:layout_marginTop="10dp"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"/>
+                        android:layout_height="wrap_content">
+
+                        <!--White line background-->
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:src="@drawable/dashboard_line"
+                                android:adjustViewBounds="true"
+                                android:scaleType="fitStart"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="125dp" />
+
+                            <View
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="125dp"/>
+                        </LinearLayout>
+
+                        <!--Chart nominal-->
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/DashboardPTPFragment_Chart_Nominal"
+                            android:background="@drawable/background_card_whitetransparent"
+                            android:padding="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"/>
+                    </RelativeLayout>
 
                     <!--Target nominal-->
                     <LinearLayout
@@ -173,14 +198,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <!--Chart debitur-->
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/DashboardPTPFragment_Chart_Debitur"
-                    android:background="@drawable/background_card_whitetransparent"
-                    android:padding="10dp"
-                    android:layout_marginTop="10dp"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"/>
+                    android:layout_height="wrap_content">
+
+                    <!--White line background-->
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:src="@drawable/dashboard_line"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitStart"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="125dp" />
+
+                        <View
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="125dp"/>
+                    </LinearLayout>
+                    <!--Chart debitur-->
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/DashboardPTPFragment_Chart_Debitur"
+                        android:background="@drawable/background_card_whitetransparent"
+                        android:padding="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"/>
+                </RelativeLayout>
 
                 <!--Target debitur-->
                 <LinearLayout

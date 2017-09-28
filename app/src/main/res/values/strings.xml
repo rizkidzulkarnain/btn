@@ -69,6 +69,7 @@
     <string name="Dashboard_Penyelesaian_SudahBayar">Sudah Bayar</string>
     <string name="Dashboard_Penyelesaian_BelumBayar">Belum Bayar</string>
     <string name="Dashboard_PTP_JumlahJanjiBayar">Jumlah Janji Bayar</string>
+    <string name="Dashboard_Penyelesaian_BelumTanggal7">Dashboard penyelesaian akan ditampilkan setelah tanggal 7</string>
 
     <!--Dashboard. staff selector-->
     <string name="StaffSelector_Title">Pilih Staff</string>
@@ -477,7 +478,8 @@
     <string name="PermissionRequest_Cancel">Batal</string>
 
     <!--Transaksi-->
-    <string name="BaseURL">https://span.btn.co.id/wsMobile/</string>
+    <!--<string name="BaseURL">https://span.btn.co.id/wsMobile/</string>-->
+    <string name="BaseURL">https://mobile-coll.btn.co.id/SmartColl/</string>
     <string name="URL_Login">api/Account/login</string>
     <string name="URL_Logout">api/Account/logout</string>
     <string name="URL_UpdatePassword">api/Account/updatePassword</string>

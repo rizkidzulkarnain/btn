@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,6 +53,7 @@ public class DashboardPenyelesaianFragment extends Fragment
     //----------------------------------------------------------------------------------------------
     //spinner
     private Spinner view_Spinner;
+    private View holder_Spinner;
 
     //holder chart
     private View holder_Chart;
@@ -78,6 +80,9 @@ public class DashboardPenyelesaianFragment extends Fragment
 
     //refresher
     private SwipeRefreshLayout view_Refresher;
+
+    //alert belum ditampilkan sebelum tanggal 7
+    private TextView view_DaySevenAlert;
 
     //----------------------------------------------------------------------------------------------
     //  Transaksi
@@ -106,8 +111,19 @@ public class DashboardPenyelesaianFragment extends Fragment
         // Inflate the layout for this fragment
         View thisView = inflater.inflate(R.layout.fragment_dashboard_penyelesaian, container, false);
         GetViews(thisView);
-        SetupViews();
-        CreateGetDashboardPenyelesaianRequest();
+
+        //cek tanggal hari ini, jika belum tanggal 8, hide semua view
+        Calendar calendar = Calendar.getInstance();
+        /*if (calendar.get(Calendar.DATE) > 8)*/
+        if (calendar.get(Calendar.DATE) < 8)
+        {
+            HideAllViews();
+        }
+        else
+        {
+            SetupViews();
+            CreateGetDashboardPenyelesaianRequest();
+        }
         return thisView;
     }
 
@@ -120,6 +136,7 @@ public class DashboardPenyelesaianFragment extends Fragment
 
         //get spinner
         view_Spinner = thisView.findViewById(R.id.DashboardPenyelesaianFragment_Spinner);
+        holder_Spinner = thisView.findViewById(R.id.DashboardPenyelesaianFragment_SpinnerHolder);
 
         //get chart
         chart_Debitur = thisView.findViewById(R.id.DashboardPenyelesaianFragment_Chart_Debitur);
@@ -149,6 +166,9 @@ public class DashboardPenyelesaianFragment extends Fragment
                 CreateGetDashboardPenyelesaianRequest();
             }
         });
+
+        //get alert day 7
+        view_DaySevenAlert = thisView.findViewById(R.id.DashboardPenyelesaianFragment_DateSevenAlert);
     }
 
     //setup views
@@ -209,6 +229,16 @@ public class DashboardPenyelesaianFragment extends Fragment
 
         //set default mode ke today
         currentDashboardMode = DASHBOARDMODE_CURRENT;
+    }
+
+    //hide all views
+    private void HideAllViews()
+    {
+        holder_Spinner.setVisibility(View.GONE);
+        holder_Chart.setVisibility(View.GONE);
+        holder_Progress.setVisibility(View.GONE);
+        view_Alert.setVisibility(View.GONE);
+        view_DaySevenAlert.setVisibility(View.VISIBLE);
     }
 
     //----------------------------------------------------------------------------------------------

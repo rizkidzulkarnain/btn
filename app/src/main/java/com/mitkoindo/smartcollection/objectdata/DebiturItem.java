@@ -70,13 +70,13 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
     @Expose
     private String noteFrom;
 
-    @SerializedName("IDVisit")
+    @SerializedName("Aktifitas")
     @Expose
-    private String idVisit;
+    private String aktifitas;
 
-    @SerializedName("IDCall")
+    @SerializedName("AktifitasID")
     @Expose
-    private String idCall;
+    private String aktifitasId;
 
     private boolean isPenugasan = false;
 
@@ -188,20 +188,20 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
         this.noteFrom = noteFrom;
     }
 
-    public String getIdVisit() {
-        return idVisit;
+    public String getAktifitas() {
+        return aktifitas;
     }
 
-    public void setIdVisit(String idVisit) {
-        this.idVisit = idVisit;
+    public void setAktifitas(String aktifitas) {
+        this.aktifitas = aktifitas;
     }
 
-    public String getIdCall() {
-        return idCall;
+    public String getAktifitasId() {
+        return aktifitasId;
     }
 
-    public void setIdCall(String idCall) {
-        this.idCall = idCall;
+    public void setAktifitasId(String aktifitasId) {
+        this.aktifitasId = aktifitasId;
     }
 
     public boolean isPenugasan() {

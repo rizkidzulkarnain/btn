@@ -68,6 +68,10 @@ public class DetailDebitur {
     @Expose
     private String alamatRumah;
 
+    @SerializedName("AlamatRumah_OLD")
+    @Expose
+    private String alamatRumahOld;
+
     @SerializedName("AlamatAgunan")
     @Expose
     private String alamatAgunan;
@@ -75,6 +79,13 @@ public class DetailDebitur {
     @SerializedName("AlamatKantor")
     @Expose
     private String alamatKantor;
+
+    @SerializedName("AlamatKantor_OLD")
+    @Expose
+    private String alamatKantorOld;
+
+    @SerializedName("AlamatSaatIni")
+    @Expose
     private String alamatSaatIni;
 
     @SerializedName("UserAssignDate")
@@ -229,6 +240,21 @@ public class DetailDebitur {
         this.userAssignDate = userAssignDate;
     }
 
+    public String getAlamatRumahOld() {
+        return alamatRumahOld;
+    }
+
+    public void setAlamatRumahOld(String alamatRumahOld) {
+        this.alamatRumahOld = alamatRumahOld;
+    }
+
+    public String getAlamatKantorOld() {
+        return alamatKantorOld;
+    }
+
+    public void setAlamatKantorOld(String alamatKantorOld) {
+        this.alamatKantorOld = alamatKantorOld;
+    }
 
     //parse form JSON
     public void ParseData(String jsonString)

@@ -232,14 +232,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     public void CreateUpdateChatRequest()
     {
         //kalo sedang load page baru, disable loadnya
-        /*if (flag_LoadingNewPage)
+        if (flag_LoadingNewPage)
             return;
 
         //set flag transaksi ke update chat
         flag_UpdateChat = true;
 
         //send request
-        new SendGetChatRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");*/
+        new SendGetChatRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
     }
 
     //create request buat get chat list
@@ -252,7 +252,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         {
             //create sp parameter object
             JSONObject spParameterObject = new JSONObject();
-            spParameterObject.put("userID", userID_ChatPartner);
+            /*spParameterObject.put("userID", userID_ChatPartner);*/
+            spParameterObject.put("userID", userID);
+            spParameterObject.put("chatWithUserID", userID_ChatPartner);
             spParameterObject.put("limit", 10);
             if (flag_UpdateChat)
                 spParameterObject.put("page", 1);
@@ -322,6 +324,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         {
             if (flag_LoadingNewPage)
             {
+                flag_LoadingNewPage = false;
                 end_LoadNewPage = true;
                 return;
             }

@@ -23,6 +23,7 @@ import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActiv
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturViewModel;
 import com.mitkoindo.smartcollection.module.laporan.LaporanCallActivity;
 import com.mitkoindo.smartcollection.module.laporan.LaporanVisitActivity;
+import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
 import com.mitkoindo.smartcollection.utils.Constant;
 import com.mitkoindo.smartcollection.utils.SimpleListItemDecoration;
@@ -146,14 +147,16 @@ public class StaffProductivityDebiturActivity extends BaseActivity {
         mFastAdapter.withOnClickListener(new FastAdapter.OnClickListener<DebiturItem>() {
             @Override
             public boolean onClick(View v, IAdapter<DebiturItem> adapter, DebiturItem item, int position) {
-                if (!TextUtils.isEmpty(item.getIdVisit())) {
-                    Intent intent = new Intent(StaffProductivityDebiturActivity.this, LaporanVisitActivity.class);
-                    intent.putExtra("VisitID", item.getIdVisit());
-                    startActivity(intent);
-                } else if (!TextUtils.isEmpty(item.getIdCall())) {
-                    Intent intent = new Intent(StaffProductivityDebiturActivity.this, LaporanCallActivity.class);
-                    intent.putExtra("CallID", item.getIdCall());
-                    startActivity(intent);
+                if (!TextUtils.isEmpty(item.getAktifitasId()) && !TextUtils.isEmpty(item.getAktifitas())) {
+                    if (item.getAktifitas().equalsIgnoreCase(RestConstants.STAFF_PRODUCTIVITY_VISIT_VALUE)) {
+                        Intent intent = new Intent(StaffProductivityDebiturActivity.this, LaporanVisitActivity.class);
+                        intent.putExtra("VisitID", item.getAktifitasId());
+                        startActivity(intent);
+                    } else if (item.getAktifitas().equalsIgnoreCase(RestConstants.STAFF_PRODUCTIVITY_CALL_VALUE)) {
+                        Intent intent = new Intent(StaffProductivityDebiturActivity.this, LaporanCallActivity.class);
+                        intent.putExtra("CallID", item.getAktifitasId());
+                        startActivity(intent);
+                    }
                 }
                 return true;
             }
