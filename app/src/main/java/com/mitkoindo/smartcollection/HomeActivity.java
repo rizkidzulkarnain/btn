@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -137,6 +139,9 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
     private Handler badgeUpdaterHandler;
     private Runnable badgeUpdaterRunnable;
 
+    //indicator online
+    private View indicator_Online;
+
     //----------------------------------------------------------------------------------------------
     //  Data
     //----------------------------------------------------------------------------------------------
@@ -156,6 +161,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
     private String baseUrl;
     private String url_Logout;
     private String url_DataSP;
+    private String url_Ping;
 
     //auth token
     private String authToken;
@@ -217,6 +223,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
             public void run()
             {
                 homeMenuAdapter.CreateGetBadgeData();
+                CreateGetIndicatorRequest();
                 badgeUpdaterHandler.postDelayed(badgeUpdaterRunnable, delay_update_badge * 1000);
             }
         };
@@ -241,6 +248,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
         view_UserName = findViewById(R.id.HomeActivity_UserName);
         view_UserID = findViewById(R.id.HomeActivity_UserID);
         view_UserGroup = findViewById(R.id.HomeActivity_UserGroup);
+        indicator_Online = findViewById(R.id.HomeActivity_Indicator);
 
         //create alert
         genericAlert = new GenericAlert(this);
@@ -312,6 +320,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
         baseUrl = ResourceLoader.LoadBaseURL(this);
         url_Logout = getString(R.string.URL_Logout);
         url_DataSP = getString(R.string.URL_Data_StoreProcedure);
+        url_Ping = getString(R.string.URL_Ping);
 
         //load auth token
         authToken = ResourceLoader.LoadAuthToken(this);
@@ -603,6 +612,65 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
         protected void onPostExecute(String s)
         {
             super.onPostExecute(s);
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Create request buat get online / offline indicator
+    //----------------------------------------------------------------------------------------------
+    private void CreateGetIndicatorRequest()
+    {
+        //cek apakah koneksi on / off
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        if (!isConnected)
+        {
+            SetupIndicator("500");
+        }
+
+        new SendGetIndicatorRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+    }
+
+    //send get indicator request
+    private class SendGetIndicatorRequest extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected String doInBackground(String... strings)
+        {
+            String usedURL = baseUrl + url_Ping;
+
+            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
+            return networkConnection.SendGetRequest(usedURL);
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+            SetupIndicator(s);
+        }
+    }
+
+    //setup indicator
+    private void SetupIndicator(String resultString)
+    {
+        //get response
+        if (resultString.startsWith("5") || resultString.isEmpty())
+        {
+            //show indicator offline
+            indicator_Online.setBackground(ContextCompat.getDrawable(this, R.drawable.background_circle_indicator_offline));
+        }
+        else if (resultString.startsWith("2"))
+        {
+            //show indicator online
+            indicator_Online.setBackground(ContextCompat.getDrawable(this, R.drawable.background_circle_indicator_online));
+        }
+        else
+        {
+            //show indicator offline
+            indicator_Online.setBackground(ContextCompat.getDrawable(this, R.drawable.background_circle_indicator_offline));
         }
     }
 

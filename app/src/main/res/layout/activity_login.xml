@@ -6,23 +6,89 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@color/Background_Login_Temp"
+    android:background="@drawable/background_logingradient"
     tools:context="com.mitkoindo.smartcollection.LoginActivity">
 
-    <!--Logo bank btn-->
-    <ImageView
-        android:src="@drawable/temp_loginbackground1"
-        android:scaleType="fitStart"
+    <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+
+        <!--logo btn-->
+        <LinearLayout
+            android:id="@+id/LoginActivity_Area_BTN_Logo"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <View
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:src="@drawable/img_login_logobtn"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!--Logo smart collection-->
+        <LinearLayout
+            android:id="@+id/LoginActivity_Area_SmartCollection_Logo"
+            android:layout_below="@id/LoginActivity_Area_BTN_Logo"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:src="@drawable/img_logo_smartcollection"
+                android:adjustViewBounds="true"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!--Particle-->
+        <!--<ImageView
+            android:src="@drawable/img_particle_ga_niat"
+            android:layout_alignParentBottom="true"
+            android:adjustViewBounds="true"
+            android:layout_marginBottom="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />-->
+    </RelativeLayout>
 
     <!--Login form-->
+    <!--<LinearLayout
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">-->
     <LinearLayout
         android:gravity="bottom"
         android:orientation="vertical"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
-        android:paddingBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -30,8 +96,11 @@
         <TextView
             android:text="@string/Login_ID"
             android:textColor="@color/White"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/LoginActivity_Username"
             android:inputType="text"
@@ -40,6 +109,8 @@
             android:theme="@style/EditText.Login"
             android:textColor="@color/White"
             android:textColorHint="@color/White"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -47,39 +118,21 @@
         <TextView
             android:text="@string/Login_Password"
             android:textColor="@color/White"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/LoginActivity_Password"
             android:theme="@style/EditText.Login"
             android:textColor="@color/White"
             android:textColorHint="@color/White"
             android:inputType="textPassword"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-        <!--&lt;!&ndash;checkbox untuk menampilkan password&ndash;&gt;
-        <LinearLayout
-            android:onClick="HandleInput_Login_ToggleSwitch"
-            android:gravity="center_vertical"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Switch
-                android:id="@+id/LoginActivity_RememberMe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:text="@string/Login_RememberMe"
-                android:textColor="@color/White"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>-->
 
         <!--Login button-->
         <Button
@@ -89,18 +142,10 @@
             android:text="@string/Button_LoginPage_Login"
             android:textColor="@color/White"
             android:textStyle="bold"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-        <!--forgot password button-->
-        <!--<Button
-            android:background="@drawable/background_rounded_rectangle_loginbutton"
-            android:layout_marginTop="10dp"
-            android:text="@string/Button_LoginPage_ForgotPassword"
-            android:textColor="@color/White"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />-->
 
         <!--Version-->
         <TextView
@@ -109,11 +154,15 @@
             android:textSize="12sp"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
             android:text="@string/Misc_Copyright"
+            android:background="@color/Background_Copyright"
+            android:padding="10dp"
             android:textColor="@color/White"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"

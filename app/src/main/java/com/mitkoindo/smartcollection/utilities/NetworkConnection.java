@@ -11,6 +11,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -205,6 +208,8 @@ public class NetworkConnection
             //cek jika resultcode nggak 200
             switch (HttpResult)
             {
+                case HttpsURLConnection.HTTP_NO_CONTENT :
+                    return "204";
                 case HttpsURLConnection.HTTP_BAD_REQUEST : //400
                     return "Bad Request";
                 case HttpsURLConnection.HTTP_UNAUTHORIZED : //401
@@ -438,6 +443,82 @@ public class NetworkConnection
                 int x = 0;
                 int z = x + 1;
                 */
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return serverResponse;
+    }
+
+    //send plain post request
+    public String SendPlainPostRequest(String url_String)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        String serverResponse = "";
+
+        try
+        {
+            URL url = null;
+            url = new URL(url_String);
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setConnectTimeout(5000);
+            httpURLConnection.setReadTimeout(60000);
+            httpURLConnection.setRequestProperty("Content-Type","application/json");
+            if (accessToken != null && !accessToken.isEmpty())
+            {
+                if (accessToken.contains("Bearer"))
+                {
+                    httpURLConnection.setRequestProperty("Authorization", accessToken);
+                }
+                else
+                {
+                    httpURLConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
+                }
+            }
+
+            httpURLConnection.setRequestProperty("PhoneSpec", phoneSpec);
+            httpURLConnection.connect();
+
+            OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
+            out.write(requestObject.toString());
+            out.close();
+
+            int HttpResult = httpURLConnection.getResponseCode();
+
+            //cek resultcode, jika 503, return maintenance
+            if (HttpResult == HttpURLConnection.HTTP_UNAVAILABLE)
+                return "Maintenance";
+
+
+            if (HttpResult == HttpURLConnection.HTTP_OK)
+            {
+                BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"utf-8"));
+                String line = null;
+                while ((line = br.readLine()) != null)
+                {
+                    sb.append(line + "\n");
+                }
+                br.close();
+
+                serverResponse = ""+sb.toString();
+            }
+            else
+            {
+                BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream(),"utf-8"));
+                String line = null;
+                while ((line = br.readLine()) != null)
+                {
+                    sb.append(line + "\n");
+                }
+                br.close();
+
+                serverResponse = ""+sb.toString();
             }
         }
         catch (IOException e)

@@ -21,7 +21,7 @@
         <TextView
             android:id="@+id/HomeMenuAdapter_Text"
             android:layout_gravity="center_horizontal"
-            android:textColor="@color/White"
+            android:textColor="@color/Line_HomeMenu_New"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -42,7 +42,7 @@
             android:id="@+id/HomeMenuAdapter_BadgeCounter"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@color/White"
+            android:textColor="@color/Font_Badge"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

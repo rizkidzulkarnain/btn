@@ -203,7 +203,8 @@ public class LoginActivity extends AppCompatActivity
             //create network connection
             NetworkConnection networkConnection = new NetworkConnection("", "");
             networkConnection.SetRequestObject(requestObject);
-            return networkConnection.SendPostRequest(usedURL);
+            /*return networkConnection.SendPostRequest(usedURL);*/
+            return networkConnection.SendPlainPostRequest(usedURL);
         }
 
         @Override
