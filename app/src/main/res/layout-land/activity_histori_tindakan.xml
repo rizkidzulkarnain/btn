@@ -1,87 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_bluegradient"
-    tools:context="com.mitkoindo.smartcollection.module.ptp_reminder.PTPReminderActivity">
+    tools:context="com.mitkoindo.smartcollection.HistoriTindakanActivity">
 
-    <!--Content-->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--Title-->
-        <LinearLayout
-            android:layout_marginTop="10dp"
+        <!--Page title-->
+        <TextView
+            android:text="@string/HistoriTindakan_Title"
+            android:textColor="@color/White"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@drawable/img_actionbar_land"
             android:gravity="center"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:src="@drawable/menuicon_ptpreminder"
-                android:tint="@color/White"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
-
-            <TextView
-                android:text="@string/PTP_Reminder_Title"
-                android:textColor="@color/White"
-                android:textSize="18sp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:layout_height="66dp" />
 
         <!--Divider-->
         <View
-            android:background="@color/color_Primary"
+            android:background="@color/Background_PageTitle"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
 
-        <!--Holder for data & alert-->
+        <!--List tindakan-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--List of reminder-->
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/PTP_Reminder_List"
-                android:padding="10dp"
+                android:id="@+id/HistoriTindakan_ListTindakan"
+                android:overScrollMode="never"
                 android:clipToPadding="false"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"/>
 
-            <!--progress bar-->
-            <ProgressBar
-                android:id="@+id/PTP_Reminder_ProgressBar"
-                android:visibility="gone"
-                android:layout_centerInParent="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <!--Alert text-->
             <TextView
-                android:id="@+id/PTP_Reminder_Alert"
-                android:visibility="gone"
+                android:id="@+id/HistoriTindakan_NoData"
+                android:text="@string/Text_NoData"
+                android:textSize="18sp"
                 android:textColor="@color/White"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:visibility="gone"
                 android:layout_centerInParent="true"
-                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
     </LinearLayout>
 
     <!--Back button-->
     <ImageView
-        android:onClick="HandleInput_PTPReminder_Back"
+        android:onClick="HandleInput_HistoriTindakan_Back"
         android:src="@drawable/ic_keyboard_backspace_white_36dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
@@ -90,7 +70,7 @@
         android:layout_height="wrap_content" />
 
     <!--<RelativeLayout
-        android:onClick="HandleInput_PTPReminder_Back"
+        android:onClick="HandleInput_HistoriTindakan_Back"
         android:background="@drawable/background_circle_blacktransparent"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"

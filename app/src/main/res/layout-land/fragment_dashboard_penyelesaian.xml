@@ -4,21 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_bluegradient"
-    tools:context="com.mitkoindo.smartcollection.module.dashboard.DashboardKunjunganFragment">
+    tools:context="com.mitkoindo.smartcollection.module.dashboard.DashboardPenyelesaianFragment">
 
     <!--Spinner untuk memilih mau menampilkan data hari ini atau akumulasi-->
     <RelativeLayout
-        android:id="@+id/DashboardKunjunganFragment_SpinnerHolder"
+        android:id="@+id/DashboardPenyelesaianFragment_SpinnerHolder"
         android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <Spinner
-            android:id="@+id/DashboardKunjunganFragment_Spinner"
+            android:id="@+id/DashboardPenyelesaianFragment_Spinner"
             android:background="@color/color_Accent"
             android:dropDownSelector="@color/White"
             android:padding="5dp"
-            android:layout_centerInParent="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -35,8 +34,8 @@
     </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/DashboardKunjunganFragment_Refresher"
-        android:layout_below="@id/DashboardKunjunganFragment_SpinnerHolder"
+        android:id="@+id/DashboardPenyelesaianFragment_Refresher"
+        android:layout_below="@id/DashboardPenyelesaianFragment_SpinnerHolder"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -46,7 +45,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/DashboardKunjunganFragment_ChartLayout"
+                android:id="@+id/DashboardPenyelesaianFragment_ChartLayout"
                 android:padding="10dp"
                 android:clipToPadding="false"
                 android:orientation="vertical"
@@ -55,8 +54,9 @@
 
                 <!--Label data nominal-->
                 <TextView
-                    android:text="@string/Dashboard_Kunjungan_Outstanding"
+                    android:text="@string/Dashboard_Nominal"
                     android:textSize="18sp"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -74,7 +74,7 @@
                         <ImageView
                             android:src="@drawable/dashboard_line"
                             android:adjustViewBounds="true"
-                            android:scaleType="fitStart"
+                            android:scaleType="fitXY"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="125dp" />
@@ -87,7 +87,7 @@
 
                     <!--Chart nominal-->
                     <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/DashboardKunjunganFragment_Chart_Nominal"
+                        android:id="@+id/DashboardPenyelesaianFragment_Chart_Nominal"
                         android:background="@drawable/background_card_whitetransparent"
                         android:padding="10dp"
                         android:layout_marginTop="10dp"
@@ -114,7 +114,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/DashboardKunjunganFragment_Nominal_Target"
+                        android:id="@+id/DashboardPenyelesaianFragment_Nominal_Target"
                         android:textColor="@color/White"
                         android:gravity="start"
                         android:layout_marginLeft="5dp"
@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="@string/Dashboard_Kunjungan_SudahDikunjungi"
+                        android:text="@string/Dashboard_Penyelesaian_SudahBayar"
                         android:textColor="@color/White"
                         android:textStyle="bold"
                         android:gravity="end"
@@ -143,7 +143,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/DashboardKunjunganFragment_Nominal_Realisasi"
+                        android:id="@+id/DashboardPenyelesaianFragment_Nominal_Realisasi"
                         android:textColor="@color/White"
                         android:gravity="start"
                         android:layout_marginLeft="5dp"
@@ -161,7 +161,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="@string/Dashboard_Kunjungan_BelumDikunjungi"
+                        android:text="@string/Dashboard_Penyelesaian_BelumBayar"
                         android:textColor="@color/White"
                         android:textStyle="bold"
                         android:gravity="end"
@@ -172,7 +172,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/DashboardKunjunganFragment_Nominal_Outstanding"
+                        android:id="@+id/DashboardPenyelesaianFragment_Nominal_Outstanding"
                         android:textColor="@color/White"
                         android:gravity="start"
                         android:layout_marginLeft="5dp"
@@ -204,7 +204,7 @@
                         <ImageView
                             android:src="@drawable/dashboard_line"
                             android:adjustViewBounds="true"
-                            android:scaleType="fitStart"
+                            android:scaleType="fitXY"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="125dp" />
@@ -217,13 +217,12 @@
 
                     <!--Chart debitur-->
                     <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/DashboardKunjunganFragment_Chart_Debitur"
+                        android:id="@+id/DashboardPenyelesaianFragment_Chart_Debitur"
                         android:background="@drawable/background_card_whitetransparent"
                         android:padding="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="250dp"/>
-
                 </RelativeLayout>
 
                 <!--Target debitur-->
@@ -245,7 +244,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/DashboardKunjunganFragment_Debitur_Target"
+                        android:id="@+id/DashboardPenyelesaianFragment_Debitur_Target"
                         android:textColor="@color/White"
                         android:gravity="start"
                         android:layout_marginLeft="5dp"
@@ -263,7 +262,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="@string/Dashboard_Kunjungan_SudahDikunjungi"
+                        android:text="@string/Dashboard_Penyelesaian_SudahBayar"
                         android:textColor="@color/White"
                         android:textStyle="bold"
                         android:gravity="end"
@@ -274,7 +273,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/DashboardKunjunganFragment_Debitur_Realisasi"
+                        android:id="@+id/DashboardPenyelesaianFragment_Debitur_Realisasi"
                         android:textColor="@color/White"
                         android:gravity="start"
                         android:layout_marginLeft="5dp"
@@ -292,7 +291,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="@string/Dashboard_Kunjungan_BelumDikunjungi"
+                        android:text="@string/Dashboard_Penyelesaian_BelumBayar"
                         android:textColor="@color/White"
                         android:textStyle="bold"
                         android:gravity="end"
@@ -303,7 +302,7 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/DashboardKunjunganFragment_Debitur_Outstanding"
+                        android:id="@+id/DashboardPenyelesaianFragment_Debitur_Outstanding"
                         android:textColor="@color/White"
                         android:gravity="start"
                         android:layout_marginLeft="5dp"
@@ -318,7 +317,7 @@
 
     <!--Progress bar-->
     <RelativeLayout
-        android:id="@+id/DashboardKunjunganFragment_ProgressLayout"
+        android:id="@+id/DashboardPenyelesaianFragment_ProgressLayout"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -332,7 +331,20 @@
 
     <!--Alert jika ada masalah-->
     <TextView
-        android:id="@+id/DashboardKunjunganFragment_AlertMessage"
+        android:id="@+id/DashboardPenyelesaianFragment_AlertMessage"
+        android:textColor="@color/White"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--Alert untuk memberitahu bahwa dashboard hanya akan ditampilkan setelah tanggal 7-->
+    <TextView
+        android:id="@+id/DashboardPenyelesaianFragment_DateSevenAlert"
+        android:text="@string/Dashboard_Penyelesaian_BelumTanggal7"
         android:textColor="@color/White"
         android:textStyle="bold"
         android:textSize="16sp"

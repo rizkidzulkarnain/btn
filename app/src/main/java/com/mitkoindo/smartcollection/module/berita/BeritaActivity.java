@@ -78,6 +78,16 @@ public class BeritaActivity extends AppCompatActivity
         setContentView(R.layout.activity_berita);
 
         //setup
+        /*GetViews();
+        SetupTransaction();
+        SetupViews();*/
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
         GetViews();
         SetupTransaction();
         SetupViews();

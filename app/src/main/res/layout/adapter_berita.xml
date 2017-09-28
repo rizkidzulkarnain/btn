@@ -19,7 +19,7 @@
     <!--Divider-->
     <View
         android:layout_marginTop="5dp"
-        android:background="@color/colorAccentSecond"
+        android:background="@color/color_Primary"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
@@ -54,7 +54,7 @@
 
             <!--Underline-->
             <View
-                android:background="@color/colorAccentSecond"
+                android:background="@color/color_Primary"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
         </LinearLayout>
@@ -83,7 +83,7 @@
 
             <!--Underline-->
             <View
-                android:background="@color/colorAccentSecond"
+                android:background="@color/color_Primary"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
         </LinearLayout>
@@ -125,7 +125,7 @@
             <ImageView
                 android:id="@+id/AdapterBerita_FileIcon"
                 android:src="@drawable/ic_insert_drive_file_white_24dp"
-                android:tint="@color/Background_PageTitle"
+                android:tint="@color/color_PrimaryDark"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
 

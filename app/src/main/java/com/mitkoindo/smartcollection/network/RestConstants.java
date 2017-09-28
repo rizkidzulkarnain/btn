@@ -34,7 +34,7 @@ public final class RestConstants {
     public static final String LIST_DEBITUR_STATUS_PENDING_VALUE = "PENDING";
     public static final String LIST_DEBITUR_STATUS_LANCAR_VALUE = "LANCAR";
     public static final String LIST_DEBITUR_STATUS_MATURED_VALUE = "MATURED";
-    public static final String LIST_DEBITUR_STATUS_IN_PROGRESS_VALUE = "IN PROGRESS";
+    public static final String LIST_DEBITUR_STATUS_IN_PROGRESS_VALUE = "INPROGRESS";
 
     public static final String DETAIL_DEBITUR_SP_NAME = "MKI_SP_DEBITUR_DETAIL";
 

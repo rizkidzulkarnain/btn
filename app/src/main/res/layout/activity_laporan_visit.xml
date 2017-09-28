@@ -52,6 +52,7 @@
             <!--Tujuan Kunjungan value-->
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_tujuan_kunjungan"
+                style="@style/CardLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -59,7 +60,7 @@
 
                 <TextView
                     android:id="@+id/LaporanVisit_TujuanKunjungan"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/padding_10"
@@ -83,6 +84,7 @@
             <!--Alamat yang dikunjungi value-->
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_alamat_yang_dikunjungi"
+                style="@style/CardLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -90,7 +92,7 @@
 
                 <TextView
                     android:id="@+id/LaporanVisit_Alamat"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/padding_10"
@@ -114,6 +116,7 @@
             <!--Orang yang ditemui edit text-->
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_orang_yang_ditemui"
+                style="@style/CardLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -121,7 +124,7 @@
 
                 <TextView
                     android:id="@+id/LaporanVisit_YangDitemui"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/padding_10"
@@ -145,6 +148,7 @@
             <!--Hubungan dengan debitur-->
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_hubungan_dengan_debitur"
+                style="@style/CardLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -152,7 +156,7 @@
 
                 <TextView
                     android:id="@+id/LaporanVisit_Hubungan"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/padding_10"
@@ -176,6 +180,7 @@
             <!--Hasil Kunjungan-->
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_hasil_kunjungan"
+                style="@style/CardLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -183,7 +188,7 @@
 
                 <TextView
                     android:id="@+id/LaporanVisit_HasilKunjungan"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/padding_10"
@@ -214,13 +219,14 @@
                 <!--Tanggal Janji Debitur value-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_tanggal_janji_debitur"
+                    style="@style/CardLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium">
 
                     <TextView
                         android:id="@+id/LaporanVisit_TanggalJanji"
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -252,6 +258,7 @@
                 <!--Jumlah yang akan disetor edit text-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_jumlah_yang_akan_disetor"
+                    style="@style/CardLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium"
@@ -259,7 +266,7 @@
 
                     <TextView
                         android:id="@+id/LaporanVisit_JumlahSetor"
-                        style="@style/FontRegular.Medium"
+                        style="@style/FontRegular.Medium.White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_10"
@@ -287,6 +294,7 @@
             <!--Status Agunan-->
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_status_agunan"
+                style="@style/CardLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -297,7 +305,7 @@
 
                 <TextView
                     android:id="@+id/LaporanVisit_StatusAgunan"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/padding_10"
@@ -324,6 +332,7 @@
             <!--Kondisi Agunan-->
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_kondisi_agunan"
+                style="@style/CardLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -334,7 +343,7 @@
 
                 <TextView
                     android:id="@+id/LaporanVisit_KondisiAgunan"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/padding_10"
@@ -361,6 +370,7 @@
             <!--Alasan Menunggak-->
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_alasan_menunggak"
+                style="@style/CardLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -371,7 +381,7 @@
 
                 <TextView
                     android:id="@+id/LaporanVisit_AlasanMenunggak"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/padding_10"
@@ -398,6 +408,7 @@
             <!--Tindak Lanjut-->
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_tindak_lanjut"
+                style="@style/CardLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -408,7 +419,7 @@
 
                 <TextView
                     android:id="@+id/LaporanVisit_TindakLanjut"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/padding_10"
@@ -435,6 +446,7 @@
             <!--Tanggal Tindak Lanjut DatePicker -->
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_tanggal_tindak_lanjut"
+                style="@style/CardLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -445,7 +457,7 @@
 
                 <TextView
                     android:id="@+id/LaporanVisit_TanggalTindakLanjut"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/padding_10"
@@ -471,6 +483,7 @@
             <!--Catatan Edit Text-->
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_catatan"
+                style="@style/CardLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_medium"
@@ -481,7 +494,7 @@
 
                 <TextView
                     android:id="@+id/LaporanVisit_Catatan"
-                    style="@style/FontRegular.Medium"
+                    style="@style/FontRegular.Medium.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/padding_10"

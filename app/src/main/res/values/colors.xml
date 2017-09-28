@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#179D5F</color>
-    <color name="colorPrimaryDark">#19607D</color>
-    <color name="colorAccent">#1FB972</color>
+    <color name="colorPrimary">#0B598E</color>
+    <color name="colorPrimaryDark">#0B598E</color>
+    <color name="colorAccent">#FEDA32</color>
+    <color name="colorAccentSecond">#00BCD4</color>
+    <!--<color name="colorPrimary">#179D5F</color>-->
+    <!--<color name="colorPrimary">#FFDD02</color>-->
+    <!--<color name="colorPrimaryDark">#19607D</color>-->
+    <!--<color name="colorPrimaryDark">#DDBF00</color>-->
+    <!--<color name="colorAccent">#1FB972</color>-->
+    <!--<color name="colorAccent">#015790</color>-->
     <color name="colorPrimarySecond">#3F51B5</color>
     <color name="colorPrimaryDarkSecond">#303F9F</color>
-    <color name="colorAccentSecond">#00BCD4</color>
+    <!--<color name="colorAccentSecond">#00BCD4</color>-->
+
+    <color name="color_Primary">#FFDD02</color>
+    <color name="color_PrimaryDark">#DDBF00</color>
+    <color name="color_Accent">#015790</color>
 
     <!--color by name-->
     <color name="White">#ffffff</color>
@@ -22,6 +33,7 @@
     <color name="VeryLightGray">#F0F0F0</color>
     <color name="TabFontSelectedColor">#DEFD7A</color>
     <color name="BackgroundDebiturListItem">#19607D</color>
+    <color name="BackgroundCard">#1577B8</color>
     <color name="FormVisitRed">#E33B3B</color>
     <color name="FormCallGreen">#50AE55</color>
     <color name="CheckInBlue">#2B98F0</color>

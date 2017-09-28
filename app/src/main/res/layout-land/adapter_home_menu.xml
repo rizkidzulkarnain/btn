@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Icon-->
+        <ImageView
+            android:id="@+id/HomeMenuAdapter_Icon"
+            android:layout_gravity="center_horizontal"
+            android:tint="@color/White"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+        <!--Text-->
+        <TextView
+            android:id="@+id/HomeMenuAdapter_Text"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/Line_HomeMenu_New"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!--Badge-->
+    <RelativeLayout
+        android:id="@+id/HomeMenuAdapter_BadgeHolder"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        android:padding="10dp"
+        android:background="@drawable/background_rounded_rectangle_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/HomeMenuAdapter_BadgeCounter"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/Font_Badge"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>

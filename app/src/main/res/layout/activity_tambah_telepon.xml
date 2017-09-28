@@ -63,13 +63,13 @@
                 <!--Nama edit text-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_nama"
+                    style="@style/CardLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_nama"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:cardBackgroundColor="@color/colorAccentSecond">
+                    app:layout_constraintEnd_toEndOf="parent">
                     <EditText
                         android:id="@+id/edit_text_nama"
                         style="@style/FontRegular.Medium.White"
@@ -102,13 +102,13 @@
                 <!--Hubungan dengan debitur value-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_hubungan_dengan_debitur"
+                    style="@style/CardLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_hubungan_dengan_debitur"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:cardBackgroundColor="@color/colorAccentSecond">
+                    app:layout_constraintEnd_toEndOf="parent">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -151,13 +151,13 @@
                 <!--Type Telepon value-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_type_telepon"
+                    style="@style/CardLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_type_telepon"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:cardBackgroundColor="@color/colorAccentSecond">
+                    app:layout_constraintEnd_toEndOf="parent">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -200,13 +200,13 @@
                 <!--Nama edit text-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_nomor_telepon"
+                    style="@style/CardLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_telepon"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:cardBackgroundColor="@color/colorAccentSecond">
+                    app:layout_constraintEnd_toEndOf="parent">
                     <EditText
                         android:id="@+id/edit_text_nomor_telepon"
                         style="@style/FontRegular.Medium.White"
@@ -226,9 +226,9 @@
                 </android.support.v7.widget.CardView>
 
                 <!--Submit Button-->
-                <Button
+                <info.hoang8f.widget.FButton
                     android:id="@+id/button_submit"
-                    style="@style/FontRegular"
+                    style="@style/Button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_64"

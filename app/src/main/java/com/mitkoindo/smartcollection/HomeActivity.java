@@ -233,6 +233,15 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        int x = 0;
+        int z = x + 1;
+    }
+
+    @Override
     protected void onDestroy() {
         composites.clear();
 
@@ -1136,7 +1145,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
                 // don't persist past a device reboot
                 .setLifetime(Lifetime.FOREVER)
                 // start between 0 and 60 seconds from now
-                .setTrigger(Trigger.executionWindow(1700, 1800))
+                .setTrigger(Trigger.executionWindow(250, 300))
                 // don't overwrite an existing job with the same tag
                 .setReplaceCurrent(true)
                 // retry with exponential backoff
@@ -1161,7 +1170,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
                 // don't persist past a device reboot
                 .setLifetime(Lifetime.FOREVER)
                 // start between 0 and 60 seconds from now
-                .setTrigger(Trigger.executionWindow(1700, 1800))
+                .setTrigger(Trigger.executionWindow(250, 300))
                 // don't overwrite an existing job with the same tag
                 .setReplaceCurrent(true)
                 // retry with exponential backoff

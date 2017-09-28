@@ -33,7 +33,7 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/DashboardActivity_Tab"
-            android:background="@color/colorPrimary"
+            android:background="@color/color_Accent"
             app:tabTextColor="@color/White"
             app:tabSelectedTextColor="@color/TabFontSelectedColor"
             app:tabIndicatorColor="@color/White"

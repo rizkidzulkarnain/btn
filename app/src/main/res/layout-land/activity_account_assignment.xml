@@ -15,7 +15,7 @@
 
         <RelativeLayout
             android:id="@+id/AccountAssignmentLayout_PageTitle"
-            android:background="@drawable/img_actionbar"
+            android:background="@drawable/img_actionbar_land"
             android:layout_width="match_parent"
             android:layout_height="66dp">
 

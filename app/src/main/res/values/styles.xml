@@ -133,8 +133,7 @@
     <!--Toolbar-->
     <style name="AppToolbar">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="contentInsetLeft">0dp</item>
         <item name="contentInsetStart">0dp</item>
     </style>
@@ -163,8 +162,8 @@
         <item name="tabMode">scrollable</item>
         <item name="tabGravity">fill</item>
         <item name="tabIndicatorHeight">@dimen/padding_small</item>
-        <item name="tabIndicatorColor">@color/White</item>
-        <item name="tabSelectedTextColor">@color/TabFontSelectedColor</item>
+        <item name="tabIndicatorColor">@color/colorAccent</item>
+        <item name="tabSelectedTextColor">@color/colorAccent</item>
         <item name="tabTextAppearance">@style/AppTextHomeTab</item>
     </style>
 
@@ -175,6 +174,23 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
+    </style>
+
+    <!--Card-->
+    <style name="CardLayout">
+        <item name="cardBackgroundColor">@color/BackgroundCard</item>
+    </style>
+
+    <!--Button-->
+    <style name="Button">
+        <item name="buttonColor">@color/BackgroundCard</item>
+        <item name="shadowColor">@color/Black_Transparent</item>
+        <item name="shadowEnabled">true</item>
+        <item name="shadowHeight">@dimen/padding_smaller</item>
+        <item name="cornerRadius">@dimen/padding_small</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="fontPath">@string/font_default_bold</item>
     </style>
 
 </resources>

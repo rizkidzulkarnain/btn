@@ -33,7 +33,7 @@
 
         <View
             android:id="@+id/view_separator"
-            android:background="@color/colorAccentSecond"
+            android:background="@color/color_Primary"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/padding_medium"

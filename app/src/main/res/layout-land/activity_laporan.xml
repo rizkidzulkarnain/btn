@@ -1,42 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/background_bluegradient"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mitkoindo.smartcollection.module.laporan.ArchiveActivity">
+    tools:context="com.mitkoindo.smartcollection.module.laporan.LaporanActivity">
 
+    <!--Content-->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--page title, etc -->
+        <!--Page title-->
         <TextView
-            android:id="@+id/ArchiveActivity_Staffname"
+            android:text="@string/Laporan_Title"
+            android:textSize="20sp"
             android:textColor="@color/White"
-            android:textSize="16sp"
             android:textStyle="bold"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:background="@drawable/img_actionbar"
-            android:layout_gravity="center"
             android:gravity="center"
-            android:layout_width="wrap_content"
+            android:background="@drawable/img_actionbar_land"
+            android:layout_width="match_parent"
             android:layout_height="66dp" />
 
-        <include
-            android:id="@+id/ArchiveActivity_ArchiveFragment"
-            layout="@layout/fragment_archive"
+        <!--Tab-->
+        <android.support.design.widget.TabLayout
+            android:id="@+id/Laporan_Tab"
+            android:background="@color/color_Accent"
+            app:tabTextColor="@color/White"
+            app:tabSelectedTextColor="@color/TabFontSelectedColor"
+            app:tabIndicatorColor="@color/White"
+            app:tabTextAppearance="@style/TabLayoutNotAllCaps"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabIndicatorHeight="@dimen/padding_small"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            />
+
+        <!--Pager-->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/Laporan_ViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 
     <!--Back button-->
     <ImageView
-        android:onClick="HandleInput_ArchiveActivity_Back"
+        android:onClick="HandleInput_Laporan_Back"
         android:src="@drawable/ic_keyboard_backspace_white_36dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
@@ -45,7 +57,7 @@
         android:layout_height="wrap_content" />
 
     <!--<RelativeLayout
-        android:onClick="HandleInput_ArchiveActivity_Back"
+        android:onClick="HandleInput_Laporan_Back"
         android:background="@drawable/background_circle_blacktransparent"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"

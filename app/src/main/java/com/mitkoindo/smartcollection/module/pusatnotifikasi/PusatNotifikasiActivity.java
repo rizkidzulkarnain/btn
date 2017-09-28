@@ -181,6 +181,9 @@ public class PusatNotifikasiActivity extends AppCompatActivity
         //set intent
         Intent intent = null;
 
+        if (notificationData.PageType == null)
+            return;
+
         //switch result tergantung item type
         switch (notificationData.PageType)
         {

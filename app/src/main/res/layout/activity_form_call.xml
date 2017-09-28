@@ -63,13 +63,13 @@
                 <!--Tujuan Value-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_tujuan"
+                    style="@style/CardLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tujuan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:cardBackgroundColor="@color/colorAccentSecond">
+                    app:layout_constraintEnd_toEndOf="parent">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -113,13 +113,13 @@
                 <!--Berbicara dengan edit text-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_berbicara_dengan"
+                    style="@style/CardLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_berbicara_dengan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:cardBackgroundColor="@color/colorAccentSecond">
+                    app:layout_constraintEnd_toEndOf="parent">
                     <EditText
                         android:id="@+id/edit_text_berbicara_dengan"
                         style="@style/FontRegular.Medium.White"
@@ -154,13 +154,13 @@
                 <!--Hubungan dengan debitur value-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_hubungan_dengan_debitur"
+                    style="@style/CardLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_hubungan_dengan_debitur"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:cardBackgroundColor="@color/colorAccentSecond">
+                    app:layout_constraintEnd_toEndOf="parent">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -204,13 +204,13 @@
                 <!--Hasil Panggilan value-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_hasil_panggilan"
+                    style="@style/CardLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_hasil_panggilan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:cardBackgroundColor="@color/colorAccentSecond">
+                    app:layout_constraintEnd_toEndOf="parent">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -255,14 +255,14 @@
                 <!--Tanggal hasil panggilan DatePicker-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_tanggal_hasil_panggilan"
+                    style="@style/CardLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tanggal_hasil_panggilan"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:visibility="@{formCallViewModel.obsIsShowTanggalJanjiDebitur ? View.VISIBLE : View.GONE}"
-                    app:cardBackgroundColor="@color/colorAccentSecond">
+                    android:visibility="@{formCallViewModel.obsIsShowTanggalJanjiDebitur ? View.VISIBLE : View.GONE}">
                     <TextView
                         android:id="@+id/text_view_tanggal_hasil_panggilan_date"
                         style="@style/FontRegular.Medium.White"
@@ -292,14 +292,14 @@
                 <!--Jumlah yang akan disetor edit text-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_jumlah_yang_akan_disetor"
+                    style="@style/CardLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_jumlah_yang_akan_disetor"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:visibility="@{formCallViewModel.obsIsShowJumlahYangAkanDisetor ? View.VISIBLE : View.GONE}"
-                    app:cardBackgroundColor="@color/colorAccentSecond">
+                    android:visibility="@{formCallViewModel.obsIsShowJumlahYangAkanDisetor ? View.VISIBLE : View.GONE}">
                     <EditText
                         android:id="@+id/edit_text_jumlah_yang_akan_disetor"
                         style="@style/FontRegular.Medium.White"
@@ -333,13 +333,13 @@
                 <!--Alasan Tidak Bayar value-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_alasan_tidak_bayar"
+                    style="@style/CardLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_alasan_tidak_bayar"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:cardBackgroundColor="@color/colorAccentSecond">
+                    app:layout_constraintEnd_toEndOf="parent">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -383,13 +383,13 @@
                 <!--Tindak Lanjut value-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_tindak_lanjut"
+                    style="@style/CardLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tindak_lanjut"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:cardBackgroundColor="@color/colorAccentSecond">
+                    app:layout_constraintEnd_toEndOf="parent">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -433,13 +433,13 @@
                 <!--Tanggal Tindak Lanjut DatePicker -->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_tanggal_tindak_lanjut"
+                    style="@style/CardLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_tanggal_tindak_lanjut"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:cardBackgroundColor="@color/colorAccentSecond">
+                    app:layout_constraintEnd_toEndOf="parent">
                     <TextView
                         android:id="@+id/text_view_tanggal_tindak_lanjut_date"
                         style="@style/FontRegular.Medium.White"
@@ -468,13 +468,13 @@
                 <!--Catatan Edit Text-->
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_catatan"
+                    style="@style/CardLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_catatan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:cardBackgroundColor="@color/colorAccentSecond">
+                    app:layout_constraintEnd_toEndOf="parent">
                     <EditText
                         android:id="@+id/edit_text_catatan"
                         style="@style/FontRegular.Medium.White"
@@ -496,9 +496,9 @@
                 </android.support.v7.widget.CardView>
 
                 <!--Submit Button-->
-                <Button
+                <info.hoang8f.widget.FButton
                     android:id="@+id/button_submit"
-                    style="@style/FontRegular"
+                    style="@style/Button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_64"

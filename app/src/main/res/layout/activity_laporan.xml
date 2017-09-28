@@ -20,16 +20,14 @@
             android:textColor="@color/White"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
+            android:background="@drawable/img_actionbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="66dp" />
 
         <!--Tab-->
         <android.support.design.widget.TabLayout
             android:id="@+id/Laporan_Tab"
-            android:layout_marginTop="10dp"
-            android:background="@color/colorPrimary"
+            android:background="@color/color_Accent"
             app:tabTextColor="@color/White"
             app:tabSelectedTextColor="@color/TabFontSelectedColor"
             app:tabIndicatorColor="@color/White"

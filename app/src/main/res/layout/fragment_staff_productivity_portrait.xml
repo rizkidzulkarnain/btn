@@ -97,7 +97,7 @@
                             app:layout_constraintBottom_toBottomOf="@+id/barrier_header"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:background="@color/colorAccent"/>
+                            android:background="@color/BackgroundDebiturListItem"/>
 
                         <!--Waktu Header-->
                         <TextView
@@ -110,7 +110,7 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/text_view_jumlah_kunjungan_header"
-                            android:background="@color/colorAccent"
+                            android:background="@color/BackgroundDebiturListItem"
                             android:text="@string/StaffProductivity_Waktu"
                             tools:text="Waktu"/>
 
@@ -126,7 +126,7 @@
                             app:layout_constraintStart_toEndOf="@+id/text_view_waktu_header"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBaseline_toBaselineOf="@+id/text_view_waktu_header"
-                            android:background="@color/colorAccent"
+                            android:background="@color/BackgroundDebiturListItem"
                             android:text="@string/StaffProductivity_JumlahKunjungan"
                             tools:text="Jumlah Kunjungan"/>
 
