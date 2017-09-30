@@ -84,8 +84,8 @@
     <color name="Gradient_Blue_NewStart">#2895c9</color>
     <color name="Gradient_Blue_NewEnd">#081d3b</color>
     <color name="Gradient_Login_Start">#021d3a</color>
-    <!--<color name="Gradient_Login_End">#023267</color>-->
-    <color name="Gradient_Login_End">#0c6492</color>
+    <color name="Gradient_Login_End">#023267</color>
+    <!--<color name="Gradient_Login_End">#0c6492</color>-->
 
     <color name="Gradient_Shadow_Start">#66757575</color>
 

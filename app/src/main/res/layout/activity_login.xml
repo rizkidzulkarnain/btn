@@ -68,13 +68,13 @@
         </LinearLayout>
 
         <!--Particle-->
-        <!--<ImageView
-            android:src="@drawable/img_particle_ga_niat"
+        <ImageView
+            android:src="@drawable/img_particle2"
             android:layout_alignParentBottom="true"
             android:adjustViewBounds="true"
             android:layout_marginBottom="30dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />-->
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 
     <!--Login form-->
