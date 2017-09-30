@@ -108,7 +108,7 @@
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:text="@string/Dashboard_PTP_JumlahJanjiBayar"
+                            android:text="@string/Dashboard_PTP_JumlahBinaan"
                             android:textColor="@color/White"
                             android:textStyle="bold"
                             android:gravity="end"
@@ -137,7 +137,7 @@
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:text="@string/Dashboard_Penyelesaian_SudahBayar"
+                            android:text="@string/Dashboard_PTP_JanjiBayar"
                             android:textColor="@color/White"
                             android:textStyle="bold"
                             android:gravity="end"
@@ -166,7 +166,7 @@
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:text="@string/Dashboard_Penyelesaian_BelumBayar"
+                            android:text="@string/Dashboard_PTP_TidakJanjiBayar"
                             android:textColor="@color/White"
                             android:textStyle="bold"
                             android:gravity="end"
@@ -238,7 +238,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="@string/Dashboard_PTP_JumlahJanjiBayar"
+                        android:text="@string/Dashboard_PTP_JumlahBinaan"
                         android:textColor="@color/White"
                         android:textStyle="bold"
                         android:gravity="end"
@@ -267,7 +267,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="@string/Dashboard_Penyelesaian_SudahBayar"
+                        android:text="@string/Dashboard_PTP_JanjiBayar"
                         android:textColor="@color/White"
                         android:textStyle="bold"
                         android:gravity="end"
@@ -296,7 +296,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:text="@string/Dashboard_Penyelesaian_BelumBayar"
+                        android:text="@string/Dashboard_PTP_TidakJanjiBayar"
                         android:textColor="@color/White"
                         android:textStyle="bold"
                         android:gravity="end"

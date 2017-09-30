@@ -11,6 +11,7 @@ public class DebiturItemWithPTP extends DebiturItem
 {
     //data PTP
     public String PTPHint;
+    public String PTPAmount;
 
     //parse form JSON
     public void ParseData(String jsonString)
@@ -27,6 +28,7 @@ public class DebiturItemWithPTP extends DebiturItem
             setDpd(dataObject.getString("DPD"));
             setLastPayment(dataObject.getString("LastPaymentDate"));
             PTPHint = dataObject.getString("PTPHint");
+            PTPAmount = dataObject.getString("Tagihan");
         }
         catch (JSONException e)
         {

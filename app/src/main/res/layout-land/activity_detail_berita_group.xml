@@ -16,7 +16,7 @@
         <!--Page title-->
         <TextView
             android:text="@string/Berita_Fragment_Group_Title"
-            android:textColor="@color/White"
+            android:textColor="@color/color_PageTitle"
             android:textSize="16sp"
             android:textStyle="bold"
             android:background="@drawable/img_actionbar_land"
@@ -28,7 +28,7 @@
         <ScrollView
             android:layout_margin="10dp"
             android:padding="10dp"
-            android:background="@drawable/background_card_white"
+            android:background="@drawable/background_rounded_rectangle_genericlist"
             android:clipToPadding="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -43,6 +43,7 @@
                     android:id="@+id/DetailBeritaGroup_Title"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    android:textColor="@color/White"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -57,6 +58,7 @@
                     <!--Label-->
                     <TextView
                         android:text="@string/Berita_Adapter_Sender"
+                        android:textColor="@color/White"
                         android:gravity="end"
                         android:layout_marginRight="5dp"
                         android:layout_marginEnd="5dp"
@@ -67,6 +69,7 @@
                     <!--Sender ID-->
                     <TextView
                         android:id="@+id/DetailBeritaGroup_SenderID"
+                        android:textColor="@color/White"
                         android:layout_marginLeft="5dp"
                         android:layout_marginStart="5dp"
                         android:layout_weight="1"
@@ -78,7 +81,7 @@
                 <View
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@color/Black"
+                    android:background="@color/color_Primary"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"/>
 
@@ -100,19 +103,21 @@
                         <!--Start date Label-->
                         <TextView
                             android:text="@string/Berita_Broadcast_StartDate"
+                            android:textColor="@color/White"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
                         <!--StartDate text-->
                         <TextView
                             android:layout_marginTop="5dp"
+                            android:textColor="@color/White"
                             android:id="@+id/DetailBeritaGroup_StartDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
                         <!--Divider-->
                         <View
-                            android:background="@color/Grey15"
+                            android:background="@color/color_Primary"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"/>
                     </LinearLayout>
@@ -128,6 +133,7 @@
                         <!--Start date Label-->
                         <TextView
                             android:text="@string/Berita_Broadcast_ExpiredDate"
+                            android:textColor="@color/White"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -135,12 +141,13 @@
                         <TextView
                             android:layout_marginTop="5dp"
                             android:id="@+id/DetailBeritaGroup_ExpiredDate"
+                            android:textColor="@color/White"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
                         <!--Divider-->
                         <View
-                            android:background="@color/Grey15"
+                            android:background="@color/color_Primary"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"/>
                     </LinearLayout>
@@ -149,6 +156,7 @@
                 <!--News content-->
                 <TextView
                     android:id="@+id/DetailBeritaGroup_Content"
+                    android:textColor="@color/White"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -163,6 +171,7 @@
                     <TextView
                         android:id="@+id/DetailBeritaGroup_NoFile"
                         android:text="@string/Berita_Adapter_NoFiles"
+                        android:textColor="@color/White"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
@@ -180,13 +189,14 @@
                         <ImageView
                             android:id="@+id/DetailBeritaGroup_FileIcon"
                             android:src="@drawable/ic_insert_drive_file_white_24dp"
-                            android:tint="@color/Background_PageTitle"
+                            android:tint="@color/color_PrimaryDark"
                             android:layout_width="25dp"
                             android:layout_height="25dp" />
 
                         <!--File name-->
                         <TextView
                             android:id="@+id/DetailBeritaGroup_FileName"
+                            android:textColor="@color/White"
                             android:layout_marginLeft="5dp"
                             android:layout_marginStart="5dp"
                             android:layout_width="wrap_content"

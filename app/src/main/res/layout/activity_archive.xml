@@ -16,7 +16,7 @@
         <!--page title, etc -->
         <TextView
             android:id="@+id/ArchiveActivity_Staffname"
-            android:textColor="@color/White"
+            android:textColor="@color/color_PageTitle"
             android:textSize="16sp"
             android:textStyle="bold"
             android:maxLines="1"

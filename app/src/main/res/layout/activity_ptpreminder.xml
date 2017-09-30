@@ -16,35 +16,27 @@
 
         <!--Title-->
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:background="@drawable/img_actionbar"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="66dp">
 
             <ImageView
                 android:src="@drawable/menuicon_ptpreminder"
-                android:tint="@color/White"
+                android:tint="@color/color_PageTitle"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
 
             <TextView
                 android:text="@string/PTP_Reminder_Title"
-                android:textColor="@color/White"
+                android:textColor="@color/color_PageTitle"
                 android:textSize="18sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
-        <!--Divider-->
-        <View
-            android:background="@color/color_Primary"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
-
         <!--Holder for data & alert-->
         <RelativeLayout
             android:layout_width="match_parent"

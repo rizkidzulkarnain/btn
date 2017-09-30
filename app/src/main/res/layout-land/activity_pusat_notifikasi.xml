@@ -15,7 +15,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:background="@drawable/img_actionbar"
+            android:background="@drawable/img_actionbar_land"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_width="match_parent"

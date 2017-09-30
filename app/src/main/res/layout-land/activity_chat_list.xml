@@ -24,7 +24,7 @@
             <!--Icon chat-->
             <ImageView
                 android:src="@drawable/menuicon_chat"
-                android:tint="@color/White"
+                android:tint="@color/color_PageTitle"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
 
@@ -33,7 +33,7 @@
                 android:text="@string/Chat_Title"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/White"
+                android:textColor="@color/color_PageTitle"
                 android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_width="wrap_content"

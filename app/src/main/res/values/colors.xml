@@ -17,6 +17,7 @@
     <color name="color_Primary">#FFDD02</color>
     <color name="color_PrimaryDark">#DDBF00</color>
     <color name="color_Accent">#015790</color>
+    <color name="color_PageTitle">#0067aa</color>
 
     <!--color by name-->
     <color name="White">#ffffff</color>

@@ -343,8 +343,8 @@ public class DashboardPTPFragment extends Fragment
                     PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentase, "Outstanding");*/
                     /*PieEntry pieEntry = new PieEntry((float) Double.parseDouble(currentdashboardData.RealisasiProsentase), "Janji Bayar");
                     PieEntry pieEntry1 = new PieEntry((float) Double.parseDouble(currentdashboardData.OutstandingProsentase), "Outstanding");*/
-                    String realiasiLabel = getString(R.string.Dashboard_Penyelesaian_SudahBayar);
-                    String outstandingLabel = getString(R.string.Dashboard_Penyelesaian_BelumBayar);
+                    String realiasiLabel = getString(R.string.Dashboard_PTP_JanjiBayar);
+                    String outstandingLabel = getString(R.string.Dashboard_PTP_TidakJanjiBayar);
                     PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentaseValue, realiasiLabel);
                     PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentaseValue, outstandingLabel);
 
@@ -353,7 +353,7 @@ public class DashboardPTPFragment extends Fragment
                     pieEntries_Dabitur.add(pieEntry1);
 
                     //create chart
-                    PieDataSet pieDataSet = new PieDataSet(pieEntries_Dabitur, "Debitur");
+                    PieDataSet pieDataSet = new PieDataSet(pieEntries_Dabitur, "");
                     pieDataSet.setDrawValues(false);
                     pieDataSet.setColors(new int[] {R.color.ChartColor_Positive, R.color.ChartColor_Negative}, getActivity());
                     PieData pieData = new PieData(pieDataSet);
@@ -366,6 +366,7 @@ public class DashboardPTPFragment extends Fragment
 
                     Description description = new Description();
                     description.setTextColor(ContextCompat.getColor(getActivity(), R.color.White));
+                    description.setEnabled(false);
                     chart_Debitur.setDescription(description);
 
                     Legend chartLegend = chart_Debitur.getLegend();
@@ -385,8 +386,8 @@ public class DashboardPTPFragment extends Fragment
                     PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentase, "Outstanding");*/
                     /*PieEntry pieEntry = new PieEntry((float) Double.parseDouble(currentdashboardData.RealisasiProsentase), "Janji Bayar");
                     PieEntry pieEntry1 = new PieEntry((float) Double.parseDouble(currentdashboardData.OutstandingProsentase), "Outstanding");*/
-                    String realiasiLabel = getString(R.string.Dashboard_Penyelesaian_SudahBayar);
-                    String outstandingLabel = getString(R.string.Dashboard_Penyelesaian_BelumBayar);
+                    String realiasiLabel = getString(R.string.Dashboard_PTP_JanjiBayar);
+                    String outstandingLabel = getString(R.string.Dashboard_PTP_TidakJanjiBayar);
                     PieEntry pieEntry = new PieEntry((float) currentdashboardData.RealisasiProsentaseValue, realiasiLabel);
                     PieEntry pieEntry1 = new PieEntry((float) currentdashboardData.OutstandingProsentaseValue, outstandingLabel);
 
@@ -396,7 +397,7 @@ public class DashboardPTPFragment extends Fragment
 
                     //create chart
                     /*PieDataSet pieDataSet = new PieDataSet(pieEntries_Nominal, "Nominal");*/
-                    PieDataSet pieDataSet = new PieDataSet(pieEntries_Nominal, "Monthly");
+                    PieDataSet pieDataSet = new PieDataSet(pieEntries_Nominal, "");
                     pieDataSet.setDrawValues(false);
                     pieDataSet.setColors(new int[] {R.color.ChartColor_Positive, R.color.ChartColor_Negative}, getActivity());
                     PieData pieData = new PieData(pieDataSet);
@@ -410,6 +411,7 @@ public class DashboardPTPFragment extends Fragment
 
                     Description description = new Description();
                     description.setTextColor(ContextCompat.getColor(getActivity(), R.color.White));
+                    description.setEnabled(false);
                     chart_Nominal.setDescription(description);
 
                     Legend chartLegend = chart_Nominal.getLegend();

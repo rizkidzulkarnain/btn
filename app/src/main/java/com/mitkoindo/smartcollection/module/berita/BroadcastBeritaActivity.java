@@ -1038,13 +1038,15 @@ public class BroadcastBeritaActivity extends AppCompatActivity
             }
 
             //show alert bahwa send broadcast sukses
-            alertTitle = getString(R.string.Text_Success);
+            /*alertTitle = getString(R.string.Text_Success);
             alertMessage = getString(R.string.Berita_Broadcast_Alert_BroadcastSuccess);
-            genericAlert.DisplayAlert(alertMessage, alertTitle);
+            genericAlert.DisplayAlert(alertMessage, alertTitle);*/
 
             //dismiss sendpopup
             if (sendPopup.isShowing())
                 sendPopup.dismiss();
+
+            ShowSendSuccessAlert();
         }
         catch (JSONException e)
         {
@@ -1055,6 +1057,29 @@ public class BroadcastBeritaActivity extends AppCompatActivity
             alertMessage = getString(R.string.Text_SomethingWrong);
             genericAlert.DisplayAlert(alertMessage, alertTitle);
         }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Return to list berita setelah berhasil kirim berita
+    //----------------------------------------------------------------------------------------------
+    private void ShowSendSuccessAlert()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.Text_Success);
+        builder.setMessage(R.string.Berita_Broadcast_Alert_BroadcastSuccess);
+
+        builder.setPositiveButton(R.string.Text_OK, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                finish();
+            }
+        });
+
+        //show alert
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     //----------------------------------------------------------------------------------------------

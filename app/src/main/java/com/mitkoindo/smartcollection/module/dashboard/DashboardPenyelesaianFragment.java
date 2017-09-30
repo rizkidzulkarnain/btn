@@ -369,7 +369,7 @@ public class DashboardPenyelesaianFragment extends Fragment
                     pieEntries_Dabitur.add(pieEntry1);
 
                     //create chart
-                    PieDataSet pieDataSet = new PieDataSet(pieEntries_Dabitur, "Debitur");
+                    PieDataSet pieDataSet = new PieDataSet(pieEntries_Dabitur, "");
                     pieDataSet.setDrawValues(false);
                     pieDataSet.setColors(new int[] {R.color.ChartColor_Positive, R.color.ChartColor_Negative}, getActivity());
                     PieData pieData = new PieData(pieDataSet);
@@ -382,6 +382,7 @@ public class DashboardPenyelesaianFragment extends Fragment
 
                     Description description = new Description();
                     description.setTextColor(ContextCompat.getColor(getActivity(), R.color.White));
+                    description.setEnabled(false);
                     chart_Debitur.setDescription(description);
 
                     Legend chartLegend = chart_Debitur.getLegend();
@@ -409,7 +410,7 @@ public class DashboardPenyelesaianFragment extends Fragment
                     pieEntries_Nominal.add(pieEntry1);
 
                     //create chart
-                    PieDataSet pieDataSet = new PieDataSet(pieEntries_Nominal, "Nominal");
+                    PieDataSet pieDataSet = new PieDataSet(pieEntries_Nominal, "");
                     pieDataSet.setDrawValues(false);
                     pieDataSet.setColors(new int[] {R.color.ChartColor_Positive, R.color.ChartColor_Negative}, getActivity());
                     PieData pieData = new PieData(pieDataSet);
@@ -422,6 +423,7 @@ public class DashboardPenyelesaianFragment extends Fragment
 
                     Description description = new Description();
                     description.setTextColor(ContextCompat.getColor(getActivity(), R.color.White));
+                    description.setEnabled(false);
                     chart_Nominal.setDescription(description);
 
                     Legend chartLegend = chart_Nominal.getLegend();

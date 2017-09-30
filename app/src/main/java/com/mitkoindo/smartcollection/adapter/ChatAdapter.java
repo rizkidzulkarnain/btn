@@ -231,17 +231,20 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     //create request buat update chat
     public void CreateUpdateChatRequest()
     {
-        //kalo sedang load page baru, disable loadnya
+        /*//kalo sedang load page baru, disable loadnya
         if (flag_LoadingNewPage)
             return;
 
         //set flag transaksi ke update chat
-        flag_UpdateChat = true;
+        flag_UpdateChat = true;*/
 
         //send request
-        new SendGetChatRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+        new SendUpdateChatRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
     }
 
+    //----------------------------------------------------------------------------------------------
+    //  Send get chat request
+    //----------------------------------------------------------------------------------------------
     //create request buat get chat list
     private JSONObject CreateGetChatRequestObject()
     {
@@ -256,10 +259,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             spParameterObject.put("userID", userID);
             spParameterObject.put("chatWithUserID", userID_ChatPartner);
             spParameterObject.put("limit", 10);
-            if (flag_UpdateChat)
+            /*if (flag_UpdateChat)
                 spParameterObject.put("page", 1);
-            else
-                spParameterObject.put("page", currentPage);
+            else*/
+            spParameterObject.put("page", currentPage);
 
             //populate request object
             requestObject.put("DatabaseID", "db1");
@@ -362,14 +365,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
                 //disable flag
                 flag_LoadingNewPage = false;
             }
-            else if (flag_UpdateChat)
+            /*else if (flag_UpdateChat)
             {
                 //update chat item
                 UpdateChatItem(newChatItems);
 
                 //disable flag update chat
                 flag_UpdateChat = false;
-            }
+            }*/
             else
             {
                 //initial setup
@@ -490,6 +493,114 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
 
         int x = 0;
         int y = x + 1;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Create request buat update message
+    //----------------------------------------------------------------------------------------------
+    //create request buat get chat list
+    private JSONObject CreateUpdateChatRequestObject()
+    {
+        //inisialisasi request object
+        JSONObject requestObject = new JSONObject();
+
+        try
+        {
+            //create sp parameter object
+            JSONObject spParameterObject = new JSONObject();
+            /*spParameterObject.put("userID", userID_ChatPartner);*/
+            spParameterObject.put("userID", userID);
+            spParameterObject.put("chatWithUserID", userID_ChatPartner);
+            spParameterObject.put("limit", 10);
+            spParameterObject.put("page", 1);
+
+            //populate request object
+            requestObject.put("DatabaseID", "db1");
+            requestObject.put("SpName", "MKI_SP_CHAT_LIST");
+            requestObject.put("SpParameter", spParameterObject);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        //return request object
+        return requestObject;
+    }
+
+    //send request
+    private class SendUpdateChatRequest extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected String doInBackground(String... strings)
+        {
+            //set url
+            String usedURL = baseURL + url_DataSP;
+
+            //create request object
+            JSONObject requestObject = CreateUpdateChatRequestObject();
+
+            //send request
+            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
+            networkConnection.SetRequestObject(requestObject);
+            return networkConnection.SendPostRequest(usedURL);
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+            HandleResult_Update(s);
+        }
+    }
+
+    //handle result
+    private void HandleResult_Update(String resultString)
+    {
+        //hide progress bar
+        view_ProgressBar.setVisibility(View.GONE);
+
+        //hide indicator
+        view_PageLoadIndicator.setVisibility(View.GONE);
+
+        //pastikan response tidak null atau kosong
+        if (resultString == null || resultString.isEmpty())
+        {
+            //show alert
+            view_AlertText.setText(R.string.Text_SomethingWrong);
+            view_AlertText.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        try
+        {
+            //parse message
+            JSONArray dataArray = new JSONArray(resultString);
+
+            if (dataArray.length() <= 0)
+                return;
+
+            //create list of chat
+            ArrayList<ChatItem> newChatItems = new ArrayList<>();
+
+            //parse data
+            for (int i = 0; i < dataArray.length(); i++)
+            {
+                ChatItem newChatItem = new ChatItem();
+                newChatItem.ParseData(dataArray.getJSONObject(i));
+                newChatItems.add(newChatItem);
+            }
+
+            UpdateChatItem(newChatItems);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+
+            //show alert
+            view_AlertText.setText(R.string.Text_SomethingWrong);
+            view_AlertText.setVisibility(View.VISIBLE);
+        }
     }
 
     //----------------------------------------------------------------------------------------------

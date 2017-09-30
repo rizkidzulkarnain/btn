@@ -22,7 +22,7 @@
             <!--Page title-->
             <TextView
                 android:text="@string/AccountAssignment_PageTitle"
-                android:textColor="@color/White"
+                android:textColor="@color/color_PageTitle"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_centerInParent="true"

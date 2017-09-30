@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="10dp"
     android:background="@drawable/background_bluegradient"
     tools:context="com.mitkoindo.smartcollection.module.dashboard.DashboardActivity">
 
@@ -14,22 +13,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!--Dashboard icon-->
-        <ImageView
-            android:src="@drawable/titleicon_dashboard"
-            android:tint="@color/Tint_PageIcon"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/img_actionbar_land"
+            android:layout_width="match_parent"
+            android:layout_height="66dp">
 
-        <TextView
-            android:text="@string/Dashboard_Title"
-            android:textSize="18sp"
-            android:textColor="@color/Tint_PageIcon"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <!--Dashboard icon-->
+            <ImageView
+                android:src="@drawable/titleicon_dashboard"
+                android:tint="@color/color_PageTitle"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp" />
+
+            <TextView
+                android:text="@string/Dashboard_Title"
+                android:textSize="18sp"
+                android:textColor="@color/color_PageTitle"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/DashboardActivity_Tab"
@@ -37,7 +44,6 @@
             app:tabTextColor="@color/White"
             app:tabSelectedTextColor="@color/TabFontSelectedColor"
             app:tabIndicatorColor="@color/White"
-            android:layout_marginTop="10dp"
             app:tabTextAppearance="@style/TabLayoutNotAllCaps"
             app:tabGravity="fill"
             app:tabMode="fixed"

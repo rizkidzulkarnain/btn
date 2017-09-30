@@ -17,7 +17,7 @@
         <TextView
             android:text="@string/Laporan_Title"
             android:textSize="20sp"
-            android:textColor="@color/White"
+            android:textColor="@color/color_PageTitle"
             android:textStyle="bold"
             android:gravity="center"
             android:background="@drawable/img_actionbar"

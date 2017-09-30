@@ -15,7 +15,7 @@
         <!--Page title-->
         <TextView
             android:text="@string/Berita_Fragment_Global_Title"
-            android:textColor="@color/White"
+            android:textColor="@color/color_PageTitle"
             android:textSize="16sp"
             android:textStyle="bold"
             android:background="@drawable/img_actionbar_land"
@@ -27,7 +27,7 @@
         <ScrollView
             android:layout_margin="10dp"
             android:padding="10dp"
-            android:background="@drawable/background_card_white"
+            android:background="@drawable/background_rounded_rectangle_genericlist"
             android:clipToPadding="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -42,6 +42,7 @@
                     android:id="@+id/DetailBeritaGlobal_Subject"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    android:textColor="@color/White"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -50,13 +51,14 @@
                 <View
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@color/Black"
+                    android:background="@color/color_Primary"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"/>
 
                 <!--News date-->
                 <TextView
                     android:id="@+id/DetailBeritaGlobal_Date"
+                    android:textColor="@color/White"
                     android:layout_gravity="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -64,6 +66,7 @@
                 <!--Content-->
                 <TextView
                     android:id="@+id/DetailBeritaGlobal_Content"
+                    android:textColor="@color/White"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
