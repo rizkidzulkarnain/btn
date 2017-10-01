@@ -63,6 +63,8 @@ import java.util.List;
 import butterknife.OnClick;
 import butterknife.Optional;
 
+import static com.mitkoindo.smartcollection.FetchAddressIntentService.Constants.SUCCESS_RESULT;
+
 /**
  * Created by ericwijaya on 8/17/17.
  */
@@ -73,6 +75,8 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
     private static final String EXTRA_CUSTOMER_REFERENCE = "extra_customer_reference";
     private static final String EXTRA_TYPE = "extra_type";
     private static final int REQ_CODE_LOCATION_PERMISSION = 1;
+    private static final int ACTION_TAMBAH_ALAMAT = 10;
+    private static final int ACTION_TAMBAH_TELEPON = 11;
 
     private DetailDebiturViewModel mDetailDebiturViewModel;
     private ActivityDetailDebiturBinding mBinding;
@@ -259,7 +263,7 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
                         break;
                     }
                     case R.id.popup_menu_tambah_telepon: {
-                        startActivity(TambahTeleponActivity.instantiate(DetailDebiturActivity.this, mNoRekening, mCustomerReference));
+                        startActivityForResult(TambahTeleponActivity.instantiate(DetailDebiturActivity.this, mNoRekening, mCustomerReference), ACTION_TAMBAH_TELEPON);
                         break;
                     }
                     case R.id.popup_menu_view_telepon: {
@@ -267,7 +271,7 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
                         break;
                     }
                     case R.id.popup_menu_tambah_alamat: {
-                        startActivity(TambahAlamatActivity.instantiate(DetailDebiturActivity.this, mNoRekening, mCustomerReference));
+                        startActivityForResult(TambahAlamatActivity.instantiate(DetailDebiturActivity.this, mNoRekening, mCustomerReference), ACTION_TAMBAH_ALAMAT);
                         break;
                     }
                     case R.id.popup_menu_gallery: {
@@ -337,13 +341,20 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
         if (event.getViewId() ==  LIST_PHONE) {
             if (mListPhoneNumberDialog != null && mListPhoneNumberDialog.isShowing()) {
                 mListPhoneNumberDialog.dismiss();
-                String phoneNumber = event.getName();
+
+                String phoneNumberString = "";
+                for (PhoneNumber phoneNumber : mDetailDebiturViewModel.obsListPhoneNumber.get()) {
+                    if (event.getName().contains(phoneNumber.getNomorKontak())) {
+                        phoneNumberString = phoneNumber.getNomorKontak();
+                        break;
+                    }
+                }
 
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + phoneNumber));
+                intent.setData(Uri.parse("tel:" + phoneNumberString));
 
                 startActivities(new Intent[] {
-                        FormCallActivity.instantiate(DetailDebiturActivity.this, mNoRekening, phoneNumber),
+                        FormCallActivity.instantiate(DetailDebiturActivity.this, mNoRekening, phoneNumberString),
                         intent});
             }
         } else if (event.getViewId() ==  LIST_ADDRESS) {
@@ -389,6 +400,24 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
             }
 
             showAddressDialogSimpleSpinner(addressList, getString(R.string.DetailDebitur_PilihAlamat), LIST_ADDRESS);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case ACTION_TAMBAH_ALAMAT: {
+                    mDetailDebiturViewModel.getDetailDebitur(mNoRekening);
+                    break;
+                }
+                case ACTION_TAMBAH_TELEPON: {
+                    mDetailDebiturViewModel.getDetailDebitur(mNoRekening);
+                    break;
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -483,7 +512,11 @@ public class DetailDebiturActivity extends BaseActivity implements GoogleApiClie
         protected void onReceiveResult(int resultCode, Bundle resultData) {
 
             // Display the address string or an error message sent from the intent service.
-            mAddressOutput = resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY);
+            if (resultCode == SUCCESS_RESULT) {
+                mAddressOutput = resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY);
+            } else {
+                mAddressOutput = String.format(getString(R.string.GagalMendapatkanGeoAddress), mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+            }
 
             mDetailDebiturViewModel.checkIn(getUserId(), mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude(), mAddressOutput);
 

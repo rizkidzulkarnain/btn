@@ -2,6 +2,7 @@ package com.mitkoindo.smartcollection;
 
 import android.Manifest;
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,6 +19,7 @@ import android.os.ResultReceiver;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +57,8 @@ import com.mitkoindo.smartcollection.module.dashboard.DashboardActivity;
 import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturActivity;
 import com.mitkoindo.smartcollection.module.debitur.listdebitur.ListDebiturActivity;
 import com.mitkoindo.smartcollection.module.laporan.LaporanActivity;
+import com.mitkoindo.smartcollection.module.laporan.LaporanCallActivity;
+import com.mitkoindo.smartcollection.module.laporan.LaporanVisitActivity;
 import com.mitkoindo.smartcollection.module.laporan.agenttracking.ListStaffDownlineActivity;
 import com.mitkoindo.smartcollection.module.ptp_reminder.PTPReminderActivity;
 import com.mitkoindo.smartcollection.module.pusatnotifikasi.PusatNotifikasiActivity;
@@ -96,6 +100,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -111,6 +116,8 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import timber.log.Timber;
+
+import static com.mitkoindo.smartcollection.FetchAddressIntentService.Constants.SUCCESS_RESULT;
 
 public class HomeActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener
 {
@@ -1057,7 +1064,11 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
         protected void onReceiveResult(int resultCode, Bundle resultData) {
 
             // Display the address string or an error message sent from the intent service.
-            mAddressOutput = resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY);
+            if (resultCode == SUCCESS_RESULT) {
+                mAddressOutput = resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY);
+            } else {
+                mAddressOutput = String.format(getString(R.string.GagalMendapatkanGeoAddress), mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+            }
 
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
             String key_UserID = getString(R.string.SharedPreferenceKey_UserID);
@@ -1170,7 +1181,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
                 // don't persist past a device reboot
                 .setLifetime(Lifetime.FOREVER)
                 // start between 0 and 60 seconds from now
-                .setTrigger(Trigger.executionWindow(250, 300))
+                .setTrigger(Trigger.executionWindow(1700, 1800))
                 // don't overwrite an existing job with the same tag
                 .setReplaceCurrent(true)
                 // retry with exponential backoff
@@ -1211,6 +1222,31 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
                                         @Override
                                         public void accept(List<FormCallResponse> formCallResponses) throws Exception {
                                             Timber.i("___sendFormCall doOnNext " + formCallResponses.get(0).getMessage());
+
+                                            if (formCallResponses.size() > 0) {
+                                                Intent intent = new Intent(HomeActivity.this, LaporanCallActivity.class);
+                                                intent.putExtra("CallID", formCallResponses.get(0).getMessage());
+
+                                                Random r = new Random();
+                                                int notificationId = r.nextInt((10000 - 10) + 1) + 10;
+                                                PendingIntent contentIntent = PendingIntent.getActivity(HomeActivity.this, notificationId, intent, PendingIntent.FLAG_ONE_SHOT);
+
+//                                            Show Notification
+                                                NotificationCompat.Builder mBuilder =
+                                                        new NotificationCompat.Builder(HomeActivity.this)
+                                                                .setSmallIcon(R.mipmap.ic_launcher)
+                                                                .setStyle(new NotificationCompat.BigTextStyle()
+                                                                        .bigText(getString(R.string.BackgroundService_DataOfflineFormCallDikirimkan)))
+                                                                .setContentTitle(getString(R.string.BackgroundService_NotificationTitle))
+                                                                .setContentText(getString(R.string.BackgroundService_DataOfflineFormCallDikirimkan))
+                                                                .setContentIntent(contentIntent)
+                                                                .setAutoCancel(true);
+
+                                                // Gets an instance of the NotificationManager service
+                                                NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                                                // Builds the notification and issues it.
+                                                mNotifyMgr.notify(notificationId, mBuilder.build());
+                                            }
 
 //                                            Delete Form Call from Db
                                             RealmHelper.deleteFormCall(spParameterFormCall.getAccountNo());
@@ -1350,6 +1386,32 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
                                             }
                                             if (!TextUtils.isEmpty(spParameterFormVisitDb.getPhotoSignaturePath())) {
                                                 FileUtils.deleteFile(spParameterFormVisitDb.getPhotoSignaturePath());
+                                            }
+
+
+                                            if (formVisitResponses.size() > 0) {
+                                                Intent intent = new Intent(HomeActivity.this, LaporanVisitActivity.class);
+                                                intent.putExtra("VisitID", formVisitResponses.get(0).getMessage());
+
+                                                Random r = new Random();
+                                                int notificationId = r.nextInt((10000 - 10) + 1) + 10;
+                                                PendingIntent contentIntent = PendingIntent.getActivity(HomeActivity.this, notificationId, intent, PendingIntent.FLAG_ONE_SHOT);
+
+//                                            Show Notification
+                                                NotificationCompat.Builder mBuilder =
+                                                        new NotificationCompat.Builder(HomeActivity.this)
+                                                                .setSmallIcon(R.mipmap.ic_launcher)
+                                                                .setStyle(new NotificationCompat.BigTextStyle()
+                                                                        .bigText(getString(R.string.BackgroundService_DataOfflineFormVisitDikirimkan)))
+                                                                .setContentTitle(getString(R.string.BackgroundService_NotificationTitle))
+                                                                .setContentText(getString(R.string.BackgroundService_DataOfflineFormVisitDikirimkan))
+                                                                .setContentIntent(contentIntent)
+                                                                .setAutoCancel(true);
+
+                                                // Gets an instance of the NotificationManager service
+                                                NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                                                // Builds the notification and issues it.
+                                                mNotifyMgr.notify(notificationId, mBuilder.build());
                                             }
 
 //                                            Delete Form Visit from Db

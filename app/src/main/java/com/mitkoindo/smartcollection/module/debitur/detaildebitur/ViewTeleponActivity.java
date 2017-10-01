@@ -39,6 +39,7 @@ public class ViewTeleponActivity extends BaseActivity {
 
     public static final String EXTRA_NO_REKENING = "extra_no_rekening";
     private static final String EXTRA_CUSTOMER_REFERENCE = "extra_customer_reference";
+    private static final int ACTION_TAMBAH_TELEPON = 11;
 
     private DetailDebiturViewModel mDetailDebiturViewModel;
     private ActivityViewTeleponBinding mBinding;
@@ -158,8 +159,22 @@ public class ViewTeleponActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case ACTION_TAMBAH_TELEPON: {
+                    mDetailDebiturViewModel.getPhoneList(mNoRekening);
+                    break;
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
     @OnClick(R.id.image_btn_toolbar_tambah_telepon)
     public void onTambahTeleponClick(View view) {
-        startActivity(TambahTeleponActivity.instantiate(ViewTeleponActivity.this, mNoRekening, mCustomerReference));
+        startActivityForResult(TambahTeleponActivity.instantiate(ViewTeleponActivity.this, mNoRekening, mCustomerReference), ACTION_TAMBAH_TELEPON);
     }
 }

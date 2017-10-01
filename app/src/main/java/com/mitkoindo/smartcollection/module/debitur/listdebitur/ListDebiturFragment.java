@@ -132,7 +132,6 @@ public class ListDebiturFragment extends BaseFragment {
         mListDebiturViewModel.error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-
                 if (mListDebiturViewModel.error.get() instanceof HttpException) {
                     if (((HttpException) mListDebiturViewModel.error.get()).code() != 404) {
                         if (mStatus.equals(RestConstants.LIST_DEBITUR_STATUS_PENDING_VALUE) && mPage == 1) {
@@ -193,6 +192,7 @@ public class ListDebiturFragment extends BaseFragment {
         mListDebiturViewModel.obsDebiturResponse.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
+                mFooterAdapter.clear();
                 mFastAdapter.clear();
                 mFastAdapter.add(mListDebiturViewModel.obsDebiturResponse.get());
                 mBinding.recyclerViewDebitur.getLayoutManager().scrollToPosition(0);
@@ -206,6 +206,7 @@ public class ListDebiturFragment extends BaseFragment {
         mListDebiturViewModel.obsDebiturResponseLoadMore.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
+                mFooterAdapter.clear();
                 mFastAdapter.add(mListDebiturViewModel.obsDebiturResponseLoadMore.get());
             }
         });

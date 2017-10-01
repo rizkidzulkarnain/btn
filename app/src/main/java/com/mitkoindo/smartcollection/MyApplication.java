@@ -1,10 +1,14 @@
 package com.mitkoindo.smartcollection;
 
 import android.app.Application;
+import android.os.Build;
+import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
 import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
+
+import java.lang.reflect.Method;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -28,6 +32,15 @@ public class MyApplication extends MultiDexApplication {
         initCalligraphy();
         initRealm();
         initStetho();
+
+        if (Build.VERSION.SDK_INT >= 24) {
+            try {
+                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                m.invoke(null);
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static Application getInstance() {

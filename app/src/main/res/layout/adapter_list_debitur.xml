@@ -229,9 +229,9 @@
                 app:barrierDirection="bottom"
                 app:constraint_referenced_ids="text_view_note,text_view_note_value"/>
 
-            <!--Note From-->
+            <!--Expired Date-->
             <TextView
-                android:id="@+id/text_view_note_from"
+                android:id="@+id/text_view_expired_date"
                 style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -239,12 +239,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/barrier_note"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
-                android:text="@string/note_from"
+                android:text="@string/expired_date"
                 android:visibility="@{debiturItem.isPenugasan ? View.VISIBLE : View.GONE}"/>
 
             <!--Note value-->
             <TextView
-                android:id="@+id/text_view_note_from_value"
+                android:id="@+id/text_view_expired_date_value"
                 style="@style/FontRegular.Medium.White"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -253,9 +253,9 @@
                 app:layout_constraintTop_toBottomOf="@+id/barrier_note"
                 app:layout_constraintStart_toEndOf="@+id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBaseline_toBaselineOf="@+id/text_view_note_from"
-                android:text="@{debiturItem.noteFrom}"
-                tools:text="pak Ramlian"
+                app:layout_constraintBaseline_toBaselineOf="@+id/text_view_expired_date"
+                android:text="@{debiturItem.expiredDate}"
+                tools:text="1 Oktober 2017"
                 android:visibility="@{debiturItem.isPenugasan ? View.VISIBLE : View.GONE}"/>
 
         </android.support.constraint.ConstraintLayout>

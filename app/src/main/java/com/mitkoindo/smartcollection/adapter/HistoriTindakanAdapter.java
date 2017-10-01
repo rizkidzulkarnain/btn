@@ -53,10 +53,10 @@ public class HistoriTindakanAdapter extends RecyclerView.Adapter<HistoriTindakan
         HistoriTindakan currentData = all_HistoriTindakan.get(position);
 
         //attach data to views
-        holder.DeskripsiTindakan.setText(currentData.DeskripsiTindakan);
-        holder.TanggalTindakan.setText(currentData.TanggelTindakan_View);
-        holder.Pelaku.setText(currentData.YangMelakukan);
-        holder.AlasanTindakan.setText(currentData.AlasanTindakan);
+        holder.OrangYangDikunjungi.setText(currentData.OrangYangDikunjungi);
+        holder.HubunganYangDikunjungiDesc.setText(currentData.HubunganYangDikunjungiDesc);
+        holder.TanggalAktifitas.setText(currentData.TanggalAktifitas);
+        holder.HasilVisitDesc.setText(currentData.HasilVisitDesc);
     }
 
     @Override
@@ -70,19 +70,19 @@ public class HistoriTindakanAdapter extends RecyclerView.Adapter<HistoriTindakan
     //----------------------------------------------------------------------------------------------
     class HistoriTindakanViewHolder extends RecyclerView.ViewHolder
     {
-        TextView DeskripsiTindakan;
-        TextView TanggalTindakan;
-        TextView Pelaku;
-        TextView AlasanTindakan;
+        TextView OrangYangDikunjungi;
+        TextView HubunganYangDikunjungiDesc;
+        TextView TanggalAktifitas;
+        TextView HasilVisitDesc;
 
         public HistoriTindakanViewHolder(View itemView)
         {
             super(itemView);
 
-            DeskripsiTindakan = itemView.findViewById(R.id.HistoriTindakanAdapter_DeskripsiTindakan);
-            TanggalTindakan = itemView.findViewById(R.id.HistoriTindakanAdapter_TanggalTindakan);
-            Pelaku = itemView.findViewById(R.id.HistoriTindakanAdapter_Pelaku);
-            AlasanTindakan = itemView.findViewById(R.id.HistoriTindakanAdapter_AlasanTindakan);
+            OrangYangDikunjungi = itemView.findViewById(R.id.HistoriTindakanAdapter_yangDikunjungi);
+            HubunganYangDikunjungiDesc = itemView.findViewById(R.id.HistoriTindakanAdapter_Hubungan);
+            TanggalAktifitas = itemView.findViewById(R.id.HistoriTindakanAdapter_TanggalAktivitas);
+            HasilVisitDesc = itemView.findViewById(R.id.HistoriTindakanAdapter_HasilVisit);
         }
     }
 }

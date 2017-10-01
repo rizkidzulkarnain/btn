@@ -7,11 +7,11 @@ import java.util.Date;
 
 public class HistoriTindakan
 {
-    public String DeskripsiTindakan;
-    public Date TanggalTindakan;
-    public String TanggelTindakan_View;
-    public String YangMelakukan;
-    public String AlasanTindakan;
+    public String TanggalAktifitas;
+    public String HasilVisitDesc;
+    public String OrangYangDikunjungi;
+    public String HubunganYangDikunjungiDesc;
+    public String NomorRekening;
 
     //parse form JSON
     public void ParseData(String jsonString)
@@ -22,13 +22,11 @@ public class HistoriTindakan
             JSONObject dataObject = new JSONObject(jsonString);
 
             //get data
-            DeskripsiTindakan = dataObject.getString("DeskripsiTindakan");
-            YangMelakukan = dataObject.getString("YangMelakukan");
-            AlasanTindakan = dataObject.getString("AlasanTindakan");
-
-            //parse date
-            //Hold dulu, karena nanti disediakan sama API
-            TanggelTindakan_View = dataObject.getString("TanggalTindakan");
+            TanggalAktifitas = dataObject.getString("TanggalAktifitas");
+            HasilVisitDesc = dataObject.getString("HasilVisitDesc");
+            OrangYangDikunjungi = dataObject.getString("OrangYangDikunjungi");
+            HubunganYangDikunjungiDesc = dataObject.getString("HubunganYangDikunjungiDesc");
+            NomorRekening = dataObject.getString("NomorRekening");
         }
         catch (JSONException e)
         {

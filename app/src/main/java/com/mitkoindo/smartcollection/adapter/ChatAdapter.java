@@ -511,7 +511,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             /*spParameterObject.put("userID", userID_ChatPartner);*/
             spParameterObject.put("userID", userID);
             spParameterObject.put("chatWithUserID", userID_ChatPartner);
-            spParameterObject.put("limit", 10);
+            spParameterObject.put("limit", 999);
             spParameterObject.put("page", 1);
 
             //populate request object
@@ -681,11 +681,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         }
 
         //assume bahwa message kekirim, add message ke adapter
-        ChatItem chatItem = new ChatItem();
+        //create update chat request
+        CreateUpdateChatRequest();
+
+        /*ChatItem chatItem = new ChatItem();
         chatItem.FromUserID = userID;
         chatItem.ToUserID = userID_ChatPartner;
         chatItem.Message = view_ChatForm.getText().toString();
-        AddChatMessage(chatItem);
+        AddChatMessage(chatItem);*/
 
         //clear text di chat form
         view_ChatForm.setText("");

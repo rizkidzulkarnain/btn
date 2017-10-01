@@ -96,7 +96,8 @@
                 android:id="@+id/recycler_view_debitur"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/background_bluegradient">
+                android:background="@drawable/background_bluegradient"
+                android:visibility="@{listDebiturVideModel.obsIsEmpty ? View.GONE : View.VISIBLE}">
             </android.support.v7.widget.RecyclerView>
 
         </android.support.v4.widget.SwipeRefreshLayout>

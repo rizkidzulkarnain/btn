@@ -15,6 +15,8 @@ public class DebiturItemWithPetugas extends DebiturItem
     public String NamaPetugas;
     public String GroupPetugas;
     public String UserIdPetugas;
+    public String Note;
+    public String NoteFrom;
 
     public DebiturItemWithPetugas()
     {
@@ -44,6 +46,8 @@ public class DebiturItemWithPetugas extends DebiturItem
             NamaPetugas = dataObject.getString("NamaPetugas");
             GroupPetugas = dataObject.getString("GroupPetugas");
             UserIdPetugas = dataObject.getString("UserIdPetugas");
+            Note = dataObject.getString("Note");
+            NoteFrom = dataObject.getString("NoteFrom");
         }
         catch (JSONException e)
         {

@@ -126,6 +126,8 @@
     <string name="ListDebitur_SearchHint">Cari debitur</string>
     <string name="ListDebitur_Search">Cari</string>
     <string name="ListDebitur_SortBy">Sort by</string>
+    <string name="ListDebitur_GetBundleSuccess">Berhasil download data debitur</string>
+    <string name="ListDebitur_SendOfflineDataSuccess">Berhasil mengirim data offline Form Visit dan Form Call</string>
 
     <!--Detail debitur page-->
     <string name="DetailDebitur_PageTitle">Detail Debitur</string>
@@ -170,6 +172,7 @@
     <string name="FormVisit_HubunganDenganDebitur">Hubungan dengan debitur</string>
     <string name="FormVisit_HasilKunjungan">Hasil kunjungan</string>
     <string name="FormVisit_TanggalJanjiDebitur">Tanggal janji debitur</string>
+    <string name="FormVisit_TanggalRealisasiJanji">Tanggal realisasi janji</string>
     <string name="FormVisit_JumlahYangAkanDisetor">Jumlah yang akan disetor</string>
     <string name="FormVisit_JumlahYangAkanDisetorHint">Masukkan jumlah yang akan disetor</string>
     <string name="FormVisit_StatusAgunan">Status agunan</string>
@@ -212,6 +215,7 @@
     <string name="FormVisit_AlasanMenunggakInitial">Pilih alasan menunggak</string>
     <string name="FormVisit_TindakLanjutInitial">Pilih tindak lanjut</string>
     <string name="FormVisit_TanggalJanjiDebiturInitial">Pilih tanggal janji debitur</string>
+    <string name="FormVisit_TanggalRealisasiJanjiInitial">Pilih tanggal realisasi janji</string>
     <string name="FormVisit_TanggalTindakLanjutInitial">Pilih tanggal tindak lanjut</string>
 
     <!--Form Visit Tujuan Kunjungan-->
@@ -240,6 +244,7 @@
     <string name="FormCall_HubunganDenganDebitur">Hubungan dengan debitur</string>
     <string name="FormCall_HasilPanggilan">Hasil panggilan</string>
     <string name="FormCall_TanggalHasilPanggilan">Tanggal janji bayar</string>
+    <string name="FormCall_TanggalRealisasiJanji">Tanggal realisasi janji</string>
     <string name="FormCall_JumlahYangAkanDisetor">Jumlah yang akan disetor</string>
     <string name="FormCall_JumlahYangAkanDisetorHint">Masukkan jumlah yang akan disetor</string>
     <string name="FormCall_AlasanTidakBayar">Alasan tidak bayar</string>
@@ -256,12 +261,14 @@
     <string name="FormCall_HubunganDenganDebiturInitial">Pilih hubungan dengan debitur</string>
     <string name="FormCall_HasilPanggilanInitial">Pilih hasil panggilan</string>
     <string name="FormCall_TanggalHasilPanggilanInitial">Pilih tanggal janji bayar</string>
+    <string name="FormCall_TanggalRealisasiJanjiInitial">Pilih tanggal realisasi janji</string>
     <string name="FormCall_AlasanTidakBayarInitial">Pilih alasan tidak bayar</string>
     <string name="FormCall_TindakLanjutInitial">Pilih tindak lanjut</string>
     <string name="FormCall_TanggalTindakLanjutInitial">Pilih tanggal tindak lanjut</string>
 
     <!--Form Visit Konfirmasi Page-->
     <string name="FormKonfirmasi_PageTitle">Konfirmasi Form Visit</string>
+    <string name="FormKonfirmasi_SignatureHint">Silakan Tanda Tangan</string>
 
     <!--Tambah Alamat dan Telepon-->
     <string name="TambahAlamat_PageTitle">Tambahkan Kontak</string>
@@ -345,6 +352,7 @@
     <string name="Gallery_Signature">Foto Signature</string>
 
     <!--Background Service-->
+    <string name="BackgroundService_NotificationTitle">BTN Smart Collection</string>
     <string name="BackgroundService_DataOfflineFormVisitDikirimkan">Data offline form visit telah dikirimkan</string>
     <string name="BackgroundService_DataOfflineFormCallDikirimkan">Data offline form call telah dikirimkan</string>
 
@@ -408,6 +416,11 @@
     <string name="HistoriTindakan_Adapter_Pelaku">Petugas</string>
     <string name="HistoriTindakan_Adapter_AlasanTindakan">Alasan Tindakan</string>
 
+    <string name="HistoriTindakan_OrangyangDikunjungi">Orang Yang Dikunjungi</string>
+    <string name="HistoriTindakan_Hubungan">Hubungan Dengan Debitur</string>
+    <string name="HistoriTindakan_TanggalKunjungan">Tanggal Kunjungan</string>
+    <string name="HistoriTindakan_HasilKunjungan">Hasil Kunjungan</string>
+
     <!--Page pusat notifikasi-->
     <string name="PusatNotifikasi_Title">Pusat Notifikasi</string>
 
@@ -424,6 +437,7 @@
     <string name="last_payment">Last Payment</string>
     <string name="note">Note</string>
     <string name="note_from">Note From</string>
+    <string name="expired_date">Expired Date</string>
 
     <!--List Report Distribusi Staff adapter-->
     <string name="jumlah_penugasan">Jumlah penugasan</string>
@@ -445,19 +459,20 @@
     <string name="yes">Ya</string>
     <string name="no">Tidak</string>
     <string name="TidakAdaDataPilihan">Tidak ada data pilihan</string>
-    <string name="GagalMendapatkanData">Gagal mendapatkan data</string>
-    <string name="GagalMenyimpanFormVisit">Gagal mengirim form visit, Data disimpan di offline record dan dikirim setelah ada koneksi</string>
-    <string name="GagalMenyimpanFormCall">Gagal mengirim form call, Data disimpan di offline record dan dikirim setelah ada koneksi</string>
-    <string name="GagalMendapatListNomorTelepon">Gagal mendapatkan list nomor telepon</string>
-    <string name="GagalMenambahkanAlamatDanTelepon">Gagal menambahkan alamat / telepon</string>
-    <string name="GagalCheckIn">Gagal melakukan check in</string>
-    <string name="GagalMenambahNomorTelepon">Gagal menambah nomor telepon</string>
-    <string name="GagalMenambahAlamat">Gagal menambah alamat</string>
-    <string name="GagalMendapatListDebitur">Gagal mendapatkan list debitur, memakai data offline record</string>
+    <string name="GagalMendapatkanData">Tidak mendapatkan data</string>
+    <string name="GagalMenyimpanFormVisit">Anda berada pada offline mode, data akan disimpan secara online. Silakan lakukan sinkronisasi setelah terhubung kembali dengan internet.</string>
+    <string name="GagalMenyimpanFormCall">Anda berada pada offline mode, data akan disimpan secara online. Silakan lakukan sinkronisasi setelah terhubung kembali dengan internet.</string>
+    <string name="GagalMendapatListNomorTelepon">Tidak mendapatkan list nomor telepon</string>
+    <string name="GagalMenambahkanAlamatDanTelepon">Tidak berhasil menambahkan alamat / telepon</string>
+    <string name="GagalCheckIn">Tidak berhasil melakukan check in</string>
+    <string name="GagalMenambahNomorTelepon">Tidak berhasil menambah nomor telepon</string>
+    <string name="GagalMenambahAlamat">Tidak berhasil menambah alamat</string>
+    <string name="GagalMendapatListDebitur">Koneksi terputus, beralih ke mode offline</string>
     <string name="GagalDataTanggalIni">Tidak ada data pada tanggal ini</string>
     <string name="TidakAdaDataNoTelepon">Tidak ada data nomor telepon</string>
     <string name="TidakAdaDataAlamat">Tidak ada data alamat</string>
     <string name="TidakAdaDataFoto">Tidak ada data foto</string>
+    <string name="GagalMendapatkanGeoAddress">Alamat tidak diketahui, Latitude : %1$f Longitude : %2$f</string>
 
     <!--Geocoder-->
     <string name="no_geocoder_available">No geocoder available</string>

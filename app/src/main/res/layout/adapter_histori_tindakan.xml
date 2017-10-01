@@ -7,9 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!--Deskripsi Tindakan-->
+    <!--yang dikunjungi-->
     <TextView
-        android:text="@string/HistoriTindakan_Adapter_DeskripsiTindakan"
+        android:text="@string/HistoriTindakan_OrangyangDikunjungi"
         android:textColor="@color/White"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -20,7 +20,7 @@
         android:layout_height="1dp"/>
 
     <TextView
-        android:id="@+id/HistoriTindakanAdapter_DeskripsiTindakan"
+        android:id="@+id/HistoriTindakanAdapter_yangDikunjungi"
         android:textSize="14sp"
         android:textColor="@color/White"
         android:layout_marginTop="5dp"
@@ -29,10 +29,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!--Tanggal Tindakan-->
+    <!--hubungan dengan debitur-->
     <TextView
         android:layout_marginTop="10dp"
-        android:text="@string/HistoriTindakan_Adapter_TanggalTindakan"
+        android:text="@string/HistoriTindakan_Hubungan"
         android:textColor="@color/White"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -43,7 +43,7 @@
         android:layout_height="1dp"/>
 
     <TextView
-        android:id="@+id/HistoriTindakanAdapter_TanggalTindakan"
+        android:id="@+id/HistoriTindakanAdapter_Hubungan"
         android:textSize="14sp"
         android:textColor="@color/White"
         android:layout_marginTop="5dp"
@@ -52,10 +52,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!--Pelaku-->
+    <!--hasil kunjungan-->
     <TextView
         android:layout_marginTop="10dp"
-        android:text="@string/HistoriTindakan_Adapter_Pelaku"
+        android:text="@string/HistoriTindakan_HasilKunjungan"
         android:textColor="@color/White"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -66,7 +66,7 @@
         android:layout_height="1dp"/>
 
     <TextView
-        android:id="@+id/HistoriTindakanAdapter_Pelaku"
+        android:id="@+id/HistoriTindakanAdapter_HasilVisit"
         android:textSize="14sp"
         android:textColor="@color/White"
         android:layout_marginTop="5dp"
@@ -75,10 +75,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!--Alasan Tindakan-->
+    <!--tanggal kunjungan-->
     <TextView
         android:layout_marginTop="10dp"
-        android:text="@string/HistoriTindakan_Adapter_AlasanTindakan"
+        android:text="@string/HistoriTindakan_TanggalKunjungan"
         android:textColor="@color/White"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -89,7 +89,7 @@
         android:layout_height="1dp"/>
 
     <TextView
-        android:id="@+id/HistoriTindakanAdapter_AlasanTindakan"
+        android:id="@+id/HistoriTindakanAdapter_TanggalAktivitas"
         android:textSize="14sp"
         android:textColor="@color/White"
         android:layout_marginTop="5dp"

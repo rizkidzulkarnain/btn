@@ -5,9 +5,7 @@ package com.mitkoindo.smartcollection.network;
  */
 
 public final class RestConstants {
-//    public static final String BASE_URL = "https://span.btn.co.id/";
     public static final String BASE_URL = "https://mobile-coll.btn.co.id/";
-//    public static final String BASE_URL_IMAGE = BASE_URL + "wsMobile";
     public static final String BASE_URL_END = "SmartColl";
     public static final String BASE_URL_IMAGE = BASE_URL + BASE_URL_END;
 

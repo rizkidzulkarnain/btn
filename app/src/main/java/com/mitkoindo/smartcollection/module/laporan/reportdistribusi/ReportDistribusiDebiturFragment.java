@@ -101,6 +101,7 @@ public class ReportDistribusiDebiturFragment extends BaseFragment {
         mListDebiturViewModel.obsDebiturResponse.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
+                mFooterAdapter.clear();
                 mFastAdapter.clear();
                 mFastAdapter.add(mListDebiturViewModel.obsDebiturResponse.get());
                 mBinding.recyclerViewDebitur.getLayoutManager().scrollToPosition(0);
@@ -114,6 +115,7 @@ public class ReportDistribusiDebiturFragment extends BaseFragment {
         mListDebiturViewModel.obsDebiturResponseLoadMore.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
+                mFooterAdapter.clear();
                 mFastAdapter.add(mListDebiturViewModel.obsDebiturResponseLoadMore.get());
             }
         });

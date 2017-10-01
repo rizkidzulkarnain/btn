@@ -27,6 +27,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -62,6 +63,8 @@ import java.util.List;
 
 import butterknife.OnClick;
 
+import static com.mitkoindo.smartcollection.FetchAddressIntentService.Constants.SUCCESS_RESULT;
+
 /**
  * Created by ericwijaya on 8/26/17.
  */
@@ -85,6 +88,8 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
     private String mAddress;
     private String mAddressOutput;
     private boolean mAddressRequested;
+    private boolean mIsSignaturePadSigned = false;
+    private Location mLastKnownLocation;
 
 
     public static Intent instantiate(Context context, SpParameterFormVisitDb spParameter, String noRekening, String alamatYangDikunjungi) {
@@ -100,6 +105,7 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
         super.onCreate(savedInstanceState);
 
         setupToolbar(getString(R.string.FormKonfirmasi_PageTitle));
+        initSignaturePad();
     }
 
     @Override
@@ -348,17 +354,33 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
 
 //        Set Signature visibility
         String relationShipId = mSpParameterFormVisitDb.getPersonVisitRel();
-        String statusAgunanId = mSpParameterFormVisitDb.getCollStatDesc();
-        if ((relationShipId.equals(RestConstants.RELATIONSHIP_ID_YANG_BERSANGKUTAN_VALUE)
+        if ( relationShipId.equals(RestConstants.RELATIONSHIP_ID_YANG_BERSANGKUTAN_VALUE)
                 || relationShipId.equals(RestConstants.RELATIONSHIP_ID_SUAMI_VALUE)
-                || relationShipId.equals(RestConstants.RELATIONSHIP_ID_ISTRI_VALUE))
-
-                && !statusAgunanId.equals(RestConstants.STATUS_AGUNAN_ID_RUMAH_KOSONG_VALUE)) {
+                || relationShipId.equals(RestConstants.RELATIONSHIP_ID_ISTRI_VALUE) ) {
 
             mFormVisitKonfirmasiViewModel.obsIsSignatureShow.set(true);
         } else {
             mFormVisitKonfirmasiViewModel.obsIsSignatureShow.set(false);
         }
+    }
+
+    private void initSignaturePad() {
+        mBinding.signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
+            @Override
+            public void onStartSigning() {
+                mIsSignaturePadSigned = true;
+            }
+
+            @Override
+            public void onSigned() {
+                mIsSignaturePadSigned = true;
+            }
+
+            @Override
+            public void onClear() {
+                mIsSignaturePadSigned = false;
+            }
+        });
     }
 
     final private int REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_SIGNATURE = 124;
@@ -457,8 +479,12 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
     @OnClick(R.id.button_submit)
     public void onSubmitClicked(View view) {
         if (mFormVisitKonfirmasiViewModel.obsIsSignatureShow.get()) {
-            getPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_SIGNATURE,
-                    getString(R.string.FormVisit_external_storage_permission_description));
+            if (mIsSignaturePadSigned) {
+                getPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_CODE_EXTERNAL_STORAGE_PERMISSIONS_SIGNATURE,
+                        getString(R.string.FormVisit_external_storage_permission_description));
+            } else {
+                displayMessage(getString(R.string.FormKonfirmasi_SignatureHint));
+            }
         } else {
             requestAccessLocationPermission();
         }
@@ -498,6 +524,8 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
                         public void onSuccess(Location location) {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
+                                mLastKnownLocation = location;
+
                                 mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.setGeoLatitude(location.getLatitude());
                                 mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.setGeoLongitude(location.getLongitude());
 
@@ -547,7 +575,12 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
         protected void onReceiveResult(int resultCode, Bundle resultData) {
 
             // Display the address string or an error message sent from the intent service.
-            mAddressOutput = resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY);
+            if (resultCode == SUCCESS_RESULT) {
+                mAddressOutput = resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY);
+            } else {
+                mAddressOutput = String.format(getString(R.string.GagalMendapatkanGeoAddress), mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+            }
+
             mFormVisitKonfirmasiViewModel.spParameterFormVisitDb.setGeoAddress(mAddressOutput);
 
             mFormVisitKonfirmasiViewModel.saveFormVisit(getAccessToken());

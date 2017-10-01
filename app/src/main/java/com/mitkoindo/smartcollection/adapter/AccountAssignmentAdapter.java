@@ -150,6 +150,19 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
         holder.DPD.setText(currentDebitur.getDpd());
         holder.LastPayment.setText(currentDebitur.getLastPayment());
 
+        //setup note
+        if (currentDebitur.Note == null || currentDebitur.Note.isEmpty() || currentDebitur.Note.equals("null"))
+        {
+            //hide note
+            holder.holder_NoteArea1.setVisibility(View.GONE);
+            holder.holder_NoteArea2.setVisibility(View.GONE);
+        }
+        else
+        {
+            holder.Note.setText(currentDebitur.Note);
+            holder.NoteFrom.setText(currentDebitur.NoteFrom);
+        }
+
         //set checkbox
         holder.checkBox.setOnCheckedChangeListener(null);
         if (currentDebitur.Checked)
@@ -532,7 +545,12 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
         TextView Tagihan;
         TextView DPD;
         TextView LastPayment;
+        TextView Note;
+        TextView NoteFrom;
         CheckBox checkBox;
+
+        View holder_NoteArea1;
+        View holder_NoteArea2;
 
         View infoSection;
 
@@ -545,8 +563,13 @@ public class AccountAssignmentAdapter extends RecyclerView.Adapter<AccountAssign
             Tagihan = itemView.findViewById(R.id.text_view_tagihan_value);
             DPD = itemView.findViewById(R.id.text_view_dpd_value);
             LastPayment = itemView.findViewById(R.id.text_view_last_payment_value);
+            Note = itemView.findViewById(R.id.DebiturAssignment_Note);
+            NoteFrom = itemView.findViewById(R.id.DebiturAssignment_NoteFrom);
             checkBox = itemView.findViewById(R.id.AccountAssignmentAdapter_CheckBox);
             infoSection = itemView.findViewById(R.id.AccountAssignmentAdapter_InfoSection);
+
+            holder_NoteArea1 = itemView.findViewById(R.id.DebiturAssignmentAdapter_NoteArea1);
+            holder_NoteArea2 = itemView.findViewById(R.id.DebiturAssignmentAdapter_NoteArea2);
         }
     }
 }

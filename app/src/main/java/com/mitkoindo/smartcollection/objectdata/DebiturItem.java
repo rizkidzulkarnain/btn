@@ -70,6 +70,10 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
     @Expose
     private String noteFrom;
 
+    @SerializedName("ExpiredDate")
+    @Expose
+    private String expiredDate;
+
     @SerializedName("Aktifitas")
     @Expose
     private String aktifitas;
@@ -186,6 +190,14 @@ public class DebiturItem extends AbstractItem <DebiturItem, DebiturItem.ViewHold
 
     public void setNoteFrom(String noteFrom) {
         this.noteFrom = noteFrom;
+    }
+
+    public String getExpiredDate() {
+        return expiredDate;
+    }
+
+    public void setExpiredDate(String expiredDate) {
+        this.expiredDate = expiredDate;
     }
 
     public String getAktifitas() {

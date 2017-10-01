@@ -32,6 +32,7 @@ public class DialogTwoLineSpinnerItemViewModel extends ChoiceObservable<Object> 
     }
 
     public View.OnClickListener onItemClicked() {
-        return v -> EventBus.getDefault().post(new EventDialogSimpleSpinnerSelected(item.description, viewId));
+        String text = item.title + "\r\n" + item.description;
+        return v -> EventBus.getDefault().post(new EventDialogSimpleSpinnerSelected(text, viewId));
     }
 }

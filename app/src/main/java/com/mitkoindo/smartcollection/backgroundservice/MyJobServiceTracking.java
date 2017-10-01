@@ -37,6 +37,8 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
+import static com.mitkoindo.smartcollection.FetchAddressIntentService.Constants.SUCCESS_RESULT;
+
 /**
  * Created by ericwijaya on 9/17/17.
  */
@@ -193,7 +195,11 @@ public class MyJobServiceTracking extends JobService implements GoogleApiClient.
         protected void onReceiveResult(int resultCode, Bundle resultData) {
 
             // Display the address string or an error message sent from the intent service.
-            mAddressOutput = resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY);
+            if (resultCode == SUCCESS_RESULT) {
+                mAddressOutput = resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY);
+            } else {
+                mAddressOutput = String.format(getString(R.string.GagalMendapatkanGeoAddress), mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+            }
 
             Timber.i("getAddress success : " + mAddressOutput);
             trackingLocation(mUserId, mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude(), mAddressOutput);

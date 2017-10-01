@@ -119,6 +119,7 @@ public class TambahAlamatActivity extends BaseActivity {
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (mTambahAlamatViewModel.obsIsSaveSuccess.get()) {
                     displayMessage(R.string.TambahAlamatSaja_Success);
+                    setResult(RESULT_OK);
                     finish();
                 }
             }

@@ -57,6 +57,8 @@ import java.util.List;
 
 import butterknife.OnClick;
 
+import static com.mitkoindo.smartcollection.FetchAddressIntentService.Constants.SUCCESS_RESULT;
+
 /**
  * Created by ericwijaya on 8/20/17.
  */
@@ -90,6 +92,7 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
     private String mNoTelepon;
     private String mAddressOutput;
     private boolean mAddressRequested;
+    private Location mLastKnownLocation;
 
 
     public static Intent instantiate(Context context, String noRekening, String noTelepon) {
@@ -208,13 +211,19 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
 //                    Jika hasil kunjungan = akan setor tanggal, maka show field jumlah yang akan disetor
                     if (hasilPanggilanId.equals(RestConstants.RESULT_ID_AKAN_SETOR_TANGGAL_VALUE)) {
                         mFormCallViewModel.obsIsShowJumlahYangAkanDisetor.set(true);
+                        mFormCallViewModel.tanggalHasilPanggilan.set(getString(R.string.FormCall_TanggalHasilPanggilanInitial));
                     } else {
                         mFormCallViewModel.obsIsShowJumlahYangAkanDisetor.set(false);
+                        mFormCallViewModel.tanggalHasilPanggilan.set(getString(R.string.FormCall_TanggalRealisasiJanjiInitial));
                     }
                 } else {
                     mFormCallViewModel.obsIsShowTanggalJanjiDebitur.set(false);
                     mFormCallViewModel.obsIsShowJumlahYangAkanDisetor.set(false);
                 }
+
+                mFormCallViewModel.spParameterFormCall.setResultDate(null);
+                mFormCallViewModel.spParameterFormCall.setPtpAmount(0);
+                mFormCallViewModel.jumlahYangAkanDisetor.set("");
             }
         });
     }
@@ -477,7 +486,11 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
             displayMessage(getString(R.string.FormCall_HasilPanggilanInitial));
             return false;
         } else if (TextUtils.isEmpty(spParameterFormCall.getResultDate()) && mFormCallViewModel.obsIsShowTanggalJanjiDebitur.get()) {
-            displayMessage(getString(R.string.FormCall_TanggalHasilPanggilanInitial));
+            if (mFormCallViewModel.obsIsShowJumlahYangAkanDisetor.get()) {
+                displayMessage(getString(R.string.FormCall_TanggalHasilPanggilanInitial));
+            } else {
+                displayMessage(getString(R.string.FormCall_TanggalRealisasiJanjiInitial));
+            }
             return false;
         } else if (spParameterFormCall.getPtpAmount() == 0 && mFormCallViewModel.obsIsShowJumlahYangAkanDisetor.get()) {
             displayMessage(getString(R.string.FormCall_JumlahYangAkanDisetorHint));
@@ -546,6 +559,8 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
                         public void onSuccess(Location location) {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
+                                mLastKnownLocation = location;
+
                                 mFormCallViewModel.spParameterFormCall.setGeoLatitude(location.getLatitude());
                                 mFormCallViewModel.spParameterFormCall.setGeoLongitude(location.getLongitude());
 
@@ -595,7 +610,11 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
         protected void onReceiveResult(int resultCode, Bundle resultData) {
 
             // Display the address string or an error message sent from the intent service.
-            mAddressOutput = resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY);
+            if (resultCode == SUCCESS_RESULT) {
+                mAddressOutput = resultData.getString(FetchAddressIntentService.Constants.RESULT_DATA_KEY);
+            } else {
+                mAddressOutput = String.format(getString(R.string.GagalMendapatkanGeoAddress), mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+            }
 
             mFormCallViewModel.spParameterFormCall.setGeoAddress(mAddressOutput);
 

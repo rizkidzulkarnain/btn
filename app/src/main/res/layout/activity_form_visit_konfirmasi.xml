@@ -234,7 +234,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/card_view_hasil_kunjungan"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="@string/FormVisit_TanggalJanjiDebitur"
+                    android:text="@{formVisitKonfirmasiViewModel.obsIsShowJumlahYangAkanDisetor ? @string/FormVisit_TanggalJanjiDebitur : @string/FormVisit_TanggalRealisasiJanji}"
                     android:visibility="@{formVisitKonfirmasiViewModel.obsIsShowTanggalJanjiDebitur ? View.VISIBLE : View.GONE}"/>
 
                 <!--Tanggal Janji Debitur value-->

@@ -17,6 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import timber.log.Timber;
+
 public class LaporanCallActivity extends AppCompatActivity
 {
     //----------------------------------------------------------------------------------------------
@@ -133,6 +135,7 @@ public class LaporanCallActivity extends AppCompatActivity
 
         //get data dari bundle
         callID = bundle.getString("CallID");
+        Timber.i("___" + callID);
     }
 
     //----------------------------------------------------------------------------------------------

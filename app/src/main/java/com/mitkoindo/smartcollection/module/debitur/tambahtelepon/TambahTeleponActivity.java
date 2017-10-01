@@ -120,6 +120,7 @@ public class TambahTeleponActivity extends BaseActivity {
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (mTambahTeleponViewModel.obsIsSaveSuccess.get()) {
                     displayMessage(R.string.TambahTelepon_Success);
+                    setResult(RESULT_OK);
                     finish();
                 }
             }

@@ -1,6 +1,8 @@
 package com.mitkoindo.smartcollection.backgroundservice;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
@@ -8,6 +10,8 @@ import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
+import com.mitkoindo.smartcollection.module.laporan.LaporanCallActivity;
+import com.mitkoindo.smartcollection.module.laporan.LaporanVisitActivity;
 import com.mitkoindo.smartcollection.network.ApiUtils;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.FormCallBody;
@@ -192,22 +196,31 @@ public class MyJobService extends JobService {
                                     .doOnNext(new Consumer<List<FormCallResponse>>() {
                                         @Override
                                         public void accept(List<FormCallResponse> formCallResponses) throws Exception {
-                                            Timber.i("___sendFormCall doOnNext " + formCallResponses.get(0).getMessage());
+
+                                            if (formCallResponses.size() > 0) {
+                                                Intent intent = new Intent(MyJobService.this, LaporanCallActivity.class);
+                                                intent.putExtra("CallID", formCallResponses.get(0).getMessage());
+
+                                                Random r = new Random();
+                                                int notificationId = r.nextInt((10000 - 10) + 1) + 10;
+                                                PendingIntent contentIntent = PendingIntent.getActivity(MyJobService.this, notificationId, intent, PendingIntent.FLAG_ONE_SHOT);
 
 //                                            Show Notification
-//                                            NotificationCompat.Builder mBuilder =
-//                                                    new NotificationCompat.Builder(MyJobService.this)
-//                                                            .setSmallIcon(R.drawable.ic_phone)
-//                                                            .setContentTitle(getString(R.string.BackgroundService_DataOfflineFormCallDikirimkan))
-//                                                            .setContentText("Nomor Rekening : " + spParameterFormCall.getAccountNo());
-//
-//                                            Random r = new Random();
-//                                            int mNotificationId = r.nextInt((1000-10)+1)+10;
-//                                            // Gets an instance of the NotificationManager service
-//                                            NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//                                            // Builds the notification and issues it.
-//                                            mNotifyMgr.notify(mNotificationId, mBuilder.build());
+                                                NotificationCompat.Builder mBuilder =
+                                                        new NotificationCompat.Builder(MyJobService.this)
+                                                                .setSmallIcon(R.mipmap.ic_launcher)
+                                                                .setStyle(new NotificationCompat.BigTextStyle()
+                                                                        .bigText(getString(R.string.BackgroundService_DataOfflineFormCallDikirimkan)))
+                                                                .setContentTitle(getString(R.string.BackgroundService_NotificationTitle))
+                                                                .setContentText(getString(R.string.BackgroundService_DataOfflineFormCallDikirimkan))
+                                                                .setContentIntent(contentIntent)
+                                                                .setAutoCancel(true);
 
+                                                // Gets an instance of the NotificationManager service
+                                                NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                                                // Builds the notification and issues it.
+                                                mNotifyMgr.notify(notificationId, mBuilder.build());
+                                            }
 
 //                                            Delete Form Call from Db
                                             RealmHelper.deleteFormCall(spParameterFormCall.getAccountNo());
@@ -327,7 +340,6 @@ public class MyJobService extends JobService {
                                     .doOnNext(new Consumer<List<FormVisitResponse>>() {
                                         @Override
                                         public void accept(List<FormVisitResponse> formVisitResponses) throws Exception {
-                                            Timber.i("sendFormVisit doOnNext " + formVisitResponses.get(0).getMessage());
 
 //                                            Delete file photo
                                             if (!TextUtils.isEmpty(spParameterFormVisitDb.getPhotoDebiturPath())) {
@@ -343,20 +355,31 @@ public class MyJobService extends JobService {
                                                 FileUtils.deleteFile(spParameterFormVisitDb.getPhotoSignaturePath());
                                             }
 
-//                                            Show Notification
-//                                            NotificationCompat.Builder mBuilder =
-//                                                    new NotificationCompat.Builder(MyJobService.this)
-//                                                            .setSmallIcon(R.drawable.ic_home_map)
-//                                                            .setContentTitle(getString(R.string.BackgroundService_DataOfflineFormVisitDikirimkan))
-//                                                            .setContentText("Nomor Rekening : " + spParameterFormVisitDb.getAccNo());
-//
-//                                            Random r = new Random();
-//                                            int mNotificationId = r.nextInt((1000-10)+1)+10;
-//                                            // Gets an instance of the NotificationManager service
-//                                            NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//                                            // Builds the notification and issues it.
-//                                            mNotifyMgr.notify(mNotificationId, mBuilder.build());
 
+                                            if (formVisitResponses.size() > 0) {
+                                                Intent intent = new Intent(MyJobService.this, LaporanVisitActivity.class);
+                                                intent.putExtra("VisitID", formVisitResponses.get(0).getMessage());
+
+                                                Random r = new Random();
+                                                int notificationId = r.nextInt((10000 - 10) + 1) + 10;
+                                                PendingIntent contentIntent = PendingIntent.getActivity(MyJobService.this, notificationId, intent, PendingIntent.FLAG_ONE_SHOT);
+
+//                                            Show Notification
+                                                NotificationCompat.Builder mBuilder =
+                                                        new NotificationCompat.Builder(MyJobService.this)
+                                                                .setSmallIcon(R.mipmap.ic_launcher)
+                                                                .setStyle(new NotificationCompat.BigTextStyle()
+                                                                        .bigText(getString(R.string.BackgroundService_DataOfflineFormVisitDikirimkan)))
+                                                                .setContentTitle(getString(R.string.BackgroundService_NotificationTitle))
+                                                                .setContentText(getString(R.string.BackgroundService_DataOfflineFormVisitDikirimkan))
+                                                                .setContentIntent(contentIntent)
+                                                                .setAutoCancel(true);
+
+                                                // Gets an instance of the NotificationManager service
+                                                NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                                                // Builds the notification and issues it.
+                                                mNotifyMgr.notify(notificationId, mBuilder.build());
+                                            }
 
 //                                            Delete Form Visit from Db
                                             RealmHelper.deleteFormVisit(spParameterFormVisitDb.getAccNo());
