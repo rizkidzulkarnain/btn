@@ -113,7 +113,7 @@ public class ChatWindowActivity extends AppCompatActivity
     {
         super.onStart();
 
-        /*//create handler & runnable to update chat
+        //create handler & runnable to update chat
         chatUpdateHandler = new Handler();
         chatUpdateRunnable = new Runnable()
         {
@@ -125,7 +125,7 @@ public class ChatWindowActivity extends AppCompatActivity
             }
         };
 
-        chatUpdateHandler.postDelayed(chatUpdateRunnable, delay_chat_update * 1000);*/
+        chatUpdateHandler.postDelayed(chatUpdateRunnable, delay_chat_update * 1000);
     }
 
     @Override
