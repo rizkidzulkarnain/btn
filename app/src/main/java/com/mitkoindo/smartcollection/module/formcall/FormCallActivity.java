@@ -414,7 +414,17 @@ public class FormCallActivity extends BaseActivity implements GoogleApiClient.On
         calendar.add(Calendar.MONTH, 1);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         calendar.add(Calendar.DATE, -1);
-        datePickerDialog.getDatePicker().setMaxDate(calendar.getTime().getTime());
+
+        Calendar calendar15 = Calendar.getInstance();
+        calendar15.add(Calendar.DATE, 15);
+
+        long maxDate = calendar.getTime().getTime();
+        int returnVal = Double.compare(calendar15.getTime().getTime(), calendar.getTime().getTime());
+        if (returnVal < 0) {
+            maxDate = calendar15.getTime().getTime();
+        }
+
+        datePickerDialog.getDatePicker().setMaxDate(maxDate);
 
         datePickerDialog.show();
     }

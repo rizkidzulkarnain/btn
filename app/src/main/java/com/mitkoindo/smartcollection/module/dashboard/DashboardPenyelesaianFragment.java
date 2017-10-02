@@ -112,9 +112,12 @@ public class DashboardPenyelesaianFragment extends Fragment
         View thisView = inflater.inflate(R.layout.fragment_dashboard_penyelesaian, container, false);
         GetViews(thisView);
 
+        SetupViews();
+        CreateGetDashboardPenyelesaianRequest();
+
         //cek tanggal hari ini, jika belum tanggal 8, hide semua view
-        Calendar calendar = Calendar.getInstance();
-        /*if (calendar.get(Calendar.DATE) > 8)*/
+        /*Calendar calendar = Calendar.getInstance();
+        *//*if (calendar.get(Calendar.DATE) > 8)*//*
         if (calendar.get(Calendar.DATE) < 8)
         {
             HideAllViews();
@@ -123,7 +126,7 @@ public class DashboardPenyelesaianFragment extends Fragment
         {
             SetupViews();
             CreateGetDashboardPenyelesaianRequest();
-        }
+        }*/
         return thisView;
     }
 
@@ -270,7 +273,8 @@ public class DashboardPenyelesaianFragment extends Fragment
             //execute transaction
             NetworkConnection networkConnection = new NetworkConnection(authToken, "");
             networkConnection.SetRequestObject(requestObject);
-            return networkConnection.SendPostRequest(usedURL);
+            /*return networkConnection.SendPostRequest(usedURL);*/
+            return networkConnection.SendPlainPostRequest(usedURL);
         }
 
         @Override
@@ -394,6 +398,13 @@ public class DashboardPenyelesaianFragment extends Fragment
                     view_Debitur_Target.setText("" + currentdashboardData.Target);
                     view_Debitur_Realisasi.setText("" + currentdashboardData.Realisasi);
                     view_Debitur_Outstanding.setText("" + currentdashboardData.Outstanding);
+
+                    if (currentdashboardData.Target == null || currentdashboardData.Target.equals("null"))
+                        view_Debitur_Target.setText("0");
+                    if (currentdashboardData.Realisasi == null || currentdashboardData.Realisasi.equals("null"))
+                        view_Debitur_Realisasi.setText("0");
+                    if (currentdashboardData.Outstanding == null || currentdashboardData.Outstanding.equals("null"))
+                        view_Debitur_Outstanding.setText("0");
                 }
                 else
                 {
@@ -435,6 +446,13 @@ public class DashboardPenyelesaianFragment extends Fragment
                     view_Nominal_Target.setText("" + currentdashboardData.Target);
                     view_Nominal_Realisasi.setText("" + currentdashboardData.Realisasi);
                     view_Nominal_Outstanding.setText("" + currentdashboardData.Outstanding);
+
+                    if (currentdashboardData.Target == null || currentdashboardData.Target.equals("null"))
+                        view_Nominal_Target.setText("0");
+                    if (currentdashboardData.Realisasi == null || currentdashboardData.Realisasi.equals("null"))
+                        view_Nominal_Realisasi.setText("0");
+                    if (currentdashboardData.Outstanding == null || currentdashboardData.Outstanding.equals("null"))
+                        view_Nominal_Outstanding.setText("0");
                 }
 
                 //show alert
@@ -447,8 +465,8 @@ public class DashboardPenyelesaianFragment extends Fragment
             e.printStackTrace();
 
             //show something wrong
-            String alertMessage = getString(R.string.Text_SomethingWrong);
-            view_Alert.setText(alertMessage);
+            /*String alertMessage = getString(R.string.Text_SomethingWrong);*/
+            view_Alert.setText(resultString);
             view_Alert.setVisibility(View.VISIBLE);
             holder_Progress.setVisibility(View.GONE);
             return;

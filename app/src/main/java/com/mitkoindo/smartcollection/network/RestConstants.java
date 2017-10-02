@@ -92,6 +92,8 @@ public final class RestConstants {
 
     public static final String GALLERY_SP_NAME = "MKI_SP_DEBITUR_GALLERY";
 
+    public static final String ADDRESS_NEW_SP_NAME = "MKI_SP_DEBITUR_ADDRESS_LIST";
+
     public static final String ORDER_DIRECTION_ASC_VALUE = "ASC";
 
     public static final String RESULT_ID_AKAN_SETOR_TANGGAL_VALUE = "R0012";

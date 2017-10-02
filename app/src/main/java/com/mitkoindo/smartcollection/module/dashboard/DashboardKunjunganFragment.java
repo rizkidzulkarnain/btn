@@ -241,7 +241,8 @@ public class DashboardKunjunganFragment extends Fragment
             //execute transaction
             NetworkConnection networkConnection = new NetworkConnection(authToken, "");
             networkConnection.SetRequestObject(requestObject);
-            return networkConnection.SendPostRequest(usedURL);
+            /*return networkConnection.SendPostRequest(usedURL);*/
+            return networkConnection.SendPlainPostRequest(usedURL);
         }
 
         @Override
@@ -301,7 +302,6 @@ public class DashboardKunjunganFragment extends Fragment
             view_Alert.setVisibility(View.VISIBLE);
             holder_Progress.setVisibility(View.GONE);
             return;
-
         }
 
         //initialize dashboard data holder
@@ -361,9 +361,20 @@ public class DashboardKunjunganFragment extends Fragment
 
                     chart_Debitur.invalidate();
                     //set data debitur
-                    view_Debitur_Target.setText("" + currentdashboardData.Target);
-                    view_Debitur_Realisasi.setText("" + currentdashboardData.Realisasi);
-                    view_Debitur_Outstanding.setText("" + currentdashboardData.Outstanding);
+                    if (currentdashboardData.Target == null || currentdashboardData.Target.equals("null"))
+                        view_Debitur_Target.setText("0");
+                    else
+                        view_Debitur_Target.setText("" + currentdashboardData.Target);
+
+                    if (currentdashboardData.Realisasi == null || currentdashboardData.Realisasi.equals("null"))
+                        view_Debitur_Realisasi.setText("0");
+                    else
+                        view_Debitur_Realisasi.setText("" + currentdashboardData.Realisasi);
+
+                    if (currentdashboardData.Outstanding == null || currentdashboardData.Outstanding.equals("null"))
+                        view_Debitur_Outstanding.setText("0");
+                    else
+                        view_Debitur_Outstanding.setText("" + currentdashboardData.Outstanding);
                 }
                 else
                 {
@@ -401,9 +412,20 @@ public class DashboardKunjunganFragment extends Fragment
                     chart_Nominal.invalidate();
 
                     ///set data nominal
-                    view_Nominal_Target.setText("" + currentdashboardData.Target);
-                    view_Nominal_Realisasi.setText("" + currentdashboardData.Realisasi);
-                    view_Nominal_Outstanding.setText("" + currentdashboardData.Outstanding);
+                    if (currentdashboardData.Target == null || currentdashboardData.Target.equals("null"))
+                        view_Nominal_Target.setText("0");
+                    else
+                        view_Nominal_Target.setText("" + currentdashboardData.Target);
+
+                    if (currentdashboardData.Realisasi == null || currentdashboardData.Realisasi.equals("null"))
+                        view_Nominal_Realisasi.setText("0");
+                    else
+                        view_Nominal_Realisasi.setText("" + currentdashboardData.Realisasi);
+
+                    if (currentdashboardData.Outstanding == null || currentdashboardData.Outstanding.equals("null"))
+                        view_Nominal_Outstanding.setText("0");
+                    else
+                        view_Nominal_Outstanding.setText("" + currentdashboardData.Outstanding);
                 }
 
                 //show alert
@@ -416,8 +438,9 @@ public class DashboardKunjunganFragment extends Fragment
             e.printStackTrace();
 
             //show something wrong
-            String alertMessage = getString(R.string.Text_SomethingWrong);
-            view_Alert.setText(alertMessage);
+            /*String alertMessage = getString(R.string.Text_SomethingWrong);
+            view_Alert.setText(alertMessage);*/
+            view_Alert.setText(resultString);
             view_Alert.setVisibility(View.VISIBLE);
             holder_Progress.setVisibility(View.GONE);
             return;

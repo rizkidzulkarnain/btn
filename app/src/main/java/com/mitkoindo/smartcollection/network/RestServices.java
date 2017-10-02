@@ -7,6 +7,7 @@ import com.mitkoindo.smartcollection.network.body.FormCallBody;
 import com.mitkoindo.smartcollection.network.body.FormVisitBody;
 import com.mitkoindo.smartcollection.network.body.FormVisitDropDownBody;
 import com.mitkoindo.smartcollection.network.body.GalleryBody;
+import com.mitkoindo.smartcollection.network.body.GetListAddressNewBody;
 import com.mitkoindo.smartcollection.network.body.ListDebiturBody;
 import com.mitkoindo.smartcollection.network.body.ListPhoneNumberBody;
 import com.mitkoindo.smartcollection.network.body.LoginBody;
@@ -26,6 +27,7 @@ import com.mitkoindo.smartcollection.network.response.MultipartResponse;
 import com.mitkoindo.smartcollection.network.response.OfflineBundleResponse;
 import com.mitkoindo.smartcollection.network.response.TambahAlamatResponse;
 import com.mitkoindo.smartcollection.network.response.TambahTeleponResponse;
+import com.mitkoindo.smartcollection.objectdata.AddressNew;
 import com.mitkoindo.smartcollection.objectdata.AgentTracking;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
 import com.mitkoindo.smartcollection.objectdata.DetailDebitur;
@@ -144,6 +146,9 @@ public interface RestServices {
 
     @POST(RestConstants.DATA_SP)
     Observable<List<GalleryItem>> getGallery(@Body GalleryBody galleryBody);
+
+    @POST(RestConstants.DATA_SP)
+    Observable<List<AddressNew>> getListAddressNew(@Body GetListAddressNewBody addressNewBody);
 
     @Headers({"Content-Type: multipart/form-data"})
     @Multipart

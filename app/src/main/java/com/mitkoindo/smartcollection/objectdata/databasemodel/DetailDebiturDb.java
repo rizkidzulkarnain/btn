@@ -32,6 +32,8 @@ public class DetailDebiturDb extends RealmObject {
 
     private String tindakLanjut;
 
+    private String tindakLanjutDesc;
+
     private String status;
 
     private String ptp;
@@ -63,6 +65,7 @@ public class DetailDebiturDb extends RealmObject {
         totalKewajiban = detailDebitur.getTotalKewajiban();
         kolektabilitas = detailDebitur.getKolektabilitas();
         tindakLanjut = detailDebitur.getTindakLanjut();
+        tindakLanjutDesc = detailDebitur.getTindakLanjutDesc();
         status = detailDebitur.getStatus();
         ptp = detailDebitur.getPtp();
         besaranPtp = detailDebitur.getBesaranPtp();
@@ -85,6 +88,7 @@ public class DetailDebiturDb extends RealmObject {
         detailDebitur.setTotalKewajiban(totalKewajiban);
         detailDebitur.setKolektabilitas(kolektabilitas);
         detailDebitur.setTindakLanjut(tindakLanjut);
+        detailDebitur.setTindakLanjutDesc(tindakLanjutDesc);
         detailDebitur.setStatus(status);
         detailDebitur.setPtp(ptp);
         detailDebitur.setBesaranPtp(besaranPtp);
@@ -175,6 +179,14 @@ public class DetailDebiturDb extends RealmObject {
 
     public void setTindakLanjut(String tindakLanjut) {
         this.tindakLanjut = tindakLanjut;
+    }
+
+    public String getTindakLanjutDesc() {
+        return tindakLanjutDesc;
+    }
+
+    public void setTindakLanjutDesc(String tindakLanjutDesc) {
+        this.tindakLanjutDesc = tindakLanjutDesc;
     }
 
     public String getStatus() {

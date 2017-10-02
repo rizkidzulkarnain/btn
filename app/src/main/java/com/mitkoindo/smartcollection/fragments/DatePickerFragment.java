@@ -74,6 +74,15 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         }
     }
 
+    //set max date ke end of month
+    public void SetMaxDateToEndOfMonth()
+    {
+        Calendar calendarClone = (Calendar)Calendar.getInstance().clone();
+        calendarClone.set(Calendar.DATE, calendarClone.getActualMaximum(Calendar.DAY_OF_MONTH));
+        calendarClone.set(Calendar.MONTH, calendarClone.get(Calendar.MONTH));
+        maxDate = calendarClone.getTimeInMillis();
+    }
+
     //----------------------------------------------------------------------------------------------
     //  Property
     //----------------------------------------------------------------------------------------------

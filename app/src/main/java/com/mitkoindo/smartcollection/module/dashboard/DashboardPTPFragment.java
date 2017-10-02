@@ -252,7 +252,8 @@ public class DashboardPTPFragment extends Fragment
             //execute transaction
             NetworkConnection networkConnection = new NetworkConnection(authToken, "");
             networkConnection.SetRequestObject(requestObject);
-            return networkConnection.SendPostRequest(usedURL);
+            /*return networkConnection.SendPostRequest(usedURL);*/
+            return networkConnection.SendPlainPostRequest(usedURL);
         }
 
         @Override
@@ -378,6 +379,13 @@ public class DashboardPTPFragment extends Fragment
                     view_Debitur_Target.setText("" + currentdashboardData.Target);
                     view_Debitur_Realisasi.setText("" + currentdashboardData.Realisasi);
                     view_Debitur_Outstanding.setText("" + currentdashboardData.Outstanding);
+
+                    if (currentdashboardData.Target == null || currentdashboardData.Target.equals("null"))
+                        view_Debitur_Target.setText("0");
+                    if (currentdashboardData.Realisasi == null || currentdashboardData.Realisasi.equals("null"))
+                        view_Debitur_Realisasi.setText("0");
+                    if (currentdashboardData.Outstanding == null || currentdashboardData.Outstanding.equals("null"))
+                        view_Debitur_Outstanding.setText("0");
                 }
                 else
                 {
@@ -419,10 +427,17 @@ public class DashboardPTPFragment extends Fragment
 
                     chart_Nominal.invalidate();
 
-                    ///set data nominal
                     view_Nominal_Target.setText("" + currentdashboardData.Target);
                     view_Nominal_Realisasi.setText("" + currentdashboardData.Realisasi);
                     view_Nominal_Outstanding.setText("" + currentdashboardData.Outstanding);
+
+                    ///set data nominal
+                    if (currentdashboardData.Target == null || currentdashboardData.Target.equals("null"))
+                        view_Nominal_Target.setText("0");
+                    if (currentdashboardData.Realisasi == null || currentdashboardData.Realisasi.equals("null"))
+                        view_Nominal_Realisasi.setText("0");
+                    if (currentdashboardData.Outstanding == null || currentdashboardData.Outstanding.equals("null"))
+                        view_Nominal_Outstanding.setText("0");
                 }
 
                 //show alert
@@ -435,8 +450,9 @@ public class DashboardPTPFragment extends Fragment
             e.printStackTrace();
 
             //show something wrong
-            String alertMessage = getString(R.string.Text_SomethingWrong);
-            view_Alert.setText(alertMessage);
+            /*String alertMessage = getString(R.string.Text_SomethingWrong);
+            view_Alert.setText(alertMessage);*/
+            view_Alert.setText(resultString);
             view_Alert.setVisibility(View.VISIBLE);
             holder_Progress.setVisibility(View.GONE);
         }

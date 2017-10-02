@@ -241,7 +241,7 @@ public class BeritaGlobalAdapter extends RecyclerView.Adapter<BeritaGlobalAdapte
         {
             //create sorting object
             JSONObject sortingObject = new JSONObject();
-            sortingObject.put("Property", "TanggalBerita");
+            sortingObject.put("Property", "CreatedDateVal");
             sortingObject.put("Direction", "DESC");
 
             //create sorting array

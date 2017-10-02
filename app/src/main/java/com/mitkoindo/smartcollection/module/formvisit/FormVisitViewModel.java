@@ -10,11 +10,13 @@ import com.mitkoindo.smartcollection.network.ApiUtils;
 import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.body.FormVisitBody;
 import com.mitkoindo.smartcollection.network.body.FormVisitDropDownBody;
+import com.mitkoindo.smartcollection.network.body.GetListAddressNewBody;
 import com.mitkoindo.smartcollection.network.models.DbParam;
 import com.mitkoindo.smartcollection.network.models.Filter;
 import com.mitkoindo.smartcollection.network.models.Sort;
 import com.mitkoindo.smartcollection.network.response.FormVisitResponse;
 import com.mitkoindo.smartcollection.network.response.MultipartResponse;
+import com.mitkoindo.smartcollection.objectdata.AddressNew;
 import com.mitkoindo.smartcollection.objectdata.DropDownAddress;
 import com.mitkoindo.smartcollection.objectdata.databasemodel.SpParameterFormVisitDb;
 import com.mitkoindo.smartcollection.utils.Constant;
@@ -74,6 +76,7 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
     public ObservableField<String> catatan = new ObservableField<>();
     public ObservableField<Boolean> isFotoAgunan2Show = new ObservableField<>(false);
     public ObservableField<List<DropDownAddress>> mObsListDropDownAddress = new ObservableField<>();
+    public ObservableField<List<AddressNew>> mObsListAddressNew = new ObservableField<>();
 
     public SpParameterFormVisitDb spParameterFormVisitDb = new SpParameterFormVisitDb();
 
@@ -124,6 +127,43 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
                     public void onError(Throwable e) {
                         error.set(e);
                         Timber.e("getListAddress " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        composites.add(disposable);
+    }
+
+    public void getListAddressNew(String accessToken, String noRekening) {
+        Disposable disposable = ApiUtils.getRestServices(accessToken).getListAddressNew(createAddressNewBody(noRekening))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        obsIsLoading.set(true);
+                    }
+                })
+                .doOnTerminate(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        obsIsLoading.set(false);
+                    }
+                })
+                .subscribeWith(new DisposableObserver<List<AddressNew>>() {
+                    @Override
+                    public void onNext(List<AddressNew> listAddressNew) {
+                        mObsListAddressNew.set(listAddressNew);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        error.set(e);
+                        Timber.e("getListAddressNew " + e.getMessage());
                     }
 
                     @Override
@@ -263,5 +303,18 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
         formVisitBody.setSpParameter(spParameter);
 
         return formVisitBody;
+    }
+
+    private GetListAddressNewBody createAddressNewBody(String nomorRekening) {
+        GetListAddressNewBody addressNewBody = new GetListAddressNewBody();
+        addressNewBody.setDatabaseId(RestConstants.DATABASE_ID_VALUE);
+        addressNewBody.setSpName(RestConstants.ADDRESS_NEW_SP_NAME);
+
+        GetListAddressNewBody.SpParameter spParameter = new GetListAddressNewBody.SpParameter();
+        spParameter.setNomorRekening(nomorRekening);
+
+        addressNewBody.setSpParameter(spParameter);
+
+        return addressNewBody;
     }
 }

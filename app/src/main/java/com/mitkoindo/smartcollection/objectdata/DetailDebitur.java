@@ -52,6 +52,10 @@ public class DetailDebitur {
     @Expose
     private String tindakLanjut;
 
+    @SerializedName("TindakLanjutDesc")
+    @Expose
+    private String tindakLanjutDesc;
+
     @SerializedName("StatusAkhir")
     @Expose
     private String status;
@@ -174,6 +178,14 @@ public class DetailDebitur {
 
     public void setTindakLanjut(String tindakLanjut) {
         this.tindakLanjut = tindakLanjut;
+    }
+
+    public String getTindakLanjutDesc() {
+        return tindakLanjutDesc;
+    }
+
+    public void setTindakLanjutDesc(String tindakLanjutDesc) {
+        this.tindakLanjutDesc = tindakLanjutDesc;
     }
 
     public String getStatus() {

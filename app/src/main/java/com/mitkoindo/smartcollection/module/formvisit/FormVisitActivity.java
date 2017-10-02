@@ -36,6 +36,7 @@ import com.mitkoindo.smartcollection.dialog.DialogTwoLineSpinnerAdapter;
 import com.mitkoindo.smartcollection.event.EventDialogSimpleSpinnerSelected;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.network.RestConstants;
+import com.mitkoindo.smartcollection.objectdata.AddressNew;
 import com.mitkoindo.smartcollection.objectdata.DropDownAction;
 import com.mitkoindo.smartcollection.objectdata.DropDownAddress;
 import com.mitkoindo.smartcollection.objectdata.DropDownAddressDb;
@@ -56,7 +57,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.OnClick;
@@ -76,6 +76,7 @@ public class FormVisitActivity extends BaseActivity {
 
     private List<DropDownPurpose> mListDropDownPurpose;
     private List<DropDownAddress> mListDropDownAddress;
+    private List<AddressNew> mListAddressNew;
     private List<DropDownRelationship> mListDropDownRelationship;
     private List<DropDownResult> mListDropDownResult;
     private List<DropDownReason> mListDropDownReason;
@@ -184,6 +185,25 @@ public class FormVisitActivity extends BaseActivity {
                 }
             }
         });
+        mFormVisitViewModel.mObsListAddressNew.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (mFormVisitViewModel.mObsListAddressNew.get() != null) {
+                    mListAddressNew = mFormVisitViewModel.mObsListAddressNew.get();
+                    mListAddress.clear();
+                    for (AddressNew addressNew : mListAddressNew) {
+                        if (addressNew.getAlamat() != null) {
+                            mListAlamatYangDikunjungi.add(addressNew.getAlamat());
+
+                            DialogTwoLineSpinnerAdapter.TwoLineSpinner twoLineSpinner = new DialogTwoLineSpinnerAdapter.TwoLineSpinner();
+                            twoLineSpinner.title = addressNew.getTipeAlamat();
+                            twoLineSpinner.description = addressNew.getAlamat();
+                            mListAddress.add(twoLineSpinner);
+                        }
+                    }
+                }
+            }
+        });
         mFormVisitViewModel.jumlahYangAkanDisetor.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
@@ -253,6 +273,7 @@ public class FormVisitActivity extends BaseActivity {
         });
 
         mFormVisitViewModel.getListAddress(getAccessToken(), mNoRekening);
+//        mFormVisitViewModel.getListAddressNew(getAccessToken(), mNoRekening);
     }
 
     private void getExtra() {
@@ -612,6 +633,14 @@ public class FormVisitActivity extends BaseActivity {
                         break;
                     }
                 }
+//                for (AddressNew addressNew : mListAddressNew) {
+//                    if (!TextUtils.isEmpty(addressNew.getAlamat()) && event.getName().contains(addressNew.getAlamat())) {
+//                        mFormVisitViewModel.spParameterFormVisitDb.setCuAddr(addressNew.getKodeAlamat());
+//                        mFormVisitViewModel.alamatYangDikunjungi.set(event.getName());
+//                        break;
+//                    }
+//                }
+
                 break;
             }
             case R.id.card_view_hubungan_dengan_debitur: {
@@ -735,7 +764,17 @@ public class FormVisitActivity extends BaseActivity {
         calendar.add(Calendar.MONTH, 1);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         calendar.add(Calendar.DATE, -1);
-        datePickerDialog.getDatePicker().setMaxDate(calendar.getTime().getTime());
+
+        Calendar calendar15 = Calendar.getInstance();
+        calendar15.add(Calendar.DATE, 15);
+
+        long maxDate = calendar.getTime().getTime();
+        int returnVal = Double.compare(calendar15.getTime().getTime(), calendar.getTime().getTime());
+        if (returnVal < 0) {
+            maxDate = calendar15.getTime().getTime();
+        }
+
+        datePickerDialog.getDatePicker().setMaxDate(maxDate);
 
         datePickerDialog.show();
     }
