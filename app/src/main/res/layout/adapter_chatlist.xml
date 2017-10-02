@@ -15,25 +15,58 @@
         android:layout_width="50dp"
         android:layout_height="50dp" />
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!--Nama staff-->
-        <TextView
-            android:id="@+id/ChatListAdapter_Staffname"
-            android:textColor="@color/Tint_ChatList_Element"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <!--Badge-->
+        <RelativeLayout
+            android:id="@+id/ChatListAdapter_BadgeHolder"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/background_rounded_rectangle_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <!--level staff-->
-        <TextView
-            android:id="@+id/ChatListAdapter_StaffLevel"
-            android:textColor="@color/Tint_ChatList_Element"
-            android:textSize="12sp"
-            android:layout_marginTop="5dp"
+            <TextView
+                android:id="@+id/ChatListAdapter_BadgeCounter"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/Font_Badge"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_toLeftOf="@id/ChatListAdapter_BadgeHolder"
+            android:layout_toStartOf="@id/ChatListAdapter_BadgeHolder"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content">
+
+            <!--Nama staff-->
+            <TextView
+                android:id="@+id/ChatListAdapter_Staffname"
+                android:textColor="@color/Tint_ChatList_Element"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--level staff-->
+            <TextView
+                android:id="@+id/ChatListAdapter_StaffLevel"
+                android:textColor="@color/Tint_ChatList_Element"
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

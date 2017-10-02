@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.mitkoindo.smartcollection.HomeActivity;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.helper.ItemClickListener;
 import com.mitkoindo.smartcollection.module.chat.ChatListActivity;
 import com.mitkoindo.smartcollection.objectdata.Staff;
+import com.mitkoindo.smartcollection.objectdata.StaffOnChat;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
 import org.json.JSONArray;
@@ -34,7 +36,7 @@ public class StaffListChatAdapter extends RecyclerView.Adapter<StaffListChatAdap
     private Activity context;
 
     //list of staff
-    private ArrayList<Staff> staffList = new ArrayList<>();
+    private ArrayList<StaffOnChat> staffList = new ArrayList<>();
 
     //----------------------------------------------------------------------------------------------
     //  Input
@@ -86,7 +88,7 @@ public class StaffListChatAdapter extends RecyclerView.Adapter<StaffListChatAdap
     public StaffListChatAdapter(Activity context, ArrayList<Staff> staffList)
     {
         this.context = context;
-        this.staffList = staffList;
+        /*this.staffList = staffList;*/
     }
 
     @Override
@@ -109,13 +111,23 @@ public class StaffListChatAdapter extends RecyclerView.Adapter<StaffListChatAdap
         onBind = true;
 
         //get current staff
-        Staff currentStaff = staffList.get(position);
+        StaffOnChat currentStaff = staffList.get(position);
 
         //attach nama staff
         holder.staffName.setText(currentStaff.FULL_NAME);
 
         //attach level staff
         holder.staffLevel.setText(currentStaff.LEVEL);
+
+        if (currentStaff.totalChat == null || currentStaff.totalChat.isEmpty() || currentStaff.totalChat.equals("null"))
+        {
+            holder.holder_TotalChat.setVisibility(View.GONE);
+        }
+        else
+        {
+            holder.totalChat.setText(currentStaff.totalChat);
+            holder.holder_TotalChat.setVisibility(View.VISIBLE);
+        }
 
         //release bind
         onBind = false;
@@ -272,7 +284,7 @@ public class StaffListChatAdapter extends RecyclerView.Adapter<StaffListChatAdap
         try
         {
             //create staff arraylist
-            ArrayList<Staff> staffs = new ArrayList<>();
+            ArrayList<StaffOnChat> staffs = new ArrayList<>();
 
             //konversi ke jsonArray
             JSONArray dataArray = new JSONArray(resultString);
@@ -281,26 +293,29 @@ public class StaffListChatAdapter extends RecyclerView.Adapter<StaffListChatAdap
             for (int i = 0; i < dataArray.length(); i++)
             {
                 //create new staff data dan parse data dari JSON Object
-                Staff newStaff = new Staff();
+                StaffOnChat newStaff = new StaffOnChat();
                 newStaff.Parse(dataArray.getJSONObject(i));
 
                 //add data ke list
                 staffs.add(newStaff);
             }
 
-            CreateInitualStaffData(staffs);
+            CreateInitialStaffData(staffs);
         }
         catch (JSONException e)
         {
             e.printStackTrace();
         }
 
+        //create request buat get chat badge
+        CreateGetChatBadgeRequest();
+
         //show list
         view_Recycler.setVisibility(View.VISIBLE);
     }
 
     //Create initial staff data
-    private void CreateInitualStaffData(ArrayList<Staff> newStaffs)
+    private void CreateInitialStaffData(ArrayList<StaffOnChat> newStaffs)
     {
         //clear staff list
         staffList = new ArrayList<>();
@@ -316,7 +331,154 @@ public class StaffListChatAdapter extends RecyclerView.Adapter<StaffListChatAdap
             notifyDataSetChanged();
 
         //show list
+        /*view_Recycler.setVisibility(View.VISIBLE);*/
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Create request buat get chat badge
+    //----------------------------------------------------------------------------------------------
+    private void CreateGetChatBadgeRequest()
+    {
+        JSONObject requestObject = new JSONObject();
+        try
+        {
+            //create spParameterObject
+            JSONObject spParameterObject = new JSONObject();
+            spParameterObject.put("userID", userID);
+
+            requestObject.put("DatabaseID", "db1");
+            requestObject.put("SpName", "MKI_SP_NOTIFICATION_CHAT");
+            requestObject.put("SpParameter", spParameterObject);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        new SendGetChatBadgeRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, requestObject);
+    }
+
+    private class SendGetChatBadgeRequest extends AsyncTask<JSONObject, Void, String>
+    {
+        @Override
+        protected String doInBackground(JSONObject... jsonObjects)
+        {
+            //set url
+            String usedURL = baseURL + url_DataSP;
+
+            //get request object
+            JSONObject requestObject = jsonObjects[0];
+
+            //Send request
+            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
+            networkConnection.SetRequestObject(requestObject);
+            return networkConnection.SendPostRequest(usedURL);
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+            HandleGetBadgeResult(s);
+        }
+    }
+
+    //handle result dari get chat
+    private void HandleGetBadgeResult(String resultString)
+    {
+        try
+        {
+            //extract badge
+            JSONArray dataArray = new JSONArray(resultString);
+
+            //loop all data
+            for (int i = 0; i < dataArray.length(); i++)
+            {
+                //extract user ID dan chat counter
+                JSONObject currentData = dataArray.getJSONObject(i);
+                String fromUserID = currentData.getString("FromUserID");
+                String totalChat = currentData.getString("TotalChat");
+
+                //cari user yang IDnya sama
+                for (int j = 0; j < staffList.size(); j++)
+                {
+                    StaffOnChat currentStaff = staffList.get(j);
+
+                    if (fromUserID.toLowerCase().equals(currentStaff.USERID.toLowerCase()))
+                    {
+                        currentStaff.totalChat = totalChat;
+                        break;
+                    }
+                }
+            }
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        //update view
+        if (!onBind)
+            notifyDataSetChanged();
+
+        //show list
         view_Recycler.setVisibility(View.VISIBLE);
+
+        CreateReadNotificationRequest();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Create request buat set notifikasi chat jadi "read"
+    //----------------------------------------------------------------------------------------------
+    private void CreateReadNotificationRequest()
+    {
+        //create request object
+        JSONObject requestObject = new JSONObject();
+
+        try
+        {
+            //create spParameterObject
+            JSONObject spParameterObject = new JSONObject();
+            spParameterObject.put("userID", userID);
+            spParameterObject.put("pageType", "PageChat");
+
+            //setup request object
+            requestObject.put("DatabaseID", "db1");
+            requestObject.put("SpName", "MKI_SP_NOTIFICATION_READ_BY_TYPE");
+            requestObject.put("SpParameter", spParameterObject);
+
+            //send request
+            new SendReadNotificationRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, requestObject);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    //send request
+    private class SendReadNotificationRequest extends AsyncTask<JSONObject, Void, String>
+    {
+        @Override
+        protected String doInBackground(JSONObject... jsonObjects)
+        {
+            //set url
+            String usedURL = baseURL + url_DataSP;
+
+            //set requestObject
+            JSONObject requestObject = jsonObjects[0];
+
+            //send request
+            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
+            networkConnection.SetRequestObject(requestObject);
+            return networkConnection.SendPostRequest(usedURL);
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -327,6 +489,8 @@ public class StaffListChatAdapter extends RecyclerView.Adapter<StaffListChatAdap
         //staff name
         TextView staffName;
         TextView staffLevel;
+        TextView totalChat;
+        View holder_TotalChat;
 
         public StaffListChatViewHolder(View itemView)
         {
@@ -334,6 +498,8 @@ public class StaffListChatAdapter extends RecyclerView.Adapter<StaffListChatAdap
 
             staffName = itemView.findViewById(R.id.ChatListAdapter_Staffname);
             staffLevel = itemView.findViewById(R.id.ChatListAdapter_StaffLevel);
+            totalChat = itemView.findViewById(R.id.ChatListAdapter_BadgeCounter);
+            holder_TotalChat = itemView.findViewById(R.id.ChatListAdapter_BadgeHolder);
 
             //add input listener
             itemView.setOnClickListener(this);

@@ -209,7 +209,8 @@ public class DashboardKunjunganFragment extends Fragment
         this.DASHBOARDMODE_MONTH = DASHBOARDMODE_MONTH;
 
         //set default mode ke today
-        currentDashboardMode = DASHBOARDMODE_CURRENT;
+        /*currentDashboardMode = DASHBOARDMODE_CURRENT;*/
+        currentDashboardMode = DASHBOARDMODE_MONTH;
     }
 
     //----------------------------------------------------------------------------------------------

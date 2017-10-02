@@ -9,6 +9,7 @@
     <!--Spinner untuk memilih mau menampilkan data hari ini atau akumulasi-->
     <RelativeLayout
         android:id="@+id/DashboardPTPFragment_SpinnerHolder"
+        android:visibility="gone"
         android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

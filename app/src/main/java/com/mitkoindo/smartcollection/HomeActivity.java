@@ -468,7 +468,7 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
                 break;
             case "Chat" :
                 intent = new Intent(this, ChatListActivity.class);
-                CreateReadNotificationRequest("PageChat");
+                /*CreateReadNotificationRequest("PageChat");*/
                 break;
             case "Check-In":
                 requestAccessLocationPermission();
