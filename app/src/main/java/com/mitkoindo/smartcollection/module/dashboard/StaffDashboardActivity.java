@@ -10,6 +10,7 @@ import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.adapter.CommonTabAdapter;
@@ -30,6 +31,9 @@ public class StaffDashboardActivity extends AppCompatActivity
 
     //option menu
     private ImageView button_OptionMenu;
+
+    //staff name
+    private TextView view_StaffName;
 
     //----------------------------------------------------------------------------------------------
     //  Transaksi
@@ -74,6 +78,7 @@ public class StaffDashboardActivity extends AppCompatActivity
         //get tab component
         view_Tablayout = findViewById(R.id.DashboardActivity_Tab);
         view_ViewPager = findViewById(R.id.DashboardActivity_ViewPager);
+        view_StaffName = findViewById(R.id.DashboardStaff_StaffName);
         button_OptionMenu = findViewById(R.id.DashboardActivity_OptionMenu);
     }
 
@@ -139,6 +144,9 @@ public class StaffDashboardActivity extends AppCompatActivity
             return;
 
         userID = bundle.getString("StaffID");
+
+        String staffName = bundle.getString("StaffName");
+        view_StaffName.setText(staffName);
     }
 
     //----------------------------------------------------------------------------------------------

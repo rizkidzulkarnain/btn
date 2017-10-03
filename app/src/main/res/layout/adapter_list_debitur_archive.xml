@@ -165,7 +165,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_view_last_payment_value"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
-                android:text="Tanggal Kunjungan"/>
+                android:text="@string/Laporan_Arsip_TanggalKunjungan"/>
 
             <!--Last Payment value-->
             <TextView

@@ -198,6 +198,7 @@ public class StaffDashboardSelectorActivity extends AppCompatActivity
         //open intent
         Intent intent = new Intent(this, StaffDashboardActivity.class);
         intent.putExtra("StaffID", currentStaff.USERID);
+        intent.putExtra("StaffName", currentStaff.FULL_NAME);
         startActivity(intent);
     }
 

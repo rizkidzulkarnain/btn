@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.module.misc.ImageViewerActivity;
+import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.objectdata.ImageData;
 import com.mitkoindo.smartcollection.objectdata.LaporanVisit;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
@@ -48,6 +49,9 @@ public class LaporanVisitActivity extends AppCompatActivity
     private View holder_TanggalJanji;
     private View holder_JumlahSetor;
     private View holder_FotoAgunan2;
+
+    //label
+    private TextView label_TanggalJanji;
 
     //generic alert
     private GenericAlert genericAlert;
@@ -115,6 +119,8 @@ public class LaporanVisitActivity extends AppCompatActivity
         holder_TanggalJanji = findViewById(R.id.LaporanVisit_Holder_TanggalJanji);
         holder_JumlahSetor = findViewById(R.id.LaporanVisit_Holder_JumlahSetor);
         holder_FotoAgunan2 = findViewById(R.id.LaporanVisit_Holder_FotoAgunan2);
+
+        label_TanggalJanji = findViewById(R.id.text_view_tanggal_janji_debitur);
 
         View btnBack = findViewById(R.id.image_btn_toolbar_back);
         if (btnBack != null) {
@@ -280,7 +286,31 @@ public class LaporanVisitActivity extends AppCompatActivity
         view_Hubungan.setText(laporanVisit.HubunganYangDikunjungiDesc);
         view_HasilKunjungan.setText(laporanVisit.HasilVisitDesc);
 
-        if (laporanVisit.TanggalJanjiBayar == null || laporanVisit.TanggalJanjiBayar.isEmpty())
+        if (laporanVisit.HasilVisit.equals(RestConstants.RESULT_ID_AKAN_SETOR_TANGGAL_VALUE))
+        {
+            view_TanggalJanji.setText(laporanVisit.TanggalJanjiBayar);
+            holder_TanggalJanji.setVisibility(View.VISIBLE);
+
+            view_JumlahSetor.setText(laporanVisit.NominalJanjiBayar);
+            holder_JumlahSetor.setVisibility(View.VISIBLE);
+        }
+        else if (laporanVisit.HasilVisit.equals(RestConstants.RESULT_ID_AKAN_DATANG_KE_BTN_TANGGAL_VALUE) ||
+                laporanVisit.HasilVisit.equals(RestConstants.RESULT_ID_MINTA_DIHUBUNGI_TANGGAL_VALUE))
+        {
+            //set label jadi tanggal realisasi janji
+            label_TanggalJanji.setText(R.string.FormVisit_TanggalRealisasiJanji);
+
+            view_TanggalJanji.setText(laporanVisit.TanggalJanjiBayar);
+            holder_TanggalJanji.setVisibility(View.VISIBLE);
+            holder_JumlahSetor.setVisibility(View.GONE);
+        }
+        else
+        {
+            holder_TanggalJanji.setVisibility(View.GONE);
+            holder_JumlahSetor.setVisibility(View.GONE);
+        }
+
+        /*if (laporanVisit.TanggalJanjiBayar == null || laporanVisit.TanggalJanjiBayar.isEmpty())
         {
             holder_TanggalJanji.setVisibility(View.GONE);
         }
@@ -288,9 +318,9 @@ public class LaporanVisitActivity extends AppCompatActivity
         {
             view_TanggalJanji.setText(laporanVisit.TanggalJanjiBayar);
             holder_TanggalJanji.setVisibility(View.VISIBLE);
-        }
+        }*/
 
-        if (laporanVisit.NominalJanjiBayar.equals("0.0"))
+        /*if (laporanVisit.NominalJanjiBayar.equals("0.0"))
         {
             holder_JumlahSetor.setVisibility(View.GONE);
         }
@@ -298,7 +328,7 @@ public class LaporanVisitActivity extends AppCompatActivity
         {
             view_JumlahSetor.setText(laporanVisit.NominalJanjiBayar);
             holder_JumlahSetor.setVisibility(View.VISIBLE);
-        }
+        }*/
 
         view_StatusAgunan.setText(laporanVisit.StatusAgunanDesc);
         view_KondisiAgunan.setText(laporanVisit.KondisiAgunan);

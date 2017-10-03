@@ -181,6 +181,9 @@ public class ChatListActivity extends AppCompatActivity
         //get selected staff
         Staff selectedStaff = staffListChatAdapter.GetSelectedStaff(index);
 
+        //set total chat ke null
+        staffListChatAdapter.SetTotalChatToNull(index);
+
         //pastikan item nggak null
         if (selectedStaff == null)
             return;

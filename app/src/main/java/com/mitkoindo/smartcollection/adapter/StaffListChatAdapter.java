@@ -179,6 +179,21 @@ public class StaffListChatAdapter extends RecyclerView.Adapter<StaffListChatAdap
         return staffList.get(index);
     }
 
+    //set total message jadi null
+    public void SetTotalChatToNull(int index)
+    {
+        //prevent out of bounds
+        if (index >= getItemCount())
+            return;
+
+        //set total chat di selected staff jadi null
+        staffList.get(index).totalChat = null;
+
+        //update
+        if (!onBind)
+            notifyDataSetChanged();
+    }
+
     //----------------------------------------------------------------------------------------------
     //  Create request
     //----------------------------------------------------------------------------------------------

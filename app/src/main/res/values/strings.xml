@@ -399,6 +399,8 @@
     <string name="Laporan_Title_FormVisit">Laporan Form Visit</string>
     <string name="Laporan_Title_FormCall">Laporan Form Call</string>
     <string name="Laporan_Alert_IDNotFound">Data visit / call debitur tidak ditemukan</string>
+    <string name="Laporan_Arsip_TanggalKunjungan">Tanggal Kunjungan</string>
+    <string name="Laporan_Arsip_TanggalTelepon">Tanggal Telepon</string>
 
     <!--Update password page-->
     <string name="UpdatePassword_PageTitle">Update Password</string>

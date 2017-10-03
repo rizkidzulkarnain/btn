@@ -30,7 +30,8 @@ public class MobileNews
         {
             /*RowNumber = dataObject.getInt("RowNumber");*/
             ID = dataObject.getInt("ID");
-            AuthorID = dataObject.getString("AuthorID");
+            /*AuthorID = dataObject.getString("AuthorID");*/
+            AuthorID = dataObject.getString("AuthorName");
             Title = dataObject.getString("Title");
             Summary = dataObject.getString("Summary");
             NewsContent = dataObject.getString("NewsContent");

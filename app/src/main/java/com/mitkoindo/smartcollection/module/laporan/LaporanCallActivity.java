@@ -35,11 +35,13 @@ public class LaporanCallActivity extends AppCompatActivity
     private TextView view_TanggalTindakLanjut;
     private TextView view_Catatan;
 
-    private View title_TanggalHasilPanggilan;
+    private TextView title_TanggalHasilPanggilan;
     private View holder_TanggalHasilPanggilan;
 
     private View title_JumlahSetoran;
     private View holder_JumlahSetoran;
+
+    private TextView label_TanggalJanji;
 
     //generic alert
     private GenericAlert genericAlert;
@@ -100,6 +102,7 @@ public class LaporanCallActivity extends AppCompatActivity
 
         title_JumlahSetoran = findViewById(R.id.text_view_jumlah_yang_akan_disetor);
         holder_JumlahSetoran = findViewById(R.id.card_view_jumlah_yang_akan_disetor);
+
 
         genericAlert = new GenericAlert(this);
 
@@ -260,6 +263,8 @@ public class LaporanCallActivity extends AppCompatActivity
         else if (laporanCall.HasilVisit.equals(RestConstants.RESULT_ID_AKAN_DATANG_KE_BTN_TANGGAL_VALUE) ||
                 laporanCall.HasilVisit.equals(RestConstants.RESULT_ID_MINTA_DIHUBUNGI_TANGGAL_VALUE))
         {
+            title_TanggalHasilPanggilan.setText(R.string.FormVisit_TanggalRealisasiJanji);
+
             //hanya show tanggal hasil saja
             view_TanggalHasil.setText(laporanCall.TanggalJanjiBayar);
 

@@ -14,6 +14,8 @@ public class DebiturItemWithFlag extends DebiturItem
 
     public String TanggalKunjungan;
 
+    public String TanggalTelefon;
+
     public String IDVisit;
 
     public String IDCall;
@@ -55,6 +57,11 @@ public class DebiturItemWithFlag extends DebiturItem
             if (dataObject.has("IDCall"))
             {
                 IDCall = dataObject.getString("IDCall");
+            }
+
+            if (dataObject.has("TanggalTelefon"))
+            {
+                TanggalTelefon = dataObject.getString("TanggalTelefon");
             }
         }
         catch (JSONException e)

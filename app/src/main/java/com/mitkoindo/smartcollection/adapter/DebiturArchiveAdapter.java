@@ -130,7 +130,19 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
         holder.lastPayment.setText(currentDebitur.getLastPayment());
         holder.tagihan.setText(currentDebitur.getTagihan());
         holder.dpd.setText(currentDebitur.getDpd());
-        holder.tanggalKunjungan.setText(currentDebitur.TanggalKunjungan);
+
+        if (currentDebitur.TanggalKunjungan == null || currentDebitur.TanggalKunjungan.isEmpty() ||
+                currentDebitur.TanggalKunjungan.equals("null"))
+        {
+            //gunakan tanggal call
+            holder.label_TanggalKunjungan.setText(R.string.Laporan_Arsip_TanggalTelepon);
+            holder.tanggalKunjungan.setText(currentDebitur.TanggalTelefon);
+        }
+        else
+        {
+            holder.label_TanggalKunjungan.setText(R.string.Laporan_Arsip_TanggalKunjungan);
+            holder.tanggalKunjungan.setText(currentDebitur.TanggalKunjungan);
+        }
 
         //set listener
         final int currentPos = position;
@@ -494,6 +506,7 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
         TextView dpd;
         TextView lastPayment;
         TextView tanggalKunjungan;
+        TextView label_TanggalKunjungan;
 
         public DebiturViewHolder(View itemView)
         {
@@ -505,6 +518,7 @@ public class DebiturArchiveAdapter extends RecyclerView.Adapter<DebiturArchiveAd
             dpd = itemView.findViewById(R.id.text_view_dpd_value);
             lastPayment = itemView.findViewById(R.id.text_view_last_payment_value);
             tanggalKunjungan = itemView.findViewById(R.id.text_view_last_kunjungan_value);
+            label_TanggalKunjungan = itemView.findViewById(R.id.text_view_last_kunjungan);
         }
     }
 }

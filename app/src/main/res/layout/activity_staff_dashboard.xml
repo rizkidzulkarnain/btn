@@ -38,6 +38,22 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+        <!--Staff name-->
+        <TextView
+            android:id="@+id/DashboardStaff_StaffName"
+            android:gravity="center"
+            android:background="@color/color_Accent"
+            android:shadowColor="@color/Black"
+            android:textColor="@color/White"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:background="@color/White"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
         <android.support.design.widget.TabLayout
             android:id="@+id/DashboardActivity_Tab"
             android:background="@color/color_Accent"
