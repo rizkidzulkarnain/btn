@@ -16,9 +16,12 @@ import com.mitkoindo.smartcollection.HomeActivity;
 import com.mitkoindo.smartcollection.R;
 import com.mitkoindo.smartcollection.base.BaseActivity;
 import com.mitkoindo.smartcollection.databinding.ActivityListDebiturBinding;
+import com.mitkoindo.smartcollection.event.EventDialogSimpleSpinnerSelected;
+import com.mitkoindo.smartcollection.event.EventRefreshListDebitur;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.module.laporan.LaporanCallActivity;
 import com.mitkoindo.smartcollection.module.laporan.LaporanVisitActivity;
+import com.mitkoindo.smartcollection.network.RestConstants;
 import com.mitkoindo.smartcollection.network.response.OfflineBundleResponse;
 import com.mitkoindo.smartcollection.objectdata.DebiturItem;
 import com.mitkoindo.smartcollection.objectdata.DetailDebitur;
@@ -28,6 +31,8 @@ import com.mitkoindo.smartcollection.objectdata.PhoneNumber;
 import com.mitkoindo.smartcollection.objectdata.databasemodel.DebiturItemDb;
 import com.mitkoindo.smartcollection.objectdata.databasemodel.DetailDebiturDb;
 import com.mitkoindo.smartcollection.objectdata.databasemodel.PhoneNumberDb;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -206,6 +211,9 @@ public class ListDebiturActivity extends BaseActivity {
             public void onPropertyChanged(Observable sender, int propertyId) {
                 if (mListDebiturViewModel.obsSuccessSendFormVisitAndCall.get()) {
                     displayMessage(R.string.ListDebitur_SendOfflineDataSuccess);
+
+//                    Refresh List Debitur Pending
+                    EventBus.getDefault().post(new EventRefreshListDebitur(RestConstants.LIST_DEBITUR_STATUS_PENDING_VALUE));
                 }
             }
         });

@@ -80,6 +80,13 @@ public class DashboardKunjunganFragment extends Fragment
     //refresher
     private SwipeRefreshLayout view_Refresher;
 
+    //flag buat toggle spinner
+    private boolean flag_HideSpinner;
+
+    //holdernya spinner
+    private View holder_Spinner;
+    private TextView view_AkumulasiLabel;
+
     //----------------------------------------------------------------------------------------------
     //  Transaksi
     //----------------------------------------------------------------------------------------------
@@ -150,6 +157,24 @@ public class DashboardKunjunganFragment extends Fragment
                 CreateGetDashboardKunjunganRequest();
             }
         });
+
+        //get holder spinner dan akumulasi label
+        holder_Spinner = thisView.findViewById(R.id.DashboardKunjunganFragment_SpinnerHolder);
+        view_AkumulasiLabel = thisView.findViewById(R.id.DashboardKunjunganFragment_AkumulasiLabel);
+
+        //toggle view berdasarkan flag
+        if (flag_HideSpinner)
+        {
+            //hide spinner dan show label akumulasi
+            holder_Spinner.setVisibility(View.GONE);
+            view_AkumulasiLabel.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            //show spinner dan hide label akumulasi
+            holder_Spinner.setVisibility(View.VISIBLE);
+            view_AkumulasiLabel.setVisibility(View.GONE);
+        }
     }
 
     //setup views
@@ -158,8 +183,9 @@ public class DashboardKunjunganFragment extends Fragment
         //set spinner value
         String[] spinnerValue = new String[]
                 {
-                    getString(R.string.Text_HariIni),
-                    getString(R.string.Text_Akumulasi)
+                    getString(R.string.Text_Akumulasi),
+                    getString(R.string.Text_HariIni)
+
                 };
         ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.preset_spinneritem, spinnerValue);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -173,13 +199,13 @@ public class DashboardKunjunganFragment extends Fragment
                 switch (i)
                 {
                     case 0 :
-                        //show data hari ini
-                        currentDashboardMode = DASHBOARDMODE_CURRENT;
+                        //show data monthly
+                        currentDashboardMode = DASHBOARDMODE_MONTH;
                         CreateGetDashboardKunjunganRequest();
                         break;
                     case 1 :
-                        //show data monthly
-                        currentDashboardMode = DASHBOARDMODE_MONTH;
+                        //show data hari ini
+                        currentDashboardMode = DASHBOARDMODE_CURRENT;
                         CreateGetDashboardKunjunganRequest();
                     default:break;
                 }
@@ -211,6 +237,12 @@ public class DashboardKunjunganFragment extends Fragment
         //set default mode ke today
         /*currentDashboardMode = DASHBOARDMODE_CURRENT;*/
         currentDashboardMode = DASHBOARDMODE_MONTH;
+    }
+
+    //set toggle buat hide / show spinner
+    public void SetSpinnerToggle(boolean hideSpinner)
+    {
+        flag_HideSpinner = hideSpinner;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -283,6 +315,9 @@ public class DashboardKunjunganFragment extends Fragment
     //handle result dari transaksi
     private void HandleGetDashboardResult(String resultString)
     {
+        if (getActivity() == null)
+            return;
+
         //pastikan response tidak kosong
         if (resultString == null || resultString.isEmpty())
         {

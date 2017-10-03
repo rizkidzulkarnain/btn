@@ -84,6 +84,12 @@ public class DashboardPenyelesaianFragment extends Fragment
     //alert belum ditampilkan sebelum tanggal 7
     private TextView view_DaySevenAlert;
 
+    //flag buat toggle spinner
+    private boolean flag_HideSpinner;
+
+    //holdernya spinner
+    private TextView view_AkumulasiLabel;
+
     //----------------------------------------------------------------------------------------------
     //  Transaksi
     //----------------------------------------------------------------------------------------------
@@ -172,6 +178,9 @@ public class DashboardPenyelesaianFragment extends Fragment
 
         //get alert day 7
         view_DaySevenAlert = thisView.findViewById(R.id.DashboardPenyelesaianFragment_DateSevenAlert);
+
+        //get label akumulasi
+        view_AkumulasiLabel = thisView.findViewById(R.id.DashboardPenyelesaianFragment_AkumulasiLabel);
     }
 
     //setup views
@@ -180,8 +189,8 @@ public class DashboardPenyelesaianFragment extends Fragment
         //set spinner value
         String[] spinnerValue = new String[]
                 {
-                        getString(R.string.Text_HariIni),
-                        getString(R.string.Text_Akumulasi)
+                    getString(R.string.Text_Akumulasi),
+                    getString(R.string.Text_HariIni)
                 };
         ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.preset_spinneritem, spinnerValue);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -195,13 +204,13 @@ public class DashboardPenyelesaianFragment extends Fragment
                 switch (i)
                 {
                     case 0 :
-                        //show data hari ini
-                        currentDashboardMode = DASHBOARDMODE_CURRENT;
+                        //show data monthly
+                        currentDashboardMode = DASHBOARDMODE_MONTH;
                         CreateGetDashboardPenyelesaianRequest();
                         break;
                     case 1 :
-                        //show data monthly
-                        currentDashboardMode = DASHBOARDMODE_MONTH;
+                        //show data hari ini
+                        currentDashboardMode = DASHBOARDMODE_CURRENT;
                         CreateGetDashboardPenyelesaianRequest();
                     default:break;
                 }
@@ -213,6 +222,20 @@ public class DashboardPenyelesaianFragment extends Fragment
 
             }
         });
+
+        //toggle view berdasarkan flag
+        if (flag_HideSpinner)
+        {
+            //hide spinner dan show label akumulasi
+            holder_Spinner.setVisibility(View.GONE);
+            view_AkumulasiLabel.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            //show spinner dan hide label akumulasi
+            holder_Spinner.setVisibility(View.VISIBLE);
+            view_AkumulasiLabel.setVisibility(View.GONE);
+        }
     }
 
     //setup transaction properties
@@ -243,6 +266,12 @@ public class DashboardPenyelesaianFragment extends Fragment
         holder_Progress.setVisibility(View.GONE);
         view_Alert.setVisibility(View.GONE);
         view_DaySevenAlert.setVisibility(View.VISIBLE);
+    }
+
+    //set toggle buat hide / show spinner
+    public void SetSpinnerToggle(boolean hideSpinner)
+    {
+        flag_HideSpinner = hideSpinner;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -315,6 +344,9 @@ public class DashboardPenyelesaianFragment extends Fragment
     //handle result dari transaksi
     private void HandleGetDashboardResult(String resultString)
     {
+        if (getActivity() == null)
+            return;
+
         //pastikan response tidak kosong
         if (resultString == null || resultString.isEmpty())
         {

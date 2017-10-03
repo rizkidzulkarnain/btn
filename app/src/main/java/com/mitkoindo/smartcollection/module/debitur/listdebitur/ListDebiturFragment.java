@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import com.mitkoindo.smartcollection.databinding.FragmentListDebiturBinding;
 import com.mitkoindo.smartcollection.dialog.DialogFactory;
 import com.mitkoindo.smartcollection.dialog.DialogSimpleSpinnerAdapter;
 import com.mitkoindo.smartcollection.event.EventDialogSimpleSpinnerSelected;
+import com.mitkoindo.smartcollection.event.EventRefreshListDebitur;
 import com.mitkoindo.smartcollection.helper.RealmHelper;
 import com.mitkoindo.smartcollection.module.debitur.detaildebitur.DetailDebiturActivity;
 import com.mitkoindo.smartcollection.module.formvisit.FormVisitKonfirmasiActivity;
@@ -313,6 +315,16 @@ public class ListDebiturFragment extends BaseFragment {
                     mScrollListener.resetPageCount(1);
                 }
                 break;
+            }
+        }
+    }
+
+    @Subscribe
+    public void onRefreshListDebitur(EventRefreshListDebitur event) {
+        if (!TextUtils.isEmpty(mStatus)) {
+            if (mStatus.equalsIgnoreCase(event.getStatus())) {
+                mPage = 1;
+                mScrollListener.resetPageCount(1);
             }
         }
     }

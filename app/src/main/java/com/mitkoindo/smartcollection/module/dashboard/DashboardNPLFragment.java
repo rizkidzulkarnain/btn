@@ -193,6 +193,9 @@ public class DashboardNPLFragment extends Fragment
     //handle get npl result
     private void HandleGetNPLResult(String resultString)
     {
+        if (getActivity() == null)
+            return;
+
         //pastikan response tidak kosong
         if (resultString == null || resultString.isEmpty())
         {

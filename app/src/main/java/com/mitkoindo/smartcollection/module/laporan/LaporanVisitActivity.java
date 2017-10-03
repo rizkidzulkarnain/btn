@@ -49,6 +49,7 @@ public class LaporanVisitActivity extends AppCompatActivity
     private View holder_TanggalJanji;
     private View holder_JumlahSetor;
     private View holder_FotoAgunan2;
+    private View holder_Signature;
 
     //label
     private TextView label_TanggalJanji;
@@ -119,6 +120,7 @@ public class LaporanVisitActivity extends AppCompatActivity
         holder_TanggalJanji = findViewById(R.id.LaporanVisit_Holder_TanggalJanji);
         holder_JumlahSetor = findViewById(R.id.LaporanVisit_Holder_JumlahSetor);
         holder_FotoAgunan2 = findViewById(R.id.LaporanVisit_Holder_FotoAgunan2);
+        holder_Signature = findViewById(R.id.LaporanVisit_SignatureHolder);
 
         label_TanggalJanji = findViewById(R.id.text_view_tanggal_janji_debitur);
 
@@ -375,7 +377,7 @@ public class LaporanVisitActivity extends AppCompatActivity
         }
         else
         {
-
+            holder_Signature.setVisibility(View.GONE);
         }
 
         /*view_FotoDebitur;

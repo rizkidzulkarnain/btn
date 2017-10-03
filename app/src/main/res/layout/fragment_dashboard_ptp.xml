@@ -6,37 +6,53 @@
     android:background="@drawable/background_bluegradient"
     tools:context="com.mitkoindo.smartcollection.module.dashboard.DashboardPTPFragment">
 
-    <!--Spinner untuk memilih mau menampilkan data hari ini atau akumulasi-->
     <RelativeLayout
-        android:id="@+id/DashboardPTPFragment_SpinnerHolder"
-        android:visibility="gone"
-        android:padding="5dp"
+        android:id="@+id/DashboardPTPFragment_SpinnerLabelHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Spinner
-            android:id="@+id/DashboardPTPFragment_Spinner"
+        <!--Label akumulasi-->
+        <TextView
+            android:id="@+id/DashboardPTPFragment_AkumulasiLabel"
+            android:text="@string/Text_Akumulasi"
+            android:textColor="@color/White"
+            android:padding="10dp"
             android:background="@color/color_Accent"
-            android:dropDownSelector="@color/White"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--Spinner untuk memilih mau menampilkan data hari ini atau akumulasi-->
+        <RelativeLayout
+            android:id="@+id/DashboardPTPFragment_SpinnerHolder"
+            android:visibility="gone"
             android:padding="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
 
-        <!--Dropdown arrow, karena yang punya spinner ketutup background-->
-        <ImageView
-            android:src="@drawable/ic_arrow_drop_down_white_36dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/DashboardPTPFragment_Spinner"
+                android:background="@color/color_Accent"
+                android:dropDownSelector="@color/White"
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <!--Dropdown arrow, karena yang punya spinner ketutup background-->
+            <ImageView
+                android:src="@drawable/ic_arrow_drop_down_white_36dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/DashboardPTPFragment_Refresher"
-        android:layout_below="@id/DashboardPTPFragment_SpinnerHolder"
+        android:layout_below="@id/DashboardPTPFragment_SpinnerLabelHolder"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

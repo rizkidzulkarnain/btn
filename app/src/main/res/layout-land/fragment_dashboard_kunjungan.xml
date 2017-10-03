@@ -8,36 +8,53 @@
 
     <!--Spinner untuk memilih mau menampilkan data hari ini atau akumulasi-->
     <RelativeLayout
-        android:id="@+id/DashboardKunjunganFragment_SpinnerHolder"
-        android:visibility="gone"
-        android:padding="5dp"
+        android:id="@+id/DashboardKunjunganFragment_SpinnerLabelHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Spinner
-            android:id="@+id/DashboardKunjunganFragment_Spinner"
+        <!--Label akumulasi-->
+        <TextView
+            android:id="@+id/DashboardKunjunganFragment_AkumulasiLabel"
+            android:text="@string/Text_Akumulasi"
+            android:textColor="@color/White"
+            android:padding="10dp"
             android:background="@color/color_Accent"
-            android:dropDownSelector="@color/White"
-            android:padding="5dp"
-            android:layout_centerInParent="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <!--Dropdown arrow, karena yang punya spinner ketutup background-->
-        <ImageView
-            android:src="@drawable/ic_arrow_drop_down_white_36dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <!--Spinner-->
+        <RelativeLayout
+            android:id="@+id/DashboardKunjunganFragment_SpinnerHolder"
+            android:visibility="gone"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/DashboardKunjunganFragment_Spinner"
+                android:background="@color/color_Accent"
+                android:dropDownSelector="@color/White"
+                android:padding="5dp"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <!--Dropdown arrow, karena yang punya spinner ketutup background-->
+            <ImageView
+                android:src="@drawable/ic_arrow_drop_down_white_36dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/DashboardKunjunganFragment_Refresher"
-        android:layout_below="@id/DashboardKunjunganFragment_SpinnerHolder"
+        android:layout_below="@id/DashboardKunjunganFragment_SpinnerLabelHolder"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -75,7 +92,7 @@
                         <ImageView
                             android:src="@drawable/dashboard_line"
                             android:adjustViewBounds="true"
-                            android:scaleType="fitXY"
+                            android:scaleType="fitStart"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="125dp" />
@@ -205,7 +222,7 @@
                         <ImageView
                             android:src="@drawable/dashboard_line"
                             android:adjustViewBounds="true"
-                            android:scaleType="fitXY"
+                            android:scaleType="fitStart"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="125dp" />

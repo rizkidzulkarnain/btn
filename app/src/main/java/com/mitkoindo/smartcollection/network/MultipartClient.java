@@ -38,7 +38,8 @@ public class MultipartClient {
     public static Retrofit getClient(String accessToken) {
         if (sMultipartRetrofit == null) {
             OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
-            okHttpClientBuilder.readTimeout(10, TimeUnit.SECONDS);
+            okHttpClientBuilder.readTimeout(180, TimeUnit.SECONDS);
+            okHttpClientBuilder.writeTimeout(180, TimeUnit.SECONDS);
             okHttpClientBuilder.connectTimeout(10, TimeUnit.SECONDS);
             okHttpClientBuilder.addNetworkInterceptor(new Interceptor() {
                 @Override
