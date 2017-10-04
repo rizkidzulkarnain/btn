@@ -197,6 +197,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!--PTP Amount-->
+            <TextView
+                android:id="@+id/text_view_KurangSetor"
+                style="@style/FontRegular.Medium.White"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_last_payment_value"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                android:layout_weight="2"
+                android:text="@string/PTP_KurangSetor"/>
+
+            <!--PTP value-->
+            <TextView
+                android:id="@+id/text_view_KurangSetor_value"
+                style="@style/FontRegular.Medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_last_payment_value"
+                app:layout_constraintStart_toEndOf="@+id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/White"
+                android:layout_weight="3"
+                app:layout_constraintBaseline_toBaselineOf="@+id/text_view_PTPAmount"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/padding_medium"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <!--PTP Reminder-->
             <TextView
                 android:id="@+id/text_view_PTP"

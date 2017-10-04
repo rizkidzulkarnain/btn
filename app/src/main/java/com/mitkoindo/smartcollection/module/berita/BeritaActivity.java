@@ -158,8 +158,11 @@ public class BeritaActivity extends AppCompatActivity
 
         final String userGroup_BranchCoordinator = getString(R.string.UserGroup_BranchCoordinator);
         final String userGroup_BranchManager = getString(R.string.UserGroup_BranchManager);
+        final String userGroup_SystemAdmin = getString(R.string.UserGroup_SystemAdmin);
+        final String userGroup_CollectionManager = getString(R.string.UserGroup_CollectionManager);
 
-        if (userGroupID.equals(userGroup_BranchCoordinator) || userGroupID.equals(userGroup_BranchManager))
+        if (userGroupID.equals(userGroup_BranchCoordinator) || userGroupID.equals(userGroup_BranchManager) ||
+                userGroupID.equals(userGroup_SystemAdmin) || userGroupID.equals(userGroup_CollectionManager))
             view_CreateBroadcast.setVisibility(View.VISIBLE);
         else
             view_CreateBroadcast.setVisibility(View.GONE);

@@ -38,142 +38,174 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".UpdatePasswordActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".HistoriTindakanActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.dashboard.DashboardActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.berita.BeritaActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.berita.BroadcastBeritaActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.assignment.AccountAssignmentActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.ptp_reminder.PTPReminderActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.berita.DetailBeritaGlobalActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.berita.DetailBeritaGroupActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.chat.ChatListActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.chat.ChatWindowActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.laporan.LaporanActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.dashboard.StaffDashboardSelectorActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.dashboard.StaffDashboardActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.pusatnotifikasi.PusatNotifikasiActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.laporan.ArchiveActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.laporan.LaporanVisitActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.misc.ImageViewerActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
         <activity android:name=".module.laporan.LaporanCallActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
-        <activity android:name=".module.misc.ChangeBaseURLActivity" />
+            android:configChanges="orientation|screenSize|keyboardHidden"
+			android:screenOrientation="landscape"/>
+        <activity android:name=".module.misc.ChangeBaseURLActivity" 
+		android:screenOrientation="landscape"/>
         <activity
             android:name=".module.debitur.listdebitur.ListDebiturActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.debitur.detaildebitur.DetailDebiturActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.debitur.detaildebitur.ViewTeleponActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.formvisit.FormVisitActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.formvisit.FormVisitKonfirmasiActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.formcall.FormCallActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.debitur.tambahalamatdebitur.TambahAlamatDebiturActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.debitur.tambahtelepon.TambahTeleponActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.debitur.tambahalamat.TambahAlamatActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.laporan.reportdistribusi.ReportDistribusiDebiturActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.laporan.staffproductivity.StaffProductivityPortraitActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.laporan.staffproductivity.StaffProductivityDebiturActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.laporan.agenttracking.AgentTrackingActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.debitur.detaildebitur.GalleryActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
         <activity
             android:name=".module.laporan.agenttracking.ListStaffDownlineActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" 
+			android:screenOrientation="landscape"/>
 
         <service
             android:name=".FetchAddressIntentService"

@@ -361,13 +361,16 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
         final String userGroup_Supervisor2 = getString(R.string.UserGroup_Supervisor2);
         final String userGroup_BranchCoordinator = getString(R.string.UserGroup_BranchCoordinator);
         final String userGroup_BranchManager = getString(R.string.UserGroup_BranchManager);
+        final String userGroup_SystemAdmin = getString(R.string.UserGroup_SystemAdmin);
+        final String userGroup_CollectionManager = getString(R.string.UserGroup_CollectionManager);
 
         //cek tipe user
         if (userGroupID.equals(userGroup_Staff1) || userGroupID.equals(userGroup_Staff2) || userGroupID.equals(userGroup_Staff3))
             menuItems = getResources().getStringArray(R.array.HomeMenu_Staff);
         else if (userGroupID.equals(userGroup_Supervisor1) || userGroupID.equals(userGroup_Supervisor2))
             menuItems = getResources().getStringArray(R.array.HomeMenu_Supervisor);
-        else if (userGroupID.equals(userGroup_BranchCoordinator) || userGroupID.equals(userGroup_BranchManager))
+        else if (userGroupID.equals(userGroup_BranchCoordinator) || userGroupID.equals(userGroup_BranchManager) ||
+                userGroupID.equals(userGroup_SystemAdmin) || userGroupID.equals(userGroup_CollectionManager))
             menuItems = getResources().getStringArray(R.array.HomeMenu_BC);
         else
             menuItems = getResources().getStringArray(R.array.HomeMenu_BC);

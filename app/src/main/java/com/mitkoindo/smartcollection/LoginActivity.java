@@ -252,6 +252,9 @@ public class LoginActivity extends AppCompatActivity
             //cek apakah user group ini berhak menggunakan app atau tidak
             if (!AllowAccessToApp(userGroupID))
             {
+                //send request untuk melogout user ini
+                CreateLogoutRequest(accessToken);
+
                 //show alert bahwa user group ini tidak memiliki akses ke dalam app ini
                 String alertTitle = getString(R.string.Text_MohonMaaf);
                 String alertMessage = getString(R.string.Login_Alert_UserCannotAccess);
@@ -334,12 +337,15 @@ public class LoginActivity extends AppCompatActivity
         final String userGroup_BranchCoordinator = getString(R.string.UserGroup_BranchCoordinator);
         final String userGroup_BranchManager = getString(R.string.UserGroup_BranchManager);
         final String userGroup_Admin = getString(R.string.UserGroup_Admin);
+        final String userGroup_SystemAdmin = getString(R.string.UserGroup_SystemAdmin);
+        final String userGroup_CollectionManager = getString(R.string.UserGroup_CollectionManager);
 
         if (currentUserGroup.equals(userGroup_Staff1) || currentUserGroup.equals(userGroup_Staff2) || currentUserGroup.equals(userGroup_Staff3))
             return true;
         else if (currentUserGroup.equals(userGroup_Supervisor1) || currentUserGroup.equals(userGroup_Supervisor2))
             return true;
-        else if (currentUserGroup.equals(userGroup_BranchCoordinator) || currentUserGroup.equals(userGroup_BranchManager))
+        else if (currentUserGroup.equals(userGroup_BranchCoordinator) || currentUserGroup.equals(userGroup_BranchManager) ||
+                currentUserGroup.equals(userGroup_SystemAdmin) || currentUserGroup.equals(userGroup_CollectionManager))
             return true;
         else if (currentUserGroup.toLowerCase().equals(userGroup_Admin))
             return true;
@@ -356,6 +362,44 @@ public class LoginActivity extends AppCompatActivity
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //  Logout user jika nggak ada akses
+    //----------------------------------------------------------------------------------------------
+    private String url_Logout;
+
+    //create request buat logout
+    private void CreateLogoutRequest(String authToken)
+    {
+        url_Logout = getString(R.string.URL_Logout);
+
+        //send logout request
+        new SendLogoutRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, authToken);
+    }
+
+    //send request buat logout
+    private class SendLogoutRequest extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected String doInBackground(String... strings)
+        {
+            //get token
+            String authToken = strings[0];
+
+            //create url
+            String usedURL = baseURL + url_Logout;
+
+            //eksekusi request
+            NetworkConnection networkConnection = new NetworkConnection(authToken, "");
+            return networkConnection.SendPutRequest(usedURL);
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+        }
     }
 
     //----------------------------------------------------------------------------------------------

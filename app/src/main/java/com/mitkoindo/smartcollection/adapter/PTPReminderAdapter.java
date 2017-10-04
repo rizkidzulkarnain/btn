@@ -67,6 +67,7 @@ public class PTPReminderAdapter extends RecyclerView.Adapter<PTPReminderAdapter.
         holder.LastPayment.setText(currentItem.getLastPayment());
         holder.PTP.setText(currentItem.PTPHint);
         holder.PTPAmount.setText(currentItem.PTPAmount);
+        holder.kurangSetor.setText(currentItem.KurangSetor);
 
         //add listener
         final int currentPos = position;
@@ -112,6 +113,7 @@ public class PTPReminderAdapter extends RecyclerView.Adapter<PTPReminderAdapter.
         TextView LastPayment;
         TextView PTP;
         TextView PTPAmount;
+        TextView kurangSetor;
 
         public PTPReminderViewHolder(View itemView)
         {
@@ -124,6 +126,7 @@ public class PTPReminderAdapter extends RecyclerView.Adapter<PTPReminderAdapter.
             LastPayment = itemView.findViewById(R.id.text_view_last_payment_value);
             PTP = itemView.findViewById(R.id.text_view_PTP_value);
             PTPAmount = itemView.findViewById(R.id.text_view_PTPAmount_value);
+            kurangSetor = itemView.findViewById(R.id.text_view_KurangSetor_value);
         }
     }
 }

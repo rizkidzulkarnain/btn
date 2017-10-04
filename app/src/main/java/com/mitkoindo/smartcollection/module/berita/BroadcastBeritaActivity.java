@@ -746,6 +746,16 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     //create request
     private void CreateSendFileRequest()
     {
+        //cek apakah ada user yang diselect atau tidak
+        ArrayList<String> selectedUsers = staffBroadcastAdapter.GetSelectedUserID();
+        if (selectedUsers == null || selectedUsers.size() <= 0)
+        {
+            //show alert bahwa tidak ada user yang dipilih
+            String alertText = getString(R.string.Berita_Broadcast_NoUserSelected);
+            genericAlert.DisplayAlert(alertText, "");
+            return;
+        }
+
         genericAlert.ShowLoadingAlert();
         AlternativeSendFile();
         /*new ExecuteSendFileRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");*/
@@ -897,6 +907,16 @@ public class BroadcastBeritaActivity extends AppCompatActivity
     //----------------------------------------------------------------------------------------------
     private void CreateSendBroadcastRequest()
     {
+        //cek apakah ada user yang diselect atau tidak
+        ArrayList<String> selectedUsers = staffBroadcastAdapter.GetSelectedUserID();
+        if (selectedUsers == null || selectedUsers.size() <= 0)
+        {
+            //show alert bahwa tidak ada user yang dipilih
+            String alertText = getString(R.string.Berita_Broadcast_NoUserSelected);
+            genericAlert.DisplayAlert(alertText, "");
+            return;
+        }
+
         genericAlert.ShowLoadingAlert();
 
         new SendBroadcastRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
