@@ -3,6 +3,7 @@ package com.mitkoindo.smartcollection.objectdata;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
@@ -19,6 +20,9 @@ public class ImageData
     //bitmap file
     private Bitmap imageFile;
 
+    //extra view
+    private View extraView;
+
     //load image
     public void LoadImageToImageView(Activity context, String baseURL, String targetURL, ImageView imageView)
     {
@@ -30,6 +34,12 @@ public class ImageData
 
         //load image
         new SendDownloadImageRequest().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, usedURL);
+    }
+
+    //set extra view
+    public void SetExtraView(View extraView)
+    {
+        this.extraView = extraView;
     }
 
     //send request buat download image
@@ -51,6 +61,10 @@ public class ImageData
             //set image ke view
             if (imageFile != null)
                 imageView.setImageBitmap(imageFile);
+
+            //show extra view jika ada
+            if (extraView != null)
+                extraView.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -50,6 +50,8 @@ public class LaporanVisitActivity extends AppCompatActivity
     private View holder_JumlahSetor;
     private View holder_FotoAgunan2;
     private View holder_Signature;
+    private View holder_FotoDebitur;
+    private View holder_FotoAgunan1;
 
     //label
     private TextView label_TanggalJanji;
@@ -121,6 +123,8 @@ public class LaporanVisitActivity extends AppCompatActivity
         holder_JumlahSetor = findViewById(R.id.LaporanVisit_Holder_JumlahSetor);
         holder_FotoAgunan2 = findViewById(R.id.LaporanVisit_Holder_FotoAgunan2);
         holder_Signature = findViewById(R.id.LaporanVisit_SignatureHolder);
+        holder_FotoDebitur = findViewById(R.id.LaporanVisit_Holder_FotoDebitur);
+        holder_FotoAgunan1 = findViewById(R.id.LaporanVisit_Holder_FotoAgunan1);
 
         label_TanggalJanji = findViewById(R.id.text_view_tanggal_janji_debitur);
 
@@ -343,6 +347,7 @@ public class LaporanVisitActivity extends AppCompatActivity
         if (laporanVisit.PhotoDebitur != null && !laporanVisit.PhotoDebitur.isEmpty())
         {
             ImageData imageData = new ImageData();
+            imageData.SetExtraView(holder_FotoDebitur);
             imageData.LoadImageToImageView(this, baseURL, laporanVisit.PhotoDebitur, view_FotoDebitur);
         }
         else
@@ -353,6 +358,7 @@ public class LaporanVisitActivity extends AppCompatActivity
         if (laporanVisit.PhotoAgunan1 != null && !laporanVisit.PhotoAgunan1.isEmpty())
         {
             ImageData imageData = new ImageData();
+            imageData.SetExtraView(holder_FotoAgunan1);
             imageData.LoadImageToImageView(this, baseURL, laporanVisit.PhotoAgunan1, view_FotoAgunan1);
         }
         else
@@ -363,6 +369,7 @@ public class LaporanVisitActivity extends AppCompatActivity
         if (laporanVisit.PhotoAgunan2 != null && !laporanVisit.PhotoAgunan2.isEmpty() && !laporanVisit.PhotoAgunan2.equals("null"))
         {
             ImageData imageData = new ImageData();
+            imageData.SetExtraView(holder_FotoAgunan2);
             imageData.LoadImageToImageView(this, baseURL, laporanVisit.PhotoAgunan2, view_FotoAgunan2);
         }
         else
@@ -373,6 +380,7 @@ public class LaporanVisitActivity extends AppCompatActivity
         if (laporanVisit.PhotoSignature != null && !laporanVisit.PhotoSignature.isEmpty())
         {
             ImageData imageData = new ImageData();
+            imageData.SetExtraView(holder_Signature);
             imageData.LoadImageToImageView(this, baseURL, laporanVisit.PhotoSignature, view_Signature);
         }
         else
