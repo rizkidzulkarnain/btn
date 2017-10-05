@@ -195,6 +195,9 @@
         <service android:name=".backgroundservice.ChatUpdaterService" />
 
         <receiver android:name=".utilities.NotificationChecker" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="a4f13cd9174b1ebaf2b3d4386c5f20d2300631b8" />
     </application>
 
 </manifest>

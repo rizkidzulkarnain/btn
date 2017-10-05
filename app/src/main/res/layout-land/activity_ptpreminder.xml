@@ -37,18 +37,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <!--Summary PTP-->
+        <include layout="@layout/adapter_ptp_summary"
+            android:id="@+id/PTP_Reminder_Summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <!--Holder for data & alert-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--List of reminder-->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/PTP_Reminder_List"
-                android:padding="10dp"
-                android:clipToPadding="false"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent">
+
+                <!--List of reminder-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/PTP_Reminder_List"
+                    android:padding="10dp"
+                    android:clipToPadding="false"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"/>
+
+                <!--Progress bar sebagai indikator load page baru-->
+                <ProgressBar
+                    android:id="@+id/PTP_Reminder_PageLoadIndicator"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <!--progress bar-->
             <ProgressBar

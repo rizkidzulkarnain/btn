@@ -383,6 +383,8 @@
     <string name="PTP_Reminder_Value">Jumlah PTP</string>
     <string name="PTP_LastPaymentDate">Last Payment Date</string>
     <string name="PTP_KurangSetor">Kurang Setor</string>
+    <string name="PTP_Summary_JumlahDebitur">Jumlah Debitur</string>
+    <string name="PTP_Summary_JumlahOutstanding">Jumlah Outstanding</string>
 
     <!--Chat-->
     <string name="Chat_Title">Chat</string>
@@ -506,6 +508,7 @@
     <!--Transaksi-->
     <!--<string name="BaseURL">https://span.btn.co.id/wsMobile/</string>-->
     <string name="BaseURL">https://mobile-coll.btn.co.id/SmartColl/</string>
+    <!--<string name="BaseURL">http://192.168.43.1:88/btn_new/</string>-->
     <string name="URL_Login">api/Account/login</string>
     <string name="URL_Logout">api/Account/logout</string>
     <string name="URL_UpdatePassword">api/Account/updatePassword</string>
@@ -542,6 +545,9 @@
     <string name="UserGroup_Admin">dms01</string>
     <string name="UserGroup_CollectionManager">CCRD08</string>
     <string name="UserGroup_SystemAdmin">CCRD10</string>
+
+    <!--Encryption key-->
+    <string name="Key_Encryption">Jbf24>({@TV424!-</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

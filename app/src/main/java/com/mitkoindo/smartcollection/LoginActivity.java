@@ -27,14 +27,23 @@ import com.mitkoindo.smartcollection.objectdata.databasemodel.DetailDebiturDb;
 import com.mitkoindo.smartcollection.objectdata.databasemodel.PhoneNumberDb;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
 import com.mitkoindo.smartcollection.utilities.HttpsTrustManager;
+import com.mitkoindo.smartcollection.utilities.LoginEncryption;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 import com.mitkoindo.smartcollection.utils.ProfileUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -157,6 +166,42 @@ public class LoginActivity extends AppCompatActivity
             String alertMessage = getString(R.string.Login_Alert_UsernameOrPasswordEmpty);
             genericAlert.DisplayAlert(alertMessage, "");
             return;
+        }
+
+        //encrypt username & password
+        LoginEncryption loginEncryption = new LoginEncryption();
+        try
+        {
+            text_Username = loginEncryption.encryptWithDefaultKey(text_Username);
+            text_Password = loginEncryption.encryptWithDefaultKey(text_Password);
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        catch (InvalidKeyException e)
+        {
+            e.printStackTrace();
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        catch (NoSuchPaddingException e)
+        {
+            e.printStackTrace();
+        }
+        catch (InvalidAlgorithmParameterException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IllegalBlockSizeException e)
+        {
+            e.printStackTrace();
+        }
+        catch (BadPaddingException e)
+        {
+            e.printStackTrace();
         }
 
         //show loading alert

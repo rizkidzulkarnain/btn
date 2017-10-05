@@ -15,10 +15,20 @@ import android.widget.EditText;
 
 import com.mitkoindo.smartcollection.helper.ResourceLoader;
 import com.mitkoindo.smartcollection.utilities.GenericAlert;
+import com.mitkoindo.smartcollection.utilities.LoginEncryption;
 import com.mitkoindo.smartcollection.utilities.NetworkConnection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 public class UpdatePasswordActivity extends AppCompatActivity
 {
@@ -69,9 +79,9 @@ public class UpdatePasswordActivity extends AppCompatActivity
     private void GetViews()
     {
         //get reference ke forms
-        form_OldPassword = (EditText)findViewById(R.id.UpdatePasswordActivity_OldPassword);
-        form_NewPassword = (EditText)findViewById(R.id.UpdatePasswordActivity_NewPassword);
-        form_ConfirmPassword = (EditText)findViewById(R.id.UpdatePasswordActivity_ConfirmPassword);
+        form_OldPassword = findViewById(R.id.UpdatePasswordActivity_OldPassword);
+        form_NewPassword = findViewById(R.id.UpdatePasswordActivity_NewPassword);
+        form_ConfirmPassword = findViewById(R.id.UpdatePasswordActivity_ConfirmPassword);
 
         //create alert
         genericAlert = new GenericAlert(this);
@@ -106,6 +116,43 @@ public class UpdatePasswordActivity extends AppCompatActivity
         value_OldPassword = form_OldPassword.getText().toString();
         value_NewPassword = form_NewPassword.getText().toString();
         value_ConfirmPassword = form_ConfirmPassword.getText().toString();
+
+        //encrypt masing-masing value
+        LoginEncryption loginEncryption = new LoginEncryption();
+        try
+        {
+            value_OldPassword = loginEncryption.encryptWithDefaultKey(value_OldPassword);
+            value_NewPassword = loginEncryption.encryptWithDefaultKey(value_NewPassword);
+            value_ConfirmPassword = loginEncryption.encryptWithDefaultKey(value_ConfirmPassword);
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        catch (InvalidKeyException e)
+        {
+            e.printStackTrace();
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        catch (NoSuchPaddingException e)
+        {
+            e.printStackTrace();
+        }
+        catch (InvalidAlgorithmParameterException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IllegalBlockSizeException e)
+        {
+            e.printStackTrace();
+        }
+        catch (BadPaddingException e)
+        {
+            e.printStackTrace();
+        }
 
         //show loading alert
         genericAlert.ShowLoadingAlert();

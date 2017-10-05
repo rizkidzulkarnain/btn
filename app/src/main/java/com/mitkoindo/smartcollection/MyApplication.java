@@ -5,9 +5,11 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
+import io.fabric.sdk.android.Fabric;
 import java.lang.reflect.Method;
 
 import io.realm.Realm;
@@ -26,6 +28,7 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
 
         sInstance = this;
         initTimber();
