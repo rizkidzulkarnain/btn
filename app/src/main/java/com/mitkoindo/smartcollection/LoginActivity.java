@@ -289,6 +289,7 @@ public class LoginActivity extends AppCompatActivity
             JSONObject resultObject = new JSONObject(resultString);
 
             //get token & user properties
+            String userID = resultObject.getString("USERID");
             String accessToken = resultObject.getString("AccessToken");
             String userName = resultObject.getString("SU_FULLNAME");
             String userGroup = resultObject.getString("SG_GRPNAME");
@@ -309,7 +310,7 @@ public class LoginActivity extends AppCompatActivity
 
             //simpan access token di shared preference
             SaveToken(accessToken);
-            SaveUserID();
+            SaveUserID(userID);
             SaveUserNameAndGroup(userName, userGroup, userGroupID);
 
             // Get Data Bundle
@@ -340,7 +341,7 @@ public class LoginActivity extends AppCompatActivity
     }
 
     //save user ID
-    private void SaveUserID()
+    private void SaveUserID(String userID)
     {
         //get user id key
         String userIDKey = getString(R.string.SharedPreferenceKey_UserID);
@@ -348,7 +349,7 @@ public class LoginActivity extends AppCompatActivity
         //save user ID
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(userIDKey, text_Username);
+        editor.putString(userIDKey, userID);
         editor.apply();
     }
 
