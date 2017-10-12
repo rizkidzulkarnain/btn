@@ -507,8 +507,9 @@
 
     <!--Transaksi-->
     <!--<string name="BaseURL">https://span.btn.co.id/wsMobile/</string>-->
-    <string name="BaseURL">https://mobile-coll.btn.co.id/SmartColl/</string>
+    <!--<string name="BaseURL">https://mobile-coll.btn.co.id/SmartColl/</string>-->
     <!--<string name="BaseURL">http://192.168.43.1:88/btn_new/</string>-->
+    <string name="BaseURL">https://mobile-coll.btn.co.id/smartcollp/</string>
     <string name="URL_Login">api/Account/login</string>
     <string name="URL_Logout">api/Account/logout</string>
     <string name="URL_UpdatePassword">api/Account/updatePassword</string>

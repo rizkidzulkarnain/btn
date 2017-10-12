@@ -703,7 +703,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/button_foto_debitur"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="@string/FormVisit_FotoAgunan"/>
+                    android:text="@string/FormVisit_FotoAgunan"
+                    android:visibility="@{formVisitViewModel.isFotoAgunan1Show ? View.VISIBLE : View.GONE}"/>
 
                 <!--Foto Agunan CardView 1-->
                 <android.support.v7.widget.CardView
@@ -713,7 +714,8 @@
                     android:layout_marginTop="@dimen/padding_medium"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_foto_agunan"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/card_view_tambah_foto">
+                    app:layout_constraintEnd_toStartOf="@+id/card_view_tambah_foto"
+                    android:visibility="@{formVisitViewModel.isFotoAgunan1Show ? View.VISIBLE : View.GONE}">
                     <ImageView
                         android:id="@+id/image_view_foto_agunan_1"
                         android:layout_width="96dp"
@@ -732,7 +734,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/card_view_foto_agunan_1"
                     app:layout_constraintStart_toStartOf="@+id/card_view_foto_agunan_1"
                     app:layout_constraintEnd_toEndOf="@+id/card_view_foto_agunan_1"
-                    android:text="@string/FormVisit_AmbilFoto"/>
+                    android:text="@string/FormVisit_AmbilFoto"
+                    android:visibility="@{formVisitViewModel.isFotoAgunan1Show ? View.VISIBLE : View.GONE}"/>
 
                 <!--Tambah Foto CardView-->
                 <android.support.v7.widget.CardView
@@ -742,7 +745,8 @@
                     app:layout_constraintTop_toTopOf="@+id/card_view_foto_agunan_1"
                     app:layout_constraintBottom_toBottomOf="@+id/card_view_foto_agunan_1"
                     app:layout_constraintStart_toEndOf="@+id/card_view_foto_agunan_1"
-                    app:layout_constraintEnd_toStartOf="@+id/card_view_foto_agunan_2">
+                    app:layout_constraintEnd_toStartOf="@+id/card_view_foto_agunan_2"
+                    android:visibility="@{formVisitViewModel.isFotoAgunan1Show ? View.VISIBLE : View.GONE}">
                     <ImageView
                         android:layout_width="36dp"
                         android:layout_height="36dp"

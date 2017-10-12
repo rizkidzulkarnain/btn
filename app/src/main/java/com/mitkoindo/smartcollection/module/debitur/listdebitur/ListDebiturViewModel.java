@@ -383,24 +383,32 @@ public class ListDebiturViewModel extends BaseObservable implements ILifecycleVi
                             RequestBody requestFileFotoDebitur = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoDebitur)), fileFotoDebitur);
                             MultipartBody.Part bodyDebitur = MultipartBody.Part.createFormData("file", fileFotoDebitur.getName(), requestFileFotoDebitur);
 
-                            File fileFotoAgunan1 = new File(spParameterFormVisitDb.getPhotoAgunan1Path());
-                            Uri uriFotoAgunan1 = Uri.fromFile(fileFotoAgunan1);
-                            RequestBody requestFileFotoAgunan1 = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoAgunan1)), fileFotoAgunan1);
-                            MultipartBody.Part bodyAgunan1 = MultipartBody.Part.createFormData("file", fileFotoAgunan1.getName(), requestFileFotoAgunan1);
-
                             return ApiUtils.getMultipartServices(mAccessToken).uploadFile(bodyDebitur)
                                     .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
                                         @Override
                                         public ObservableSource<MultipartResponse> apply(@io.reactivex.annotations.NonNull MultipartResponse multipartResponse) throws Exception {
                                             spParameterFormVisitDb.setPhotoDebitur(multipartResponse.getRelativePath());
 
-                                            return ApiUtils.getMultipartServices(mAccessToken).uploadFile(bodyAgunan1);
+                                            if (!TextUtils.isEmpty(spParameterFormVisitDb.getPhotoAgunan1Path())) {
+                                                File fileFotoAgunan1 = new File(spParameterFormVisitDb.getPhotoAgunan1Path());
+                                                Uri uriFotoAgunan1 = Uri.fromFile(fileFotoAgunan1);
+                                                RequestBody requestFileFotoAgunan1 = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoAgunan1)), fileFotoAgunan1);
+                                                MultipartBody.Part bodyAgunan1 = MultipartBody.Part.createFormData("file", fileFotoAgunan1.getName(), requestFileFotoAgunan1);
+
+                                                return ApiUtils.getMultipartServices(mAccessToken).uploadFile(bodyAgunan1);
+                                            } else {
+                                                return Observable.just(multipartResponse);
+                                            }
                                         }
                                     })
                                     .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
                                         @Override
                                         public ObservableSource<MultipartResponse> apply(@io.reactivex.annotations.NonNull MultipartResponse multipartResponse) throws Exception {
-                                            spParameterFormVisitDb.setPhotoAgunan1(multipartResponse.getRelativePath());
+                                            if (!TextUtils.isEmpty(spParameterFormVisitDb.getPhotoAgunan1Path())) {
+                                                spParameterFormVisitDb.setPhotoAgunan1(multipartResponse.getRelativePath());
+                                            } else {
+                                                spParameterFormVisitDb.setPhotoAgunan1("");
+                                            }
 
                                             if (!TextUtils.isEmpty(spParameterFormVisitDb.getPhotoAgunan2Path())) {
                                                 File fileFotoAgunan2 = new File(spParameterFormVisitDb.getPhotoAgunan2Path());

@@ -34,16 +34,8 @@ public class MyApplication extends MultiDexApplication {
         initTimber();
         initCalligraphy();
         initRealm();
-        initStetho();
-
-        if (Build.VERSION.SDK_INT >= 24) {
-            try {
-                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-                m.invoke(null);
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-        }
+//        initStetho();
+        initCameraForNougat();
     }
 
     public static Application getInstance() {
@@ -89,5 +81,16 @@ public class MyApplication extends MultiDexApplication {
                         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
                         .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
                         .build());
+    }
+
+    private void initCameraForNougat() {
+        if (Build.VERSION.SDK_INT >= 24) {
+            try {
+                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                m.invoke(null);
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

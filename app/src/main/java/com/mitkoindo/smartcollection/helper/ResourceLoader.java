@@ -64,7 +64,7 @@ public class ResourceLoader
     //load base url
     public static String LoadBaseURL(Context context)
     {
-        //initialize base url string
+        /*//initialize base url string
         String baseURL = "";
 
         //cek data base url di shared preference
@@ -81,7 +81,11 @@ public class ResourceLoader
         }
 
         //jika tidak kosong, return hasil get base url dari shared preference
-        return baseURL;
+        return baseURL;*/
+
+        //load base url dari xml
+        /*String baseURL = context.getString(R.string.BaseURL);*/
+        return context.getString(R.string.BaseURL);
     }
 
     //load auth token

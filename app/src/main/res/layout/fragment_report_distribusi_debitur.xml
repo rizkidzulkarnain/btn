@@ -86,19 +86,19 @@
 
         <LinearLayout
             android:id="@+id/linear_layout_report_distribusi"
-            android:layout_width="344dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/linear_layout_search"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:paddingTop="@dimen/padding_medium"
             android:paddingBottom="@dimen/padding_medium"
             android:paddingLeft="@dimen/padding_medium_large"
             android:paddingStart="@dimen/padding_medium_large"
             android:paddingRight="@dimen/padding_medium_large"
             android:paddingEnd="@dimen/padding_medium_large"
-            android:background="@color/colorPrimary"
-            tools:layout_editor_absoluteX="8dp">
+            android:background="@color/colorPrimary">
             <TextView
                 android:id="@+id/text_view_date_time"
                 style="@style/FontRegular.Medium.White"

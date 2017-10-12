@@ -74,6 +74,7 @@ public class FormVisitViewModel extends BaseObservable implements ILifecycleView
     public ObservableField<String> tindakLanjut = new ObservableField<>();
     public ObservableField<String> tanggalTindakLanjut = new ObservableField<>();
     public ObservableField<String> catatan = new ObservableField<>();
+    public ObservableField<Boolean> isFotoAgunan1Show = new ObservableField<>();
     public ObservableField<Boolean> isFotoAgunan2Show = new ObservableField<>(false);
     public ObservableField<List<DropDownAddress>> mObsListDropDownAddress = new ObservableField<>();
     public ObservableField<List<AddressNew>> mObsListAddressNew = new ObservableField<>();

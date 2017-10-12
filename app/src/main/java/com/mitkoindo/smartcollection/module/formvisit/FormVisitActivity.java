@@ -225,6 +225,16 @@ public class FormVisitActivity extends BaseActivity {
                 }
             }
         });
+        mFormVisitViewModel.isFotoAgunan1Show.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (!mFormVisitViewModel.isFotoAgunan1Show.get()) {
+                    mBinding.imageViewFotoAgunan1.setImageResource(R.drawable.ic_home_variant_grey600_48dp);
+                    mFormVisitViewModel.spParameterFormVisitDb.setPhotoAgunan1Path("");
+                    mFormVisitViewModel.isFotoAgunan2Show.set(false);
+                }
+            }
+        });
         mFormVisitViewModel.isFotoAgunan2Show.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
@@ -340,6 +350,7 @@ public class FormVisitActivity extends BaseActivity {
         mFormVisitViewModel.alasanMenunggak.set(getString(R.string.FormVisit_AlasanMenunggakInitial));
         mFormVisitViewModel.tindakLanjut.set(getString(R.string.FormVisit_TindakLanjutInitial));
         mFormVisitViewModel.tanggalTindakLanjut.set(getString(R.string.FormVisit_TanggalTindakLanjutInitial));
+        mFormVisitViewModel.isFotoAgunan1Show.set(false);
         mFormVisitViewModel.isFotoAgunan2Show.set(false);
     }
 
@@ -630,6 +641,15 @@ public class FormVisitActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(dropDownAddress.getAlamat()) && event.getName().contains(dropDownAddress.getAlamat())) {
                         mFormVisitViewModel.spParameterFormVisitDb.setCuAddr(dropDownAddress.getCaAddrType());
                         mFormVisitViewModel.alamatYangDikunjungi.set(event.getName());
+
+//                        Tambah Kondisi Alamat, Munculkan tambah foto agunan jika Alamat Sekarang / Alamat Agunan / Alamat KTP, jika type alamat lain tidak perlu foto Agunan
+                        if (dropDownAddress.getCaAddrType().equals(RestConstants.TYPE_ALAMAT_ID_ALAMAT_SEKARANG_VALUE)
+                                || dropDownAddress.getCaAddrType().equals(RestConstants.TYPE_ALAMAT_ID_ALAMAT_AGUNAN_VALUE)
+                                || dropDownAddress.getCaAddrType().equals(RestConstants.TYPE_ALAMAT_ID_ALAMAT_KTP_VALUE) ) {
+                            mFormVisitViewModel.isFotoAgunan1Show.set(true);
+                        } else {
+                            mFormVisitViewModel.isFotoAgunan1Show.set(false);
+                        }
                         break;
                     }
                 }
@@ -891,7 +911,7 @@ public class FormVisitActivity extends BaseActivity {
         } else if (TextUtils.isEmpty(spParameter.getPhotoDebiturPath())) {
             displayMessage(getString(R.string.FormVisit_FotoDebiturHint));
             return false;
-        } else if (TextUtils.isEmpty(spParameter.getPhotoAgunan1Path())) {
+        } else if (TextUtils.isEmpty(spParameter.getPhotoAgunan1Path()) && mFormVisitViewModel.isFotoAgunan1Show.get()) {
             displayMessage(getString(R.string.FormVisit_FotoAgunanHint));
             return false;
         }

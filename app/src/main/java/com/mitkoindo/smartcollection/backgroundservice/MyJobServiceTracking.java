@@ -231,6 +231,8 @@ public class MyJobServiceTracking extends JobService implements GoogleApiClient.
                     public void onNext(List<CheckInResponse> listCheckInResponse) {
                         Timber.i("send trackingLocation Success");
 
+//                        jobFinished(mJobParameters, false);
+
 //                        NotificationCompat.Builder mBuilder =
 //                                new NotificationCompat.Builder(MyJobServiceTracking.this)
 //                                        .setSmallIcon(R.drawable.ic_play_icon)
@@ -238,7 +240,7 @@ public class MyJobServiceTracking extends JobService implements GoogleApiClient.
 //                                        .setContentText(mAddressOutput);
 //
 //                        Random r = new Random();
-//                        int mNotificationId = r.nextInt((1000-10)+1)+10;
+//                        int mNotificationId = r.nextInt((10000-10)+1)+10;
 //                        // Gets an instance of the NotificationManager service
 //                        NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 //                        // Builds the notification and issues it.

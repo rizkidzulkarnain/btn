@@ -327,10 +327,12 @@ public class FormVisitKonfirmasiActivity extends BaseActivity implements GoogleA
                 resizeBmpAgunan1 = Bitmap.createBitmap(resizeBmpAgunan1, 0, 0, w, h, mtx, false);
                 resizeBmpAgunan1 = resizeBmpAgunan1.copy(Bitmap.Config.ARGB_8888, true);
             }
-            mBinding.cardViewFotoAgunan1.setVisibility(View.VISIBLE);
+//            mBinding.cardViewFotoAgunan1.setVisibility(View.VISIBLE);
             mBinding.imageViewFotoAgunan1.setImageBitmap(resizeBmpAgunan1);
+            mFormVisitKonfirmasiViewModel.isFotoAgunan1Show.set(true);
         } else {
-            mBinding.cardViewFotoAgunan1.setVisibility(View.GONE);
+//            mBinding.cardViewFotoAgunan1.setVisibility(View.GONE);
+            mFormVisitKonfirmasiViewModel.isFotoAgunan1Show.set(false);
         }
 
 //        Set Foto Agunan 2

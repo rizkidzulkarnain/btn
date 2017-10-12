@@ -6,7 +6,7 @@ package com.mitkoindo.smartcollection.network;
 
 public final class RestConstants {
     public static final String BASE_URL = "https://mobile-coll.btn.co.id/";
-    public static final String BASE_URL_END = "SmartColl";
+    public static final String BASE_URL_END = "smartcollp";
     public static final String BASE_URL_IMAGE = BASE_URL + BASE_URL_END;
 
     public static final String ENDPOINT_LOGIN = BASE_URL_END + "/api/Account/login";
@@ -105,6 +105,10 @@ public final class RestConstants {
     public static final String RELATIONSHIP_ID_ISTRI_VALUE = "03";
 
     public static final String STATUS_AGUNAN_ID_RUMAH_KOSONG_VALUE = "01";
+
+    public static final String TYPE_ALAMAT_ID_ALAMAT_KTP_VALUE = "01";
+    public static final String TYPE_ALAMAT_ID_ALAMAT_SEKARANG_VALUE = "02";
+    public static final String TYPE_ALAMAT_ID_ALAMAT_AGUNAN_VALUE = "09";
 
     public static final String STAFF_PRODUCTIVITY_CALL_VALUE = "CALL";
     public static final String STAFF_PRODUCTIVITY_VISIT_VALUE = "VISIT";

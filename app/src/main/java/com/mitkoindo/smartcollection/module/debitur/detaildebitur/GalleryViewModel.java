@@ -32,6 +32,7 @@ public class GalleryViewModel extends BaseObservable implements ILifecycleViewMo
     public ObservableField<Throwable> error = new ObservableField<>();
     public ObservableField<List<GalleryItem>> obsListGalleryItem = new ObservableField<>();
     public ObservableField<GalleryItem> obsGalleryItem = new ObservableField<>();
+    public ObservableBoolean obsIsAgunan1Show = new ObservableBoolean();
     public ObservableBoolean obsIsAgunan2Show = new ObservableBoolean();
     public ObservableBoolean obsIsSignatureShow = new ObservableBoolean();
     public ObservableBoolean obsIsEmpty = new ObservableBoolean(false);
@@ -74,6 +75,11 @@ public class GalleryViewModel extends BaseObservable implements ILifecycleViewMo
                         obsListGalleryItem.set(listGallery);
                         if (listGallery.size() > 0) {
                             obsGalleryItem.set(listGallery.get(0));
+                            if (!TextUtils.isEmpty(listGallery.get(0).getPhotoAgunan1())) {
+                                obsIsAgunan1Show.set(true);
+                            } else {
+                                obsIsAgunan1Show.set(false);
+                            }
                             if (!TextUtils.isEmpty(listGallery.get(0).getPhotoAgunan2())) {
                                 obsIsAgunan2Show.set(true);
                             } else {

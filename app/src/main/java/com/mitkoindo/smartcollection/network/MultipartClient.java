@@ -56,7 +56,7 @@ public class MultipartClient {
                     return chain.proceed(request);
                 }
             });
-            okHttpClientBuilder.addNetworkInterceptor(new StethoInterceptor());
+//            okHttpClientBuilder.addNetworkInterceptor(new StethoInterceptor());
 
             final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {

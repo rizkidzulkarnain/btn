@@ -63,6 +63,7 @@ public class FormVisitKonfirmasiViewModel extends BaseObservable implements ILif
     public ObservableField<String> tindakLanjut = new ObservableField<>();
     public ObservableField<String> tanggalTindakLanjut = new ObservableField<>();
     public ObservableField<String> catatan = new ObservableField<>();
+    public ObservableField<Boolean> isFotoAgunan1Show = new ObservableField<>();
     public ObservableField<Boolean> isFotoAgunan2Show = new ObservableField<>();
 
     public SpParameterFormVisitDb spParameterFormVisitDb = new SpParameterFormVisitDb();
@@ -81,24 +82,32 @@ public class FormVisitKonfirmasiViewModel extends BaseObservable implements ILif
         RequestBody requestFileFotoDebitur = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoDebitur)), fileFotoDebitur);
         MultipartBody.Part bodyDebitur = MultipartBody.Part.createFormData("file", fileFotoDebitur.getName(), requestFileFotoDebitur);
 
-        File fileFotoAgunan1 = new File(spParameterFormVisitDb.getPhotoAgunan1Path());
-        Uri uriFotoAgunan1 = Uri.fromFile(fileFotoAgunan1);
-        RequestBody requestFileFotoAgunan1 = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoAgunan1)), fileFotoAgunan1);
-        MultipartBody.Part bodyAgunan1 = MultipartBody.Part.createFormData("file", fileFotoAgunan1.getName(), requestFileFotoAgunan1);
-
         Disposable disposable = ApiUtils.getMultipartServices(accessToken).uploadFile(bodyDebitur)
                 .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
                     @Override
                     public ObservableSource<MultipartResponse> apply(@NonNull MultipartResponse multipartResponse) throws Exception {
                         spParameterFormVisitDb.setPhotoDebitur(multipartResponse.getRelativePath());
 
-                        return ApiUtils.getMultipartServices(accessToken).uploadFile(bodyAgunan1);
+                        if (isFotoAgunan1Show.get()) {
+                            File fileFotoAgunan1 = new File(spParameterFormVisitDb.getPhotoAgunan1Path());
+                            Uri uriFotoAgunan1 = Uri.fromFile(fileFotoAgunan1);
+                            RequestBody requestFileFotoAgunan1 = RequestBody.create(MediaType.parse(FileUtils.getMimeType(uriFotoAgunan1)), fileFotoAgunan1);
+                            MultipartBody.Part bodyAgunan1 = MultipartBody.Part.createFormData("file", fileFotoAgunan1.getName(), requestFileFotoAgunan1);
+
+                            return ApiUtils.getMultipartServices(accessToken).uploadFile(bodyAgunan1);
+                        } else {
+                            return Observable.just(multipartResponse);
+                        }
                     }
                 })
                 .flatMap(new Function<MultipartResponse, ObservableSource<MultipartResponse>>() {
                     @Override
                     public ObservableSource<MultipartResponse> apply(@NonNull MultipartResponse multipartResponse) throws Exception {
-                        spParameterFormVisitDb.setPhotoAgunan1(multipartResponse.getRelativePath());
+                        if (isFotoAgunan1Show.get()) {
+                            spParameterFormVisitDb.setPhotoAgunan1(multipartResponse.getRelativePath());
+                        } else {
+                            spParameterFormVisitDb.setPhotoAgunan1("");
+                        }
 
                         if (isFotoAgunan2Show.get()) {
                             File fileFotoAgunan2 = new File(spParameterFormVisitDb.getPhotoAgunan2Path());
